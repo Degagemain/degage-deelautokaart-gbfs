@@ -24,6 +24,7 @@ hand.
 | `web/gbfs.html` | instappagina voor aggregatoren: instapadres, bestanden, wat de feed niet belooft |
 | `web/fotos/` | modelfoto's van Wikimedia Commons + `fotos.json` met licentie en auteur |
 | `gbfs/` | de gegenereerde feed + de officiële JSON Schemas |
+| `index.html`, `gbfs/index.html` | doorverwijzingen: de root naar de kaart, `/gbfs` naar de instappagina |
 | `scripts/genereer_gbfs.py` | de generator: databank → feed |
 | `scripts/carrosserie.json` | handmatige lijst: personenwagen of bestelwagen, per model |
 | `scripts/districten.json` | handmatige lijst: contactadres per lokale groep |
@@ -55,6 +56,13 @@ inhoud, en wat de feed uitdrukkelijk *niet* belooft:
 
 ```
 https://degagemain.github.io/degage-deelautokaart-gbfs/web/gbfs.html
+```
+
+Wie de map van de feed zelf opvraagt, komt daar ook uit — `gbfs/index.html` stuurt door.
+Dat is het adres dat een partner overhoudt als hij het instapadres afkapt:
+
+```
+https://degagemain.github.io/degage-deelautokaart-gbfs/gbfs/
 ```
 
 Alles op die pagina wordt uit de feed zelf gelezen: de aantallen, de datum en de
