@@ -55,8 +55,8 @@ Twee dingen om te weten:
 
 De OV-feiten — en dat zijn KEUZES, geen feiten
 ----------------------------------------------
-· Bus en tram (De Lijn): de dichtste halte met VASTE LIJNEN binnen HALTE_ZOEK_M, en hoeveel
-  bussen of trams er daar per uur PER RICHTING vertrekken. Haltes met dezelfde naam —
+· Bus en tram (De Lijn): de dichtste halte met VASTE LIJNEN, en hoeveel bussen of trams er
+  daar per uur PER RICHTING vertrekken. Haltes met dezelfde naam —
   meestal de twee kanten van de straat — horen bij elkaar; elke kant is één richting, en
   we tonen de drukste kant. Daarnaast: hoeveel zulke haltes er binnen HALTE_M liggen. Een
   halte zonder ritten op de referentiedag telt niet: die bestaat op de kaart, maar er
@@ -69,15 +69,22 @@ De OV-feiten — en dat zijn KEUZES, geen feiten
   Melsele viel een standplaats zo op "geen bus", terwijl er op 480 tot 690 m drie haltes
   liggen (zes perrons), de dichtste met elf ritten per uur. Vogelvlucht is korter dan de wandeling, maar
   400 m was te krap om iets te zeggen over wat een mens werkelijk loopt. (11-09-2026)
+· Waarom er dan tóch tot HALTE_VER_M (10 km) doorgezocht wordt. Niet omdat een halte op
+  4 km nog te belopen valt, maar omdat de kaart erop FILTERT. "Geen halte binnen een
+  kilometer" is geen afstand: wie de schuif op 2 km zet, kan zo'n standplaats niet
+  beoordelen. Met een gemeten afstand kan het filter wél zeggen waar ze valt, en de
+  bezoeker ziet zelf dat 3,4 km ver is. (11-09-2026)
 · Trein (NMBS): het dichtste station binnen TREIN_M, en hoeveel treinen er daar per uur
   stoppen, GEDEELD DOOR TWEE richtingen. Per perron tellen, zoals bij de bus, gaat hier niet:
   een groot station heeft tot twaalf perrons in dezelfde richting, en veel ritten staan op
   een perron zonder nummer. Het totaal gedeeld door twee klopt voor een gewoon station op
   een lijn.
-· Waarom 3 km voor een station. Een eerste versie zocht tot 1,5 km. Daarmee stond bij
-  bijna de helft van de standplaatsen geen station, ook waar er een op fietsafstand ligt:
-  in Melsele ligt het station op ongeveer 2 km, en de popup zweeg erover. Naar een station
-  fietst men; 3 km is een tiental minuten. (11-09-2026)
+· Waarom 10 km voor een station. Een eerste versie zocht tot 1,5 km, een tweede tot 3 km.
+  Bij 1,5 km stond bij bijna de helft van de standplaatsen geen station, ook waar er een op
+  fietsafstand ligt: in Melsele ligt het station op ongeveer 2 km, en de popup zweeg erover.
+  Naar een station fietst men, en met een deelauto rijdt men erheen — een station op 8 km is
+  voor wie de auto neemt nog altijd het station waar hij opstapt. Bij een filter op deze
+  afstand is dat het bereik dat telt. (11-09-2026)
 · Op één gewone WERKDAG, tussen VENSTER_VAN en VENSTER_TOT: de dinsdag binnen de geldigheid
   van beide dienstregelingen met de meeste diensten. Dat is een schooldag en geen
   vakantiedag, zonder dat hier een vakantiekalender hoeft te staan.
@@ -113,8 +120,19 @@ from pathlib import Path
 # DE KEUZES — zie de uitleg bovenaan
 # ============================================================================
 HALTE_M = 800             # "haltes in de buurt": ongeveer tien minuten wandelen
-HALTE_ZOEK_M = 1000       # zo ver zoeken we naar de dichtste halte met vaste lijnen
-TREIN_M = 3000            # een station: daar fietst men naartoe, zo'n tien minuten
+HALTE_ZOEK_M = 1000       # binnen deze straal tellen ALLE haltes mee voor de dichtste
+TREIN_M = 10_000          # zo ver zoeken we door naar een station
+# Zo ver zoeken we door als er dichtbij (bijna) niets ligt. De kaart filtert op de afstand
+# tot de dichtste halte en het dichtste station, en een filter kan alleen zeggen "verder
+# dan X" als de afstand ook werkelijk gemeten is. Een standplaats zonder halte binnen een
+# kilometer heeft er wél een op drie; die afstand moet dus in de gegevens staan.
+HALTE_VER_M = 10_000
+# Ligt er binnen HALTE_ZOEK_M minder dan dit aantal haltes, dan nemen we de zoveel dichtste
+# tot HALTE_VER_M. Waarom een aantal en niet gewoon alles binnen 10 km: bij het groeperen
+# hoort per halte de verzameling ritten, en die van alle haltes binnen 10 km van elke
+# standplaats bijhouden kost gigabytes. Twaalf is ruim genoeg voor beide kanten van een
+# straat plus de buurhaltes, en alleen haltes waar iets rijdt tellen mee.
+HALTE_VER_KANDIDATEN = 12
 VENSTER_VAN = 7 * 3600    # 07:00
 VENSTER_TOT = 19 * 3600   # 19:00
 
@@ -387,45 +405,81 @@ def kies_dag(zips: dict[str, zipfile.ZipFile]) -> date:
 # ============================================================================
 # bus en tram
 # ============================================================================
+def _groepeer(z: zipfile.ZipFile, actief: dict[str, str], naam_van: dict[str, str],
+              kandidaten: dict[str, list[tuple[str, float]]]) -> dict[str, dict[str, list]]:
+    """Per standplaats per HALTENAAM: de kleinste afstand, alle ritten samen, en de drukste kant.
+
+    De twee kanten van de straat heten meestal hetzelfde en zijn in de data twee haltes, één
+    per richting; de drukste kant is wat je aan die halte per richting krijgt. Een halte waar
+    op de referentiedag niets stopt, bestaat op de kaart maar telt hier niet mee.
+
+    Het zware deel is `ritten_per_halte`, dat de haltetijden rij voor rij leest. Vandaar dat
+    `kandidaten` zo klein mogelijk gehouden wordt: dit is per aanroep één keer dat bestand.
+    """
+    nodig = {stop_id for lijst in kandidaten.values() for stop_id, _ in lijst}
+    per_halte = ritten_per_halte(z, actief, nodig)
+    groepen: dict[str, dict[str, list]] = defaultdict(dict)
+    for sid, lijst in kandidaten.items():
+        for stop_id, d in lijst:
+            ritten = per_halte.get(stop_id)
+            if not ritten:
+                continue
+            g = groepen[sid].setdefault(naam_van[stop_id], [d, set(), False, 0])
+            g[0] = min(g[0], d)
+            g[1] |= ritten
+            g[2] = g[2] or any(actief.get(r) == "tram" for r in ritten)
+            g[3] = max(g[3], len(ritten))
+    return groepen
+
+
 def bus_tram(z: zipfile.ZipFile, dag: date, standplaatsen: list) -> dict:
     """Per standplaats: de dichtste halte met vaste lijnen, en hoeveel er in de buurt liggen."""
     actief = actieve_ritten(z, dag, BRONNEN["delijn"]["soorten"])
     zeg(f"  {len(actief):,} bus- en tramritten op {dag}".replace(",", "."))
 
-    raster = Raster(standplaatsen, HALTE_ZOEK_M)
-    naam_van: dict[str, str] = {}
-    buren: dict[str, list[tuple[str, float]]] = {}
+    haltes, naam_van = [], {}
     for h in lees(z, "stops.txt"):
         try:
             lat, lon = float(h["stop_lat"]), float(h["stop_lon"])
         except (ValueError, KeyError):
             continue
-        dicht = [(p[0], d) for p, d in raster.binnen(lat, lon)]
-        if dicht:
-            buren[h["stop_id"]] = dicht
-            naam_van[h["stop_id"]] = h.get("stop_name", "").strip()
-    zeg(f"  {len(buren):,} haltes liggen binnen {HALTE_ZOEK_M} m van een standplaats".replace(",", "."))
+        haltes.append((h["stop_id"], lat, lon))
+        naam_van[h["stop_id"]] = h.get("stop_name", "").strip()
+    raster = Raster(haltes, HALTE_VER_M)
 
-    per_halte = ritten_per_halte(z, actief, set(buren))
+    def kandidaten_voor(wie: list, alles: bool) -> dict[str, list[tuple[str, float]]]:
+        """Welke haltes mogen meetellen voor deze standplaatsen, van dichtbij naar ver."""
+        uit = {}
+        for sid, lat, lon in wie:
+            op_afstand = sorted(((p[0], d) for p, d in raster.binnen(lat, lon)),
+                                key=lambda x: x[1])
+            if alles:
+                uit[sid] = op_afstand
+                continue
+            binnen = [x for x in op_afstand if x[1] <= HALTE_ZOEK_M]
+            uit[sid] = (binnen if len(binnen) >= HALTE_VER_KANDIDATEN
+                        else op_afstand[:HALTE_VER_KANDIDATEN])
+        return uit
+
+    kandidaten = kandidaten_voor(standplaatsen, alles=False)
+    zonder_dichtbij = sum(1 for lijst in kandidaten.values() if lijst and lijst[0][1] > HALTE_ZOEK_M)
+    zeg(f"  {sum(len(v) for v in kandidaten.values()):,} halte-standplaatsparen bekeken; "
+        f"{zonder_dichtbij} standplaatsen zonder halte binnen {HALTE_ZOEK_M} m".replace(",", "."))
+    groepen = _groepeer(z, actief, naam_van, kandidaten)
+
+    # Wie na die ronde nog geen halte met vaste lijnen heeft, staat in belbusgebied: er
+    # liggen wél haltes vlakbij, maar er rijdt op de referentiedag niets met een vaste lijn,
+    # en de twaalf dichtste zijn dan allemaal leeg. Voor die paar standplaatsen tellen álle
+    # haltes tot HALTE_VER_M mee — met een tweede leesbeurt over de haltetijden erbij. Dat
+    # kost een halve minuut voor een handvol standplaatsen, en levert een gemeten afstand op
+    # in plaats van een gat waar het filter niets mee kan.
+    open_nog = [s for s in standplaatsen if not groepen.get(s[0])]
+    if open_nog:
+        zeg(f"  {len(open_nog)} standplaatsen zonder halte met vaste lijnen; "
+            f"tweede ronde tot {HALTE_VER_M} m")
+        groepen.update(_groepeer(z, actief, naam_van, kandidaten_voor(open_nog, alles=True)))
+
     uren = (VENSTER_TOT - VENSTER_VAN) / 3600
-
-    # Per standplaats per HALTENAAM: de kleinste afstand, alle ritten samen, en de drukste
-    # KANT. De twee kanten van de straat heten meestal hetzelfde en zijn in de data twee
-    # haltes, één per richting; de drukste kant is wat je aan die halte per richting krijgt.
-    groepen: dict[str, dict[str, list]] = defaultdict(dict)
-    for stop_id, lijst in buren.items():
-        ritten = per_halte.get(stop_id)
-        if not ritten:
-            continue                        # bestaat, maar er stopt niets: telt niet
-        naam = naam_van[stop_id]
-        tram = any(actief.get(r) == "tram" for r in ritten)
-        for sid, d in lijst:
-            g = groepen[sid].setdefault(naam, [d, set(), False, 0])
-            g[0] = min(g[0], d)
-            g[1] |= ritten
-            g[2] = g[2] or tram
-            g[3] = max(g[3], len(ritten))
-
     uit = {}
     for sid, _, _ in standplaatsen:
         g = groepen.get(sid)
@@ -446,7 +500,7 @@ def bus_tram(z: zipfile.ZipFile, dag: date, standplaatsen: list) -> dict:
 # trein
 # ============================================================================
 def trein(z: zipfile.ZipFile, dag: date, standplaatsen: list) -> dict:
-    """Per standplaats: het dichtste station binnen TREIN_M, en de treinen per uur daar."""
+    """Per standplaats: het dichtste station tot TREIN_M ver, en de treinen per uur daar."""
     actief = actieve_ritten(z, dag, BRONNEN["nmbs"]["soorten"])
     zeg(f"  {len(actief):,} treinritten op {dag}".replace(",", "."))
 
@@ -510,8 +564,8 @@ def main() -> int:
     info = json.loads(feed.read_text(encoding="utf-8"))
     standplaatsen = [(s["station_id"], s["lat"], s["lon"]) for s in info["data"]["stations"]]
     zeg(f"standplaatsen      {len(standplaatsen)} (uit {feed.name}, feed van {info['last_updated']})")
-    zeg(f"keuzes             dichtste halte binnen {HALTE_ZOEK_M} m · haltes geteld binnen {HALTE_M} m · "
-        f"station binnen {TREIN_M} m · {VENSTER_VAN // 3600:02d}:00–{VENSTER_TOT // 3600:02d}:00")
+    zeg(f"keuzes             dichtste halte tot {HALTE_VER_M} m · haltes geteld binnen {HALTE_M} m · "
+        f"station tot {TREIN_M} m · {VENSTER_VAN // 3600:02d}:00–{VENSTER_TOT // 3600:02d}:00")
     zeg()
 
     zeg(f"Mobiscore ({MOBISCORE['uitgever']}, laag {MOBISCORE['laag']})")
@@ -582,9 +636,18 @@ def main() -> int:
     zonder_halte = sum(1 for r in resultaat.values() if "halte" not in r)
     met_station = sum(1 for r in resultaat.values() if "trein" in r)
     zeg("samen")
-    zeg(f"  {len(resultaat) - zonder_halte} standplaatsen met een halte met vaste lijnen binnen {HALTE_ZOEK_M} m, "
-        f"{zonder_halte} zonder")
+    zeg(f"  {len(resultaat) - zonder_halte} standplaatsen met een halte met vaste lijnen binnen "
+        f"{HALTE_VER_M} m, {zonder_halte} zonder")
     zeg(f"  {met_station} met een station binnen {TREIN_M} m")
+    # De kaart filtert op deze twee afstanden, dus is het de moeite te zien hoe ze liggen:
+    # staat alles onder een kilometer, dan valt er met een schuif tot 10 km niets te kiezen.
+    for label, waarden in (("halte", [r["halte"]["m"] for r in resultaat.values() if "halte" in r]),
+                           ("station", [r["trein"]["m"] for r in resultaat.values() if "trein" in r])):
+        if waarden:
+            waarden.sort()
+            mediaan = waarden[len(waarden) // 2]
+            zeg(f"  afstand tot de dichtste {label}: mediaan {mediaan} m, "
+                f"verste {waarden[-1]} m")
     zeg()
 
     bestand = {
@@ -602,7 +665,8 @@ def main() -> int:
         "voor_feed": info["last_updated"],
         "referentiedag": dag.isoformat(),
         "venster": f"{VENSTER_VAN // 3600:02d}:00-{VENSTER_TOT // 3600:02d}:00",
-        "stralen_m": {"halte": HALTE_M, "halte_zoek": HALTE_ZOEK_M, "trein": TREIN_M},
+        "stralen_m": {"halte": HALTE_M, "halte_zoek": HALTE_ZOEK_M,
+                      "halte_ver": HALTE_VER_M, "trein": TREIN_M},
         "mobiscore_bron": MOBISCORE,
         "bronnen": {k: {"naam": b["naam"], "url": b["url"], "via": b["via"],
                         "versie": versies[k]} for k, b in BRONNEN.items()},

@@ -1,5 +1,5 @@
 {
-  "bijgewerkt": "2026-09-10",
+  "bijgewerkt": "2026-09-11",
   "bron": "Wikimedia Commons",
   "fotos": {
     "Alfa Romeo|Giulia": {
@@ -1259,6 +1259,19 @@
       "licentie": "CC BY 2.0",
       "titel": "File:Mercedes A 160 (6558284067).jpg",
       "verhouding": 1.333
+    },
+    "Mercedes|A-150": {
+      "auteur": "K. Jähne",
+      "bestand": "mercedes-a-150.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Mercedes-Benz_W169_20060311.jpg",
+      "categorieen": [
+        "Category:Beige Mercedes-Benz hatchbacks",
+        "Category:Mercedes-Benz W169"
+      ],
+      "gezocht_op": "W169",
+      "licentie": "CC BY-SA 3.0",
+      "titel": "File:Mercedes-Benz W169 20060311.jpg",
+      "verhouding": 1.504
     },
     "Mercedes|VITO": {
       "auteur": "Vauxford",
@@ -3262,7 +3275,6 @@
     "Mazda|2",
     "Mercedes-Benz|A-170",
     "Mercedes|A",
-    "Mercedes|A-150",
     "Nissan|Primera",
     "Nissan|Townstar",
     "Opel|Astr sports Tourer",
@@ -3282,5 +3294,8 @@
     "Volkswagen|DUBBELE CABINE*5PL*LICHTE VRACHT*2.0 TDI EU6 SCR BMT 1",
     "zoe|Intens"
   ],
-  "regels_versie": 8
+  "regels_versie": 8,
+  "zoek_als": {
+    "Mercedes|A-150": "Mercedes-Benz|W169"
+  }
 }

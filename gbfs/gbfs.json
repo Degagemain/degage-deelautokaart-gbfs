@@ -6,23 +6,23 @@
     "feeds": [
       {
         "name": "gbfs",
-        "url": "https://degage.be/gbfs/gbfs.json"
+        "url": "https://degagemain.github.io/degage-deelautokaart-gbfs/gbfs/gbfs.json"
       },
       {
         "name": "system_information",
-        "url": "https://degage.be/gbfs/system_information.json"
+        "url": "https://degagemain.github.io/degage-deelautokaart-gbfs/gbfs/system_information.json"
       },
       {
         "name": "vehicle_types",
-        "url": "https://degage.be/gbfs/vehicle_types.json"
+        "url": "https://degagemain.github.io/degage-deelautokaart-gbfs/gbfs/vehicle_types.json"
       },
       {
         "name": "station_information",
-        "url": "https://degage.be/gbfs/station_information.json"
+        "url": "https://degagemain.github.io/degage-deelautokaart-gbfs/gbfs/station_information.json"
       },
       {
         "name": "station_status",
-        "url": "https://degage.be/gbfs/station_status.json"
+        "url": "https://degagemain.github.io/degage-deelautokaart-gbfs/gbfs/station_status.json"
       }
     ]
   }

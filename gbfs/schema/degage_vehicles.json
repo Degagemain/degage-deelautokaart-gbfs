@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
-  "$id": "https://degage.be/gbfs/schema/degage_vehicles.json",
+  "$id": "https://degagemain.github.io/degage-deelautokaart-gbfs/gbfs/schema/degage_vehicles.json",
   "$comment": "DIT IS GEEN GBFS-SCHEMA en komt niet van MobilityData. Het is het eigen schema van Dégage voor degage_vehicles.json, het detailbestand dat enkel onze eigen kaart leest. Het staat hier om twee redenen: de generator kan er tegen valideren zoals tegen de officiële schema's, en `additionalProperties: false` maakt van dit bestand een tweede privacypoort — een veld dat niet in deze lijst staat, komt er ook niet in. Verboden velden staan in SCOPE.md.",
   "type": "object",
   "additionalProperties": false,

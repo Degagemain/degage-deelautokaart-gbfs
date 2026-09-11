@@ -54,7 +54,7 @@ Er is een instappagina die alles op een rij zet — het instapadres, elk bestand
 inhoud, en wat de feed uitdrukkelijk *niet* belooft:
 
 ```
-https://<jouw-pages-adres>/web/gbfs.html
+https://degagemain.github.io/degage-deelautokaart-gbfs/web/gbfs.html
 ```
 
 Alles op die pagina wordt uit de feed zelf gelezen: de aantallen, de datum en de
@@ -62,20 +62,18 @@ bestandsmaten kloppen dus altijd, ook na een verversing. Ze controleert ook of d
 die `gbfs.json` adverteert overeenkomen met waar de bestanden werkelijk staan, en
 waarschuwt als dat niet zo is — want auto-discovery volgt die URL's.
 
-**Basis-URL in de feed zetten** `gbfs.json` draagt nu nog de plaatshouder
-`https://degage.be/gbfs/…`. Genereer opnieuw met het echte adres, anders lezen partners
-een adres in dat niet bestaat.
+**Basis-URL in de feed** De feed woont op GitHub Pages; `gbfs.json` adverteert
+`https://degagemain.github.io/degage-deelautokaart-gbfs/gbfs/…`. Dat adres vindt de generator
+zelf terug uit de git-remote, dus bij een gewone run hoef je niets mee te geven.
 
-Draait het genereren vanuit een git-repo met een GitHub-remote, of staat er een `CNAME`
-in de root, dan **vindt de generator het adres zelf** en hoef je niets mee te geven.
-Anders:
+Komt er later een eigen domein, zet dat dan in een `CNAME` in de root — dat wint op het
+github.io-adres. Voor een eenmalige afwijking:
 
 ```bash
-python scripts/genereer_gbfs.py --basis-url https://<jouw-pages-adres>/gbfs
+python scripts/genereer_gbfs.py --basis-url https://<ander-adres>/gbfs
 ```
 
-De generator print bij elke run welk adres hij gebruikt en waar het vandaan komt, en
-waarschuwt zichtbaar zolang het de plaatshouder is.
+De generator print bij elke run welk adres hij gebruikt en waar het vandaan komt.
 
 ## De kaart lokaal bekijken
 
@@ -162,6 +160,25 @@ De volgende run gooit die foto weg en kiest de eerstvolgende kandidaat. Die lijs
 Wil je zelf een foto aanleveren, zet het bestand dan in `web/fotos/` en pas de regel in
 `fotos.json` aan (met auteur en licentie erbij). Het script laat bestaande sleutels met
 rust, dus die keuze blijft staan.
+
+### Een model dat Commons anders noemt
+
+De vloot noemt een wagen zoals de leden hem kennen, Commons zoals de fabrikant hem noemt.
+Meestal is dat hetzelfde, soms niet: de **Mercedes A-150** van 2007 heet op Commons
+nergens zo — daar is het een *Mercedes-Benz W169*. Zoeken op "Mercedes A-150" levert dan
+een vooroorlogse Grosser Mercedes op, die (terecht) afgekeurd wordt, en de wagen blijft
+zonder foto. Daar bestaat geen regel voor: het is geen patroon maar kennis van auto's.
+
+Zet zo'n geval met de hand in `zoek_als` in `web/fotos/fotos.json`:
+
+```json
+"zoek_als": { "Mercedes|A-150": "Mercedes-Benz|W169" }
+```
+
+Links de sleutel zoals de vloot hem kent, rechts waarop gezocht moet worden. De foto komt
+onder de **linkersleutel** in het manifest terecht, want daarmee vraagt de kaart hem op.
+Ook deze lijst **overleeft `--opnieuw`**. Een sleutel die hier in staat, staat nooit in
+`niet_gevonden`: je voegt zo'n regel juist toe voor een wagen die eerder niets opleverde.
 
 ## Rijbereik en openbaar vervoer bijwerken
 

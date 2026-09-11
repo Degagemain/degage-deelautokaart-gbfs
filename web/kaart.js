@@ -497,8 +497,10 @@ const staat = {
   bereik: {},             // "merk|model|bouwjaar" (of "merk|model") -> { km: [van, tot], ... }
   ov: null,               // web/ov.json, maar alleen als het bij deze feed hoort
   jaarVan: null,          // gekozen ondergrens bouwjaar; null = geen bouwjaarfilter
-  mobiDrempels: [],       // de standen van de Mobiscore-schuif, oplopend (bv. [5, 6, 7, 8, 9])
-  minMobi: null,          // gekozen ondergrens Mobiscore; null = geen filter
+  busDrempels: [],        // de standen van de halteschuif, in meter, aflopend
+  maxBus: null,           // gekozen bovengrens afstand tot een halte; null = geen filter
+  treinDrempels: [],      // de standen van de stationsschuif, in meter, aflopend
+  maxTrein: null,         // gekozen bovengrens afstand tot een station; null = geen filter
   grijsTonen: true,       // uitgefilterde standplaatsen grijs laten staan i.p.v. verbergen
   gekozenBrandstof: new Set(),
   gekozenSoort: new Set(),
@@ -772,7 +774,7 @@ function bouwFilters() {
   bouwZitplaatsen();
   bouwEuronorm();
   bouwBouwjaar();
-  bouwMobiscore();
+  bouwAfstanden();
 
   /* Eén luisteraar op de hele filterlijst in plaats van één per vakje. De keuzes worden
      bij elke taalwissel opnieuw getekend; per vakje luisteren zou dan bij elke wissel
@@ -899,48 +901,91 @@ function bouwjaarFiltert() {
   return staat.jaarVan !== null;
 }
 
-/* De Mobiscore als ondergrens. Hij hoort bij de STANDPLAATS: een wagen komt door het filter
-   als de plek waar hij staat minstens die score heeft. De standen zijn de hele getallen
-   tussen de laagste en de hoogste score die voorkomen. Zonder OV-gegevens bij deze feed
-   valt er niets te filteren, en verdwijnt het blok. */
-function bouwMobiscore() {
-  const blok = $("filter-mobiscore");
-  const scores = staat.ov
-    ? Object.values(staat.ov.stations).map((o) => o.mobiscore).filter((v) => typeof v === "number")
+/* De afstand tot het openbaar vervoer als BOVENgrens. Ze hoort bij de STANDPLAATS: een
+   wagen komt door het filter als de plek waar hij staat hoogstens zo ver van een halte of
+   een station ligt.
+
+   De standen komen van een vaste ladder, niet uit de data zelf zoals bij de zitplaatsen:
+   "hoogstens 500 meter" is een ronde afspraak die een mens kan inschatten, en de gemeten
+   afstanden zijn allemaal verschillend. Van die ladder blijven alleen de standen over die
+   iets DOEN — een stand boven de verste standplaats filtert niets weg, en een schuif die
+   in de eerste helft niets verandert, liegt over wat ze kan.
+
+   De schuif loopt van links (alles) naar rechts (het dichtst), net als elke andere schuif
+   hier: verder naar rechts is altijd strenger. De ladder staat daarom aflopend. */
+const AFSTAND_LADDER = [250, 500, 750, 1000, 1500, 2000, 3000, 5000, 7500, 10000];
+
+function afstandDrempels(kies) {
+  const gemeten = staat.ov
+    ? Object.values(staat.ov.stations).map(kies).filter((m) => typeof m === "number")
     : [];
-  staat.mobiDrempels = [];
-  if (scores.length) {
-    for (let n = Math.ceil(Math.min(...scores)); n <= Math.floor(Math.max(...scores)); n++) {
-      staat.mobiDrempels.push(n);
-    }
-  }
-  if (!staat.mobiDrempels.length) {
+  if (!gemeten.length) return [];
+  /* Alleen standen onder de verste standplaats: op of boven die afstand valt er niets weg.
+     Aflopend, zodat stand 1 de ruimste is en de laatste stand de strengste. */
+  const verste = Math.max(...gemeten);
+  return AFSTAND_LADDER.filter((m) => m < verste).reverse();
+}
+
+/* Eén bouwer voor de twee schuiven: ze werken identiek en verschillen alleen in waar ze
+   hun afstand halen en waar ze hun tekst zetten. */
+function bouwAfstand(blokId, schuifId, drempelsVeld, grensVeld, kies, toon) {
+  staat[drempelsVeld] = afstandDrempels(kies);
+  const blok = $(blokId);
+  if (!staat[drempelsVeld].length) {
     blok.hidden = true;
     return;
   }
-  const schuif = $("mobi-schuif");
-  schuif.max = String(staat.mobiDrempels.length);
+  blok.hidden = false;
+  const schuif = $(schuifId);
+  schuif.max = String(staat[drempelsVeld].length);
   schuif.value = "0";
   schuif.addEventListener("input", () => {
     const i = Number(schuif.value);
-    staat.minMobi = i === 0 ? null : staat.mobiDrempels[i - 1];
-    toonMobiscore();
+    staat[grensVeld] = i === 0 ? null : staat[drempelsVeld][i - 1];
+    toon();
     teken();
   });
-  toonMobiscore();
+  toon();
 }
 
-function toonMobiscore() {
-  const schuif = $("mobi-schuif");
-  const tekst = staat.minMobi === null ? t("mobi.alle") : t("mobi.vanaf", { n: getal(staat.minMobi) });
-  $("mobi-waarde").textContent = tekst;
-  schuif.setAttribute("aria-label", t("mobi.aria"));
+function bouwAfstanden() {
+  bouwAfstand("filter-bushalte", "bus-schuif", "busDrempels", "maxBus",
+              (o) => o.halte && o.halte.m, toonBushalte);
+  bouwAfstand("filter-station", "trein-schuif", "treinDrempels", "maxTrein",
+              (o) => o.trein && o.trein.m, toonStation);
+}
+
+/* De stand voluit, in dezelfde woorden als de OV-regel in de popup: "hoogstens 500 meter",
+   "hoogstens 1,5 kilometer". Zo betekent hetzelfde getal op beide plaatsen hetzelfde. */
+function toonAfstandSchuif(schuifId, waardeId, grens, ariaSleutel) {
+  const schuif = $(schuifId);
+  const tekst = grens === null ? t("afstand.alle")
+                               : t("afstand.hoogstens", { afstand: ovAfstand(grens) });
+  $(waardeId).textContent = tekst;
+  schuif.setAttribute("aria-label", t(ariaSleutel));
   schuif.setAttribute("aria-valuetext", tekst);
 }
 
-function mobiscoreVan(w) {
+function toonBushalte() {
+  toonAfstandSchuif("bus-schuif", "bus-waarde", staat.maxBus, "bus.aria");
+}
+
+function toonStation() {
+  toonAfstandSchuif("trein-schuif", "trein-waarde", staat.maxTrein, "trein.aria");
+}
+
+/* De gemeten afstand bij de standplaats van deze wagen, of null als ze er niet is. Een
+   standplaats zonder gemeten afstand komt door géén enkele bovengrens: we weten niet of
+   ze eraan voldoet, en een wagen tonen die misschien nergens bij een halte staat is erger
+   dan er eentje missen. */
+function haltAfstandVan(w) {
   const o = staat.ov && staat.ov.stations[w.station_id];
-  return o && typeof o.mobiscore === "number" ? o.mobiscore : null;
+  return o && o.halte && typeof o.halte.m === "number" ? o.halte.m : null;
+}
+
+function stationAfstandVan(w) {
+  const o = staat.ov && staat.ov.stations[w.station_id];
+  return o && o.trein && typeof o.trein.m === "number" ? o.trein.m : null;
 }
 
 /* Een wagen komt door het filter als hij aan élke aangezette groep voldoet, en binnen
@@ -956,10 +1001,14 @@ function wagenPast(w) {
     return false;
   }
   if (staat.jaarVan !== null && !(w.bouwjaar >= staat.jaarVan)) return false;
-  // Een wagen op een standplaats zonder gekende Mobiscore kan geen ondergrens halen.
-  if (staat.minMobi !== null) {
-    const m = mobiscoreVan(w);
-    if (m === null || m < staat.minMobi) return false;
+  // Een standplaats zonder gemeten afstand haalt geen enkele bovengrens; zie hierboven.
+  if (staat.maxBus !== null) {
+    const m = haltAfstandVan(w);
+    if (m === null || m > staat.maxBus) return false;
+  }
+  if (staat.maxTrein !== null) {
+    const m = stationAfstandVan(w);
+    if (m === null || m > staat.maxTrein) return false;
   }
   for (const sleutel of staat.gekozenVlaggen) {
     if (!(w.toebehoren && w.toebehoren[sleutel])) return false;
@@ -995,11 +1044,16 @@ function redenen(w) {
     r.push(paar(TOEBEHOREN.includes(sleutel) ? "kop.toebehoren" : "kop.afspraken",
                 t("reden.nietVermeld", { vlag: vlagLabel(sleutel) })));
   }
-  if (staat.minMobi !== null) {
-    const m = mobiscoreVan(w);
-    if (m === null || m < staat.minMobi) {
-      r.push(paar("kop.mobiscore", m === null ? onbekend : m.toLocaleString(locale(),
-        { minimumFractionDigits: 1, maximumFractionDigits: 1 })));
+  if (staat.maxBus !== null) {
+    const m = haltAfstandVan(w);
+    if (m === null || m > staat.maxBus) {
+      r.push(paar("kop.bushalte", m === null ? onbekend : ovAfstand(m)));
+    }
+  }
+  if (staat.maxTrein !== null) {
+    const m = stationAfstandVan(w);
+    if (m === null || m > staat.maxTrein) {
+      r.push(paar("kop.station", m === null ? onbekend : ovAfstand(m)));
     }
   }
   if (staat.minNorm !== null && (w.normRang === null || w.normRang < staat.minNorm)) {
@@ -1034,9 +1088,12 @@ function herstelFilters() {
   staat.jaarVan = null;
   $("bouwjaar-schuif").value = "0";
   toonBouwjaar();
-  staat.minMobi = null;
-  $("mobi-schuif").value = "0";
-  toonMobiscore();
+  staat.maxBus = null;
+  $("bus-schuif").value = "0";
+  toonBushalte();
+  staat.maxTrein = null;
+  $("trein-schuif").value = "0";
+  toonStation();
   document.querySelectorAll('.keuze input[type="checkbox"]').forEach((v) => { v.checked = false; });
   teken();
 }
@@ -1265,7 +1322,10 @@ function ovHtml(station) {
     regels.push(regel(t(h.tram ? "ov.tramhalte" : "ov.bushalte",
                         { afstand: ovAfstand(h.m), freq: perUur(pr) })));
   } else {
-    regels.push(regel(t("ov.geenHalte", { straal: ovAfstand(staat.ov.stralen_m.halte_zoek) })));
+    /* `halte_ver` is de straal waarbinnen `haal_ov.py` doorzoekt; `halte_zoek` is de oudere,
+       kleinere naam en blijft als terugval staan voor een ov.json van vóór die verruiming. */
+    const straal = staat.ov.stralen_m.halte_ver || staat.ov.stralen_m.halte_zoek;
+    regels.push(regel(t("ov.geenHalte", { straal: ovAfstand(straal) })));
   }
   if (ov.trein) {
     const naam = ov.trein.naam[taal] || ov.trein.naam.nl || ov.trein.naam.fr;
@@ -1402,7 +1462,8 @@ function teken() {
                     (staat.minZit !== null ? 1 : 0) +
                     (staat.minNorm !== null ? 1 : 0) +
                     (bouwjaarFiltert() ? 1 : 0) +
-                    (staat.minMobi !== null ? 1 : 0);
+                    (staat.maxBus !== null ? 1 : 0) +
+                    (staat.maxTrein !== null ? 1 : 0);
   /* Niets gefilterd, niets te wissen: dan is de knop alleen maar ruis. `hidden` maakt hem
      hier onzichtbaar maar laat zijn plaats staan (zie `.herstel-knop` in de opmaak), zodat
      de tellerregel niet verspringt bij de eerste filter. */
@@ -1505,6 +1566,10 @@ function zetInstellingen(open) {
   $("instellingen").hidden = !open;
   const knop = document.querySelector(".tandwiel-knop");
   if (knop) knop.setAttribute("aria-expanded", String(open));
+  /* Op een telefoon klapt het doosje open op de plek waar de meldknop staat; zie
+     `.toont-instellingen .melden` in de opmaak. Een klasse op <body>, want het doosje
+     hangt in de kaartbediening en is dus geen buur van die knop. */
+  document.body.classList.toggle("toont-instellingen", open);
 }
 document.addEventListener("mousedown", (e) => {
   if (!instellingenOpen()) return;
@@ -1526,9 +1591,11 @@ document.addEventListener("keydown", (e) => {
 function zetFilters(open) {
   $("zoekveld").setAttribute("aria-expanded", String(open));
   $("filters").hidden = !open;
-  /* Met dichte filters loopt de balk onderaan door tot onder het paneel; open begint ze
-     er rechts van (zie `.dichtbij` in de opmaak). Een andere breedte kan een andere
-     hoogte geven, dus meteen opnieuw meten. */
+  /* Op een breed scherm blijft de balk onderaan staan waar ze staat: haar ruimte houdt de
+     kolom van het paneel altijd vrij, ook met dichte filters (zie `.dichtbij` in de
+     opmaak), zodat er niets verspringt bij het openklappen. Op een telefoon krimpt ze wél
+     — daar liggen paneel en balk boven elkaar — en dat geeft een andere hoogte, dus
+     meteen opnieuw meten. */
   $("paneel").classList.toggle("toont-filters", open);
   meetDichtbij();
 }
@@ -1733,24 +1800,34 @@ const ZOEK_LOSLATEN = 0.5;
 const AANTAL_DICHTBIJ = 5;
 const MAX_NAAMTREFFERS = 8;
 
-/* Wanneer de balk met dichtstbijzijnde wagens vanzelf verschijnt: zodra er hoogstens
-   zoveel wagens IN BEELD staan.
+/* Wanneer de balk met dichtstbijzijnde wagens vanzelf verschijnt: altijd vanaf
+   DICHTBIJ_ZOOM — maar daarvóór ook al, zodra er hoogstens DICHTBIJ_MAX_IN_BEELD wagens
+   IN BEELD staan.
    ------------------------------------------------------------------------------------
-   Niet op zoomniveau, want dat zegt niets over wat je ziet. Boven Melsele staan er op
-   zoom 11 vijfenvijftig wagens in beeld, boven Gent vierhonderd — dezelfde zoom, een heel
-   ander plaatje. Op het platteland moest je daarom veel te ver inzoomen voor een lijstje
-   dat er meteen had kunnen staan.
+   Het aantal alleen zei niet genoeg, en het zoomniveau alleen ook niet, want dat zegt
+   niets over wat je ziet: boven Melsele staan er op zoom 11 vijfenvijftig wagens in
+   beeld, boven Gent vierhonderd — dezelfde zoom, een heel ander plaatje. Op het
+   platteland moest je daarom veel te ver inzoomen voor een lijstje dat er meteen had
+   kunnen staan.
 
    Waar het echt om draait: is "de vijf dichtste" een antwoord of een willekeurige greep?
    Staan er honderden wagens in beeld, dan is het een greep en kijk je beter naar de pins
    zelf. Blijft het bij een stuk of honderd, dan is het een antwoord — hoe ver je ook
-   uitgezoomd bent. Zo staat de balk boven een dorp al op het startbeeld, en boven het
-   centrum van Gent pas op buurtniveau; in beide gevallen precies waar ze iets toevoegt.
+   uitgezoomd bent. Zo staat de balk boven een dorp al op het startbeeld.
 
-   Het aantal kan bij inzoomen alleen maar dalen, dus de balk klapt nooit weer dicht
-   terwijl je verder inzoomt. Filters tellen mee: wie op bestelwagens filtert, houdt er
-   veel minder in beeld over en krijgt de balk dus vroeger. */
+   Maar in het dichtste stuk van Gent zakt de telling zelfs op buurtniveau niet onder de
+   honderd, en daar bleef de balk dus altijd weg — net waar de vraag "wat staat hier
+   dichtbij?" het vaakst gesteld wordt. Vandaar de zoomondergrens ernaast: wie zo ver
+   inzoomt, kijkt naar één buurt, en dan zijn de vijf dichtste opnieuw een antwoord, ook
+   al staan er meer pins getekend dan we los zouden willen tellen. Dezelfde tweetrapsregel
+   als NAAM_ZOOM/NAMEN_MAX_IN_BEELD bij de namen naast de pins.
+
+   Het aantal kan bij inzoomen alleen maar dalen en de zoom alleen maar stijgen, dus de
+   balk klapt nooit weer dicht terwijl je verder inzoomt. Filters tellen mee: wie op
+   bestelwagens filtert, houdt er veel minder in beeld over en krijgt de balk dus
+   vroeger. */
 const DICHTBIJ_MAX_IN_BEELD = 100;
+const DICHTBIJ_ZOOM = 15;
 
 /* Eén vaste titel voor de automatische balk. Het meetpunt wisselt (de muis, of anders
    het midden van de kaart), maar dat in de titel zetten zou de kop laten wisselen zodra
@@ -1829,10 +1906,19 @@ function ankerpunt() {
   return kaart.containerPointToLatLng(muisPositie);
 }
 
+/* De zichtbare doos binnen de balkruimte. Waar het om de plek op het scherm gaat — wat is
+   er bedekt, waar ligt de muis — is dít het element; `#dichtbij` is alleen de ruimte die
+   ervoor vrijgehouden wordt. */
+function balkDoos() {
+  return $("dichtbij").querySelector(".dichtbij__doos");
+}
+
 function bijDeBalk(punt) {
   const balk = $("dichtbij");
   if (balk.hidden) return false;
-  const b = balk.getBoundingClientRect();
+  /* De doos en niet de ruimte eromheen: naast de doos ligt gewoon kaart, en daar hoort de
+     lijst gewoon mee te bewegen met de muis. Zie `.dichtbij` in de opmaak. */
+  const b = balkDoos().getBoundingClientRect();
   // `punt` telt vanaf de linkerbovenhoek van de kaart, de rechthoek vanaf die van het
   // venster; het verschil ertussen moet er dus af.
   const k = document.getElementById("kaart").getBoundingClientRect();
@@ -1868,7 +1954,7 @@ function vrijeRuimte() {
   if (mobiel) boven = p.bottom - vak.top;
   else links = p.right - vak.left;
 
-  if (!balk.hidden) onder = vak.bottom - balk.getBoundingClientRect().top;
+  if (!balk.hidden) onder = vak.bottom - balkDoos().getBoundingClientRect().top;
 
   return {
     links: Math.max(0, links),
@@ -2068,7 +2154,7 @@ function toonLijst(rijen, titelFn, legeFn) {
    gemeten: bij een smaller scherm breekt de titel en wordt de balk hoger. */
 function meetDichtbij() {
   const balk = $("dichtbij");
-  const rechthoek = balk.hidden ? null : balk.getBoundingClientRect();
+  const rechthoek = balk.hidden ? null : balkDoos().getBoundingClientRect();
   const hoogte = rechthoek ? Math.ceil(rechthoek.height) + 12 : 0;
   document.documentElement.style.setProperty("--dichtbij-hoogte", hoogte + "px");
   /* Hoeveel er onderaan het venster bezet is, tot de bovenrand van de balk. Op een
@@ -2085,8 +2171,9 @@ window.addEventListener("resize", meetDichtbij);
    ==========================================================================
    Een adreszoekopdracht toont expliciet de dichtstbijzijnde wagens bij dat adres. Wie
    ergens genoeg inzoomt, stelt impliciet dezelfde vraag: wat staat hier dichtbij? Zodra
-   er weinig genoeg wagens in beeld staan (zie DICHTBIJ_MAX_IN_BEELD) tonen we daarom
-   dezelfde balk, maar rond het midden van de kaart, en ze schuift mee tijdens het pannen.
+   er weinig genoeg wagens in beeld staan of ver genoeg ingezoomd is (zie
+   DICHTBIJ_MAX_IN_BEELD en DICHTBIJ_ZOOM) tonen we daarom dezelfde balk, maar rond het
+   midden van de kaart, en ze schuift mee tijdens het pannen.
 
    Een zoekopdracht (adres of naam) wint altijd: zolang `dichtbijBron` op "zoek" staat,
    laten we die balk met rust. Sluit de bezoeker de automatische balk zelf, dan blijft ze
@@ -2121,7 +2208,7 @@ function bijwerkenAutoDichtbij() {
      balk juist in een nog niet uitgemeten iframe opengaan. Zie zetStartbeeld(). */
   if (kaart.getSize().x === 0 || kaart.getSize().y === 0) return;
 
-  if (wagensInBeeld() > DICHTBIJ_MAX_IN_BEELD) {
+  if (kaart.getZoom() < DICHTBIJ_ZOOM && wagensInBeeld() > DICHTBIJ_MAX_IN_BEELD) {
     if (dichtbijBron === "auto") {
       dichtbijBron = null;
       $("dichtbij").hidden = true;
@@ -2519,7 +2606,8 @@ function pasTaalToe(nieuw) {
     toonZitplaatsen();
     toonEuronorm();
     toonBouwjaar();
-    toonMobiscore();
+    toonBushalte();
+    toonStation();
     toonDatum();
     teken();          // telling, markerbeschrijvingen en de automatische balk
   }

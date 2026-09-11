@@ -6,7 +6,8 @@
  "stralen_m": {
   "halte": 800,
   "halte_zoek": 1000,
-  "trein": 3000
+  "halte_ver": 10000,
+  "trein": 10000
  },
  "mobiscore_bron": {
   "naam": "Mobiscore",
@@ -40,7 +41,17 @@
     "per_uur": 0.2,
     "tram": false
    },
-   "haltes_binnen": 5
+   "haltes_binnen": 5,
+   "trein": {
+    "naam": {
+     "fr": "De Pinte",
+     "en": "De Pinte",
+     "nl": "De Pinte"
+    },
+    "m": 3540,
+    "per_uur": 8.7,
+    "per_richting": 4.3
+   }
   },
   "st-1023": {
    "mobiscore": 9.2,
@@ -177,7 +188,17 @@
     "per_uur": 0.8,
     "tram": false
    },
-   "haltes_binnen": 2
+   "haltes_binnen": 2,
+   "trein": {
+    "naam": {
+     "fr": "Munkzwalm",
+     "en": "Munkzwalm",
+     "nl": "Munkzwalm"
+    },
+    "m": 3180,
+    "per_uur": 2.6,
+    "per_richting": 1.3
+   }
   },
   "st-1063": {
    "mobiscore": 9.0,
@@ -188,7 +209,17 @@
     "per_uur": 22.0,
     "tram": true
    },
-   "haltes_binnen": 13
+   "haltes_binnen": 13,
+   "trein": {
+    "naam": {
+     "fr": "Anvers-Central",
+     "en": "Anvers-Central",
+     "nl": "Antwerpen-Centraal"
+    },
+    "m": 3250,
+    "per_uur": 27.7,
+    "per_richting": 13.8
+   }
   },
   "st-1081": {
    "mobiscore": 8.9,
@@ -472,7 +503,17 @@
     "per_uur": 6.0,
     "tram": false
    },
-   "haltes_binnen": 5
+   "haltes_binnen": 5,
+   "trein": {
+    "naam": {
+     "fr": "Bruges",
+     "en": "Bruges",
+     "nl": "Brugge"
+    },
+    "m": 4650,
+    "per_uur": 14.7,
+    "per_richting": 7.3
+   }
   },
   "st-1223": {
    "mobiscore": 8.6,
@@ -483,7 +524,17 @@
     "per_uur": 5.0,
     "tram": false
    },
-   "haltes_binnen": 7
+   "haltes_binnen": 7,
+   "trein": {
+    "naam": {
+     "fr": "Merelbeke",
+     "en": "Merelbeke",
+     "nl": "Merelbeke"
+    },
+    "m": 3750,
+    "per_uur": 7.2,
+    "per_richting": 3.6
+   }
   },
   "st-1242": {
    "mobiscore": 9.4,
@@ -578,7 +629,17 @@
     "per_uur": 3.5,
     "tram": false
    },
-   "haltes_binnen": 7
+   "haltes_binnen": 7,
+   "trein": {
+    "naam": {
+     "fr": "Gand-Dampoort",
+     "en": "Gand-Dampoort",
+     "nl": "Gent-Dampoort"
+    },
+    "m": 3450,
+    "per_uur": 12.1,
+    "per_richting": 6.0
+   }
   },
   "st-1253": {
    "mobiscore": 7.1,
@@ -589,7 +650,17 @@
     "per_uur": 9.4,
     "tram": false
    },
-   "haltes_binnen": 1
+   "haltes_binnen": 1,
+   "trein": {
+    "naam": {
+     "fr": "Boechout",
+     "en": "Boechout",
+     "nl": "Boechout"
+    },
+    "m": 7280,
+    "per_uur": 4.0,
+    "per_richting": 2.0
+   }
   },
   "st-1258": {
    "mobiscore": 9.4,
@@ -810,7 +881,17 @@
     "per_uur": 0.2,
     "tram": false
    },
-   "haltes_binnen": 4
+   "haltes_binnen": 4,
+   "trein": {
+    "naam": {
+     "fr": "Gentbrugge",
+     "en": "Gentbrugge",
+     "nl": "Gentbrugge"
+    },
+    "m": 3850,
+    "per_uur": 4.3,
+    "per_richting": 2.2
+   }
   },
   "st-1368": {
    "mobiscore": 9.4,
@@ -905,7 +986,17 @@
     "per_uur": 5.0,
     "tram": false
    },
-   "haltes_binnen": 4
+   "haltes_binnen": 4,
+   "trein": {
+    "naam": {
+     "fr": "Merelbeke",
+     "en": "Merelbeke",
+     "nl": "Merelbeke"
+    },
+    "m": 4170,
+    "per_uur": 7.2,
+    "per_richting": 3.6
+   }
   },
   "st-140": {
    "mobiscore": 9.3,
@@ -1000,7 +1091,17 @@
     "per_uur": 1.2,
     "tram": false
    },
-   "haltes_binnen": 4
+   "haltes_binnen": 4,
+   "trein": {
+    "naam": {
+     "fr": "Wondelgem",
+     "en": "Wondelgem",
+     "nl": "Wondelgem"
+    },
+    "m": 4680,
+    "per_uur": 2.3,
+    "per_richting": 1.2
+   }
   },
   "st-1429": {
    "mobiscore": 8.8,
@@ -1074,7 +1175,17 @@
     "per_uur": 5.6,
     "tram": false
    },
-   "haltes_binnen": 11
+   "haltes_binnen": 11,
+   "trein": {
+    "naam": {
+     "fr": "Gand-Saint-Pierre",
+     "en": "Gand-Saint-Pierre",
+     "nl": "Gent-Sint-Pieters"
+    },
+    "m": 3320,
+    "per_uur": 28.3,
+    "per_richting": 14.2
+   }
   },
   "st-1449": {
    "mobiscore": 6.6,
@@ -1085,7 +1196,17 @@
     "per_uur": 4.4,
     "tram": false
    },
-   "haltes_binnen": 0
+   "haltes_binnen": 0,
+   "trein": {
+    "naam": {
+     "fr": "Landegem",
+     "en": "Landegem",
+     "nl": "Landegem"
+    },
+    "m": 4200,
+    "per_uur": 2.9,
+    "per_richting": 1.5
+   }
   },
   "st-1465": {
    "mobiscore": 9.0,
@@ -1222,7 +1343,17 @@
     "per_uur": 14.2,
     "tram": false
    },
-   "haltes_binnen": 12
+   "haltes_binnen": 12,
+   "trein": {
+    "naam": {
+     "fr": "Tronchiennes",
+     "en": "Tronchiennes",
+     "nl": "Drongen"
+    },
+    "m": 3050,
+    "per_uur": 2.9,
+    "per_richting": 1.5
+   }
   },
   "st-154": {
    "mobiscore": 9.4,
@@ -1359,7 +1490,17 @@
     "per_uur": 5.0,
     "tram": false
    },
-   "haltes_binnen": 1
+   "haltes_binnen": 1,
+   "trein": {
+    "naam": {
+     "fr": "Moortsele",
+     "en": "Moortsele",
+     "nl": "Moortsele"
+    },
+    "m": 4970,
+    "per_uur": 2.5,
+    "per_richting": 1.2
+   }
   },
   "st-1612": {
    "mobiscore": 9.1,
@@ -1475,7 +1616,17 @@
     "per_uur": 5.0,
     "tram": false
    },
-   "haltes_binnen": 3
+   "haltes_binnen": 3,
+   "trein": {
+    "naam": {
+     "fr": "Landskouter",
+     "en": "Landskouter",
+     "nl": "Landskouter"
+    },
+    "m": 4690,
+    "per_uur": 2.6,
+    "per_richting": 1.3
+   }
   },
   "st-1646": {
    "mobiscore": 6.4,
@@ -1486,7 +1637,17 @@
     "per_uur": 4.4,
     "tram": false
    },
-   "haltes_binnen": 3
+   "haltes_binnen": 3,
+   "trein": {
+    "naam": {
+     "fr": "Sinaai",
+     "en": "Sinaai",
+     "nl": "Sinaai"
+    },
+    "m": 7500,
+    "per_uur": 4.0,
+    "per_richting": 2.0
+   }
   },
   "st-1648": {
    "mobiscore": 9.5,
@@ -1686,7 +1847,17 @@
     "per_uur": 0.2,
     "tram": false
    },
-   "haltes_binnen": 4
+   "haltes_binnen": 4,
+   "trein": {
+    "naam": {
+     "fr": "De Pinte",
+     "en": "De Pinte",
+     "nl": "De Pinte"
+    },
+    "m": 3890,
+    "per_uur": 8.7,
+    "per_richting": 4.3
+   }
   },
   "st-1700": {
    "mobiscore": 9.3,
@@ -1731,7 +1902,25 @@
    }
   },
   "st-1715": {
-   "mobiscore": 4.9
+   "mobiscore": 4.9,
+   "halte": {
+    "naam": "Meigem Berg",
+    "m": 1850,
+    "per_richting": 0.2,
+    "per_uur": 0.2,
+    "tram": false
+   },
+   "haltes_binnen": 0,
+   "trein": {
+    "naam": {
+     "fr": "Hansbeke",
+     "en": "Hansbeke",
+     "nl": "Hansbeke"
+    },
+    "m": 4350,
+    "per_uur": 2.7,
+    "per_richting": 1.3
+   }
   },
   "st-1716": {
    "mobiscore": 8.5,
@@ -1784,7 +1973,17 @@
     "per_uur": 8.2,
     "tram": false
    },
-   "haltes_binnen": 2
+   "haltes_binnen": 2,
+   "trein": {
+    "naam": {
+     "fr": "Sleidinge",
+     "en": "Sleidinge",
+     "nl": "Sleidinge"
+    },
+    "m": 3630,
+    "per_uur": 2.3,
+    "per_richting": 1.2
+   }
   },
   "st-1733": {
    "mobiscore": 9.5,
@@ -1837,7 +2036,17 @@
     "per_uur": 7.3,
     "tram": false
    },
-   "haltes_binnen": 4
+   "haltes_binnen": 4,
+   "trein": {
+    "naam": {
+     "fr": "Gand-Dampoort",
+     "en": "Gand-Dampoort",
+     "nl": "Gent-Dampoort"
+    },
+    "m": 3070,
+    "per_uur": 12.1,
+    "per_richting": 6.0
+   }
   },
   "st-1743": {
    "mobiscore": 9.4,
@@ -1911,7 +2120,17 @@
     "per_uur": 6.0,
     "tram": false
    },
-   "haltes_binnen": 5
+   "haltes_binnen": 5,
+   "trein": {
+    "naam": {
+     "fr": "Bruges",
+     "en": "Bruges",
+     "nl": "Brugge"
+    },
+    "m": 3800,
+    "per_uur": 14.7,
+    "per_richting": 7.3
+   }
   },
   "st-1767": {
    "mobiscore": 8.5,
@@ -2279,7 +2498,17 @@
     "per_uur": 7.3,
     "tram": false
    },
-   "haltes_binnen": 6
+   "haltes_binnen": 6,
+   "trein": {
+    "naam": {
+     "fr": "Gand-Dampoort",
+     "en": "Gand-Dampoort",
+     "nl": "Gent-Dampoort"
+    },
+    "m": 3070,
+    "per_uur": 12.1,
+    "per_richting": 6.0
+   }
   },
   "st-1908": {
    "mobiscore": 9.3,
@@ -2303,7 +2532,25 @@
    }
   },
   "st-191": {
-   "mobiscore": 5.8
+   "mobiscore": 5.8,
+   "halte": {
+    "naam": "Sint-Goriks-Oudenhove Langendries",
+    "m": 1290,
+    "per_richting": 0.2,
+    "per_uur": 0.5,
+    "tram": false
+   },
+   "haltes_binnen": 0,
+   "trein": {
+    "naam": {
+     "fr": "Zottegem",
+     "en": "Zottegem",
+     "nl": "Zottegem"
+    },
+    "m": 4170,
+    "per_uur": 10.5,
+    "per_richting": 5.2
+   }
   },
   "st-193": {
    "mobiscore": 9.2,
@@ -2377,7 +2624,17 @@
     "per_uur": 14.7,
     "tram": false
    },
-   "haltes_binnen": 17
+   "haltes_binnen": 17,
+   "trein": {
+    "naam": {
+     "fr": "Gand-Dampoort",
+     "en": "Gand-Dampoort",
+     "nl": "Gent-Dampoort"
+    },
+    "m": 3010,
+    "per_uur": 12.1,
+    "per_richting": 6.0
+   }
   },
   "st-1943": {
    "mobiscore": 8.1,
@@ -2388,7 +2645,17 @@
     "per_uur": 4.0,
     "tram": false
    },
-   "haltes_binnen": 4
+   "haltes_binnen": 4,
+   "trein": {
+    "naam": {
+     "fr": "Merelbeke",
+     "en": "Merelbeke",
+     "nl": "Merelbeke"
+    },
+    "m": 3060,
+    "per_uur": 7.2,
+    "per_richting": 3.6
+   }
   },
   "st-1981": {
    "mobiscore": 8.7,
@@ -2462,7 +2729,17 @@
     "per_uur": 6.0,
     "tram": false
    },
-   "haltes_binnen": 7
+   "haltes_binnen": 7,
+   "trein": {
+    "naam": {
+     "fr": "Bruges",
+     "en": "Bruges",
+     "nl": "Brugge"
+    },
+    "m": 3410,
+    "per_uur": 14.7,
+    "per_richting": 7.3
+   }
   },
   "st-2018": {
    "mobiscore": 9.3,
@@ -2494,7 +2771,17 @@
     "per_uur": 7.3,
     "tram": false
    },
-   "haltes_binnen": 18
+   "haltes_binnen": 18,
+   "trein": {
+    "naam": {
+     "fr": "Wondelgem",
+     "en": "Wondelgem",
+     "nl": "Wondelgem"
+    },
+    "m": 3040,
+    "per_uur": 2.3,
+    "per_richting": 1.2
+   }
   },
   "st-2034": {
    "mobiscore": 9.3,
@@ -2610,7 +2897,17 @@
     "per_uur": 9.2,
     "tram": false
    },
-   "haltes_binnen": 8
+   "haltes_binnen": 8,
+   "trein": {
+    "naam": {
+     "fr": "Wondelgem",
+     "en": "Wondelgem",
+     "nl": "Wondelgem"
+    },
+    "m": 3390,
+    "per_uur": 2.3,
+    "per_richting": 1.2
+   }
   },
   "st-2057": {
    "mobiscore": 9.2,
@@ -2684,7 +2981,17 @@
     "per_uur": 3.5,
     "tram": false
    },
-   "haltes_binnen": 6
+   "haltes_binnen": 6,
+   "trein": {
+    "naam": {
+     "fr": "Gand-Dampoort",
+     "en": "Gand-Dampoort",
+     "nl": "Gent-Dampoort"
+    },
+    "m": 4000,
+    "per_uur": 12.1,
+    "per_richting": 6.0
+   }
   },
   "st-2146": {
    "mobiscore": 9.3,
@@ -2716,7 +3023,17 @@
     "per_uur": 0.2,
     "tram": false
    },
-   "haltes_binnen": 8
+   "haltes_binnen": 8,
+   "trein": {
+    "naam": {
+     "fr": "Vichte",
+     "en": "Vichte",
+     "nl": "Vichte"
+    },
+    "m": 3060,
+    "per_uur": 2.5,
+    "per_richting": 1.2
+   }
   },
   "st-2152": {
    "mobiscore": 9.1,
@@ -2916,7 +3233,17 @@
     "per_uur": 21.5,
     "tram": false
    },
-   "haltes_binnen": 11
+   "haltes_binnen": 11,
+   "trein": {
+    "naam": {
+     "fr": "Tronchiennes",
+     "en": "Tronchiennes",
+     "nl": "Drongen"
+    },
+    "m": 3030,
+    "per_uur": 2.9,
+    "per_richting": 1.5
+   }
   },
   "st-2265": {
    "mobiscore": 6.7,
@@ -2927,7 +3254,17 @@
     "per_uur": 2.8,
     "tram": false
    },
-   "haltes_binnen": 2
+   "haltes_binnen": 2,
+   "trein": {
+    "naam": {
+     "fr": "Lokeren",
+     "en": "Lokeren",
+     "nl": "Lokeren"
+    },
+    "m": 3560,
+    "per_uur": 12.9,
+    "per_richting": 6.5
+   }
   },
   "st-2268": {
    "mobiscore": 8.7,
@@ -3064,7 +3401,17 @@
     "per_uur": 0.2,
     "tram": false
    },
-   "haltes_binnen": 7
+   "haltes_binnen": 7,
+   "trein": {
+    "naam": {
+     "fr": "Gentbrugge",
+     "en": "Gentbrugge",
+     "nl": "Gentbrugge"
+    },
+    "m": 4230,
+    "per_uur": 4.3,
+    "per_richting": 2.2
+   }
   },
   "st-2320": {
    "mobiscore": 9.1,
@@ -3117,7 +3464,17 @@
     "per_uur": 4.4,
     "tram": false
    },
-   "haltes_binnen": 1
+   "haltes_binnen": 1,
+   "trein": {
+    "naam": {
+     "fr": "Tronchiennes",
+     "en": "Tronchiennes",
+     "nl": "Drongen"
+    },
+    "m": 4700,
+    "per_uur": 2.9,
+    "per_richting": 1.5
+   }
   },
   "st-2345": {
    "mobiscore": 9.6,
@@ -3296,7 +3653,17 @@
     "per_uur": 4.3,
     "tram": false
    },
-   "haltes_binnen": 4
+   "haltes_binnen": 4,
+   "trein": {
+    "naam": {
+     "fr": "Landegem",
+     "en": "Landegem",
+     "nl": "Landegem"
+    },
+    "m": 3480,
+    "per_uur": 2.9,
+    "per_richting": 1.5
+   }
   },
   "st-2380": {
    "mobiscore": 7.7,
@@ -3559,7 +3926,17 @@
     "per_uur": 10.8,
     "tram": false
    },
-   "haltes_binnen": 15
+   "haltes_binnen": 15,
+   "trein": {
+    "naam": {
+     "fr": "Tronchiennes",
+     "en": "Tronchiennes",
+     "nl": "Drongen"
+    },
+    "m": 3170,
+    "per_uur": 2.9,
+    "per_richting": 1.5
+   }
   },
   "st-2432": {
    "mobiscore": 9.1,
@@ -3612,7 +3989,17 @@
     "per_uur": 6.2,
     "tram": false
    },
-   "haltes_binnen": 6
+   "haltes_binnen": 6,
+   "trein": {
+    "naam": {
+     "fr": "Bruges",
+     "en": "Bruges",
+     "nl": "Brugge"
+    },
+    "m": 3480,
+    "per_uur": 14.7,
+    "per_richting": 7.3
+   }
   },
   "st-2467": {
    "mobiscore": 8.5,
@@ -3854,7 +4241,17 @@
     "per_uur": 21.6,
     "tram": false
    },
-   "haltes_binnen": 10
+   "haltes_binnen": 10,
+   "trein": {
+    "naam": {
+     "fr": "Wondelgem",
+     "en": "Wondelgem",
+     "nl": "Wondelgem"
+    },
+    "m": 3180,
+    "per_uur": 2.3,
+    "per_richting": 1.2
+   }
   },
   "st-2533": {
    "mobiscore": 9.2,
@@ -4432,7 +4829,17 @@
     "per_uur": 0.2,
     "tram": false
    },
-   "haltes_binnen": 4
+   "haltes_binnen": 4,
+   "trein": {
+    "naam": {
+     "fr": "Gand-Dampoort",
+     "en": "Gand-Dampoort",
+     "nl": "Gent-Dampoort"
+    },
+    "m": 4040,
+    "per_uur": 12.1,
+    "per_richting": 6.0
+   }
   },
   "st-2732": {
    "mobiscore": 8.2,
@@ -4527,7 +4934,17 @@
     "per_uur": 21.6,
     "tram": false
    },
-   "haltes_binnen": 14
+   "haltes_binnen": 14,
+   "trein": {
+    "naam": {
+     "fr": "Wondelgem",
+     "en": "Wondelgem",
+     "nl": "Wondelgem"
+    },
+    "m": 3160,
+    "per_uur": 2.3,
+    "per_richting": 1.2
+   }
   },
   "st-2789": {
    "mobiscore": 8.7,
@@ -4832,7 +5249,17 @@
     "per_uur": 0.2,
     "tram": false
    },
-   "haltes_binnen": 7
+   "haltes_binnen": 7,
+   "trein": {
+    "naam": {
+     "fr": "Tronchiennes",
+     "en": "Tronchiennes",
+     "nl": "Drongen"
+    },
+    "m": 3360,
+    "per_uur": 2.9,
+    "per_richting": 1.5
+   }
   },
   "st-2898": {
    "mobiscore": 9.6,
@@ -4969,7 +5396,17 @@
     "per_uur": 12.7,
     "tram": false
    },
-   "haltes_binnen": 12
+   "haltes_binnen": 12,
+   "trein": {
+    "naam": {
+     "fr": "Bruges",
+     "en": "Bruges",
+     "nl": "Brugge"
+    },
+    "m": 3150,
+    "per_uur": 14.7,
+    "per_richting": 7.3
+   }
   },
   "st-2928": {
    "mobiscore": 9.3,
@@ -5001,7 +5438,17 @@
     "per_uur": 6.0,
     "tram": false
    },
-   "haltes_binnen": 10
+   "haltes_binnen": 10,
+   "trein": {
+    "naam": {
+     "fr": "Anvers-Central",
+     "en": "Anvers-Central",
+     "nl": "Antwerpen-Centraal"
+    },
+    "m": 3930,
+    "per_uur": 27.7,
+    "per_richting": 13.8
+   }
   },
   "st-2938": {
    "mobiscore": 9.0,
@@ -5243,7 +5690,17 @@
     "per_uur": 8.2,
     "tram": false
    },
-   "haltes_binnen": 2
+   "haltes_binnen": 2,
+   "trein": {
+    "naam": {
+     "fr": "Tamise",
+     "en": "Tamise",
+     "nl": "Temse"
+    },
+    "m": 3920,
+    "per_uur": 2.6,
+    "per_richting": 1.3
+   }
   },
   "st-3": {
    "mobiscore": 9.4,
@@ -5569,7 +6026,17 @@
     "per_uur": 2.0,
     "tram": false
    },
-   "haltes_binnen": 3
+   "haltes_binnen": 3,
+   "trein": {
+    "naam": {
+     "fr": "Gand-Dampoort",
+     "en": "Gand-Dampoort",
+     "nl": "Gent-Dampoort"
+    },
+    "m": 3980,
+    "per_uur": 12.1,
+    "per_richting": 6.0
+   }
   },
   "st-3080": {
    "mobiscore": 9.4,
@@ -5748,7 +6215,17 @@
     "per_uur": 21.5,
     "tram": false
    },
-   "haltes_binnen": 13
+   "haltes_binnen": 13,
+   "trein": {
+    "naam": {
+     "fr": "Tronchiennes",
+     "en": "Tronchiennes",
+     "nl": "Drongen"
+    },
+    "m": 3040,
+    "per_uur": 2.9,
+    "per_richting": 1.5
+   }
   },
   "st-3116": {
    "mobiscore": 9.0,
@@ -6158,7 +6635,17 @@
     "per_uur": 7.3,
     "tram": false
    },
-   "haltes_binnen": 1
+   "haltes_binnen": 1,
+   "trein": {
+    "naam": {
+     "fr": "Gand-Dampoort",
+     "en": "Gand-Dampoort",
+     "nl": "Gent-Dampoort"
+    },
+    "m": 3400,
+    "per_uur": 12.1,
+    "per_richting": 6.0
+   }
   },
   "st-3221": {
    "mobiscore": 6.7,
@@ -6169,7 +6656,17 @@
     "per_uur": 4.2,
     "tram": false
    },
-   "haltes_binnen": 4
+   "haltes_binnen": 4,
+   "trein": {
+    "naam": {
+     "fr": "Waarschoot",
+     "en": "Waarschoot",
+     "nl": "Waarschoot"
+    },
+    "m": 3600,
+    "per_uur": 2.2,
+    "per_richting": 1.1
+   }
   },
   "st-3222": {
    "mobiscore": 9.1,
@@ -6411,7 +6908,17 @@
     "per_uur": 4.6,
     "tram": false
    },
-   "haltes_binnen": 2
+   "haltes_binnen": 2,
+   "trein": {
+    "naam": {
+     "fr": "Waregem",
+     "en": "Waregem",
+     "nl": "Waregem"
+    },
+    "m": 5820,
+    "per_uur": 6.4,
+    "per_richting": 3.2
+   }
   },
   "st-3296": {
    "mobiscore": 8.4,
@@ -7073,7 +7580,17 @@
     "per_uur": 12.9,
     "tram": false
    },
-   "haltes_binnen": 8
+   "haltes_binnen": 8,
+   "trein": {
+    "naam": {
+     "fr": "Gand-Dampoort",
+     "en": "Gand-Dampoort",
+     "nl": "Gent-Dampoort"
+    },
+    "m": 3520,
+    "per_uur": 12.1,
+    "per_richting": 6.0
+   }
   },
   "st-3412": {
    "mobiscore": 9.5,
@@ -7147,7 +7664,17 @@
     "per_uur": 0.2,
     "tram": false
    },
-   "haltes_binnen": 8
+   "haltes_binnen": 8,
+   "trein": {
+    "naam": {
+     "fr": "Vichte",
+     "en": "Vichte",
+     "nl": "Vichte"
+    },
+    "m": 3020,
+    "per_uur": 2.5,
+    "per_richting": 1.2
+   }
   },
   "st-3432": {
    "mobiscore": 8.6,
@@ -7158,7 +7685,17 @@
     "per_uur": 12.9,
     "tram": false
    },
-   "haltes_binnen": 9
+   "haltes_binnen": 9,
+   "trein": {
+    "naam": {
+     "fr": "Gand-Dampoort",
+     "en": "Gand-Dampoort",
+     "nl": "Gent-Dampoort"
+    },
+    "m": 3410,
+    "per_uur": 12.1,
+    "per_richting": 6.0
+   }
   },
   "st-3433": {
    "mobiscore": 9.4,
@@ -7631,7 +8168,17 @@
     "per_uur": 14.5,
     "tram": true
    },
-   "haltes_binnen": 9
+   "haltes_binnen": 9,
+   "trein": {
+    "naam": {
+     "fr": "Gand-Saint-Pierre",
+     "en": "Gand-Saint-Pierre",
+     "nl": "Gent-Sint-Pieters"
+    },
+    "m": 3340,
+    "per_uur": 28.3,
+    "per_richting": 14.2
+   }
   },
   "st-3506": {
    "mobiscore": 8.5,
@@ -7705,7 +8252,17 @@
     "per_uur": 4.4,
     "tram": false
    },
-   "haltes_binnen": 1
+   "haltes_binnen": 1,
+   "trein": {
+    "naam": {
+     "fr": "Tronchiennes",
+     "en": "Tronchiennes",
+     "nl": "Drongen"
+    },
+    "m": 4660,
+    "per_uur": 2.9,
+    "per_richting": 1.5
+   }
   },
   "st-3525": {
    "mobiscore": 9.2,
@@ -7779,7 +8336,17 @@
     "per_uur": 7.3,
     "tram": false
    },
-   "haltes_binnen": 16
+   "haltes_binnen": 16,
+   "trein": {
+    "naam": {
+     "fr": "Wondelgem",
+     "en": "Wondelgem",
+     "nl": "Wondelgem"
+    },
+    "m": 3080,
+    "per_uur": 2.3,
+    "per_richting": 1.2
+   }
   },
   "st-3547": {
    "mobiscore": 8.9,
@@ -7853,7 +8420,17 @@
     "per_uur": 21.6,
     "tram": false
    },
-   "haltes_binnen": 12
+   "haltes_binnen": 12,
+   "trein": {
+    "naam": {
+     "fr": "Wondelgem",
+     "en": "Wondelgem",
+     "nl": "Wondelgem"
+    },
+    "m": 3150,
+    "per_uur": 2.3,
+    "per_richting": 1.2
+   }
   },
   "st-3564": {
    "mobiscore": 9.1,
@@ -7969,7 +8546,17 @@
     "per_uur": 6.0,
     "tram": false
    },
-   "haltes_binnen": 10
+   "haltes_binnen": 10,
+   "trein": {
+    "naam": {
+     "fr": "Bruges",
+     "en": "Bruges",
+     "nl": "Brugge"
+    },
+    "m": 3680,
+    "per_uur": 14.7,
+    "per_richting": 7.3
+   }
   },
   "st-3592": {
    "mobiscore": 9.4,
@@ -8001,7 +8588,17 @@
     "per_uur": 21.6,
     "tram": false
    },
-   "haltes_binnen": 10
+   "haltes_binnen": 10,
+   "trein": {
+    "naam": {
+     "fr": "Tronchiennes",
+     "en": "Tronchiennes",
+     "nl": "Drongen"
+    },
+    "m": 3180,
+    "per_uur": 2.9,
+    "per_richting": 1.5
+   }
   },
   "st-3597": {
    "mobiscore": 9.2,
@@ -8222,10 +8819,38 @@
     "per_uur": 0.2,
     "tram": false
    },
-   "haltes_binnen": 3
+   "haltes_binnen": 3,
+   "trein": {
+    "naam": {
+     "fr": "Beervelde",
+     "en": "Beervelde",
+     "nl": "Beervelde"
+    },
+    "m": 3860,
+    "per_uur": 2.2,
+    "per_richting": 1.1
+   }
   },
   "st-3628": {
-   "mobiscore": 7.0
+   "mobiscore": 7.0,
+   "halte": {
+    "naam": "Lokeren Doorslaardam",
+    "m": 1290,
+    "per_richting": 1.5,
+    "per_uur": 2.9,
+    "tram": false
+   },
+   "haltes_binnen": 0,
+   "trein": {
+    "naam": {
+     "fr": "Lokeren",
+     "en": "Lokeren",
+     "nl": "Lokeren"
+    },
+    "m": 3140,
+    "per_uur": 12.9,
+    "per_richting": 6.5
+   }
   },
   "st-3629": {
    "mobiscore": 9.3,
@@ -8362,7 +8987,17 @@
     "per_uur": 1.6,
     "tram": false
    },
-   "haltes_binnen": 8
+   "haltes_binnen": 8,
+   "trein": {
+    "naam": {
+     "fr": "Gand-Dampoort",
+     "en": "Gand-Dampoort",
+     "nl": "Gent-Dampoort"
+    },
+    "m": 3090,
+    "per_uur": 12.1,
+    "per_richting": 6.0
+   }
   },
   "st-3650": {
    "mobiscore": 9.4,
@@ -8520,7 +9155,17 @@
     "per_uur": 0.2,
     "tram": false
    },
-   "haltes_binnen": 10
+   "haltes_binnen": 10,
+   "trein": {
+    "naam": {
+     "fr": "Wondelgem",
+     "en": "Wondelgem",
+     "nl": "Wondelgem"
+    },
+    "m": 3340,
+    "per_uur": 2.3,
+    "per_richting": 1.2
+   }
   },
   "st-3666": {
    "mobiscore": 8.6,
@@ -8587,6 +9232,14 @@
   },
   "st-3672": {
    "mobiscore": 7.3,
+   "halte": {
+    "naam": "Zwijndrecht P+R Melsele perron 6",
+    "m": 1570,
+    "per_richting": 10.4,
+    "per_uur": 10.4,
+    "tram": false
+   },
+   "haltes_binnen": 0,
    "trein": {
     "naam": {
      "fr": "Melsele",
@@ -8620,7 +9273,25 @@
    }
   },
   "st-3679": {
-   "mobiscore": 4.9
+   "mobiscore": 4.9,
+   "halte": {
+    "naam": "Meigem Berg",
+    "m": 1800,
+    "per_richting": 0.2,
+    "per_uur": 0.2,
+    "tram": false
+   },
+   "haltes_binnen": 0,
+   "trein": {
+    "naam": {
+     "fr": "Hansbeke",
+     "en": "Hansbeke",
+     "nl": "Hansbeke"
+    },
+    "m": 4590,
+    "per_uur": 2.7,
+    "per_richting": 1.3
+   }
   },
   "st-368": {
    "mobiscore": 9.3,
@@ -8715,7 +9386,17 @@
     "per_uur": 21.6,
     "tram": false
    },
-   "haltes_binnen": 9
+   "haltes_binnen": 9,
+   "trein": {
+    "naam": {
+     "fr": "Wondelgem",
+     "en": "Wondelgem",
+     "nl": "Wondelgem"
+    },
+    "m": 3160,
+    "per_uur": 2.3,
+    "per_richting": 1.2
+   }
   },
   "st-3692": {
    "mobiscore": 9.1,
@@ -8852,7 +9533,17 @@
     "per_uur": 6.0,
     "tram": false
    },
-   "haltes_binnen": 6
+   "haltes_binnen": 6,
+   "trein": {
+    "naam": {
+     "fr": "Bruges",
+     "en": "Bruges",
+     "nl": "Brugge"
+    },
+    "m": 3800,
+    "per_uur": 14.7,
+    "per_richting": 7.3
+   }
   },
   "st-3702": {
    "mobiscore": 9.2,
@@ -9087,6 +9778,14 @@
   },
   "st-3722": {
    "mobiscore": 8.0,
+   "halte": {
+    "naam": "Melsele Sint-Elisabethstraat",
+    "m": 1070,
+    "per_richting": 5.4,
+    "per_uur": 10.8,
+    "tram": false
+   },
+   "haltes_binnen": 0,
    "trein": {
     "naam": {
      "fr": "Melsele",
@@ -9170,7 +9869,17 @@
     "per_uur": 5.0,
     "tram": false
    },
-   "haltes_binnen": 1
+   "haltes_binnen": 1,
+   "trein": {
+    "naam": {
+     "fr": "Moortsele",
+     "en": "Moortsele",
+     "nl": "Moortsele"
+    },
+    "m": 4530,
+    "per_uur": 2.5,
+    "per_richting": 1.2
+   }
   },
   "st-3730": {
    "mobiscore": 9.5,
@@ -9286,7 +9995,17 @@
     "per_uur": 0.2,
     "tram": false
    },
-   "haltes_binnen": 6
+   "haltes_binnen": 6,
+   "trein": {
+    "naam": {
+     "fr": "Gand-Saint-Pierre",
+     "en": "Gand-Saint-Pierre",
+     "nl": "Gent-Sint-Pieters"
+    },
+    "m": 3950,
+    "per_uur": 28.3,
+    "per_richting": 14.2
+   }
   },
   "st-3756": {
    "mobiscore": 6.5,
@@ -9612,7 +10331,17 @@
     "per_uur": 0.2,
     "tram": false
    },
-   "haltes_binnen": 3
+   "haltes_binnen": 3,
+   "trein": {
+    "naam": {
+     "fr": "Tronchiennes",
+     "en": "Tronchiennes",
+     "nl": "Drongen"
+    },
+    "m": 3120,
+    "per_uur": 2.9,
+    "per_richting": 1.5
+   }
   },
   "st-3792": {
    "mobiscore": 9.5,
@@ -10169,7 +10898,17 @@
     "per_uur": 21.6,
     "tram": false
    },
-   "haltes_binnen": 11
+   "haltes_binnen": 11,
+   "trein": {
+    "naam": {
+     "fr": "Wondelgem",
+     "en": "Wondelgem",
+     "nl": "Wondelgem"
+    },
+    "m": 3130,
+    "per_uur": 2.3,
+    "per_richting": 1.2
+   }
   },
   "st-399": {
    "mobiscore": 9.4,
@@ -10285,7 +11024,17 @@
     "per_uur": 5.4,
     "tram": false
    },
-   "haltes_binnen": 5
+   "haltes_binnen": 5,
+   "trein": {
+    "naam": {
+     "fr": "Merelbeke",
+     "en": "Merelbeke",
+     "nl": "Merelbeke"
+    },
+    "m": 3650,
+    "per_uur": 7.2,
+    "per_richting": 3.6
+   }
   },
   "st-463": {
    "mobiscore": 9.4,
@@ -10317,7 +11066,17 @@
     "per_uur": 14.7,
     "tram": false
    },
-   "haltes_binnen": 16
+   "haltes_binnen": 16,
+   "trein": {
+    "naam": {
+     "fr": "Gand-Saint-Pierre",
+     "en": "Gand-Saint-Pierre",
+     "nl": "Gent-Sint-Pieters"
+    },
+    "m": 3010,
+    "per_uur": 28.3,
+    "per_richting": 14.2
+   }
   },
   "st-473": {
    "mobiscore": 8.7,
@@ -10391,7 +11150,17 @@
     "per_uur": 21.6,
     "tram": false
    },
-   "haltes_binnen": 11
+   "haltes_binnen": 11,
+   "trein": {
+    "naam": {
+     "fr": "Wondelgem",
+     "en": "Wondelgem",
+     "nl": "Wondelgem"
+    },
+    "m": 3040,
+    "per_uur": 2.3,
+    "per_richting": 1.2
+   }
   },
   "st-502": {
    "mobiscore": 8.8,
@@ -10479,6 +11248,14 @@
   },
   "st-575": {
    "mobiscore": 5.2,
+   "halte": {
+    "naam": "Scheldewindeke Keerken",
+    "m": 2160,
+    "per_richting": 0.2,
+    "per_uur": 0.2,
+    "tram": false
+   },
+   "haltes_binnen": 0,
    "trein": {
     "naam": {
      "fr": "Scheldewindeke",
@@ -10520,7 +11297,17 @@
     "per_uur": 0.2,
     "tram": false
    },
-   "haltes_binnen": 8
+   "haltes_binnen": 8,
+   "trein": {
+    "naam": {
+     "fr": "Tronchiennes",
+     "en": "Tronchiennes",
+     "nl": "Drongen"
+    },
+    "m": 3050,
+    "per_uur": 2.9,
+    "per_richting": 1.5
+   }
   },
   "st-613": {
    "mobiscore": 8.8,
@@ -10699,7 +11486,17 @@
     "per_uur": 21.5,
     "tram": false
    },
-   "haltes_binnen": 15
+   "haltes_binnen": 15,
+   "trein": {
+    "naam": {
+     "fr": "Wondelgem",
+     "en": "Wondelgem",
+     "nl": "Wondelgem"
+    },
+    "m": 3040,
+    "per_uur": 2.3,
+    "per_richting": 1.2
+   }
   },
   "st-685": {
    "mobiscore": 9.0,
@@ -10920,7 +11717,17 @@
     "per_uur": 4.4,
     "tram": false
    },
-   "haltes_binnen": 1
+   "haltes_binnen": 1,
+   "trein": {
+    "naam": {
+     "fr": "Tronchiennes",
+     "en": "Tronchiennes",
+     "nl": "Drongen"
+    },
+    "m": 4590,
+    "per_uur": 2.9,
+    "per_richting": 1.5
+   }
   },
   "st-938": {
    "mobiscore": 9.4,
@@ -11015,7 +11822,17 @@
     "per_uur": 10.8,
     "tram": false
    },
-   "haltes_binnen": 17
+   "haltes_binnen": 17,
+   "trein": {
+    "naam": {
+     "fr": "Gand-Saint-Pierre",
+     "en": "Gand-Saint-Pierre",
+     "nl": "Gent-Sint-Pieters"
+    },
+    "m": 3130,
+    "per_uur": 28.3,
+    "per_richting": 14.2
+   }
   },
   "st-972": {
    "mobiscore": 9.4,
@@ -11068,7 +11885,17 @@
     "per_uur": 0.9,
     "tram": false
    },
-   "haltes_binnen": 2
+   "haltes_binnen": 2,
+   "trein": {
+    "naam": {
+     "fr": "Roulers",
+     "en": "Roeselare",
+     "nl": "Roeselare"
+    },
+    "m": 6480,
+    "per_uur": 4.8,
+    "per_richting": 2.4
+   }
   }
  }
 }

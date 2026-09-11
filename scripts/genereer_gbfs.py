@@ -245,10 +245,10 @@ PURCHASE_URL = None
 # CC BY 4.0 staat hier als voorstel omdat de geo-bronnen in deze codebase dezelfde
 # licentie dragen. Bevestigen of vervangen.
 LICENSE_URL = "https://creativecommons.org/licenses/by/4.0/"
-# Basis-URL van de gepubliceerde feed. SCOPE.md, open punt: "Naam/URL van de publieke
-# repo (onboardingsmodule) + wie GitHub Pages aanzet." Tot die er is, staat hier een
-# plaatshouder — te overschrijven met --basis-url.
-BASIS_URL_PLAATSHOUDER = "https://degage.be/gbfs"
+# Basis-URL van de gepubliceerde feed. De feed woont voorlopig op GitHub Pages onder de
+# publieke repo; de GBFS-bestanden staan daar in de submap `gbfs`. Komt er later een eigen
+# domein, dan wint een `CNAME` in de root hierop — of geef `--basis-url` mee.
+BASIS_URL_STANDAARD = "https://degagemain.github.io/degage-deelautokaart-gbfs/gbfs"
 
 # `ttl` staat op de refreshcadans. Wij verversen manueel per kwartaal, dus een korte ttl
 # liegt. 86400 = één dag: consumers mogen dagelijks pollen zonder valse belofte.
@@ -1435,7 +1435,8 @@ def zoek_basis_url(repo: Path, expliciet: str | None) -> tuple[str, str]:
         if pages:
             return f"{pages}/gbfs", f"afgeleid uit de git-remote ({remote})"
 
-    return BASIS_URL_PLAATSHOUDER, "PLAATSHOUDER — niets gevonden om het uit af te leiden"
+    return (BASIS_URL_STANDAARD,
+            "standaardadres van de publieke repo op GitHub Pages")
 
 
 def herkomst(label: str, waarde: str, bron: str) -> None:
@@ -1580,14 +1581,6 @@ def main() -> int:
         zeg("LET OP: `degage.geo` niet beschikbaar — rechtstreeks op de replica verbonden.")
         zeg("  De postcodelaag `pc` ontbreekt, dus de twijfelvlag wordt NIET gemeten.")
         zeg("  Dat getal is diagnostisch; de weggeschreven bestanden veranderen er niet door.")
-        zeg()
-
-    if basis_url == BASIS_URL_PLAATSHOUDER:
-        zeg("LET OP: de basis-URL is een plaatshouder. `gbfs.json` adverteert dan vijf")
-        zeg("  adressen die niet bestaan — en auto-discovery bij partners volgt juist díé")
-        zeg("  adressen, niet de plek waar ze het bestand vandaan haalden.")
-        zeg("  Zet het echte adres met --basis-url, of publiceer vanuit een git-repo met een")
-        zeg("  GitHub-remote of een CNAME: dan vindt het script het zelf.")
         zeg()
 
     zeg("openstaande keuzes — voorlopige waarden, door Pieter te bevestigen")
