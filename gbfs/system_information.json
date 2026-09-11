@@ -1,0 +1,28 @@
+{
+  "last_updated": "2026-07-31T00:00:00+02:00",
+  "ttl": 86400,
+  "version": "3.0",
+  "data": {
+    "system_id": "degage",
+    "languages": [
+      "nl"
+    ],
+    "name": [
+      {
+        "text": "Dégage",
+        "language": "nl"
+      }
+    ],
+    "opening_hours": "24/7",
+    "timezone": "Europe/Brussels",
+    "feed_contact_email": "info@degage.be",
+    "operator": [
+      {
+        "text": "Dégage",
+        "language": "nl"
+      }
+    ],
+    "url": "https://www.degage.be/",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/"
+  }
+}

@@ -1,0 +1,7354 @@
+{
+  "last_updated": "2026-07-31T00:00:00+02:00",
+  "ttl": 86400,
+  "version": "3.0",
+  "data": {
+    "stations": [
+      {
+        "station_id": "st-1015",
+        "name": [
+          {
+            "text": "Poloke",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.981037,
+        "lon": 3.694074,
+        "post_code": "9840",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1023",
+        "name": [
+          {
+            "text": "Peggy",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.220723,
+        "lon": 2.903154,
+        "post_code": "8400",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1026",
+        "name": [
+          {
+            "text": "SBtje",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.20678,
+        "lon": 3.210489,
+        "post_code": "8200",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-103",
+        "name": [
+          {
+            "text": "Kameleon",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.027848,
+        "lon": 3.732193,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1035",
+        "name": [
+          {
+            "text": "Gustavo",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.221155,
+        "lon": 4.440682,
+        "post_code": "2140",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1037",
+        "name": [
+          {
+            "text": "Hati",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.218275,
+        "lon": 3.217185,
+        "post_code": "8000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1050",
+        "name": [
+          {
+            "text": "Itientje",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.204586,
+        "lon": 3.239278,
+        "post_code": "8310",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1056",
+        "name": [
+          {
+            "text": "Poppy",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.849506,
+        "lon": 3.751233,
+        "post_code": "9630",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1063",
+        "name": [
+          {
+            "text": "Zeppos",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.221537,
+        "lon": 4.467143,
+        "post_code": "2100",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1081",
+        "name": [
+          {
+            "text": "Jubel",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.724697,
+        "lon": 4.241732,
+        "post_code": "1500",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1106",
+        "name": [
+          {
+            "text": "Mocaccino",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.97225,
+        "lon": 3.53488,
+        "post_code": "9800",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1109",
+        "name": [
+          {
+            "text": "DenAuto",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.051933,
+        "lon": 3.702721,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1110",
+        "name": [
+          {
+            "text": "Michelle",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.043584,
+        "lon": 3.728779,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1111",
+        "name": [
+          {
+            "text": "Ky-oto",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.067734,
+        "lon": 3.748095,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1123",
+        "name": [
+          {
+            "text": "Picanto",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.091835,
+        "lon": 3.759379,
+        "post_code": "9041",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1140",
+        "name": [
+          {
+            "text": "Margootje",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.030986,
+        "lon": 3.727844,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1143",
+        "name": [
+          {
+            "text": "Play-mobiel",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.079989,
+        "lon": 3.709435,
+        "post_code": "9032",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1151",
+        "name": [
+          {
+            "text": "ZoeDrongen",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.054093,
+        "lon": 3.647706,
+        "post_code": "9031",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1164",
+        "name": [
+          {
+            "text": "Roodkapje",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.081398,
+        "lon": 3.712342,
+        "post_code": "9032",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1165",
+        "name": [
+          {
+            "text": "Specht",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.082462,
+        "lon": 3.710697,
+        "post_code": "9032",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1167",
+        "name": [
+          {
+            "text": "BigBerry",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.055149,
+        "lon": 3.715475,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1173",
+        "name": [
+          {
+            "text": "Oriole",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.92997,
+        "lon": 3.10672,
+        "post_code": "8800",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1209",
+        "name": [
+          {
+            "text": "Florastje",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.219172,
+        "lon": 3.273403,
+        "post_code": "8310",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1223",
+        "name": [
+          {
+            "text": "Roodie",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.988032,
+        "lon": 3.743155,
+        "post_code": "9820",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1242",
+        "name": [
+          {
+            "text": "StientjesTesla",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.043474,
+        "lon": 3.70099,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1247",
+        "name": [
+          {
+            "text": "PietjePrius",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.050107,
+        "lon": 3.750038,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1249",
+        "name": [
+          {
+            "text": "Neo",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.049839,
+        "lon": 3.746275,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1251",
+        "name": [
+          {
+            "text": "Havre8",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.206852,
+        "lon": 4.456748,
+        "post_code": "2100",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1252",
+        "name": [
+          {
+            "text": "Toy",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.081385,
+        "lon": 3.769821,
+        "post_code": "9041",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1253",
+        "name": [
+          {
+            "text": "ZoeZevenbunder",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.221551,
+        "lon": 4.542436,
+        "post_code": "2110",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1258",
+        "name": [
+          {
+            "text": "DeReu",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.058088,
+        "lon": 3.745504,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1259",
+        "name": [
+          {
+            "text": "LonestarSapphire",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.083543,
+        "lon": 3.711122,
+        "post_code": "9032",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1272",
+        "name": [
+          {
+            "text": "Soba",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.069891,
+        "lon": 3.691747,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1274",
+        "name": [
+          {
+            "text": "BabylonBerlingo",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.998511,
+        "lon": 3.752142,
+        "post_code": "9820",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1275",
+        "name": [
+          {
+            "text": "Jean",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.033264,
+        "lon": 3.746051,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1287",
+        "name": [
+          {
+            "text": "OpelAstraMariakerke",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.076511,
+        "lon": 3.693225,
+        "post_code": "9030",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1313",
+        "name": [
+          {
+            "text": "Yef",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.051921,
+        "lon": 3.746715,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1314",
+        "name": [
+          {
+            "text": "DePartner",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.063152,
+        "lon": 3.752252,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-135",
+        "name": [
+          {
+            "text": "Marjetje",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.05918,
+        "lon": 3.69641,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1356",
+        "name": [
+          {
+            "text": "Jerom",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.055239,
+        "lon": 3.755334,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1359",
+        "name": [
+          {
+            "text": "Marcel",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.063415,
+        "lon": 3.794805,
+        "post_code": "9070",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1368",
+        "name": [
+          {
+            "text": "Kareltje",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.063395,
+        "lon": 3.729887,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1376",
+        "name": [
+          {
+            "text": "Marco",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.038945,
+        "lon": 3.7437,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1385",
+        "name": [
+          {
+            "text": "Constantina",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.964162,
+        "lon": 3.750213,
+        "post_code": "9820",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1386",
+        "name": [
+          {
+            "text": "BluePoema",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.034065,
+        "lon": 4.512093,
+        "post_code": "2800",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1397",
+        "name": [
+          {
+            "text": "DeLorean",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.986636,
+        "lon": 3.735206,
+        "post_code": "9820",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-140",
+        "name": [
+          {
+            "text": "Wilma",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.059931,
+        "lon": 3.754422,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1401",
+        "name": [
+          {
+            "text": "Elektrixie",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.050054,
+        "lon": 3.639262,
+        "post_code": "9031",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1406",
+        "name": [
+          {
+            "text": "MikeWazowski",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.024242,
+        "lon": 4.465373,
+        "post_code": "2800",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1407",
+        "name": [
+          {
+            "text": "Babette",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.062921,
+        "lon": 3.738232,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1409",
+        "name": [
+          {
+            "text": "FordDeMax",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.108059,
+        "lon": 3.778217,
+        "post_code": "9041",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1429",
+        "name": [
+          {
+            "text": "Gangurru",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.08294,
+        "lon": 3.711772,
+        "post_code": "9032",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1431",
+        "name": [
+          {
+            "text": "Brenda",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.075945,
+        "lon": 3.748907,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1432",
+        "name": [
+          {
+            "text": "GrijzeTrafibus",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.058301,
+        "lon": 3.705595,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1446",
+        "name": [
+          {
+            "text": "DeBerouwto",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.006084,
+        "lon": 3.710778,
+        "post_code": "9052",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1449",
+        "name": [
+          {
+            "text": "DeRodeRidder",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.083119,
+        "lon": 3.628842,
+        "post_code": "9921",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1465",
+        "name": [
+          {
+            "text": "Rudy02",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.24627,
+        "lon": 4.458652,
+        "post_code": "2900",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1468",
+        "name": [
+          {
+            "text": "TheWhiteLady",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.022785,
+        "lon": 3.764801,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1472",
+        "name": [
+          {
+            "text": "Lotte",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.048829,
+        "lon": 3.750836,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1489",
+        "name": [
+          {
+            "text": "Upsakee",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.012699,
+        "lon": 3.875889,
+        "post_code": "9230",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-15",
+        "name": [
+          {
+            "text": "Kwienieta",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.022697,
+        "lon": 3.716515,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1513",
+        "name": [
+          {
+            "text": "DokkerBernadette",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.071425,
+        "lon": 3.751689,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1514",
+        "name": [
+          {
+            "text": "Flashke",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.061231,
+        "lon": 3.692698,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-154",
+        "name": [
+          {
+            "text": "Blackie",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.052273,
+        "lon": 3.702518,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1546",
+        "name": [
+          {
+            "text": "Gec",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.045725,
+        "lon": 3.728698,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1559",
+        "name": [
+          {
+            "text": "Miserlou",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.055569,
+        "lon": 3.755903,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1571",
+        "name": [
+          {
+            "text": "RedCharlie",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.037412,
+        "lon": 3.7593,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1574",
+        "name": [
+          {
+            "text": "Touran",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.051569,
+        "lon": 3.712223,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1599",
+        "name": [
+          {
+            "text": "DaciaHeemstraat",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.085577,
+        "lon": 3.711095,
+        "post_code": "9032",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1602",
+        "name": [
+          {
+            "text": "SchelderodeRifter",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.967699,
+        "lon": 3.71419,
+        "post_code": "9820",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1612",
+        "name": [
+          {
+            "text": "Clipper",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.068536,
+        "lon": 3.748818,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-162",
+        "name": [
+          {
+            "text": "Tibor",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.021854,
+        "lon": 3.766841,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1628",
+        "name": [
+          {
+            "text": "BartsTouran",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.074711,
+        "lon": 3.746664,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1633",
+        "name": [
+          {
+            "text": "MilesAhead",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.0671,
+        "lon": 3.69292,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1634",
+        "name": [
+          {
+            "text": "Annabelle",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.201722,
+        "lon": 3.201266,
+        "post_code": "8200",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1645",
+        "name": [
+          {
+            "text": "Notavia",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.983932,
+        "lon": 3.727757,
+        "post_code": "9820",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1646",
+        "name": [
+          {
+            "text": "Pratiek",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.176868,
+        "lon": 3.975632,
+        "post_code": "9180",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1648",
+        "name": [
+          {
+            "text": "Maxie",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.032967,
+        "lon": 3.713348,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-165",
+        "name": [
+          {
+            "text": "Edmond",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.073169,
+        "lon": 3.706521,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1664",
+        "name": [
+          {
+            "text": "DeIdealePartner",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.138085,
+        "lon": 4.220878,
+        "post_code": "9140",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1666",
+        "name": [
+          {
+            "text": "Elix",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.969225,
+        "lon": 3.512285,
+        "post_code": "9800",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1669",
+        "name": [
+          {
+            "text": "Superbie",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.064779,
+        "lon": 3.776947,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-167",
+        "name": [
+          {
+            "text": "Karlingo",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.060546,
+        "lon": 3.566336,
+        "post_code": "9850",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1670",
+        "name": [
+          {
+            "text": "LambiekTrafiek",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.054704,
+        "lon": 3.766479,
+        "post_code": "9070",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1675",
+        "name": [
+          {
+            "text": "BlauwePicasso9050",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.034221,
+        "lon": 3.743903,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1677",
+        "name": [
+          {
+            "text": "TheBlackKangoo",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.043958,
+        "lon": 3.75518,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-170",
+        "name": [
+          {
+            "text": "Wally",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.999356,
+        "lon": 3.705835,
+        "post_code": "9052",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1700",
+        "name": [
+          {
+            "text": "DeTipi",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.03229,
+        "lon": 4.501526,
+        "post_code": "2800",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1708",
+        "name": [
+          {
+            "text": "Violierstraat10",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.018637,
+        "lon": 3.75058,
+        "post_code": "9820",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1715",
+        "name": [
+          {
+            "text": "ZevenzitPoesele",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.036323,
+        "lon": 3.515785,
+        "post_code": "9850",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1716",
+        "name": [
+          {
+            "text": "Doblo",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.163131,
+        "lon": 3.235452,
+        "post_code": "8020",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1719",
+        "name": [
+          {
+            "text": "Leopardo",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.064138,
+        "lon": 3.707755,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1725",
+        "name": [
+          {
+            "text": "Red-yToGO",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.106594,
+        "lon": 3.626599,
+        "post_code": "9920",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1733",
+        "name": [
+          {
+            "text": "KamielCaddy",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.053205,
+        "lon": 3.71819,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1734",
+        "name": [
+          {
+            "text": "Dory",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.210145,
+        "lon": 4.439339,
+        "post_code": "2140",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1735",
+        "name": [
+          {
+            "text": "ToyotaVerso",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.067176,
+        "lon": 3.780925,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1743",
+        "name": [
+          {
+            "text": "LeonardoNiCabrio",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.02531,
+        "lon": 3.721167,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1756",
+        "name": [
+          {
+            "text": "Octavie",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.200065,
+        "lon": 3.200414,
+        "post_code": "8200",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1759",
+        "name": [
+          {
+            "text": "Duplo",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.048948,
+        "lon": 3.753353,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1761",
+        "name": [
+          {
+            "text": "Peuzotje",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.203087,
+        "lon": 3.270333,
+        "post_code": "8310",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1767",
+        "name": [
+          {
+            "text": "Aaron",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.012591,
+        "lon": 3.753799,
+        "post_code": "9820",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-179",
+        "name": [
+          {
+            "text": "Bluebuf",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.091893,
+        "lon": 3.715067,
+        "post_code": "9032",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1792",
+        "name": [
+          {
+            "text": "VredigeCaddy",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.82748,
+        "lon": 3.285379,
+        "post_code": "8500",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1793",
+        "name": [
+          {
+            "text": "RenoKaptuur",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.032533,
+        "lon": 3.684582,
+        "post_code": "9051",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1798",
+        "name": [
+          {
+            "text": "Mariposa",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.036509,
+        "lon": 3.744454,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-180",
+        "name": [
+          {
+            "text": "Boemerang",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.049532,
+        "lon": 3.746668,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1813",
+        "name": [
+          {
+            "text": "NatKingCole",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.039341,
+        "lon": 3.764107,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-182",
+        "name": [
+          {
+            "text": "Elektron",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.064352,
+        "lon": 3.748366,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1830",
+        "name": [
+          {
+            "text": "Melanie",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.171509,
+        "lon": 4.363095,
+        "post_code": "2660",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1839",
+        "name": [
+          {
+            "text": "GrijzeAntilope",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.905989,
+        "lon": 4.675407,
+        "post_code": "3020",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1861",
+        "name": [
+          {
+            "text": "GolfMuinkpark",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.043164,
+        "lon": 3.731948,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1863",
+        "name": [
+          {
+            "text": "Beagle",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.882021,
+        "lon": 4.717619,
+        "post_code": "3010",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1864",
+        "name": [
+          {
+            "text": "Eisbaer",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.063493,
+        "lon": 3.699712,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1873",
+        "name": [
+          {
+            "text": "Elza",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.080471,
+        "lon": 3.709348,
+        "post_code": "9032",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1875",
+        "name": [
+          {
+            "text": "ElsRoelof",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.161772,
+        "lon": 3.262881,
+        "post_code": "8020",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1877",
+        "name": [
+          {
+            "text": "Bluesette",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.05247,
+        "lon": 3.705718,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1892",
+        "name": [
+          {
+            "text": "Shiraz",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.049713,
+        "lon": 3.718721,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-190",
+        "name": [
+          {
+            "text": "Django",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.067815,
+        "lon": 3.780462,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1908",
+        "name": [
+          {
+            "text": "Flexi",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.058044,
+        "lon": 3.69904,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-191",
+        "name": [
+          {
+            "text": "Strannik",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.844497,
+        "lon": 3.769631,
+        "post_code": "9620",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-193",
+        "name": [
+          {
+            "text": "Carlascar + Heckie",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.035163,
+        "lon": 3.745794,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1936",
+        "name": [
+          {
+            "text": "Spoedniek",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.997504,
+        "lon": 3.752044,
+        "post_code": "9820",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-194",
+        "name": [
+          {
+            "text": "Zwarteparel",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.053286,
+        "lon": 3.767072,
+        "post_code": "9070",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1942",
+        "name": [
+          {
+            "text": "MagicMicra",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.063795,
+        "lon": 3.699235,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1943",
+        "name": [
+          {
+            "text": "Babytouran",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.033596,
+        "lon": 3.804344,
+        "post_code": "9070",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-1981",
+        "name": [
+          {
+            "text": "TheRabbit",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.814509,
+        "lon": 3.295896,
+        "post_code": "8500",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2007",
+        "name": [
+          {
+            "text": "Bakkie",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.977231,
+        "lon": 3.536473,
+        "post_code": "9800",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2010",
+        "name": [
+          {
+            "text": "Christine",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.965557,
+        "lon": 3.759894,
+        "post_code": "9820",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2013",
+        "name": [
+          {
+            "text": "LaFiata",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.203013,
+        "lon": 3.264688,
+        "post_code": "8310",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2018",
+        "name": [
+          {
+            "text": "Marie-Jose",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.832976,
+        "lon": 3.276375,
+        "post_code": "8500",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2031",
+        "name": [
+          {
+            "text": "Una",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.064254,
+        "lon": 3.698584,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2034",
+        "name": [
+          {
+            "text": "DoeMaar",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.057408,
+        "lon": 3.697602,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2044",
+        "name": [
+          {
+            "text": "LepoArtsa",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.99919,
+        "lon": 3.746859,
+        "post_code": "9820",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2048",
+        "name": [
+          {
+            "text": "Micramobiel",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.029658,
+        "lon": 3.758178,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2049",
+        "name": [
+          {
+            "text": "RioLieven",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.232736,
+        "lon": 3.207528,
+        "post_code": "8000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-205",
+        "name": [
+          {
+            "text": "Yaribo",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.873799,
+        "lon": 3.624453,
+        "post_code": "9700",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2050",
+        "name": [
+          {
+            "text": "Fabio",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.100681,
+        "lon": 3.763356,
+        "post_code": "9041",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2057",
+        "name": [
+          {
+            "text": "BlauweZafi",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.060282,
+        "lon": 3.698725,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2061",
+        "name": [
+          {
+            "text": "LaBagnole",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.050034,
+        "lon": 3.750286,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2070",
+        "name": [
+          {
+            "text": "Zegerke",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.055881,
+        "lon": 3.662546,
+        "post_code": "9031",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2073",
+        "name": [
+          {
+            "text": "Alfie",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.083569,
+        "lon": 3.777932,
+        "post_code": "9041",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2146",
+        "name": [
+          {
+            "text": "Lou",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.818851,
+        "lon": 3.27529,
+        "post_code": "8500",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2148",
+        "name": [
+          {
+            "text": "Blauwblitz",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.853328,
+        "lon": 3.361117,
+        "post_code": "8540",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2152",
+        "name": [
+          {
+            "text": "Stan",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.730091,
+        "lon": 4.243942,
+        "post_code": "1500",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2190",
+        "name": [
+          {
+            "text": "Angel",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.055219,
+        "lon": 3.750469,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2198",
+        "name": [
+          {
+            "text": "Bucky",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.054301,
+        "lon": 3.746263,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2202",
+        "name": [
+          {
+            "text": "HeyYouDaar",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.043937,
+        "lon": 3.745288,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2208",
+        "name": [
+          {
+            "text": "PassionelePanda",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.828538,
+        "lon": 3.28285,
+        "post_code": "8500",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2221",
+        "name": [
+          {
+            "text": "Peugeot-Koninginlaan",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.008985,
+        "lon": 3.757689,
+        "post_code": "9820",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2238",
+        "name": [
+          {
+            "text": "Colette",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.222035,
+        "lon": 4.438261,
+        "post_code": "2060",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2244",
+        "name": [
+          {
+            "text": "autoNEST",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.03871,
+        "lon": 3.741959,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2253",
+        "name": [
+          {
+            "text": "VWTouran",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.209557,
+        "lon": 3.210212,
+        "post_code": "8200",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2257",
+        "name": [
+          {
+            "text": "Etienne",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.063411,
+        "lon": 3.690038,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2265",
+        "name": [
+          {
+            "text": "ZwartePolo",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.083818,
+        "lon": 3.954609,
+        "post_code": "9160",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2268",
+        "name": [
+          {
+            "text": "Tipo_Melle",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.004614,
+        "lon": 3.800705,
+        "post_code": "9090",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2278",
+        "name": [
+          {
+            "text": "DaciaLogan",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.882558,
+        "lon": 4.691343,
+        "post_code": "3000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2292",
+        "name": [
+          {
+            "text": "Allemansotto",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.155335,
+        "lon": 4.147827,
+        "post_code": "9100",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2297",
+        "name": [
+          {
+            "text": "Fertotta",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.841708,
+        "lon": 4.341477,
+        "post_code": "1000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2305",
+        "name": [
+          {
+            "text": "Sandy",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.055916,
+        "lon": 3.717186,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2309",
+        "name": [
+          {
+            "text": "KleinMaarFijn",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.042814,
+        "lon": 3.755189,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-232",
+        "name": [
+          {
+            "text": "Sajarana",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.060849,
+        "lon": 3.805326,
+        "post_code": "9070",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2320",
+        "name": [
+          {
+            "text": "DeGrijzeModus",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.839878,
+        "lon": 3.263739,
+        "post_code": "8500",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2325",
+        "name": [
+          {
+            "text": "Palomino",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.09134,
+        "lon": 3.711576,
+        "post_code": "9032",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2339",
+        "name": [
+          {
+            "text": "qNiro",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.087676,
+        "lon": 3.635672,
+        "post_code": "9921",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2345",
+        "name": [
+          {
+            "text": "Ketje",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.214661,
+        "lon": 4.428496,
+        "post_code": "2140",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2347",
+        "name": [
+          {
+            "text": "VWStationwagenWondelgem",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.085991,
+        "lon": 3.7076,
+        "post_code": "9032",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2349",
+        "name": [
+          {
+            "text": "EddyDeCaddy",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.052719,
+        "lon": 3.733495,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2354",
+        "name": [
+          {
+            "text": "Sunchie",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.217881,
+        "lon": 3.226734,
+        "post_code": "8000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2356",
+        "name": [
+          {
+            "text": "DeBie-Mobiel",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.01502,
+        "lon": 3.718479,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2365",
+        "name": [
+          {
+            "text": "Jixo",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.055922,
+        "lon": 3.766072,
+        "post_code": "9070",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2367",
+        "name": [
+          {
+            "text": "RedSuzi",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.225519,
+        "lon": 2.909194,
+        "post_code": "8400",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2368",
+        "name": [
+          {
+            "text": "Archer",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.045433,
+        "lon": 3.763826,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2379",
+        "name": [
+          {
+            "text": "V52",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.037862,
+        "lon": 3.603481,
+        "post_code": "9031",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2380",
+        "name": [
+          {
+            "text": "Hygge",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.019167,
+        "lon": 4.558748,
+        "post_code": "2820",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2384",
+        "name": [
+          {
+            "text": "Corsa",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.218277,
+        "lon": 4.440627,
+        "post_code": "2140",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2388",
+        "name": [
+          {
+            "text": "Smappy",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.199726,
+        "lon": 3.176595,
+        "post_code": "8200",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-239",
+        "name": [
+          {
+            "text": "RinskopfsClio + RinskopfsBerlingo",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.039787,
+        "lon": 3.755192,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2392",
+        "name": [
+          {
+            "text": "FiestaEva",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.057354,
+        "lon": 3.697778,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2393",
+        "name": [
+          {
+            "text": "Jef74",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.041645,
+        "lon": 3.757185,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2405",
+        "name": [
+          {
+            "text": "OpelCombo",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.03169,
+        "lon": 3.742893,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2408",
+        "name": [
+          {
+            "text": "TheEmeraldQueen",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.030175,
+        "lon": 3.770389,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2409",
+        "name": [
+          {
+            "text": "IpioZoe",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.044301,
+        "lon": 3.772089,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-241",
+        "name": [
+          {
+            "text": "Julio",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.061348,
+        "lon": 3.700234,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2410",
+        "name": [
+          {
+            "text": "KangooKoudeKeuken",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.200238,
+        "lon": 3.181297,
+        "post_code": "8200",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2418",
+        "name": [
+          {
+            "text": "AygoBert",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.041615,
+        "lon": 3.774025,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2429",
+        "name": [
+          {
+            "text": "Bordooke",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.062857,
+        "lon": 3.693095,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2432",
+        "name": [
+          {
+            "text": "Tjangobel",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.243842,
+        "lon": 4.44888,
+        "post_code": "2170",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2449",
+        "name": [
+          {
+            "text": "ItalianSportscar",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.039905,
+        "lon": 3.701901,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2466",
+        "name": [
+          {
+            "text": "Milonga",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.214641,
+        "lon": 3.2581,
+        "post_code": "8310",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2467",
+        "name": [
+          {
+            "text": "RouleDeBerlin",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.01335,
+        "lon": 3.769797,
+        "post_code": "9090",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2471",
+        "name": [
+          {
+            "text": "Rosas",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.210444,
+        "lon": 4.430424,
+        "post_code": "2140",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2488",
+        "name": [
+          {
+            "text": "MissClio",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.049019,
+        "lon": 3.714862,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2493",
+        "name": [
+          {
+            "text": "WhiteCombo",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.074399,
+        "lon": 3.69928,
+        "post_code": "9030",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2500",
+        "name": [
+          {
+            "text": "LittleBlackCar",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.062364,
+        "lon": 3.71806,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2501",
+        "name": [
+          {
+            "text": "SeatLeonFlora",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.014825,
+        "lon": 3.763868,
+        "post_code": "9820",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2509",
+        "name": [
+          {
+            "text": "GroteSmurf",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.050475,
+        "lon": 3.745425,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2510",
+        "name": [
+          {
+            "text": "Caddylac",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.080914,
+        "lon": 3.700373,
+        "post_code": "9032",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2515",
+        "name": [
+          {
+            "text": "Karmelauto",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.990111,
+        "lon": 3.640654,
+        "post_code": "9840",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2522",
+        "name": [
+          {
+            "text": "Gladiool",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.088019,
+        "lon": 3.688537,
+        "post_code": "9032",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2525",
+        "name": [
+          {
+            "text": "JPSkodaRoomster",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.101148,
+        "lon": 3.989956,
+        "post_code": "9160",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2527",
+        "name": [
+          {
+            "text": "Tuuta",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.068322,
+        "lon": 3.686564,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2533",
+        "name": [
+          {
+            "text": "Peugeot2008",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.207782,
+        "lon": 3.213894,
+        "post_code": "8000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2535",
+        "name": [
+          {
+            "text": "AstraMimosa",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.083167,
+        "lon": 3.677003,
+        "post_code": "9030",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2544",
+        "name": [
+          {
+            "text": "Olifant",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.034978,
+        "lon": 3.759002,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2552",
+        "name": [
+          {
+            "text": "LottesAstra",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.886766,
+        "lon": 3.434775,
+        "post_code": "8790",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2553",
+        "name": [
+          {
+            "text": "Franky",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.070294,
+        "lon": 3.695125,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2554",
+        "name": [
+          {
+            "text": "Gina",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.07251,
+        "lon": 3.730262,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2561",
+        "name": [
+          {
+            "text": "DeZwartePanter",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.864761,
+        "lon": 4.708208,
+        "post_code": "3001",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2566",
+        "name": [
+          {
+            "text": "PeterPanda",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.054917,
+        "lon": 3.736546,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2581",
+        "name": [
+          {
+            "text": "Paolo",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.073858,
+        "lon": 3.712964,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2590",
+        "name": [
+          {
+            "text": "Mieleke",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.072487,
+        "lon": 3.760608,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2591",
+        "name": [
+          {
+            "text": "FrostyFiesta",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.05053,
+        "lon": 3.648438,
+        "post_code": "9031",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2592",
+        "name": [
+          {
+            "text": "LenteLeafje",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.866652,
+        "lon": 3.641018,
+        "post_code": "9700",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2596",
+        "name": [
+          {
+            "text": "OnsMartine",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.042882,
+        "lon": 3.761682,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2597",
+        "name": [
+          {
+            "text": "Talisman",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.073899,
+        "lon": 3.714868,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2600",
+        "name": [
+          {
+            "text": "KrugerKar",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.216781,
+        "lon": 4.440651,
+        "post_code": "2140",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2616",
+        "name": [
+          {
+            "text": "Emiel",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.04482,
+        "lon": 3.771694,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-263",
+        "name": [
+          {
+            "text": "Cliootje",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.846272,
+        "lon": 2.727636,
+        "post_code": "8970",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2634",
+        "name": [
+          {
+            "text": "Bolleke",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.044866,
+        "lon": 3.713125,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2648",
+        "name": [
+          {
+            "text": "WijkwagenBroekMere",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.91293,
+        "lon": 3.960194,
+        "post_code": "9420",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2663",
+        "name": [
+          {
+            "text": "DeOoievaar",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.841805,
+        "lon": 3.257804,
+        "post_code": "8500",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2667",
+        "name": [
+          {
+            "text": "Rioblanco",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.891141,
+        "lon": 4.734328,
+        "post_code": "3010",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2670",
+        "name": [
+          {
+            "text": "Passata",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.042906,
+        "lon": 3.666296,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2699",
+        "name": [
+          {
+            "text": "MyKokona",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.042792,
+        "lon": 3.762058,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2704",
+        "name": [
+          {
+            "text": "WeldaRoomster",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.034147,
+        "lon": 3.743768,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2707",
+        "name": [
+          {
+            "text": "Franco",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.072433,
+        "lon": 3.707853,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2711",
+        "name": [
+          {
+            "text": "MyRedHotCar",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.06235,
+        "lon": 3.712472,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2715",
+        "name": [
+          {
+            "text": "NoteCollegelaan",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.21263,
+        "lon": 4.455859,
+        "post_code": "2140",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2727",
+        "name": [
+          {
+            "text": "Boris",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.067035,
+        "lon": 3.795793,
+        "post_code": "9070",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2732",
+        "name": [
+          {
+            "text": "OLFWagen",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.188262,
+        "lon": 4.179758,
+        "post_code": "9100",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2762",
+        "name": [
+          {
+            "text": "TouranClementwijk",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.183577,
+        "lon": 4.135257,
+        "post_code": "9100",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2763",
+        "name": [
+          {
+            "text": "Lea",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.04534,
+        "lon": 3.695537,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2785",
+        "name": [
+          {
+            "text": "Witteke",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.172232,
+        "lon": 4.149962,
+        "post_code": "9100",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2788",
+        "name": [
+          {
+            "text": "Carla",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.067407,
+        "lon": 3.688509,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2789",
+        "name": [
+          {
+            "text": "NewKitty",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.078462,
+        "lon": 3.692047,
+        "post_code": "9030",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2790",
+        "name": [
+          {
+            "text": "Janice",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.148928,
+        "lon": 3.243035,
+        "post_code": "8020",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2793",
+        "name": [
+          {
+            "text": "Tiguana",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.072922,
+        "lon": 3.69286,
+        "post_code": "9030",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2798",
+        "name": [
+          {
+            "text": "DeVerhuismobiel",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.090721,
+        "lon": 3.707149,
+        "post_code": "9032",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2818",
+        "name": [
+          {
+            "text": "C3LEZ",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.030545,
+        "lon": 3.709105,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2824",
+        "name": [
+          {
+            "text": "Liebe",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.072025,
+        "lon": 3.763552,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2844",
+        "name": [
+          {
+            "text": "Tuur",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.02669,
+        "lon": 3.705951,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2857",
+        "name": [
+          {
+            "text": "DasMobiel",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.066358,
+        "lon": 3.722982,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2861",
+        "name": [
+          {
+            "text": "Rouge",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.95219,
+        "lon": 3.133479,
+        "post_code": "8800",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2862",
+        "name": [
+          {
+            "text": "BlauweKangoeroe",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.220476,
+        "lon": 4.439141,
+        "post_code": "2140",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2864",
+        "name": [
+          {
+            "text": "Bobb-E",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.035629,
+        "lon": 3.741514,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2869",
+        "name": [
+          {
+            "text": "BuzzLightgear",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.048608,
+        "lon": 3.74268,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2884",
+        "name": [
+          {
+            "text": "DasAuto",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.069584,
+        "lon": 3.759835,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2888",
+        "name": [
+          {
+            "text": "Zwartkop",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.065203,
+        "lon": 3.772702,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-289",
+        "name": [
+          {
+            "text": "Donky",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.076147,
+        "lon": 3.669451,
+        "post_code": "9030",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2898",
+        "name": [
+          {
+            "text": "FreddieStarman",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.048194,
+        "lon": 3.717388,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2902",
+        "name": [
+          {
+            "text": "MGSusan",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.068363,
+        "lon": 3.77032,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2908",
+        "name": [
+          {
+            "text": "eKia",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.018744,
+        "lon": 3.710842,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2916",
+        "name": [
+          {
+            "text": "CosyMaxi",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.203252,
+        "lon": 3.199049,
+        "post_code": "8200",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2918",
+        "name": [
+          {
+            "text": "Tweeta",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.874309,
+        "lon": 4.324777,
+        "post_code": "1090",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2922",
+        "name": [
+          {
+            "text": "MadamGrijs",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.023799,
+        "lon": 3.766651,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2925",
+        "name": [
+          {
+            "text": "WillyOnTour",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.214269,
+        "lon": 3.252724,
+        "post_code": "8310",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2928",
+        "name": [
+          {
+            "text": "Tippy",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.050638,
+        "lon": 3.755813,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2937",
+        "name": [
+          {
+            "text": "Ninoshi",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.220559,
+        "lon": 4.477268,
+        "post_code": "2100",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2938",
+        "name": [
+          {
+            "text": "Korre",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.044284,
+        "lon": 3.763489,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2946",
+        "name": [
+          {
+            "text": "Basiel",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.049235,
+        "lon": 3.76107,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2948",
+        "name": [
+          {
+            "text": "MagicGuy",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.065739,
+        "lon": 3.719707,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2958",
+        "name": [
+          {
+            "text": "Blueberry",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.899244,
+        "lon": 4.62742,
+        "post_code": "3020",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2959",
+        "name": [
+          {
+            "text": "LindasAutootje",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.155323,
+        "lon": 3.230184,
+        "post_code": "8020",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2972",
+        "name": [
+          {
+            "text": "Putt-PuttPartner",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.172761,
+        "lon": 4.153492,
+        "post_code": "9100",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2976",
+        "name": [
+          {
+            "text": "OpelZaffie",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.02948,
+        "lon": 3.758259,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2981",
+        "name": [
+          {
+            "text": "Mini-mobiel",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.743954,
+        "lon": 4.233219,
+        "post_code": "1500",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2984",
+        "name": [
+          {
+            "text": "ArFre",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.046361,
+        "lon": 3.756756,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2989",
+        "name": [
+          {
+            "text": "Molletje",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.071967,
+        "lon": 3.687832,
+        "post_code": "9030",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2997",
+        "name": [
+          {
+            "text": "Darknstormy",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.077499,
+        "lon": 3.728356,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-2998",
+        "name": [
+          {
+            "text": "VdW-Fabia",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.134632,
+        "lon": 4.275754,
+        "post_code": "9140",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3",
+        "name": [
+          {
+            "text": "BlackBird",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.052545,
+        "lon": 3.705814,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3001",
+        "name": [
+          {
+            "text": "WhiteZoe",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.91154,
+        "lon": 4.670024,
+        "post_code": "3020",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3006",
+        "name": [
+          {
+            "text": "NoirNugget",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.047987,
+        "lon": 3.75397,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3010",
+        "name": [
+          {
+            "text": "WitPaardje",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.039643,
+        "lon": 3.753568,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3012",
+        "name": [
+          {
+            "text": "Rila",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.057967,
+        "lon": 3.750158,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3023",
+        "name": [
+          {
+            "text": "AutoDo",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.085029,
+        "lon": 3.705151,
+        "post_code": "9032",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3024",
+        "name": [
+          {
+            "text": "Josie",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.044043,
+        "lon": 3.752526,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3028",
+        "name": [
+          {
+            "text": "Fabia",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.8537,
+        "lon": 2.709836,
+        "post_code": "8970",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3033",
+        "name": [
+          {
+            "text": "BlauwTuuteke",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.114273,
+        "lon": 3.966447,
+        "post_code": "9160",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3034",
+        "name": [
+          {
+            "text": "Thor",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.197874,
+        "lon": 3.204933,
+        "post_code": "8200",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3035",
+        "name": [
+          {
+            "text": "Moriann-E",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.034697,
+        "lon": 3.743498,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3055",
+        "name": [
+          {
+            "text": "ZoefMelsele300",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.223221,
+        "lon": 4.274438,
+        "post_code": "9120",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3056",
+        "name": [
+          {
+            "text": "DaciaTolhuis",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.066219,
+        "lon": 3.726253,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3074",
+        "name": [
+          {
+            "text": "LadyInRed",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.738221,
+        "lon": 4.251947,
+        "post_code": "1501",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3076",
+        "name": [
+          {
+            "text": "DeSequoia",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.054151,
+        "lon": 3.748026,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3079",
+        "name": [
+          {
+            "text": "Polo28",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.070345,
+        "lon": 3.792921,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3080",
+        "name": [
+          {
+            "text": "Voyageur",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.046176,
+        "lon": 3.742769,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3082",
+        "name": [
+          {
+            "text": "ElektrischBlaadje",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.168178,
+        "lon": 4.112202,
+        "post_code": "9111",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3083",
+        "name": [
+          {
+            "text": "Pola",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.969176,
+        "lon": 3.539408,
+        "post_code": "9800",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3088",
+        "name": [
+          {
+            "text": "Springtrin",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.973599,
+        "lon": 3.543176,
+        "post_code": "9800",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3092",
+        "name": [
+          {
+            "text": "Zalmobiel",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.047093,
+        "lon": 3.743309,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3096",
+        "name": [
+          {
+            "text": "Balisto",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.051365,
+        "lon": 3.75702,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3098",
+        "name": [
+          {
+            "text": "SeatIbizaHanneV",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.026989,
+        "lon": 3.73341,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3108",
+        "name": [
+          {
+            "text": "Au-tomaat",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.089311,
+        "lon": 3.714238,
+        "post_code": "9032",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3110",
+        "name": [
+          {
+            "text": "DeZwarteReiziger",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.062785,
+        "lon": 3.691044,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3116",
+        "name": [
+          {
+            "text": "Gorki",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.066009,
+        "lon": 3.73661,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3119",
+        "name": [
+          {
+            "text": "DenBoulevard",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.057513,
+        "lon": 3.744203,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3122",
+        "name": [
+          {
+            "text": "Dokky",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.038122,
+        "lon": 3.705834,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3123",
+        "name": [
+          {
+            "text": "Otto",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.049688,
+        "lon": 3.746406,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-313",
+        "name": [
+          {
+            "text": "Linde",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.063796,
+        "lon": 3.761333,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3153",
+        "name": [
+          {
+            "text": "To-yoda",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.054391,
+        "lon": 3.695056,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3163",
+        "name": [
+          {
+            "text": "OctaafVonHerlegem",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.054795,
+        "lon": 3.762189,
+        "post_code": "9070",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3165",
+        "name": [
+          {
+            "text": "ChristineC3",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.020492,
+        "lon": 3.776352,
+        "post_code": "9090",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3168",
+        "name": [
+          {
+            "text": "Boeleke",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.062334,
+        "lon": 3.754106,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3169",
+        "name": [
+          {
+            "text": "Camilin",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.166188,
+        "lon": 4.133059,
+        "post_code": "9100",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3170",
+        "name": [
+          {
+            "text": "MonaTheKona",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.030345,
+        "lon": 3.712785,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-318",
+        "name": [
+          {
+            "text": "Mahi",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.054391,
+        "lon": 3.644007,
+        "post_code": "9031",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3185",
+        "name": [
+          {
+            "text": "GroenJazzke",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.035837,
+        "lon": 3.745573,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3189",
+        "name": [
+          {
+            "text": "Nikola",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.018761,
+        "lon": 3.773753,
+        "post_code": "9090",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3191",
+        "name": [
+          {
+            "text": "Robert-e-Niro",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.021621,
+        "lon": 3.722736,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3194",
+        "name": [
+          {
+            "text": "LittleCarrier",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.061036,
+        "lon": 3.710853,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3199",
+        "name": [
+          {
+            "text": "VeerlesVolkswagen",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.01585,
+        "lon": 3.691761,
+        "post_code": "9052",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3213",
+        "name": [
+          {
+            "text": "Uli",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.061346,
+        "lon": 3.702733,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3214",
+        "name": [
+          {
+            "text": "Mila",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.871459,
+        "lon": 3.834163,
+        "post_code": "9620",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3217",
+        "name": [
+          {
+            "text": "Spritz",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.067483,
+        "lon": 3.78584,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3221",
+        "name": [
+          {
+            "text": "Peugeot308SW",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.185065,
+        "lon": 3.632634,
+        "post_code": "9971",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3222",
+        "name": [
+          {
+            "text": "Sneeuwwitje",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.738579,
+        "lon": 4.231818,
+        "post_code": "1500",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3223",
+        "name": [
+          {
+            "text": "Vroemilienne",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.048007,
+        "lon": 3.71171,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3226",
+        "name": [
+          {
+            "text": "MerivaMariakerke",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.074376,
+        "lon": 3.700508,
+        "post_code": "9030",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3228",
+        "name": [
+          {
+            "text": "CitroenC1Vijfdeurs",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.058446,
+        "lon": 3.717233,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3249",
+        "name": [
+          {
+            "text": "FifiJunior",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.019966,
+        "lon": 3.76793,
+        "post_code": "9090",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-326",
+        "name": [
+          {
+            "text": "BlauweDacia",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.05539,
+        "lon": 3.735393,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3275",
+        "name": [
+          {
+            "text": "Saguaro",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.032512,
+        "lon": 3.747505,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3276",
+        "name": [
+          {
+            "text": "Hyundaii20",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.062982,
+        "lon": 3.700626,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3282",
+        "name": [
+          {
+            "text": "WitteKangoeroe",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.967065,
+        "lon": 3.511025,
+        "post_code": "9800",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3285",
+        "name": [
+          {
+            "text": "Theo",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.045632,
+        "lon": 3.754618,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3287",
+        "name": [
+          {
+            "text": "FreddyDeKeddy",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.068743,
+        "lon": 3.673268,
+        "post_code": "9030",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3288",
+        "name": [
+          {
+            "text": "Citroentje",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.937615,
+        "lon": 3.467181,
+        "post_code": "9870",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3296",
+        "name": [
+          {
+            "text": "Volvie",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.997809,
+        "lon": 3.801099,
+        "post_code": "9090",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3308",
+        "name": [
+          {
+            "text": "Annie",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.232512,
+        "lon": 4.443517,
+        "post_code": "2100",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3311",
+        "name": [
+          {
+            "text": "MaxiTaxi",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.063552,
+        "lon": 3.700111,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3313",
+        "name": [
+          {
+            "text": "CitroenDeinze",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.979237,
+        "lon": 3.534298,
+        "post_code": "9800",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3315",
+        "name": [
+          {
+            "text": "TheWhiteLotus",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.079244,
+        "lon": 3.707572,
+        "post_code": "9032",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3317",
+        "name": [
+          {
+            "text": "Okapi",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.063169,
+        "lon": 3.777565,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3325",
+        "name": [
+          {
+            "text": "Dobbel",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.033062,
+        "lon": 3.768007,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3330",
+        "name": [
+          {
+            "text": "DeGroeneOtto",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.185281,
+        "lon": 4.172303,
+        "post_code": "9100",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3339",
+        "name": [
+          {
+            "text": "Dobbie",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.055108,
+        "lon": 3.75495,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3354",
+        "name": [
+          {
+            "text": "Fiesta",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.03064,
+        "lon": 3.728417,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3355",
+        "name": [
+          {
+            "text": "Renoir",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.048621,
+        "lon": 3.710402,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3360",
+        "name": [
+          {
+            "text": "Bumble-Bee",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.10127,
+        "lon": 3.67576,
+        "post_code": "9940",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3361",
+        "name": [
+          {
+            "text": "Loddertje",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.041231,
+        "lon": 3.710317,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3363",
+        "name": [
+          {
+            "text": "JudoKia",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.03324,
+        "lon": 3.769229,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3364",
+        "name": [
+          {
+            "text": "GuitigeAubergine",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.055013,
+        "lon": 3.709251,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3367",
+        "name": [
+          {
+            "text": "Jumpy",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.214775,
+        "lon": 4.398866,
+        "post_code": "2000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3368",
+        "name": [
+          {
+            "text": "Ruumi",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.823256,
+        "lon": 3.290406,
+        "post_code": "8500",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3374",
+        "name": [
+          {
+            "text": "LodeVolvoV40",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.037976,
+        "lon": 3.738146,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3375",
+        "name": [
+          {
+            "text": "Berry",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.20615,
+        "lon": 3.234114,
+        "post_code": "8000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3379",
+        "name": [
+          {
+            "text": "Zanaya",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.059129,
+        "lon": 3.728404,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-338",
+        "name": [
+          {
+            "text": "Jip",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.090915,
+        "lon": 3.70598,
+        "post_code": "9032",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3380",
+        "name": [
+          {
+            "text": "GolfkarXL",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.055129,
+        "lon": 3.767006,
+        "post_code": "9070",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3382",
+        "name": [
+          {
+            "text": "Teslatic",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.206307,
+        "lon": 3.19846,
+        "post_code": "8200",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3383",
+        "name": [
+          {
+            "text": "Conscience",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.741603,
+        "lon": 4.234652,
+        "post_code": "1500",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3391",
+        "name": [
+          {
+            "text": "ElVergatario",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.050137,
+        "lon": 3.749419,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3393",
+        "name": [
+          {
+            "text": "PartnerInCrime",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.073211,
+        "lon": 3.709384,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3399",
+        "name": [
+          {
+            "text": "FuHyundai",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.00962,
+        "lon": 3.756762,
+        "post_code": "9820",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3400",
+        "name": [
+          {
+            "text": "GroeneMichel",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.08009,
+        "lon": 3.728019,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3402",
+        "name": [
+          {
+            "text": "Leafje",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.203606,
+        "lon": 4.473589,
+        "post_code": "2100",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3408",
+        "name": [
+          {
+            "text": "Paxie",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.064967,
+        "lon": 3.710832,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3410",
+        "name": [
+          {
+            "text": "RudiDeCaddy",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.025646,
+        "lon": 3.799958,
+        "post_code": "9070",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3411",
+        "name": [
+          {
+            "text": "ZalmClio",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.075228,
+        "lon": 3.78097,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3412",
+        "name": [
+          {
+            "text": "Prikkeltje",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.210199,
+        "lon": 4.439727,
+        "post_code": "2140",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3413",
+        "name": [
+          {
+            "text": "Pjotr",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.044907,
+        "lon": 3.754165,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3414",
+        "name": [
+          {
+            "text": "BlauwBusje",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.060642,
+        "lon": 3.695049,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3427",
+        "name": [
+          {
+            "text": "Ollie",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.853134,
+        "lon": 3.361702,
+        "post_code": "8540",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3432",
+        "name": [
+          {
+            "text": "E-DidiBerli",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.074132,
+        "lon": 3.780292,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3433",
+        "name": [
+          {
+            "text": "HetNarrenschip",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.045161,
+        "lon": 3.74088,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3435",
+        "name": [
+          {
+            "text": "Jimmy",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.046908,
+        "lon": 3.712591,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3440",
+        "name": [
+          {
+            "text": "Dre",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.217784,
+        "lon": 4.444018,
+        "post_code": "2140",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3442",
+        "name": [
+          {
+            "text": "DeCorsa",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.055977,
+        "lon": 3.577545,
+        "post_code": "9850",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3449",
+        "name": [
+          {
+            "text": "DobLokeren",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.110368,
+        "lon": 3.985009,
+        "post_code": "9160",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3451",
+        "name": [
+          {
+            "text": "Pablo",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.067685,
+        "lon": 3.748701,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3452",
+        "name": [
+          {
+            "text": "TurboDampoort",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.05911,
+        "lon": 3.742554,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3460",
+        "name": [
+          {
+            "text": "Fonzie",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.816371,
+        "lon": 3.281489,
+        "post_code": "8500",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3466",
+        "name": [
+          {
+            "text": "PartnerDeurne",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.211526,
+        "lon": 4.458242,
+        "post_code": "2100",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3473",
+        "name": [
+          {
+            "text": "Karekiet",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.067821,
+        "lon": 3.668828,
+        "post_code": "9030",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3475",
+        "name": [
+          {
+            "text": "Skoda",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.055909,
+        "lon": 3.702083,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3476",
+        "name": [
+          {
+            "text": "Auris",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.193128,
+        "lon": 3.232629,
+        "post_code": "8310",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3477",
+        "name": [
+          {
+            "text": "PaardMetWielen",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.056586,
+        "lon": 3.704781,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3480",
+        "name": [
+          {
+            "text": "OpelDrongen",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.064816,
+        "lon": 3.639581,
+        "post_code": "9031",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3484",
+        "name": [
+          {
+            "text": "Mia",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.145547,
+        "lon": 4.472731,
+        "post_code": "2540",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3485",
+        "name": [
+          {
+            "text": "ID-Voerman",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.101615,
+        "lon": 3.988423,
+        "post_code": "9160",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3493",
+        "name": [
+          {
+            "text": "2BAB",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.076366,
+        "lon": 3.714667,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3495",
+        "name": [
+          {
+            "text": "Opie",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.056828,
+        "lon": 3.705021,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3496",
+        "name": [
+          {
+            "text": "Sylvester",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.039556,
+        "lon": 3.748572,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3497",
+        "name": [
+          {
+            "text": "BMW116d",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.08013,
+        "lon": 3.728211,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3499",
+        "name": [
+          {
+            "text": "Gran-eSmith",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.021178,
+        "lon": 3.750859,
+        "post_code": "9820",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3501",
+        "name": [
+          {
+            "text": "Kianoe",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.068377,
+        "lon": 3.749507,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3502",
+        "name": [
+          {
+            "text": "MrHarpsichord",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.006172,
+        "lon": 3.716757,
+        "post_code": "9052",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3506",
+        "name": [
+          {
+            "text": "Floor",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.012803,
+        "lon": 3.754202,
+        "post_code": "9820",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3507",
+        "name": [
+          {
+            "text": "ZoeClementina",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.03491,
+        "lon": 3.714645,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3518",
+        "name": [
+          {
+            "text": "Shrek",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.061629,
+        "lon": 3.755886,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3523",
+        "name": [
+          {
+            "text": "qGalaxy + qMegane",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.087325,
+        "lon": 3.63557,
+        "post_code": "9921",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3525",
+        "name": [
+          {
+            "text": "KiaSophia",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.026945,
+        "lon": 3.732239,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3537",
+        "name": [
+          {
+            "text": "CaddyCassis",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.083655,
+        "lon": 3.730049,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3542",
+        "name": [
+          {
+            "text": "Viatura",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.056615,
+        "lon": 3.717518,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3546",
+        "name": [
+          {
+            "text": "Bubbles",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.064013,
+        "lon": 3.698295,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3547",
+        "name": [
+          {
+            "text": "SteadyAsSheGoes",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.044037,
+        "lon": 3.765985,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3555",
+        "name": [
+          {
+            "text": "Felix",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.188059,
+        "lon": 3.243372,
+        "post_code": "8310",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3556",
+        "name": [
+          {
+            "text": "Moshommel",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.027469,
+        "lon": 3.731765,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3558",
+        "name": [
+          {
+            "text": "NorseWilly",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.069621,
+        "lon": 3.685256,
+        "post_code": "9030",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3564",
+        "name": [
+          {
+            "text": "AstraBreakGentbrugge",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.039666,
+        "lon": 3.755706,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3574",
+        "name": [
+          {
+            "text": "Golfkar",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.046109,
+        "lon": 3.716722,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3577",
+        "name": [
+          {
+            "text": "LeoDieCabrio",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.028734,
+        "lon": 3.754688,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3579",
+        "name": [
+          {
+            "text": "Vanny",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.049913,
+        "lon": 3.742852,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3585",
+        "name": [
+          {
+            "text": "Baudelaire",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.999649,
+        "lon": 3.893444,
+        "post_code": "9230",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3591",
+        "name": [
+          {
+            "text": "PurpleCloud",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.210908,
+        "lon": 3.2648,
+        "post_code": "8310",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3592",
+        "name": [
+          {
+            "text": "OscarDeCorsa",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.043745,
+        "lon": 3.746822,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3595",
+        "name": [
+          {
+            "text": "AutoSauvage",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.068647,
+        "lon": 3.685425,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3597",
+        "name": [
+          {
+            "text": "Gwydo",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.061238,
+        "lon": 3.696537,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3605",
+        "name": [
+          {
+            "text": "Antoine",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.003544,
+        "lon": 3.895977,
+        "post_code": "9230",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3606",
+        "name": [
+          {
+            "text": "Zappa",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.035648,
+        "lon": 3.745091,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3607",
+        "name": [
+          {
+            "text": "Arvo",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.039698,
+        "lon": 3.744019,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3608",
+        "name": [
+          {
+            "text": "Adhemar",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.172552,
+        "lon": 4.150104,
+        "post_code": "9100",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3616",
+        "name": [
+          {
+            "text": "DeWetterseReus",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.003507,
+        "lon": 3.883508,
+        "post_code": "9230",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3620",
+        "name": [
+          {
+            "text": "Bluey",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.031306,
+        "lon": 4.5224,
+        "post_code": "2820",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3621",
+        "name": [
+          {
+            "text": "MargiesPWagon",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.061994,
+        "lon": 3.735317,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3623",
+        "name": [
+          {
+            "text": "RedLightGreen",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.885561,
+        "lon": 4.697402,
+        "post_code": "3000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3624",
+        "name": [
+          {
+            "text": "Odul2",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.071838,
+        "lon": 3.754144,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3625",
+        "name": [
+          {
+            "text": "Habibi",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.070519,
+        "lon": 3.831257,
+        "post_code": "9070",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3628",
+        "name": [
+          {
+            "text": "Scrabble",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.10294,
+        "lon": 3.943572,
+        "post_code": "9160",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3629",
+        "name": [
+          {
+            "text": "Miesjelin",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.036302,
+        "lon": 3.744924,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3630",
+        "name": [
+          {
+            "text": "Agassi",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.030363,
+        "lon": 3.766994,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3642",
+        "name": [
+          {
+            "text": "Alpina",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.048926,
+        "lon": 3.709448,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3646",
+        "name": [
+          {
+            "text": "Enyatriek",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.201075,
+        "lon": 3.203268,
+        "post_code": "8200",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3648",
+        "name": [
+          {
+            "text": "LuSeatEIs",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.992851,
+        "lon": 3.657453,
+        "post_code": "9840",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3649",
+        "name": [
+          {
+            "text": "MOS",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.228313,
+        "lon": 4.427717,
+        "post_code": "2060",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-365",
+        "name": [
+          {
+            "text": "Gorpie",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.079196,
+        "lon": 3.765827,
+        "post_code": "9041",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3650",
+        "name": [
+          {
+            "text": "Focus",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.055807,
+        "lon": 3.751849,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3653",
+        "name": [
+          {
+            "text": "CoconutBrown",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.042033,
+        "lon": 3.75781,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3655",
+        "name": [
+          {
+            "text": "VliegveldRoo",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.9843,
+        "lon": 3.786731,
+        "post_code": "9090",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3657",
+        "name": [
+          {
+            "text": "Poussette",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.06024,
+        "lon": 3.694973,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3659",
+        "name": [
+          {
+            "text": "Joske",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.088473,
+        "lon": 3.690539,
+        "post_code": "9032",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-366",
+        "name": [
+          {
+            "text": "Minie",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.055444,
+        "lon": 3.725813,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3660",
+        "name": [
+          {
+            "text": "Destel",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.153341,
+        "lon": 4.165077,
+        "post_code": "9100",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3665",
+        "name": [
+          {
+            "text": "CaddyMaxi",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.074196,
+        "lon": 3.677046,
+        "post_code": "9030",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3666",
+        "name": [
+          {
+            "text": "Peugeot208TS",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.020433,
+        "lon": 3.760542,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3669",
+        "name": [
+          {
+            "text": "Viento",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.028819,
+        "lon": 3.726552,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3671",
+        "name": [
+          {
+            "text": "DriezitCargo",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.043021,
+        "lon": 3.745406,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3672",
+        "name": [
+          {
+            "text": "DDokker",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.20566,
+        "lon": 4.298425,
+        "post_code": "9120",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3676",
+        "name": [
+          {
+            "text": "C-maxie",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.204428,
+        "lon": 4.453486,
+        "post_code": "2100",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3679",
+        "name": [
+          {
+            "text": "CitroenC3",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.034602,
+        "lon": 3.513155,
+        "post_code": "9850",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-368",
+        "name": [
+          {
+            "text": "Kafka",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.057957,
+        "lon": 3.698507,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3680",
+        "name": [
+          {
+            "text": "Gecko",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.023365,
+        "lon": 3.696096,
+        "post_code": "9051",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3684",
+        "name": [
+          {
+            "text": "v40",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.051743,
+        "lon": 3.660849,
+        "post_code": "9031",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3690",
+        "name": [
+          {
+            "text": "Johanna",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.069188,
+        "lon": 3.675463,
+        "post_code": "9030",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3691",
+        "name": [
+          {
+            "text": "Riffie",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.070812,
+        "lon": 3.683622,
+        "post_code": "9030",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3692",
+        "name": [
+          {
+            "text": "Mekina",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.03227,
+        "lon": 3.746858,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3694",
+        "name": [
+          {
+            "text": "DePauwThe",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.220747,
+        "lon": 3.226664,
+        "post_code": "8000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3695",
+        "name": [
+          {
+            "text": "SaaiWhite",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.06692,
+        "lon": 3.719997,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3696",
+        "name": [
+          {
+            "text": "Kat",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.062484,
+        "lon": 3.751634,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3697",
+        "name": [
+          {
+            "text": "DonTiguan",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.062836,
+        "lon": 3.755726,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3698",
+        "name": [
+          {
+            "text": "PartnerInCrème",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.827403,
+        "lon": 4.344996,
+        "post_code": "1060",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3699",
+        "name": [
+          {
+            "text": "Kiaat",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.205565,
+        "lon": 3.269534,
+        "post_code": "8310",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3702",
+        "name": [
+          {
+            "text": "Nera",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.054835,
+        "lon": 3.762463,
+        "post_code": "9070",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3704",
+        "name": [
+          {
+            "text": "NissanLeaf",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.00673,
+        "lon": 3.764119,
+        "post_code": "9820",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3706",
+        "name": [
+          {
+            "text": "WhiteKnight",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.038706,
+        "lon": 3.798698,
+        "post_code": "9070",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3708",
+        "name": [
+          {
+            "text": "MadameMiele",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.168136,
+        "lon": 4.148371,
+        "post_code": "9100",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3710",
+        "name": [
+          {
+            "text": "Javeve",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.064056,
+        "lon": 3.708834,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3711",
+        "name": [
+          {
+            "text": "Felice",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.035237,
+        "lon": 3.737249,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3712",
+        "name": [
+          {
+            "text": "BaHaMa",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.0298,
+        "lon": 3.769686,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3715",
+        "name": [
+          {
+            "text": "CorsaRica",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.044109,
+        "lon": 3.756251,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3717",
+        "name": [
+          {
+            "text": "Millie",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.058115,
+        "lon": 3.74336,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3718",
+        "name": [
+          {
+            "text": "Roodgeval",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.074641,
+        "lon": 3.730584,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3720",
+        "name": [
+          {
+            "text": "BegijnOpel193",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.04646,
+        "lon": 3.73553,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3722",
+        "name": [
+          {
+            "text": "TsjechPorsche",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.229957,
+        "lon": 4.286416,
+        "post_code": "9120",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3724",
+        "name": [
+          {
+            "text": "AlhambraGrotekar",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.955962,
+        "lon": 3.632126,
+        "post_code": "9810",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3725",
+        "name": [
+          {
+            "text": "Kapida",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.066822,
+        "lon": 3.708206,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3726",
+        "name": [
+          {
+            "text": "Fiatiny",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.851439,
+        "lon": 3.345496,
+        "post_code": "8540",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3728",
+        "name": [
+          {
+            "text": "Praktisch",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.9688,
+        "lon": 3.721423,
+        "post_code": "9820",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3730",
+        "name": [
+          {
+            "text": "Gertruud",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.20816,
+        "lon": 4.447635,
+        "post_code": "2140",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3732",
+        "name": [
+          {
+            "text": "TonysAuto",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.223151,
+        "lon": 4.414993,
+        "post_code": "2000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3735",
+        "name": [
+          {
+            "text": "Kropotkin",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.027872,
+        "lon": 3.765998,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3741",
+        "name": [
+          {
+            "text": "SnelleEddy",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.06958,
+        "lon": 3.757486,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3746",
+        "name": [
+          {
+            "text": "K-Kamiq",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.83463,
+        "lon": 3.254904,
+        "post_code": "8500",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3752",
+        "name": [
+          {
+            "text": "Fialux",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.000407,
+        "lon": 3.71136,
+        "post_code": "9052",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3756",
+        "name": [
+          {
+            "text": "deCola",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.941552,
+        "lon": 3.659133,
+        "post_code": "9890",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3758",
+        "name": [
+          {
+            "text": "Felipe2",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.041833,
+        "lon": 3.756917,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3759",
+        "name": [
+          {
+            "text": "Peugeot208",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.968249,
+        "lon": 3.524104,
+        "post_code": "9800",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3762",
+        "name": [
+          {
+            "text": "Vera",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.191165,
+        "lon": 3.195482,
+        "post_code": "8200",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3763",
+        "name": [
+          {
+            "text": "VreeGelenOto",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.069184,
+        "lon": 3.748796,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3764",
+        "name": [
+          {
+            "text": "Fillmore",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.056291,
+        "lon": 3.757302,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3767",
+        "name": [
+          {
+            "text": "QTwo",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.060479,
+        "lon": 3.691105,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3769",
+        "name": [
+          {
+            "text": "Victor36",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.059083,
+        "lon": 3.751357,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3770",
+        "name": [
+          {
+            "text": "BerlingoXL",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.982116,
+        "lon": 3.798322,
+        "post_code": "9090",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3772",
+        "name": [
+          {
+            "text": "Danni",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.040576,
+        "lon": 3.74963,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3777",
+        "name": [
+          {
+            "text": "Sirius",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.059338,
+        "lon": 3.696515,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3778",
+        "name": [
+          {
+            "text": "Zetternammeke",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.028713,
+        "lon": 3.751952,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3783",
+        "name": [
+          {
+            "text": "Arend",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.055864,
+        "lon": 3.694553,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3784",
+        "name": [
+          {
+            "text": "DenJogger",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.045241,
+        "lon": 3.748256,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3788",
+        "name": [
+          {
+            "text": "Clyde",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.069396,
+        "lon": 3.709157,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3791",
+        "name": [
+          {
+            "text": "Serenity",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.074821,
+        "lon": 3.663314,
+        "post_code": "9030",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3792",
+        "name": [
+          {
+            "text": "BlauweQ-bus",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.035973,
+        "lon": 3.728087,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3795",
+        "name": [
+          {
+            "text": "Miel",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.069358,
+        "lon": 3.763616,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3797",
+        "name": [
+          {
+            "text": "Berlindo",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.062839,
+        "lon": 3.709357,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3801",
+        "name": [
+          {
+            "text": "Chocolat",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.050207,
+        "lon": 3.664861,
+        "post_code": "9031",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3802",
+        "name": [
+          {
+            "text": "Biloba",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.051049,
+        "lon": 3.752647,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3807",
+        "name": [
+          {
+            "text": "LaBlanche",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.745471,
+        "lon": 4.228669,
+        "post_code": "1500",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3808",
+        "name": [
+          {
+            "text": "WarandeSpace",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.058994,
+        "lon": 3.736554,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3811",
+        "name": [
+          {
+            "text": "SuzyCube",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.070443,
+        "lon": 3.7479,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3813",
+        "name": [
+          {
+            "text": "Berlingala",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.053824,
+        "lon": 3.690884,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3814",
+        "name": [
+          {
+            "text": "Drunne",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.213224,
+        "lon": 3.217355,
+        "post_code": "8000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3816",
+        "name": [
+          {
+            "text": "Andy",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.068541,
+        "lon": 3.708014,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3818",
+        "name": [
+          {
+            "text": "BlauweP5008",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.17725,
+        "lon": 4.438129,
+        "post_code": "2640",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3820",
+        "name": [
+          {
+            "text": "Albus",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.072148,
+        "lon": 3.758626,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3824",
+        "name": [
+          {
+            "text": "MGElectric",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.055031,
+        "lon": 3.762385,
+        "post_code": "9070",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3832",
+        "name": [
+          {
+            "text": "Tesla_Ledeberg",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.038279,
+        "lon": 3.744381,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3835",
+        "name": [
+          {
+            "text": "Milan",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.203941,
+        "lon": 4.462273,
+        "post_code": "2100",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3839",
+        "name": [
+          {
+            "text": "Leontine",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.025005,
+        "lon": 3.705056,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3855",
+        "name": [
+          {
+            "text": "JoyNButterflies",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.231976,
+        "lon": 4.378924,
+        "post_code": "2050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3858",
+        "name": [
+          {
+            "text": "Smurfkangoo",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.900247,
+        "lon": 4.732325,
+        "post_code": "3010",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3859",
+        "name": [
+          {
+            "text": "Isidoor",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.067968,
+        "lon": 3.75802,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3869",
+        "name": [
+          {
+            "text": "Citroencitroen",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.060914,
+        "lon": 3.733372,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3880",
+        "name": [
+          {
+            "text": "Toekcaddy",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.050729,
+        "lon": 3.746651,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-391",
+        "name": [
+          {
+            "text": "SintSwift",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.051898,
+        "lon": 3.735677,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3912",
+        "name": [
+          {
+            "text": "Framboiseke",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.058216,
+        "lon": 3.706061,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3914",
+        "name": [
+          {
+            "text": "Peujoke",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.219591,
+        "lon": 4.439633,
+        "post_code": "2140",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3915",
+        "name": [
+          {
+            "text": "Sarkev",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.076011,
+        "lon": 3.702011,
+        "post_code": "9030",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-3921",
+        "name": [
+          {
+            "text": "Ems2.0",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.068684,
+        "lon": 3.687009,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-399",
+        "name": [
+          {
+            "text": "Picasso",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.031693,
+        "lon": 3.709533,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-40",
+        "name": [
+          {
+            "text": "Yampupata",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.011943,
+        "lon": 3.715472,
+        "post_code": "9052",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-402",
+        "name": [
+          {
+            "text": "Wimpie",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.057733,
+        "lon": 3.713974,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-41",
+        "name": [
+          {
+            "text": "Berlini",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.061373,
+        "lon": 3.690015,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-419",
+        "name": [
+          {
+            "text": "Velotto",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.974588,
+        "lon": 3.529781,
+        "post_code": "9800",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-432",
+        "name": [
+          {
+            "text": "MeganeZwijnaarde",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.003032,
+        "lon": 3.722159,
+        "post_code": "9052",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-463",
+        "name": [
+          {
+            "text": "KihaluMaes",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.029749,
+        "lon": 3.727416,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-468",
+        "name": [
+          {
+            "text": "Renja",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.061597,
+        "lon": 3.69739,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-473",
+        "name": [
+          {
+            "text": "OpelBreak",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.074808,
+        "lon": 3.747211,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-494",
+        "name": [
+          {
+            "text": "Desdamona",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.006822,
+        "lon": 3.788899,
+        "post_code": "9090",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-5",
+        "name": [
+          {
+            "text": "Bonavontuur",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.042613,
+        "lon": 3.747717,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-501",
+        "name": [
+          {
+            "text": "Flo",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.069496,
+        "lon": 3.687625,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-502",
+        "name": [
+          {
+            "text": "Choco",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.073054,
+        "lon": 3.75995,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-514",
+        "name": [
+          {
+            "text": "Sassie",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.028971,
+        "lon": 3.754028,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-532",
+        "name": [
+          {
+            "text": "OttoMaties",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.033333,
+        "lon": 3.709,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-545",
+        "name": [
+          {
+            "text": "OctaviaNero",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.038513,
+        "lon": 3.750022,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-575",
+        "name": [
+          {
+            "text": "Dokkerrood",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.9217,
+        "lon": 3.761217,
+        "post_code": "9860",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-6",
+        "name": [
+          {
+            "text": "Chatooke",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.030416,
+        "lon": 3.715399,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-609",
+        "name": [
+          {
+            "text": "Fabienne",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.072929,
+        "lon": 3.670598,
+        "post_code": "9030",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-613",
+        "name": [
+          {
+            "text": "Polly",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.071802,
+        "lon": 3.762803,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-614",
+        "name": [
+          {
+            "text": "Rufus",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.064904,
+        "lon": 3.773508,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-62",
+        "name": [
+          {
+            "text": "MrProper",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.072579,
+        "lon": 3.76626,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-622",
+        "name": [
+          {
+            "text": "Pax",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.027343,
+        "lon": 3.728476,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-625",
+        "name": [
+          {
+            "text": "AstrAnne",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.058759,
+        "lon": 3.702739,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-629",
+        "name": [
+          {
+            "text": "SeaShepherd",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.02738,
+        "lon": 3.754421,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-631",
+        "name": [
+          {
+            "text": "Mees",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.041052,
+        "lon": 3.756232,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-632",
+        "name": [
+          {
+            "text": "Newbie",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.060226,
+        "lon": 3.698266,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-647",
+        "name": [
+          {
+            "text": "Bliksemschicht",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.066902,
+        "lon": 3.692119,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-685",
+        "name": [
+          {
+            "text": "Remus",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.938921,
+        "lon": 3.112424,
+        "post_code": "8800",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-71",
+        "name": [
+          {
+            "text": "Firebird",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.045852,
+        "lon": 3.742971,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-722",
+        "name": [
+          {
+            "text": "Peujozef",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.032182,
+        "lon": 3.744422,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-731",
+        "name": [
+          {
+            "text": "Hupmet",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.222646,
+        "lon": 4.436669,
+        "post_code": "2060",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-768",
+        "name": [
+          {
+            "text": "Bollie",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.039108,
+        "lon": 3.767434,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-818",
+        "name": [
+          {
+            "text": "zero",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.027803,
+        "lon": 3.757888,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-848",
+        "name": [
+          {
+            "text": "Wookie",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.033974,
+        "lon": 3.745131,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-881",
+        "name": [
+          {
+            "text": "ZafiraMerelbeke",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.008334,
+        "lon": 3.755358,
+        "post_code": "9820",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-902",
+        "name": [
+          {
+            "text": "Berrie",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.048314,
+        "lon": 3.744977,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-920",
+        "name": [
+          {
+            "text": "DeepBlue",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.73494,
+        "lon": 4.247689,
+        "post_code": "1500",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-927",
+        "name": [
+          {
+            "text": "qBerlectro",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.086574,
+        "lon": 3.635495,
+        "post_code": "9921",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-938",
+        "name": [
+          {
+            "text": "Fillemon",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.05447,
+        "lon": 3.752001,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-941",
+        "name": [
+          {
+            "text": "LeenEenS",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.042631,
+        "lon": 3.753766,
+        "post_code": "9050",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-961",
+        "name": [
+          {
+            "text": "MadaGASkar",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.057601,
+        "lon": 3.696642,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-964",
+        "name": [
+          {
+            "text": "Arthur",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.054922,
+        "lon": 3.691227,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-969",
+        "name": [
+          {
+            "text": "Sander",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.06218,
+        "lon": 3.694908,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-972",
+        "name": [
+          {
+            "text": "Ropsmobiel",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.058859,
+        "lon": 3.750543,
+        "post_code": "9040",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-989",
+        "name": [
+          {
+            "text": "Papegaai",
+            "language": "nl"
+          }
+        ],
+        "lat": 51.050573,
+        "lon": 3.714291,
+        "post_code": "9000",
+        "is_virtual_station": true
+      },
+      {
+        "station_id": "st-990",
+        "name": [
+          {
+            "text": "Belleke",
+            "language": "nl"
+          }
+        ],
+        "lat": 50.891704,
+        "lon": 3.114134,
+        "post_code": "8800",
+        "is_virtual_station": true
+      }
+    ]
+  }
+}

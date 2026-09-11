@@ -1,0 +1,815 @@
+{
+ "toelichting": "Geschat rijbereik bij gemengd gebruik per elektrisch merk+model, door scripts/haal_bereik.py: bruikbare batterij gedeeld door gemiddeld verbruik uit Open EV Data. Geen WLTP. Een marge waar de batterijversie niet bekend is; het bouwjaar telt mee met drie jaar speling. Sleutel: merk|model|bouwjaar, of merk|model voor een handmatige regel die voor elk jaar geldt. Handmatige regels (\"bron\": \"handmatig\") laat het script ongemoeid; zet \"km\": null om een model bewust geen bereik te geven.",
+ "bron": {
+  "naam": "Open EV Data",
+  "pagina": "https://github.com/KilowattApp/open-ev-data",
+  "licentie": "MIT met naamsvermelding"
+ },
+ "modellen": {
+  "Citroën|Berlingo|2017": {
+   "km": [
+    100,
+    100
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "E-Berlingo Multispace"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Citroën|E Berlingo|2018": {
+   "km": [
+    100,
+    100
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "E-Berlingo Multispace"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Citroën|e-Berlingo|2022": {
+   "km": [
+    230,
+    230
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "e-Berlingo M 50 kWh",
+    "e-Berlingo XL 50 kWh"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Citroën|e-Berlingo|2023": {
+   "km": [
+    230,
+    230
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "e-Berlingo M 50 kWh",
+    "e-Berlingo XL 50 kWh"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Citroën|eC3|2024": {
+   "km": [
+    260,
+    260
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "e-C3",
+    "e-C3 Aircross"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Dacia|Spring Extreme Electric 65 - EcoSmart|2025": {
+   "km": [
+    160,
+    160
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": false,
+   "varianten": [
+    "electric"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Dongfeng|Box|2025": {
+   "km": [
+    190,
+    250
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "Box 31.4 kWh",
+    "Box 42.3 kWh"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Kia|e-Niro 64.8 kWh Pure|2022": {
+   "km": [
+    370,
+    370
+   ],
+   "versie_bekend": true,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "e-Niro 64 kWh"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Kia|e-Niro|2020": {
+   "km": [
+    240,
+    370
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "e-Niro 39 kWh",
+    "e-Niro 39 kWh 11 kW-AC",
+    "e-Niro 64 kWh"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Kia|eNiro|2020": {
+   "km": [
+    240,
+    370
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "e-Niro 39 kWh",
+    "e-Niro 39 kWh 11 kW-AC",
+    "e-Niro 64 kWh"
+   ],
+   "bron": "open-ev-data"
+  },
+  "MG|MG5|2023": {
+   "km": [
+    260,
+    340
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "MG5 EV",
+    "MG5 EV Long Range",
+    "MG5 Electric Long Range",
+    "MG5 Electric Standard Range"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Nissan|LEAF 40KWH|2019": {
+   "km": [
+    230,
+    230
+   ],
+   "versie_bekend": true,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "Leaf",
+    "Leaf 40 kWh"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Nissan|Leaf|2019": {
+   "km": [
+    230,
+    360
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "Leaf",
+    "Leaf 40 kWh",
+    "Leaf e+",
+    "Leaf e+ 62 kWh"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Nissan|Leaf|2020": {
+   "km": [
+    230,
+    360
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "Leaf",
+    "Leaf 40 kWh",
+    "Leaf e+",
+    "Leaf e+ 62 kWh"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Nissan|Leaf|2021": {
+   "km": [
+    230,
+    360
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "Leaf",
+    "Leaf 40 kWh",
+    "Leaf e+",
+    "Leaf e+ 62 kWh"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Opel|Corsa-e|2020": {
+   "km": [
+    290,
+    290
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "Corsa-e"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Peugeot E|208|2023": {
+   "km": [
+    280,
+    310
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "e-208",
+    "e-208 11 kW-AC",
+    "e-208 50 kWh",
+    "e-208 51 kWh",
+    "e-208 7,2 kW-AC"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Peugeot|E-208|2021": {
+   "km": [
+    280,
+    310
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "e-208",
+    "e-208 11 kW-AC",
+    "e-208 50 kWh",
+    "e-208 51 kWh",
+    "e-208 7,2 kW-AC"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Peugeot|E208|2022": {
+   "km": [
+    280,
+    310
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "e-208",
+    "e-208 11 kW-AC",
+    "e-208 50 kWh",
+    "e-208 51 kWh",
+    "e-208 7,2 kW-AC"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Peugeot|Partner Full Electric|2020": {
+   "km": [
+    110,
+    110
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": false,
+   "varianten": [
+    "Partner"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Renault|Kangoo ZE|2016": {
+   "km": [
+    170,
+    170
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": false,
+   "varianten": [
+    "Kangoo ZE"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Renault|Mégane E-tech|2022": {
+   "km": [
+    250,
+    380
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "Megane E-Tech EV40",
+    "Megane E-Tech EV40 130hp",
+    "Megane E-Tech EV60",
+    "Megane E-Tech EV60 130hp",
+    "Megane E-Tech EV60 220hp"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Renault|New Zoë|2019": {
+   "km": [
+    250,
+    320
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "Zoe Q90",
+    "Zoe R110",
+    "Zoe R110 ZE40",
+    "Zoe R110 ZE50",
+    "Zoe R135 ZE50",
+    "Zoe R90"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Renault|R5|2025": {
+   "km": [
+    250,
+    320
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "5 E-Tech 40kWh 120hp",
+    "5 E-Tech 40kWh 95hp",
+    "5 E-Tech 52kWh 150hp"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Renault|Zoe|2016": {
+   "km": [
+    130,
+    320
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "Zoe Q 210",
+    "Zoe Q210",
+    "Zoe Q90",
+    "Zoe R 240",
+    "Zoe R110",
+    "Zoe R110 ZE40",
+    "Zoe R110 ZE50",
+    "Zoe R135 ZE50",
+    "Zoe R240",
+    "Zoe R90",
+    "Zoe R90 Entry",
+    "Zoe ZE40 R110",
+    "Zoe ZE50 R110",
+    "Zoe ZE50 R135"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Renault|Zoe|2017": {
+   "km": [
+    140,
+    320
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "Zoe Q90",
+    "Zoe R 240",
+    "Zoe R110",
+    "Zoe R110 ZE40",
+    "Zoe R110 ZE50",
+    "Zoe R135 ZE50",
+    "Zoe R240",
+    "Zoe R90",
+    "Zoe R90 Entry",
+    "Zoe ZE40 R110",
+    "Zoe ZE50 R110",
+    "Zoe ZE50 R135"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Renault|Zoe|2018": {
+   "km": [
+    140,
+    320
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "Zoe Q90",
+    "Zoe R 240",
+    "Zoe R110",
+    "Zoe R110 ZE40",
+    "Zoe R110 ZE50",
+    "Zoe R135 ZE50",
+    "Zoe R240",
+    "Zoe R90",
+    "Zoe R90 Entry",
+    "Zoe ZE40 R110",
+    "Zoe ZE50 R110",
+    "Zoe ZE50 R135"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Renault|Zoe|2019": {
+   "km": [
+    140,
+    320
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "Zoe Q90",
+    "Zoe R110",
+    "Zoe R110 ZE40",
+    "Zoe R110 ZE50",
+    "Zoe R135 ZE50",
+    "Zoe R90",
+    "Zoe R90 Entry",
+    "Zoe ZE40 R110",
+    "Zoe ZE50 R110",
+    "Zoe ZE50 R135"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Renault|Zoe|2020": {
+   "km": [
+    140,
+    320
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "Zoe Q90",
+    "Zoe R110",
+    "Zoe R110 ZE40",
+    "Zoe R110 ZE50",
+    "Zoe R135 ZE50",
+    "Zoe R90",
+    "Zoe R90 Entry",
+    "Zoe ZE40 R110",
+    "Zoe ZE50 R110",
+    "Zoe ZE50 R135"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Renault|Zoe|2021": {
+   "km": [
+    250,
+    320
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "Zoe R110",
+    "Zoe R110 ZE40",
+    "Zoe R110 ZE50",
+    "Zoe R135 ZE50",
+    "Zoe ZE40 R110",
+    "Zoe ZE50 R110",
+    "Zoe ZE50 R135"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Renault|Zoé R110 41kWh (200-250km rijbereik, max 22Kw laden)|2019": {
+   "km": [
+    250,
+    250
+   ],
+   "versie_bekend": true,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "Zoe Q90",
+    "Zoe R110",
+    "Zoe R110 ZE40",
+    "Zoe R90"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Seat|Mii Electric Plus|2020": {
+   "km": [
+    200,
+    200
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "Mii Electric",
+    "Mii Electric CCS",
+    "electric"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Skoda|Enyaq|2023": {
+   "km": [
+    280,
+    480
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "Enyaq 50",
+    "Enyaq 60",
+    "Enyaq 85",
+    "Enyaq 85x",
+    "Enyaq Coupe 60",
+    "Enyaq Coupe 85",
+    "Enyaq Coupe 85x",
+    "Enyaq Coupe RS",
+    "Enyaq Coupe iV 60",
+    "Enyaq Coupe iV 80",
+    "Enyaq Coupe iV 80x",
+    "Enyaq Coupe iV RS",
+    "Enyaq RS",
+    "Enyaq iV 50",
+    "Enyaq iV 55 kWh",
+    "Enyaq iV 60",
+    "Enyaq iV 62 kWh 100 kW-DC",
+    "Enyaq iV 62 kWh 50 kW-DC",
+    "Enyaq iV 80",
+    "Enyaq iV 80x",
+    "Enyaq iV 82 kWh 125 kW-DC",
+    "Enyaq iV 82 kWh 50 kW-DC",
+    "Enyaq iV RS"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Tesla|Model 3 SR+|2020": {
+   "km": [
+    330,
+    500
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "3",
+    "3 performance",
+    "Model 3",
+    "Model 3 LR",
+    "Model 3 Long Range Dual Motor",
+    "Model 3 Long Range Performance",
+    "Model 3 Performance",
+    "Model 3 RWD",
+    "Model 3 SR+",
+    "Model 3 Standard Range Plus",
+    "Model 3 Standard Range Plus LFP"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Tesla|Model 3|2019": {
+   "km": [
+    330,
+    490
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "3",
+    "3 performance",
+    "Model 3 LR",
+    "Model 3 Long Range Performance",
+    "Model 3 Long Range RWD",
+    "Model 3 Performance",
+    "Model 3 RWD",
+    "Model 3 SR+",
+    "Model 3 Standard Range Plus",
+    "Model 3 Standard Range Plus LFP"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Tesla|Model 3|2020": {
+   "km": [
+    330,
+    500
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "3",
+    "3 performance",
+    "Model 3",
+    "Model 3 LR",
+    "Model 3 Long Range Dual Motor",
+    "Model 3 Long Range Performance",
+    "Model 3 Long Range RWD",
+    "Model 3 Performance",
+    "Model 3 RWD",
+    "Model 3 SR+",
+    "Model 3 Standard Range Plus",
+    "Model 3 Standard Range Plus LFP"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Tesla|Model 3|2024": {
+   "km": [
+    330,
+    540
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "3",
+    "3 performance",
+    "Model 3",
+    "Model 3 LR",
+    "Model 3 Long Range Dual Motor",
+    "Model 3 Long Range RWD",
+    "Model 3 Performance",
+    "Model 3 RWD",
+    "Model 3 SR+",
+    "Model 3 Standard Range Plus"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Tesla|Model Y (wit)|2023": {
+   "km": [
+    350,
+    500
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "Model Y",
+    "Model Y Long Range",
+    "Model Y Long Range AWD Launch Series",
+    "Model Y Long Range Dual Motor",
+    "Model Y Performance",
+    "y",
+    "y performance"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Tesla|Model Y|2024": {
+   "km": [
+    350,
+    450
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "Model Y",
+    "Model Y Long Range AWD Launch Series",
+    "Model Y Long Range Dual Motor",
+    "Model Y Performance",
+    "y",
+    "y performance"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Volkswagen|ID.3 Pro|2020": {
+   "km": [
+    270,
+    460
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "ID.3 1st",
+    "ID.3 45 kWh",
+    "ID.3 58 kWh",
+    "ID.3 77 kWh",
+    "ID.3 Pro",
+    "ID.3 Pro Performance",
+    "ID.3 Pro S",
+    "ID.3 Pro S - 4 Seats",
+    "ID.3 Pro S - 5 Seats",
+    "ID.3 Pure Performance",
+    "pro",
+    "pro performance"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Volkswagen|ID.3|2020": {
+   "km": [
+    270,
+    460
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "ID.3 1st",
+    "ID.3 45 kWh",
+    "ID.3 58 kWh",
+    "ID.3 77 kWh",
+    "ID.3 Pro",
+    "ID.3 Pro Performance",
+    "ID.3 Pro S",
+    "ID.3 Pro S - 4 Seats",
+    "ID.3 Pro S - 5 Seats",
+    "ID.3 Pure Performance"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Volkswagen|ID.3|2021": {
+   "km": [
+    270,
+    460
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "ID.3 1st",
+    "ID.3 45 kWh",
+    "ID.3 58 kWh",
+    "ID.3 77 kWh",
+    "ID.3 GTX",
+    "ID.3 GTX Performance",
+    "ID.3 Pro",
+    "ID.3 Pro Performance",
+    "ID.3 Pro S",
+    "ID.3 Pro S - 4 Seats",
+    "ID.3 Pro S - 5 Seats",
+    "ID.3 Pure",
+    "ID.3 Pure Performance"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Volkswagen|ID.3|2025": {
+   "km": [
+    320,
+    460
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "ID.3 GTX",
+    "ID.3 GTX Performance",
+    "ID.3 Pro",
+    "ID.3 Pro S",
+    "ID.3 Pro S - 4 Seats",
+    "ID.3 Pure"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Volkswagen|ID.4 Pro 150|2022": {
+   "km": [
+    290,
+    430
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "ID.4 1st",
+    "ID.4 GTX",
+    "ID.4 Pro 4MOTION",
+    "ID.4 Pro Performance",
+    "ID.4 Pure",
+    "ID.4 Pure Performance",
+    "pro",
+    "pro performance"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Volkswagen|ID3|2020": {
+   "km": [
+    270,
+    460
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "ID.3 1st",
+    "ID.3 45 kWh",
+    "ID.3 58 kWh",
+    "ID.3 77 kWh",
+    "ID.3 Pro",
+    "ID.3 Pro Performance",
+    "ID.3 Pro S",
+    "ID.3 Pro S - 4 Seats",
+    "ID.3 Pro S - 5 Seats",
+    "ID.3 Pure Performance"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Volkswagen|id.4 77 kwh pro 1st 204 AT|2020": {
+   "km": [
+    400,
+    430
+   ],
+   "versie_bekend": true,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "ID.4 1st",
+    "ID.4 GTX",
+    "ID.4 Pro Performance",
+    "pro",
+    "pro performance"
+   ],
+   "bron": "open-ev-data"
+  },
+  "Volvo|EX30|2024": {
+   "km": [
+    280,
+    370
+   ],
+   "versie_bekend": false,
+   "jaar_gebruikt": true,
+   "varianten": [
+    "EX30 Cross Country",
+    "EX30 Single Motor",
+    "EX30 Single Motor ER",
+    "EX30 Single Motor ER Ultra",
+    "EX30 Twin Motor Performance"
+   ],
+   "bron": "open-ev-data"
+  }
+ }
+}
