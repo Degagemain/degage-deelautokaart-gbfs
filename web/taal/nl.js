@@ -83,13 +83,19 @@
     "kop.afspraken": "Afspraken",
     "kop.euronorm": "Euronorm",
     "kop.bouwjaar": "Bouwjaar",
-    "kop.mobiscore": "Mobiscore",
-    "mobiscore.uitleg": "Hoe goed de standplaats ligt tegenover winkels, scholen, zorg, vrije " +
-                        "tijd en openbaar vervoer, volgens de Vlaamse overheid. Elke stand " +
-                        "toont die score en alles daarboven.",
-    "mobi.alle": "alle standplaatsen",
-    "mobi.vanaf": "vanaf {n} op 10",
-    "mobi.aria": "Minimale Mobiscore",
+    "kop.bushalte": "Afstand tot een bushalte",
+    "kop.station": "Afstand tot een treinstation",
+    "bushalte.uitleg": "De hemelsbrede afstand van de standplaats tot de dichtstbijzijnde bus- " +
+                       "of tramhalte waar vaste lijnen stoppen. Elke stand toont die afstand " +
+                       "en alles daaronder. Te voet is de weg altijd wat langer.",
+    "station.uitleg": "De hemelsbrede afstand van de standplaats tot het dichtstbijzijnde " +
+                      "treinstation. Elke stand toont die afstand en alles daaronder. Naar een " +
+                      "station fietst of rijdt men; vandaar dat de schaal verder reikt dan bij " +
+                      "een halte.",
+    "afstand.alle": "alle standplaatsen",
+    "afstand.hoogstens": "hoogstens {afstand}",
+    "bus.aria": "Maximale afstand tot een bus- of tramhalte",
+    "trein.aria": "Maximale afstand tot een treinstation",
     "jaar.alle": "alle bouwjaren",
     "jaar.vanaf": "vanaf {jaar}",
     "jaar.enkel": "enkel {jaar}",
@@ -125,6 +131,8 @@
     "instellingen.scrollSluit": "Filters sluiten bij scrollen in de kaart",
     "instellingen.legende": "Melding over beschikbaarheid tonen",
     "instellingen.taal": "Taal",
+    "melden.knop": "Probleem melden",
+    "melden.titel": "Probleem melden of feedback geven — opent github.com in een nieuw tabblad",
 
     "knop.alles": "Alles in beeld — uitzoomen tot de volledige kaart",
     "knop.allesKort": "Alles in beeld",

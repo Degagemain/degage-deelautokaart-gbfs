@@ -83,13 +83,19 @@
     "kop.afspraken": "Arrangements",
     "kop.euronorm": "Euro standard",
     "kop.bouwjaar": "Year built",
-    "kop.mobiscore": "Mobiscore",
-    "mobiscore.uitleg": "How close the parking spot is to shops, schools, care, leisure and " +
-                        "public transport, according to the Flemish government. Each step " +
-                        "shows that score and everything above.",
-    "mobi.alle": "all parking spots",
-    "mobi.vanaf": "{n} out of 10 or higher",
-    "mobi.aria": "Minimum Mobiscore",
+    "kop.bushalte": "Distance to a bus stop",
+    "kop.station": "Distance to a train station",
+    "bushalte.uitleg": "The straight-line distance from the parking spot to the nearest bus or " +
+                       "tram stop served by scheduled lines. Each step shows that distance and " +
+                       "everything below it. On foot the walk is always a bit longer.",
+    "station.uitleg": "The straight-line distance from the parking spot to the nearest railway " +
+                      "station. Each step shows that distance and everything below it. People " +
+                      "cycle or drive to a station, which is why this scale reaches further " +
+                      "than the one for a stop.",
+    "afstand.alle": "all parking spots",
+    "afstand.hoogstens": "{afstand} or less",
+    "bus.aria": "Maximum distance to a bus or tram stop",
+    "trein.aria": "Maximum distance to a railway station",
     "jaar.alle": "all years",
     "jaar.vanaf": "{jaar} or newer",
     "jaar.enkel": "only {jaar}",
@@ -125,6 +131,8 @@
     "instellingen.scrollSluit": "Close filters when scrolling the map",
     "instellingen.legende": "Show the availability notice",
     "instellingen.taal": "Language",
+    "melden.knop": "Report a problem",
+    "melden.titel": "Report a problem or give feedback — opens github.com in a new tab",
 
     "knop.alles": "Show everything — zoom out to the whole map",
     "knop.allesKort": "Show everything",

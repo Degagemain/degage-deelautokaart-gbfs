@@ -21,6 +21,20 @@ licentie erbij in de metadata. Dit script:
 · de kaart TOONT die naamsvermelding bij de foto. Dat is geen beleefdheid maar de
   voorwaarde van de licentie — net als de OSM-attributie op de kaart zelf.
 
+Wanneer de vloot de wagen anders noemt dan Commons
+--------------------------------------------------
+De dump noemt een wagen zoals de leden hem kennen; Commons kent hem onder de naam die
+de fabrikant gebruikt. Meestal is dat hetzelfde, soms niet: de A-150 van 2007 heet op
+Commons nergens zo — daar is het een Mercedes-Benz W169. Zoeken op "Mercedes A-150"
+levert dan een vooroorlogse Grosser Mercedes op, en die wordt (terecht) afgekeurd.
+Daar bestaat geen regel voor, want het is geen patroon maar kennis van auto's. Zet zo'n
+geval met de hand in "zoek_als" in fotos.json:
+
+    "zoek_als": { "Mercedes|A-150": "Mercedes-Benz|W169" }
+
+Links de sleutel zoals de vloot hem kent, rechts waarop gezocht moet worden. De foto
+komt onder de LINKERsleutel in het manifest, want daar vraagt de kaart hem mee op.
+
 Snel bij een tweede run
 -----------------------
 Alles wat al opgehaald is, staat in `web/fotos/fotos.json`. Bij een volgende run wordt
@@ -448,12 +462,14 @@ def main() -> int:
     # bekeken worden toch al voorzien.
     volgorde = sorted(combos, key=lambda k: (-combos[k], k))
 
-    manifest = {"fotos": {}, "niet_gevonden": [], "geweigerd": []}
+    manifest = {"fotos": {}, "niet_gevonden": [], "geweigerd": [], "zoek_als": {}}
     if manifest_pad.exists():
         bestaand = json.loads(manifest_pad.read_text(encoding="utf-8"))
-        # De afwijslijst overleeft ook --opnieuw: ze is met de hand gemaakt en
-        # zou anders bij elke volledige herophaling weggegooid worden.
+        # De afwijslijst en de handmatige zoektermen overleven ook --opnieuw: ze zijn
+        # met de hand gemaakt en zouden anders bij elke volledige herophaling
+        # weggegooid worden.
         manifest["geweigerd"] = bestaand.get("geweigerd", [])
+        manifest["zoek_als"] = bestaand.get("zoek_als", {})
         if not args.opnieuw:
             manifest["fotos"] = bestaand.get("fotos", {})
             manifest["niet_gevonden"] = bestaand.get("niet_gevonden", [])
@@ -461,6 +477,19 @@ def main() -> int:
     geweigerd = set(manifest["geweigerd"])
     if geweigerd:
         zeg(f"afwijslijst: {len(geweigerd)} bestand(en) worden nooit gekozen")
+
+    # Een sleutel met een handmatige zoekterm staat nooit in de misserlijst. Wie zo'n
+    # regel toevoegt, doet dat juist voor een sleutel die eerder niets opleverde; bleef
+    # de misser staan, dan werd de nieuwe zoekterm nooit geprobeerd. De prijs is klein:
+    # zodra de zoekterm wél een foto oplevert staat die in `fotos` en wordt er niet meer
+    # gezocht. Alleen een zoekterm die niets vindt kost elke run één verzoek — en die
+    # mag opvallen, want dan klopt de regel niet.
+    zoek_als = {k: v for k, v in manifest["zoek_als"].items() if "|" in k and "|" in v}
+    if zoek_als:
+        manifest["niet_gevonden"] = [k for k in manifest["niet_gevonden"]
+                                     if k not in zoek_als]
+        zeg(f"zoektermen: {len(zoek_als)} combinatie(s) worden onder een andere naam "
+            "gezocht")
 
     # Herkeuring: de al opgehaalde foto's opnieuw langs de huidige zeven halen. Dat kost
     # geen enkel netwerkverzoek — de bestandsnaam staat in het manifest — en zorgt dat een
@@ -566,12 +595,16 @@ def main() -> int:
 
         treffer = None
         gebruikt = model
-        for variant, modeldeel in zoekvarianten(merk, model):
+        zoekmerk, zoekmodel = merk, model
+        if sleutel in zoek_als:
+            zoekmerk, zoekmodel = zoek_als[sleutel].split("|", 1)
+            zeg(f"      met de hand gezocht als {zoekmerk} {zoekmodel}")
+        for variant, modeldeel in zoekvarianten(zoekmerk, zoekmodel):
             treffer = zoek_foto(variant, merk, model, modeldeel, geweigerd)
             time.sleep(PAUZE_S)
             if treffer:
                 gebruikt = modeldeel
-                if variant != f"{merk} {model}":
+                if variant != f"{zoekmerk} {zoekmodel}":
                     zeg(f"      geen treffer op de volledige naam; gezocht op {variant!r}")
                 break
 

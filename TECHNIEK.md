@@ -130,7 +130,8 @@ laden()
 
 Alles wat de kaart weet, staat in het object **`staat`**. De gekozen filters leven daar als
 `Set`'s (`gekozenBrandstof`, `gekozenSoort`, `gekozenBak`, `gekozenVlaggen`) en als losse
-ondergrenzen (`minZit`, `minNorm`, `jaarVan`, `minMobi`). De aangevinkte vakjes in de
+ondergrenzen (`minZit`, `minNorm`, `jaarVan`) en bovengrenzen (`maxBus`, `maxTrein`). De
+aangevinkte vakjes in de
 opmaak zijn daar een afspiegeling van, nooit de bron — daarom kan de filterlijst opnieuw
 getekend worden (bij een taalwissel) zonder dat er een keuze sneuvelt.
 
@@ -158,9 +159,16 @@ wordt niet meer getoond.
 ## 6. Filters
 
 `wagenPast(w)` is de enige plek waar beslist wordt of een auto door de filters komt.
-De Mobiscore-ondergrens (`minMobi`) is de enige die niet naar de auto kijkt maar naar zijn
-standplaats (`mobiscoreVan()`); horen er geen OV-gegevens bij de feed, dan verdwijnt die
-schuif (`bouwMobiscore()`).
+De twee OV-bovengrenzen (`maxBus` en `maxTrein`) zijn de enige die niet naar de auto kijken
+maar naar zijn standplaats (`haltAfstandVan()`, `stationAfstandVan()`); horen er geen
+OV-gegevens bij de feed, dan verdwijnen die schuiven (`bouwAfstanden()`).
+
+Hun standen komen uit `AFSTAND_LADDER` — ronde afstanden van 250 m tot 10 km — waarvan
+`afstandDrempels()` alles wegsnijdt wat op of boven de verste standplaats ligt: een stand die
+niets wegfiltert, doet de schuif over haar bereik liegen. De ladder staat **aflopend**, zodat
+verder naar rechts strenger is, net als bij elke andere schuif hier. Dat de filters op iets
+kunnen staan, hangt aan `haal_ov.py`: dat zoekt tot 10 km door, zodat er bij élke standplaats
+een gemeten afstand staat in plaats van een gat.
 Tussen groepen geldt EN, binnen een groep OF — behalve bij de vlaggen, waar ook binnen de
 groep EN geldt. De redenen achter die regels, en achter het ontbreken van een negatief
 filter, staan in `FUNCTIONEEL.md`.
@@ -209,9 +217,21 @@ popup kwam dan half boven het scherm uit. Eerst stilstaan, dan openen.
 
 ### De balk met dichtstbijzijnde auto's
 
+De balk is **twee elementen**: `.dichtbij` is de ruimte waarin ze mag staan — onzichtbaar,
+`pointer-events: none`, en de container waarop de kaartjes hun containerquery doen — en
+`.dichtbij__doos` is de balk zelf, niet breder dan haar inhoud. De ruimte houdt links altijd
+de kolom van het filterpaneel vrij (404 px), ook met dichte filters: zo verspringt er niets
+bij het openklappen. Alleen `.paneel.is-klein` geeft die kolom terug.
+
+Dat onderscheid zit ook in het script: waar het om een plek op het scherm gaat — `bijDeBalk()`,
+`vrijeRuimte()`, `meetDichtbij()` — wordt `balkDoos()` gemeten en niet `#dichtbij`, want naast
+de doos ligt gewoon kaart.
+
 `dichtbijBron` houdt bij waardoor de balk openstaat: `"zoek"` (na een zoekopdracht, wint
-altijd), `"auto"` (vanzelf, bij hoogstens `DICHTBIJ_MAX_IN_BEELD` auto's in beeld) of
-`null`.
+altijd), `"auto"` (vanzelf, bij hoogstens `DICHTBIJ_MAX_IN_BEELD` auto's in beeld óf vanaf
+zoom `DICHTBIJ_ZOOM`) of `null`. Die zoomondergrens is er voor het centrum van Gent: daar
+blijft de telling ook op buurtniveau boven de honderd, en zonder hem verscheen de balk er
+nooit.
 
 De muisafhandeling kijkt naar snelheid, niet alleen naar positie:
 

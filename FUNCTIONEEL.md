@@ -124,7 +124,8 @@ vervoer rijdt:
 > Bushalte op 480 meter (5/u)  
 > Station Melsele op 1,5 kilometer (2/u)
 
-De regel met het station staat er alleen als er een binnen drie kilometer ligt.
+De regel met het station staat er alleen als er een binnen tien kilometer ligt — en dat is
+bij elke standplaats zo.
 
 Tussen haakjes staat hoeveel er per uur vertrekt, **per richting**. Rijdt er minder dan één
 per uur, dan staat er "(<1/u)"; is de halte ook een tramhalte, dan heet ze zo.
@@ -147,12 +148,12 @@ Twee kanttekeningen:
 **De regels eronder** zijn onze eigen feiten, voor het deel dat over openbaar vervoer gaat —
 ze zeggen *waarom* een plek scoort zoals ze scoort:
 
-- **De dichtste halte met vaste lijnen**, tot een kilometer ver, en hoeveel bussen of trams
+- **De dichtste halte met vaste lijnen**, en hoeveel bussen of trams
   er daar per uur **per richting** vertrekken — wat je ervaart als je aan de halte staat.
   De twee kanten van de straat zijn de twee richtingen; we tonen de drukste kant. De naam
   van de halte en het aantal haltes in de buurt staan er bewust niet bij: wie een plek
   beoordeelt, wil weten of er iets rijdt en hoe vaak.
-- **Het dichtste station**, tot drie kilometer — daar fiets je naartoe — en ongeveer hoeveel treinen er per uur
+- **Het dichtste station** — daar fiets of rijd je naartoe — en ongeveer hoeveel treinen er per uur
   **per richting** stoppen: alle treinen van het station gedeeld door twee. Per perron
   tellen gaat daar niet — een groot station heeft een tiental perrons — dus het is een
   benadering.
@@ -211,10 +212,15 @@ in het zoekveld terecht en de filters gaan open.
 Onderaan verschijnt een balk met de **vijf dichtstbijzijnde auto's**, met per auto de
 naam, het model, de gemeente, de brandstof en de afstand in vogelvlucht.
 
-Staan de filters dicht, dan loopt de balk door tot onder het paneel en is er plaats voor
-bredere kaartjes; staan ze open, dan begint ze rechts van het paneel. Er komt nooit een
-schuifbalk: de kaartjes delen de breedte, en wat echt niet meer past valt weg — de verste
-auto eerst. Op een smal scherm zie je er dus twee of drie.
+De balk begint rechts van het paneel en blijft daar, of de filters nu open staan of niet:
+zo verspringt er niets onder je cursor op het moment dat je ze openklapt. Links ervan is
+gewoon kaart — je kunt daar slepen en zoomen alsof er niets staat. Is het paneel
+geminimaliseerd, dan komt die plaats vrij en loopt de balk door tot de linkerrand.
+
+De balk is ook niet breder dan wat erin staat: twee auto's leveren een doosje van twee
+kaartjes, geen lege strook over de hele kaart. Er komt nooit een schuifbalk — hoeveel
+kaartjes er passen hangt af van de plaats die er is, en wat er niet meer bij kan valt weg,
+de verste auto eerst. Op een smal scherm zie je er dus twee of drie.
 
 Die balk komt op twee manieren tevoorschijn:
 
@@ -256,9 +262,18 @@ scrollt of veegt — dat laatste is uit te zetten in de instellingen.
 | **Versnellingsbak** | manueel of automatisch |
 | **Toebehoren** | trekhaak, fietsdrager, kinderzitje, gps, bed, aanhangwagen |
 | **Afspraken** | huisdieren toegelaten, leren autorijden |
-| **Mobiscore** | een ondergrens: "vanaf 7 op 10". Geldt voor de standplaats, niet voor de auto |
+| **Afstand tot een bushalte** | een bovengrens: "hoogstens 500 meter". Geldt voor de standplaats, niet voor de auto |
+| **Afstand tot een treinstation** | een bovengrens: "hoogstens 2 kilometer". Reikt verder, want naar een station fiets of rijd je |
 | **Euronorm** | een ondergrens, met elektrisch en hybride bovenaan (zie hieronder) |
 | **Bouwjaar** | een ondergrens: "vanaf 2018" toont 2018 en later |
+
+**De twee afstandsfilters** horen bij de standplaats en niet bij de auto: ze zijn er voor wie
+de auto met bus of trein combineert — heen met de deelauto, terug met de trein, of een auto
+zoeken die te voet vanaf de halte te bereiken is. De schuif toont alleen standen die iets
+doen: ligt élke standplaats binnen twee kilometer van een halte, dan begint de halteschuif
+daar en niet bij tien kilometer. De afstand is in vogelvlucht; te voet is de weg altijd wat
+langer. Een standplaats waar geen halte of station van gemeten is, valt buiten élke
+bovengrens — we weten dan niet of ze eraan voldoet.
 
 **Hoe ze samenwerken.** Binnen één groep is het "of" — vink je benzine én diesel aan, dan
 zie je allebei. Tussen groepen is het "en" — een bestelwagen op diesel moet aan allebei

@@ -124,6 +124,30 @@
   .alles-knop svg { width: 15px; height: 15px; }
   .alles-knop:hover { color: var(--inkt); }
 
+  /* ---------- melden ---------------------------------------------------------------
+     Een zwevende knop links naast de kaartknoppen, op gelijke hoogte met de plusknop.
+     Niet in het instellingendoosje: wie een fout ziet, ziet hem terwijl hij naar de
+     kaart kijkt — dan moet de uitweg dáár staan en niet achter een tandwiel. Met
+     woorden erbij, want een pictogram alleen vertelt niet waar je op drukt.
+
+     De afstand tot de rand: de kaartknoppen houden 10 px marge en zijn ten hoogste
+     30 px breed (34 px op een aanraakscherm), dus 52 px zet de knop er net links van,
+     hoe breed die balk ook uitvalt. */
+  .melden {
+    position: absolute; z-index: 1000;
+    top: 10px; right: 52px;
+    display: flex; align-items: center; gap: 7px;
+    height: 32px; padding: 0 12px;
+    font-family: var(--font); font-size: 13px; font-weight: 600; line-height: 1;
+    color: #fff; text-decoration: none; white-space: nowrap;
+    background: var(--groen);
+    border: 1px solid var(--groen-diep); border-radius: 999px;
+    box-shadow: var(--schaduw);
+  }
+  .melden svg { flex: 0 0 auto; width: 16px; height: 16px; }
+  .melden:hover { background: var(--groen-diep); }
+  .melden:focus-visible { outline: 2px solid var(--groen-diep); outline-offset: 2px; }
+
   .telling {
     margin: 10px 0 0;
     font-size: 13px; color: var(--inkt-zacht);
@@ -345,24 +369,43 @@
   /* ---------- balk met dichtstbijzijnde wagens --------------------------------------
      Onderaan, want de kaart eromheen moet zichtbaar blijven: de lijst is een antwoord
      op "wat staat er dicht bij dit adres", niet een tweede paneel. */
+  /* Twee lagen, en dat heeft een reden. `.dichtbij` is de RUIMTE waarin de balk mag staan:
+     onzichtbaar, altijd even breed, en de container waarop de kaartjes hieronder hun query
+     doen. `.dichtbij__doos` is de balk zelf, en die is niet breder dan wat erin staat.
+
+     Waarom de ruimte vast staat en de doos niet: een balk die van rand tot rand loopt met
+     twee kaartjes erin is drie kwart leegte over de kaart, en een balk die van breedte
+     verspringt zodra je de filters opent, laat de kaartjes onder je cursor wegschuiven. De
+     ruimte houdt daarom links altijd plaats vrij voor het filterpaneel op zijn volle hoogte
+     (12 + 380 + 12), ook als dat nu dicht staat — dan is die plaats gewoon kaart. Alleen
+     een geminimaliseerd paneel geeft ze terug, want daar komt niets meer uit open.
+
+     De containerquery hoort op de ruimte en niet op de doos: hoevéél kaartjes er passen,
+     hangt af van de plaats die er ís, niet van de breedte die ze daarna innemen. Een query
+     op een doos die zich naar haar inhoud voegt, zou naar zichzelf kijken. */
   .dichtbij {
     position: absolute; z-index: 1000;
     /* Boven de OSM-attributie blijven: die is een licentievoorwaarde en mag niet
        bedekt worden. Ze is ongeveer 17 px hoog en staat rechtsonder. */
-    /* Met dichte filters is het paneel niet hoger dan zijn kop, en loopt de balk eronder
-       door tot de linkerrand: meer plaats voor kaartjes. Staan de filters open, dan reikt
-       het paneel tot onderaan en begint de balk rechts ervan: 12 + 380 + 12. De klasse
-       `toont-filters` zet zetFilters() in het script. */
-    left: 12px; right: 12px; bottom: 34px;
+    left: 404px; right: 12px; bottom: 34px;
+    display: flex;
+    /* De ruimte zelf vangt geen klikken: naast de doos ligt gewoon kaart, en daar hoort
+       slepen en zoomen te werken alsof er niets staat. */
+    pointer-events: none;
+    container: dichtbij / inline-size;
+  }
+  .paneel.is-klein ~ .dichtbij { left: 12px; }
+  .dichtbij[hidden] { display: none; }
+  .dichtbij__doos {
+    /* `min-width: 0` en `max-width: 100%`: nooit breder dan de ruimte, en de kaartjes
+       krimpen mee in plaats van eruit te steken. */
+    min-width: 0; max-width: 100%;
+    pointer-events: auto;
     background: var(--vlak);
     border: 1px solid var(--lijn); border-radius: var(--radius);
     box-shadow: var(--schaduw);
     padding: 10px 12px 12px;
-    /* Voor de containerqueries bij de kaartjes hieronder. */
-    container: dichtbij / inline-size;
   }
-  .paneel.toont-filters ~ .dichtbij { left: 404px; }
-  .dichtbij[hidden] { display: none; }
   .dichtbij__kop { display: flex; align-items: baseline; gap: 10px; }
   .dichtbij__titel {
     margin: 0 auto 0 0;
@@ -393,7 +436,9 @@
   .dichtbij__lijst {
     display: flex; gap: 8px; margin: 9px 0 0; padding: 0; list-style: none;
   }
-  .dichtbij__lijst > li { flex: 1 1 0; min-width: 0; max-width: 260px; display: flex; }
+  /* `flex: 0 1 260px` en niet `1 1 0`: een kaartje rekt niet uit om leegte op te vullen —
+     dat is nu net wat de doos niet meer doet — maar krimpt wél als de ruimte krap wordt. */
+  .dichtbij__lijst > li { flex: 0 1 260px; min-width: 0; display: flex; }
   @container dichtbij (width < 952px) { .dichtbij__lijst > li:nth-child(n+8) { display: none; } }
   @container dichtbij (width < 832px) { .dichtbij__lijst > li:nth-child(n+7) { display: none; } }
   @container dichtbij (width < 712px) { .dichtbij__lijst > li:nth-child(n+6) { display: none; } }
@@ -797,15 +842,6 @@
     background: var(--vlak-zacht); padding: 1px 4px; border-radius: 4px;
   }
 
-  /* ---------- lage iframe ---------------------------------------------------------------
-     Onder een hoogte van zo'n 380 px reikt zelfs de kop van het paneel tot waar de balk
-     staat. Dan blijft de balk er altijd naast, ook met de filters dicht — behalve als het
-     paneel geminimaliseerd is. */
-  @media (max-height: 380px) {
-    .dichtbij { left: 404px; }
-    .paneel.is-klein ~ .dichtbij { left: 12px; }
-  }
-
   /* ---------- telefoon -------------------------------------------------------------- */
   @media (max-width: 640px) {
     .paneel {
@@ -836,11 +872,25 @@
       bottom: calc(26px + var(--dichtbij-hoogte, 0px));
     }
     .leaflet-touch .leaflet-bar a { width: 34px; height: 34px; line-height: 34px; }
-    /* Het paneel ligt bovenaan over de volle breedte, dus de balk mag hier altijd
-       van rand tot rand. Iets hoger, zodat de zoomknoppen vrij blijven. */
-    .dichtbij, .paneel.toont-filters ~ .dichtbij, .paneel.is-klein ~ .dichtbij {
-      left: 8px; right: 8px; bottom: 30px; padding: 9px 10px 10px;
+    /* De knoppen staan hier linksonder, dus schuift de meldknop mee naar onderen en komt
+       hij er rechts van te staan — 10 px marge plus de 34 px brede balk. De onderkant is
+       dezelfde als die van de knoppen, balk of geen balk. */
+    .melden {
+      top: auto; right: auto;
+      left: 52px;
+      bottom: calc(26px + var(--dichtbij-hoogte, 0px));
     }
+    /* Het instellingendoosje klapt hier naar rechts open — precies over de meldknop
+       heen. Zolang het openstaat, gaat de knop weg; zetInstellingen() zet de klasse. */
+    .toont-instellingen .melden { display: none; }
+    /* Iets hoger dan op een breed scherm, zodat de zoomknoppen vrij blijven. */
+    .dichtbij, .paneel.is-klein ~ .dichtbij {
+      left: 8px; right: 8px; bottom: 30px;
+    }
+    /* Hier staat het paneel bovenaan over de volle breedte, dus er valt links niets vrij te
+       houden en mag de doos de hele ruimte nemen: op een telefoon is die toch smaller dan
+       twee kaartjes. */
+    .dichtbij__doos { width: 100%; padding: 9px 10px 10px; }
     /* Filters open én de balk open: ze mogen elkaar niet overlappen, en de filters gaan
        voor — daar ben je op dat moment mee bezig. De balk krimpt tot naam en afstand, en
        het paneel houdt zijn onderkant 8 px boven de balk. Hoeveel ruimte de balk onderaan
@@ -927,6 +977,26 @@
 
 <div id="kaart" role="application" data-i18n-aria="app.kaartLabel"
      aria-label="Kaart met de auto's van Dégage"></div>
+
+<!-- Probleem melden of feedback geven. Gaat naar het formulier voor een nieuw issue op
+     GitHub, in een nieuw tabblad: de kaart met al je filters blijft staan. Hij hangt aan
+     de pagina en niet aan de kaart, net als het paneel — Leaflet hoeft er niets van te
+     weten, want er valt niets te pannen of te zoomen aan een link. -->
+<a class="melden" id="knop-melden"
+   href="https://github.com/Degagemain/degage-deelautokaart-gbfs/issues/new"
+   target="_blank" rel="noopener"
+   title="Probleem melden of feedback geven — opent github.com in een nieuw tabblad"
+   data-i18n-title="melden.titel">
+  <!-- Een tekstballon met een uitroepteken: je zegt iets, en het gaat over iets dat
+       misloopt. -->
+  <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor"
+       stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 12a8 8 0 0 1-8 8H8l-4 3v-4.3A8 8 0 0 1 13 4a8 8 0 0 1 8 8z"/>
+    <path d="M13 8.2v4"/>
+    <circle cx="13" cy="15.2" r=".9" fill="currentColor" stroke="none"/>
+  </svg>
+  <span data-i18n="melden.knop">Probleem melden</span>
+</a>
 
 <!-- Weergavekeuzes en de taalkeuze, geen filters: ze veranderen niets aan wélke wagens
      passen. Daarom niet in het paneel maar bij de kaartknoppen, achter het tandwiel onder
@@ -1086,23 +1156,43 @@
     <h2 data-i18n="kop.afspraken">Afspraken</h2>
     <div class="keuzes" id="filter-afspraken"></div>
 
-    <!-- De Mobiscore hoort bij de standplaats, niet bij de wagen. Het blok verdwijnt als er
-         geen OV-gegevens bij deze feed horen — dan valt er niets te filteren. -->
-    <div id="filter-mobiscore">
-      <!-- De uitleg staat achter een ⓘ, zoals in de popups: wie weet wat de Mobiscore is,
-           hoeft er niet telkens overheen te lezen. Zie de klikafhandeling bij de filters. -->
-      <h2><span data-i18n="kop.mobiscore">Mobiscore</span><button type="button"
-          class="uitleg-knop" aria-expanded="false" aria-controls="mobi-uitleg"
+    <!-- Openbaar vervoer. Deze twee horen bij de STANDPLAATS, niet bij de wagen: wie hier
+         filtert, zoekt een auto die hij kan combineren met bus of trein — heen met de auto,
+         terug met de trein, of omgekeerd. Een blok verdwijnt als er geen OV-gegevens bij
+         deze feed horen, of als alle standplaatsen even ver van zo'n halte liggen; dan valt
+         er niets te kiezen. -->
+    <div id="filter-bushalte">
+      <!-- De uitleg staat achter een ⓘ, zoals in de popups: wie weet wat er staat, hoeft er
+           niet telkens overheen te lezen. Zie de klikafhandeling bij de filters. -->
+      <h2><span data-i18n="kop.bushalte">Afstand tot een bushalte</span><button type="button"
+          class="uitleg-knop" aria-expanded="false" aria-controls="bus-uitleg"
           title="Uitleg" data-i18n-title="popup.uitleg"><svg class="ico" aria-hidden="true"><use
           href="#i-info"/></svg><span class="enkel-schermlezer"
           data-i18n="popup.uitleg">Uitleg</span></button></h2>
       <div class="schuif">
-        <input type="range" id="mobi-schuif" min="0" step="1" value="0">
-        <p class="schuif__waarde" id="mobi-waarde"></p>
-        <p class="schuif__uitleg" id="mobi-uitleg" hidden
-           data-i18n="mobiscore.uitleg">Hoe goed de standplaats ligt
-          tegenover winkels, scholen, zorg, vrije tijd en openbaar vervoer, volgens de Vlaamse
-          overheid. Elke stand toont die score en alles daarboven.</p>
+        <input type="range" id="bus-schuif" min="0" step="1" value="0">
+        <p class="schuif__waarde" id="bus-waarde"></p>
+        <p class="schuif__uitleg" id="bus-uitleg" hidden
+           data-i18n="bushalte.uitleg">De hemelsbrede afstand van de standplaats tot de
+          dichtstbijzijnde bus- of tramhalte waar vaste lijnen stoppen. Elke stand toont die
+          afstand en alles daaronder. Te voet is de weg altijd wat langer.</p>
+      </div>
+    </div>
+
+    <div id="filter-station">
+      <h2><span data-i18n="kop.station">Afstand tot een treinstation</span><button type="button"
+          class="uitleg-knop" aria-expanded="false" aria-controls="trein-uitleg"
+          title="Uitleg" data-i18n-title="popup.uitleg"><svg class="ico" aria-hidden="true"><use
+          href="#i-info"/></svg><span class="enkel-schermlezer"
+          data-i18n="popup.uitleg">Uitleg</span></button></h2>
+      <div class="schuif">
+        <input type="range" id="trein-schuif" min="0" step="1" value="0">
+        <p class="schuif__waarde" id="trein-waarde"></p>
+        <p class="schuif__uitleg" id="trein-uitleg" hidden
+           data-i18n="station.uitleg">De hemelsbrede afstand van de standplaats tot het
+          dichtstbijzijnde treinstation. Elke stand toont die afstand en alles daaronder.
+          Naar een station fietst of rijdt men; vandaar dat de schaal verder reikt dan bij
+          een halte.</p>
       </div>
     </div>
 
@@ -1130,7 +1220,10 @@
 </div>
 
 <!-- Balk onderaan met de dichtstbijzijnde wagens na een adreszoekopdracht. -->
+<!-- Het buitenste element is de ruimte waarin de balk mag staan, het binnenste de balk
+     zelf; zie `.dichtbij` in de opmaak waarom dat twee elementen zijn. -->
 <div class="dichtbij" id="dichtbij" hidden>
+ <div class="dichtbij__doos">
   <div class="dichtbij__kop">
     <p class="dichtbij__titel" id="dichtbij-titel"></p>
     <button type="button" class="dichtbij__sluit" id="dichtbij-sluit"
@@ -1143,6 +1236,7 @@
     </button>
   </div>
   <ul class="dichtbij__lijst" id="dichtbij-lijst"></ul>
+ </div>
 </div>
 
 <div class="melding" id="melding">

@@ -89,13 +89,20 @@
     "kop.afspraken": "Conditions",
     "kop.euronorm": "Norme Euro",
     "kop.bouwjaar": "Année de construction",
-    "kop.mobiscore": "Mobiscore",
-    "mobiscore.uitleg": "La proximité de l'emplacement aux commerces, écoles, soins, loisirs " +
-                        "et transports en commun, selon le gouvernement flamand. Chaque " +
-                        "position affiche ce score et tous ceux au-dessus.",
-    "mobi.alle": "tous les emplacements",
-    "mobi.vanaf": "à partir de {n} sur 10",
-    "mobi.aria": "Mobiscore minimal",
+    "kop.bushalte": "Distance d'un arrêt de bus",
+    "kop.station": "Distance d'une gare de train",
+    "bushalte.uitleg": "La distance à vol d'oiseau entre l'emplacement et l'arrêt de bus ou de " +
+                       "tram desservi par des lignes régulières le plus proche. Chaque position " +
+                       "affiche cette distance et toutes celles en dessous. À pied, le trajet " +
+                       "est toujours un peu plus long.",
+    "station.uitleg": "La distance à vol d'oiseau entre l'emplacement et la gare la plus " +
+                      "proche. Chaque position affiche cette distance et toutes celles en " +
+                      "dessous. On rejoint une gare à vélo ou en voiture ; l'échelle va donc " +
+                      "plus loin que celle d'un arrêt.",
+    "afstand.alle": "tous les emplacements",
+    "afstand.hoogstens": "{afstand} au maximum",
+    "bus.aria": "Distance maximale d'un arrêt de bus ou de tram",
+    "trein.aria": "Distance maximale d'une gare",
     "jaar.alle": "toutes les années",
     "jaar.vanaf": "à partir de {jaar}",
     "jaar.enkel": "uniquement {jaar}",
@@ -131,6 +138,8 @@
     "instellingen.scrollSluit": "Fermer les filtres en faisant défiler la carte",
     "instellingen.legende": "Afficher l'avis sur la disponibilité",
     "instellingen.taal": "Langue",
+    "melden.knop": "Signaler un problème",
+    "melden.titel": "Signaler un problème ou donner un avis — ouvre github.com dans un nouvel onglet",
 
     "knop.alles": "Tout afficher — dézoomer sur la carte entière",
     "knop.allesKort": "Tout afficher",
