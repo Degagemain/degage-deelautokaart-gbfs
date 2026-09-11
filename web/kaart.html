@@ -497,6 +497,14 @@
     -webkit-overflow-scrolling: touch;
   }
   .filters[hidden] { display: none; }
+  /* De twee filterschakelaars bovenaan: een eigen blokje met een streep eronder, zodat ze
+     bij de filters horen maar niet voor een van de koppen aangezien worden. */
+  .filterschakels {
+    padding: 6px 0 10px;
+    border-bottom: 1px solid var(--lijn);
+  }
+  .filterschakels .schakel { margin-top: 0; }
+  .filterschakels .schakel + .schakel { margin-top: 8px; }
   .filters h2 {
     margin: 13px 0 3px;
     font-size: 11.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
@@ -1007,20 +1015,12 @@
      De teksten dragen `data-i18n`-sleutels; zie vertaalPagina() in het script. -->
 <div class="instellingen" id="instellingen" hidden>
   <label class="schakel">
-    <input type="checkbox" id="knop-grijs" checked>
-    <span data-i18n="instellingen.grijs">Gefilterde auto's grijs tonen</span>
-  </label>
-  <label class="schakel">
     <input type="checkbox" id="knop-volgmuis" checked>
     <span data-i18n="instellingen.volgmuis">Lijst dichtstbijzijnde auto's volgt muis</span>
   </label>
   <label class="schakel">
     <input type="checkbox" id="knop-dichtbij" checked>
     <span data-i18n="instellingen.dichtbij">Lijst dichtstbijzijnde auto's tonen</span>
-  </label>
-  <label class="schakel">
-    <input type="checkbox" id="knop-scrollsluit" checked>
-    <span data-i18n="instellingen.scrollSluit">Filters sluiten bij scrollen in de kaart</span>
   </label>
   <label class="schakel">
     <input type="checkbox" id="knop-legende" checked>
@@ -1135,6 +1135,20 @@
   </div>
 
   <div class="filters" id="filters" hidden>
+    <!-- De twee schakelaars die over het filteren zelf gaan, staan bij de filters en niet
+         bij de weergavekeuzes achter het tandwiel: wie filtert, beslist hier meteen wat er
+         met de weggefilterde auto's gebeurt en of de lijst bij scrollen dichtklapt. -->
+    <div class="filterschakels">
+      <label class="schakel">
+        <input type="checkbox" id="knop-grijs" checked>
+        <span data-i18n="filters.grijs">Gefilterde auto's grijs tonen</span>
+      </label>
+      <label class="schakel">
+        <input type="checkbox" id="knop-scrollsluit" checked>
+        <span data-i18n="filters.scrollSluit">Filters sluiten bij scrollen in de kaart</span>
+      </label>
+    </div>
+
     <h2 data-i18n="kop.soort">Soort auto</h2>
     <div class="keuzes" id="filter-soort"></div>
 

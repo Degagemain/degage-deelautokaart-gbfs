@@ -75,6 +75,8 @@
     "telling.nietGeladen": "niet geladen",
 
     "filters.wissen": "Filters wissen",
+    "filters.grijs": "Gefilterde auto's grijs tonen",
+    "filters.scrollSluit": "Filters sluiten bij scrollen in de kaart",
     "kop.soort": "Soort auto",
     "kop.zitplaatsen": "Zitplaatsen",
     "kop.brandstof": "Brandstof",
@@ -125,10 +127,8 @@
     "melding.geduld": "Even geduld",
     "melding.laden": "De standplaatsen worden geladen.",
 
-    "instellingen.grijs": "Gefilterde auto's grijs tonen",
     "instellingen.volgmuis": "Lijst dichtstbijzijnde auto's volgt muis",
     "instellingen.dichtbij": "Lijst dichtstbijzijnde auto's tonen",
-    "instellingen.scrollSluit": "Filters sluiten bij scrollen in de kaart",
     "instellingen.legende": "Melding over beschikbaarheid tonen",
     "instellingen.taal": "Taal",
     "melden.knop": "Probleem melden",

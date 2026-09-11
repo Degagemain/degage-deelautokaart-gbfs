@@ -1935,14 +1935,41 @@ function toonZoekmelding(tekst) {
 /* ==========================================================================
    het vrije deel van de kaart
    ==========================================================================
-   Het paneel en de balk onderaan liggen óver de kaart. Het midden van het venster is
-   dus niet het midden van wat je ziet: een wagen die je daar neerzet, verdwijnt onder
-   het paneel. Deze twee functies rekenen uit hoeveel er aan elke kant bedekt is, en
-   mikken op het midden van wat overblijft.
+   Het paneel, de balk onderaan, de kaartknoppen en de meldknop liggen óver de kaart. Het
+   midden van het venster is dus niet het midden van wat je ziet: een wagen die je daar
+   neerzet, verdwijnt onder het paneel. Deze functies rekenen uit hoeveel er aan elke kant
+   bedekt is, en mikken op het midden van wat overblijft.
 
    De maten worden bij elke oproep gemeten, niet onthouden: het paneel groeit en krimpt
-   met de filters, de balk kan dicht staan, en op een telefoon ligt het paneel bovenaan
-   in plaats van links. */
+   met de filters, de balk kan dicht staan, en op een telefoon liggen het paneel bovenaan
+   en de knoppen onderaan in plaats van links en rechts. */
+
+/* Eén overlay die in een HOEK ligt — de kaartknoppen, de meldknop — bedekt geen hele
+   rand. Je kunt hem langs twee kanten ontwijken: opzij of omhoog/omlaag. Deze functie
+   kiest de goedkoopste van de twee, dus die het minste kaart kost.
+
+   Voor de knoppenbalk rechtsboven is dat de rechterkant (een strookje van een knop
+   breed) en niet de bovenkant (de hele balk hoog); voor de meldknop ernaast is het
+   net omgekeerd: hij is breed en laag, dus wijk je eroverheen. Zo blijft er van beide
+   samen niet meer bedekt dan een smalle rand rechts en een lage strook bovenaan. */
+function bedekHoek(o, el, vak) {
+  /* Geen offsetParent betekent display:none — de meldknop gaat op een telefoon weg
+     zodra het instellingendoosje op zijn plaats openklapt. */
+  if (!el || !el.offsetParent) return;
+  const r = el.getBoundingClientRect();
+  if (!r.width || !r.height) return;
+
+  /* Per as: de afstand van de verste rand van de overlay tot de rand van de kaart waar
+     hij tegenaan ligt. De kleinste van de twee is de kant waar hij zit. */
+  const hInzet = Math.min(r.right - vak.left, vak.right - r.left);
+  const hKant = r.right - vak.left <= vak.right - r.left ? "links" : "rechts";
+  const vInzet = Math.min(r.bottom - vak.top, vak.bottom - r.top);
+  const vKant = r.bottom - vak.top <= vak.bottom - r.top ? "boven" : "onder";
+
+  if (hInzet <= vInzet) o[hKant] = Math.max(o[hKant], hInzet);
+  else o[vKant] = Math.max(o[vKant], vInzet);
+}
+
 function vrijeRuimte() {
   const vak = document.getElementById("kaart").getBoundingClientRect();
   const mobiel = window.matchMedia("(max-width: 640px)").matches;
@@ -1956,12 +1983,21 @@ function vrijeRuimte() {
 
   if (!balk.hidden) onder = vak.bottom - balkDoos().getBoundingClientRect().top;
 
-  return {
+  const o = {
     links: Math.max(0, links),
     boven: Math.max(0, boven),
     rechts: 0,
     onder: Math.max(0, onder)
   };
+
+  /* De kaartknoppen en de meldknop erbij. Ze verhuizen van rechtsboven naar linksonder
+     op een telefoon; door te meten in plaats van te rekenen hoeft dat hier niet geweten
+     te zijn. De knoppenbalk wordt gemeten zoals ze staat, dus mét de uitzoomknop en het
+     tandwiel eronder. */
+  bedekHoek(o, document.querySelector(".leaflet-top.leaflet-left"), vak);
+  bedekHoek(o, document.querySelector(".melden"), vak);
+
+  return o;
 }
 
 /* Zet `punt` in het midden van het ONBEDEKTE deel van de kaart. */

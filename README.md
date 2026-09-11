@@ -217,15 +217,13 @@ kop van elk script.
   noemt ze onder elk OV-blok.
 
 ## Contactadressen per groep
+`scripts/districten.json` koppelt elke lokale Dégage-groep aan een contactadres. De adressen zijn al ingevuld voor zover ze bekend zijn. **Een ontbrekend adres betekent gewoon dat de kaart er geen toont.**
 
-`scripts/districten.json` koppelt elke lokale Dégage-groep aan een adres. Het staat
-standaard leeg: **een leeg adres betekent gewoon dat de kaart er geen toont.** Alleen
-adressen op `@degage.be` worden aanvaard; een persoonlijk adres laat de generator luid
-falen. Vul aan wat je zeker weet, laat de rest leeg.
+Alleen adressen op @degage.be worden aanvaard. Een persoonlijk adres zorgt ervoor dat de generator faalt.
 
 ## Hosting
 
-Bedoeld voor GitHub Pages. Alleen `web/` en `gbfs/` hoeven gehost te worden; de scripts
+Gehost op GitHub Pages. Alleen `web/` en `gbfs/` hoeven gehost te worden; de scripts
 staan erbij omdat ze bij het project horen, niet omdat ze publiek uitgevoerd worden.
 
 **`web/kaart.js` en `web/taal/` horen er altijd bij.** De pagina laadt ze met gewone

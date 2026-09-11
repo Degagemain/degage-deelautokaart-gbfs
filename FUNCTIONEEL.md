@@ -48,7 +48,7 @@ welk huis de eigenaar woont. Dat staat ook in elke popup.
 | grijze stip | een standplaats die door je filters is afgevallen |
 
 Grijze stippen blijven staan als context — je ziet dus wat je wégfiltert, niet alleen wat
-overblijft. Wie dat liever niet heeft, zet het uit in de instellingen.
+overblijft. Wie dat liever niet heeft, zet het uit met de schakelaar boven de filters.
 
 **De bollen met een getal** zijn groepjes standplaatsen die te dicht bij elkaar liggen om
 apart te tonen. Klik erop of zoom in en ze vallen uiteen. Staat er een filter aan, dan
@@ -252,7 +252,7 @@ van de kaart. Ook uit te zetten in de instellingen.
 
 De filters staan onder het zoekveld en klappen open zodra je in dat veld klikt of begint
 te typen. Ze gaan weer dicht met een klik op de kaart, met Escape, en zodra je in de kaart
-scrollt of veegt — dat laatste is uit te zetten in de instellingen.
+scrollt of veegt — dat laatste is uit te zetten met de schakelaar boven de filters.
 
 | filter | wat het doet |
 |---|---|
@@ -302,22 +302,29 @@ bovenaan, met een eigen naam: *"elektrisch en hybride"*. Nadrukkelijk geen verzo
 Van zestig auto's kennen we de euronorm niet. Die zie je alleen bij de stand "alle auto's":
 van een auto zonder gekende norm kun je niet volhouden dat hij er minstens één haalt.
 
-## Instellingen
+## Twee schakelaars bij de filters
 
-Achter het tandwiel bij de zoomknoppen:
+Bovenaan de filterlijst, net boven *"Soort auto"*, staan de twee keuzes die over het
+filteren zelf gaan. Ze horen daar en niet achter het tandwiel: wie filtert, beslist er
+meteen mee wat er met de weggefilterde auto's gebeurt.
 
 - **Gefilterde auto's grijs tonen** — uit betekent dat weggefilterde standplaatsen echt
   verdwijnen in plaats van grijs te blijven staan. Aan zegt een grijze pin ook waarom:
   wie met de muis erover gaat, ziet per auto welke filters hem tegenhouden
   (*"Brandstof: benzine · Bouwjaar: 2012"*), en in de popup staat hetzelfde onder de naam
   van de auto. Een ontbrekend toebehoren heet daar "niet vermeld", nooit "nee".
+- **Filters sluiten bij scrollen in de kaart** — uit betekent dat de filters open blijven
+  terwijl je met het wieltje zoomt of de kaart met je vingers verschuift.
+
+## Instellingen
+
+Achter het tandwiel bij de zoomknoppen:
+
 - **Lijst dichtstbijzijnde auto's volgt muis** — uit betekent dat de balk vanaf het midden
   van de kaart meet en blijft staan.
 - **Lijst dichtstbijzijnde auto's tonen** — uit laat de balk helemaal weg, ook na een
   zoekopdracht of bij het inzoomen. Voor wie de kaart zelf wil lezen zonder een balk
   onderaan.
-- **Filters sluiten bij scrollen in de kaart** — uit betekent dat de filters open blijven
-  terwijl je met het wieltje zoomt of de kaart met je vingers verschuift.
 - **Melding over beschikbaarheid tonen** — zet de regel *"Dit is géén live
   beschikbaarheid"* terug nadat je hem weggeklikt hebt, of haalt hem weg.
 - **Taal** — Nederlands, Français of English.
