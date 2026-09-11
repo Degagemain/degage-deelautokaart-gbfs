@@ -1,5 +1,5 @@
 {
-  "bijgewerkt": "2026-09-11",
+  "bijgewerkt": "2026-09-12",
   "bron": "Wikimedia Commons",
   "fotos": {
     "Alfa Romeo|Giulia": {
@@ -29,6 +29,19 @@
       "licentie": "CC BY-SA 4.0",
       "titel": "File:Audi Q2 and Audi Q3 (1).jpg",
       "verhouding": 1.333
+    },
+    "BMW|116d": {
+      "auteur": "Rob Purvis",
+      "bestand": "bmw-116d.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:BMW_116d_entering_Gore_Lane_from_Maer_Lane_(geograph_5001595).jpg",
+      "categorieen": [
+        "Category:BMW E81",
+        "Category:White BMW hatchbacks"
+      ],
+      "gezocht_op": "116d",
+      "licentie": "CC BY-SA 2.0",
+      "titel": "File:BMW 116d entering Gore Lane from Maer Lane (geograph 5001595).jpg",
+      "verhouding": 1.336
     },
     "Citroën|Berlingo": {
       "auteur": "Alexander Migl",
@@ -309,6 +322,30 @@
       "titel": "File:Moscow, Citroën Jumpy (2nd gen) white Sept 2025 01.jpg",
       "verhouding": 1.616
     },
+    "Citroën|Nemo": {
+      "auteur": "CORLIN",
+      "bestand": "citroen-nemo.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Citro%C3%ABn_Nemo_mod%C3%A8le_2015.JPG",
+      "categorieen": [
+        "Category:Citroën Nemo"
+      ],
+      "gezocht_op": "Nemo",
+      "licentie": "CC BY-SA 4.0",
+      "titel": "File:Citroën Nemo modèle 2015.JPG",
+      "verhouding": 1.333
+    },
+    "Citroën|Nemo Multispace": {
+      "auteur": "M 93",
+      "bestand": "citroen-nemo-multispace.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Citro%C3%ABn_Nemo_Kombi_HDi_75_Multispace_%E2%80%93_Frontansicht,_2._Juli_2011,_D%C3%BCsseldorf.jpg",
+      "categorieen": [
+        "Category:Citroën Nemo"
+      ],
+      "gezocht_op": "Nemo Multispace",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Citroën Nemo Kombi HDi 75 Multispace – Frontansicht, 2. Juli 2011, Düsseldorf.jpg",
+      "verhouding": 1.403
+    },
     "Citroën|Picasso C3": {
       "auteur": "Vauxford",
       "bestand": "citroen-picasso-c3.jpg",
@@ -450,6 +487,18 @@
       "licentie": "CC BY-SA 3.0",
       "titel": "File:Dacia Logan MCV Model 2009 06.jpg",
       "verhouding": 1.41
+    },
+    "Dacia|New Sandero": {
+      "auteur": "crash71100",
+      "bestand": "dacia-new-sandero.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:New_Dacia_Sandero.jpg",
+      "categorieen": [
+        "Category:Dacia Sandero"
+      ],
+      "gezocht_op": "New Sandero",
+      "licentie": "CC0",
+      "titel": "File:New Dacia Sandero.jpg",
+      "verhouding": 1.689
     },
     "Dacia|Sandero": {
       "auteur": "Alexander Migl",
@@ -935,6 +984,18 @@
       "titel": "File:2023 Honda Jazz (4th generation) hybrid Advance Sport Auto Zuerich 2023 1X7A1443.jpg",
       "verhouding": 1.671
     },
+    "Hyundai|10 1.0 limited edition 66M5": {
+      "auteur": "Rakshika_Prasad",
+      "bestand": "hyundai-10-1-0-limited-edition-66m5.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Car_by_maker_Hyundai,_model_i10.jpg",
+      "categorieen": [
+        "Category:Hyundai i10 (PA)"
+      ],
+      "gezocht_op": "10",
+      "licentie": "CC BY-SA 3.0",
+      "titel": "File:Car by maker Hyundai, model i10.jpg",
+      "verhouding": 1.333
+    },
     "Hyundai|Bayon": {
       "auteur": "Alexander Migl",
       "bestand": "hyundai-bayon.jpg",
@@ -1096,6 +1157,18 @@
       "titel": "File:Our other car is....a Hyundai i30 (26251399853).jpg",
       "verhouding": 1.339
     },
+    "Hyundai|iX20": {
+      "auteur": "M 93",
+      "bestand": "hyundai-ix20.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Hyundai_ix20_1.4_Classic_%E2%80%93_Frontansicht,_13._Juni_2011,_Heiligenhaus.jpg",
+      "categorieen": [
+        "Category:Hyundai ix20"
+      ],
+      "gezocht_op": "iX20",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Hyundai ix20 1.4 Classic – Frontansicht, 13. Juni 2011, Heiligenhaus.jpg",
+      "verhouding": 1.556
+    },
     "Kia|Cee'd": {
       "auteur": "Johan.V. (Johan Viirok)",
       "bestand": "kia-cee-d.jpg",
@@ -1206,6 +1279,22 @@
       "titel": "File:Kia e-Niro (DE; 2018) rear.jpg",
       "verhouding": 1.334
     },
+    "Kia|eNiro": {
+      "auteur": "Jan Ainali",
+      "bestand": "kia-eniro.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Kia-eNiro-front-right.jpg",
+      "categorieen": [
+        "Category:Automobiles photographed in 2022",
+        "Category:Fully Charged Live Europe 2022",
+        "Category:Kia Niro EV (SG2)",
+        "Category:Three-quarter views of Kia automobiles",
+        "Category:White Kia SUVs"
+      ],
+      "gezocht_op": "eNiro",
+      "licentie": "CC BY-SA 4.0",
+      "titel": "File:Kia-eNiro-front-right.jpg",
+      "verhouding": 1.555
+    },
     "MG|MG MG RX6 PLUGIN Hybride": {
       "auteur": "DeFacto",
       "bestand": "mg-mg-mg-rx6-plugin-hybride.jpg",
@@ -1219,6 +1308,31 @@
       "licentie": "CC BY-SA 2.5",
       "titel": "File:MG Maestro 1986.jpg",
       "verhouding": 1.636
+    },
+    "MG|MG5": {
+      "auteur": "Ogidya",
+      "bestand": "mg-mg5.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:MG_MG5_(Fully_Charged_2022).jpg",
+      "categorieen": [
+        "Category:Fully Charged Live Europe 2022",
+        "Category:MG 5 EV (EP22)"
+      ],
+      "gezocht_op": "MG5",
+      "licentie": "CC BY-SA 4.0",
+      "titel": "File:MG MG5 (Fully Charged 2022).jpg",
+      "verhouding": 1.441
+    },
+    "Mazda|2": {
+      "auteur": "M 93",
+      "bestand": "mazda-2.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Mazda2_(DY)_%E2%80%93_Frontansicht,_25._August_2013,_D%C3%BCsseldorf.jpg",
+      "categorieen": [
+        "Category:Mazda2 (DY)"
+      ],
+      "gezocht_op": "2",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Mazda2 (DY) – Frontansicht, 25. August 2013, Düsseldorf.jpg",
+      "verhouding": 1.646
     },
     "Mazda|3": {
       "auteur": "Riley from Christchurch, New Zealand",
@@ -1246,6 +1360,35 @@
       "licentie": "CC BY-SA 4.0",
       "titel": "File:2018 Mazda CX-3 Sport Nav+ 4X4 2.0 Rear.jpg",
       "verhouding": 1.442
+    },
+    "Mercedes-Benz|A-170": {
+      "auteur": "K. Jähne",
+      "bestand": "mercedes-benz-a-170.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Mercedes-Benz_W169_20060311.jpg",
+      "categorieen": [
+        "Category:Beige Mercedes-Benz hatchbacks",
+        "Category:Mercedes-Benz W169"
+      ],
+      "gezocht_op": "W169",
+      "licentie": "CC BY-SA 3.0",
+      "titel": "File:Mercedes-Benz W169 20060311.jpg",
+      "verhouding": 1.504
+    },
+    "Mercedes|A": {
+      "auteur": "Matti Blume",
+      "bestand": "mercedes-a.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Mercedes-Benz_A_200,_GIMS_2018,_Le_Grand-Saconnex_(1X7A0529).jpg",
+      "categorieen": [
+        "Category:Automobiles at GIMS 2018",
+        "Category:Geneva International Motor Show 2018 - Daimler press conference",
+        "Category:Mercedes-Benz W 177 (2018–2022)",
+        "Category:Mercedes-Benz at the Motorshow Geneva 2018",
+        "Category:Red Mercedes-Benz hatchbacks"
+      ],
+      "gezocht_op": "A",
+      "licentie": "CC BY-SA 4.0",
+      "titel": "File:Mercedes-Benz A 200, GIMS 2018, Le Grand-Saconnex (1X7A0529).jpg",
+      "verhouding": 1.5
     },
     "Mercedes|A 160 CDI": {
       "auteur": "Nacho from Oviedo, España",
@@ -1367,6 +1510,33 @@
       "titel": "File:Nissan Note E13 facelift, HK Guardforce staff car.jpg",
       "verhouding": 1.333
     },
+    "Nissan|Primera": {
+      "auteur": "Tokumeigakarinoaoshima",
+      "bestand": "nissan-primera.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Nissan_Primera_GT_(Series_Champion_of_British_Touring_Car_Championship_in_1999)_rear.jpg",
+      "categorieen": [
+        "Category:1990s Nissan automobiles in the Nissan Global Headquarters Gallery",
+        "Category:Nissan Primera GT of Laurent Aïello in 1999"
+      ],
+      "gezocht_op": "Primera",
+      "licentie": "CC BY-SA 4.0",
+      "titel": "File:Nissan Primera GT (Series Champion of British Touring Car Championship in 1999) rear.jpg",
+      "verhouding": 1.333
+    },
+    "Nissan|Townstar": {
+      "auteur": "Alexander Migl",
+      "bestand": "nissan-townstar.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Nissan_Townstar_Automesse_Ludwigsburg_2022_1X7A5881.jpg",
+      "categorieen": [
+        "Category:Grey Nissan vans",
+        "Category:Nissan Townstar",
+        "Category:Nissan automobiles in Germany"
+      ],
+      "gezocht_op": "Townstar",
+      "licentie": "CC BY-SA 4.0",
+      "titel": "File:Nissan Townstar Automesse Ludwigsburg 2022 1X7A5881.jpg",
+      "verhouding": 1.499
+    },
     "Opel|Agila": {
       "auteur": "Rudolf Stricker",
       "bestand": "opel-agila.jpg",
@@ -1436,6 +1606,20 @@
       "titel": "File:Moscow, Opel Astra K Sports Tourer red, Aug 2026 01.jpg",
       "verhouding": 1.661
     },
+    "Opel|Combo": {
+      "auteur": "Alexander-93",
+      "bestand": "opel-combo.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2023_Opel_Combo_E_IMG_9761.jpg",
+      "categorieen": [
+        "Category:License plates of Hamburg",
+        "Category:Opel Combo E (Facelift)",
+        "Category:White Opel vans"
+      ],
+      "gezocht_op": "Combo",
+      "licentie": "CC BY-SA 4.0",
+      "titel": "File:2023 Opel Combo E IMG 9761.jpg",
+      "verhouding": 1.503
+    },
     "Opel|Corsa": {
       "auteur": "Alexander-93",
       "bestand": "opel-corsa.jpg",
@@ -1467,6 +1651,33 @@
       "licentie": "CC BY-SA 4.0",
       "titel": "File:2023 Opel Corsa-e IAA 2023 1X7A0385.jpg",
       "verhouding": 1.748
+    },
+    "Opel|Crossland X": {
+      "auteur": "Matti Blume",
+      "bestand": "opel-crossland-x.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Opel_Crossland_X,_IAA_2017,_Frankfurt_(1Y7A3376).jpg",
+      "categorieen": [
+        "Category:Automobiles at IAA 2017",
+        "Category:Fotoprojekt IAA 2017 (supported by Wikimedia Deutschland)",
+        "Category:Opel Crossland X",
+        "Category:Opel at IAA 2017"
+      ],
+      "gezocht_op": "Crossland X",
+      "licentie": "CC BY-SA 4.0",
+      "titel": "File:Opel Crossland X, IAA 2017, Frankfurt (1Y7A3376).jpg",
+      "verhouding": 1.5
+    },
+    "Opel|Crossland X Innovation": {
+      "auteur": "RL GNZLZ from Chile",
+      "bestand": "opel-crossland-x-innovation.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Opel_Crossland_X_1.2T_Innovation_2019_(46758321811).jpg",
+      "categorieen": [
+        "Category:Opel Crossland X"
+      ],
+      "gezocht_op": "Crossland X Innovation",
+      "licentie": "CC BY-SA 2.0",
+      "titel": "File:Opel Crossland X 1.2T Innovation 2019 (46758321811).jpg",
+      "verhouding": 1.667
     },
     "Opel|Insignia Grand Sport": {
       "auteur": "LSDSL",
@@ -1609,6 +1820,33 @@
       "titel": "File:Peugeot e-208 facelift Auto Zuerich 2023 1X7A1209.jpg",
       "verhouding": 1.499
     },
+    "Peugeot|108": {
+      "auteur": "Vauxford",
+      "bestand": "peugeot-108.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2018_Peugeot_108_Collection_1.0_Front_(1).jpg",
+      "categorieen": [
+        "Category:2018 Peugeot automobiles",
+        "Category:Peugeot 108",
+        "Category:Peugeot automobiles in the United Kingdom"
+      ],
+      "gezocht_op": "108",
+      "licentie": "CC BY-SA 4.0",
+      "titel": "File:2018 Peugeot 108 Collection 1.0 Front (1).jpg",
+      "verhouding": 1.646
+    },
+    "Peugeot|2008": {
+      "auteur": "Alexander Migl",
+      "bestand": "peugeot-2008.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Peugeot_e-2008_Automesse_Ludwigsburg_2022_1X7A5883.jpg",
+      "categorieen": [
+        "Category:Blue Peugeot SUVs",
+        "Category:Peugeot e-2008"
+      ],
+      "gezocht_op": "2008",
+      "licentie": "CC BY-SA 4.0",
+      "titel": "File:Peugeot e-2008 Automesse Ludwigsburg 2022 1X7A5883.jpg",
+      "verhouding": 1.608
+    },
     "Peugeot|2008 active pack automatic": {
       "auteur": "TuRbO_J from Adelaide, Australia",
       "bestand": "peugeot-2008-active-pack-automatic.jpg",
@@ -1736,6 +1974,18 @@
       "licentie": "CC BY-SA 4.0",
       "titel": "File:Peugeot 508 B Peugeot Sport Engineered SW (2023) Auto Zuerich 2023 1X7A1459.jpg",
       "verhouding": 1.499
+    },
+    "Peugeot|Bipper": {
+      "auteur": "Nacho from Oviedo, España",
+      "bestand": "peugeot-bipper.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Peugeot_Bipper_Tepee_(6595359333).jpg",
+      "categorieen": [
+        "Category:Peugeot Bipper"
+      ],
+      "gezocht_op": "Bipper",
+      "licentie": "CC BY 2.0",
+      "titel": "File:Peugeot Bipper Tepee (6595359333).jpg",
+      "verhouding": 1.333
     },
     "Peugeot|E-208": {
       "auteur": "Alexander-93",
@@ -2036,6 +2286,20 @@
       "licentie": "CC BY-SA 3.0",
       "titel": "File:Renault Kangoo Compact Concept.JPG",
       "verhouding": 1.333
+    },
+    "Renault|Master": {
+      "auteur": "JoachimKohler-HB",
+      "bestand": "renault-master.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:DiePost_Paketzustellfahrzeug_Renault_Master_III,_Modell_2010.jpg",
+      "categorieen": [
+        "Category:Postal vans in Switzerland",
+        "Category:Renault Master III (2010)",
+        "Category:Renault vehicles in Switzerland"
+      ],
+      "gezocht_op": "Master",
+      "licentie": "CC BY-SA 4.0",
+      "titel": "File:DiePost Paketzustellfahrzeug Renault Master III, Modell 2010.jpg",
+      "verhouding": 1.5
     },
     "Renault|Megane": {
       "auteur": "Retired electrician",
@@ -3240,6 +3504,18 @@
       "licentie": "CC BY-SA 4.0",
       "titel": "File:Firefly car, 2025.jpg",
       "verhouding": 1.333
+    },
+    "zoe|Intens": {
+      "auteur": "Vauxford",
+      "bestand": "zoe-intens.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2020_Renault_Zoe_Intens_R135_Z.E._50.jpg",
+      "categorieen": [
+        "Category:Renault Zoe (2019)"
+      ],
+      "gezocht_op": "Intens",
+      "licentie": "CC BY-SA 4.0",
+      "titel": "File:2020 Renault Zoe Intens R135 Z.E. 50.jpg",
+      "verhouding": 1.324
     }
   },
   "geweigerd": [
@@ -3257,45 +3533,25 @@
     "File:Toyota Auris Touring Sports Hybrid.JPG"
   ],
   "niet_gevonden": [
-    "Opel|Combo",
-    "Hyundai|iX20",
-    "BMW|116d",
-    "Citroën|Nemo",
-    "Citroën|Nemo Multispace",
     "Citroën|New C3 MAX",
     "Citroën|eC3",
-    "Dacia|New Sandero",
     "Dacia|VP",
     "Huyndai|i20",
-    "Hyundai|10 1.0 limited edition 66M5",
     "Kia|New Picanto",
-    "Kia|eNiro",
-    "MG|MG5",
     "MG|SZS1",
-    "Mazda|2",
-    "Mercedes-Benz|A-170",
-    "Mercedes|A",
-    "Nissan|Primera",
-    "Nissan|Townstar",
     "Opel|Astr sports Tourer",
     "Opel|Combo Life 7pl",
     "Opel|Combo Life Innovation",
     "Opel|Combo-D-Van",
-    "Opel|Crossland X",
-    "Opel|Crossland X Innovation",
-    "Peugeot|108",
-    "Peugeot|2008",
-    "Peugeot|Bipper",
     "Peugot|Rifter",
-    "Renault|Master",
     "Renault|New Zoë",
     "Skoda|Suberb Combi",
     "Toyoya|Aygo",
-    "Volkswagen|DUBBELE CABINE*5PL*LICHTE VRACHT*2.0 TDI EU6 SCR BMT 1",
-    "zoe|Intens"
+    "Volkswagen|DUBBELE CABINE*5PL*LICHTE VRACHT*2.0 TDI EU6 SCR BMT 1"
   ],
-  "regels_versie": 8,
+  "regels_versie": 11,
   "zoek_als": {
+    "Mercedes-Benz|A-170": "Mercedes-Benz|W169",
     "Mercedes|A-150": "Mercedes-Benz|W169"
   }
 }

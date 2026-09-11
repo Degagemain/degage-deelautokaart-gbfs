@@ -78,7 +78,7 @@ PAUZE_S = 0.25
 
 # Hoog dit op zodra je ONGESCHIKT of `titel_ok` aanpast. Het manifest onthoudt met welke
 # versie het gevuld is; wijkt die af, dan worden de eerdere missers opnieuw geprobeerd.
-REGELS_VERSIE = 8
+REGELS_VERSIE = 11
 
 # Breedte gedeeld door hoogte. Alles daaronder valt af. Gemeten over de 230 foto's van
 # de vorige ronde: 224 zitten op 1,3 of ruimer (de gewone 4:3 en 3:2 van een autofoto),
@@ -111,6 +111,7 @@ ONGESCHIKT = (
     "advertisement", "brochure", "magazine", "book", "map", "artwork", "painting",
     # racerij en rally: een i20 WRC lijkt in niets op de i20 op de standplaats
     "racing", "race", "racer", "rally", "rallye", "motorsport", "wrc", "dtm", "nascar",
+    "btcc",
     "circuit", "nurburgring", "nürburgring", "gt3", "gt4", "trophy", "rallycross",
     # opgevoerd, verlaagd, omgebouwd
     "tuning", "tuned", "modified", "custom", "stance", "widebody", "lowered",
@@ -340,13 +341,44 @@ def zoekvarianten(merk: str, model: str) -> list[tuple[str, str]]:
 
 
 def zoek_foto(zoekterm: str, merk: str, model: str, gezocht_model: str,
-              geweigerd: set[str] | None = None) -> dict | None:
+              geweigerd: set[str] | None = None, breed: bool = False) -> dict | None:
+    """Zoek een foto voor deze zoekterm; eerst met 'car' erbij, dan zonder.
+
+    Het woord 'car' erbij maakt de zoekopdracht scherper: het duwt de foto's van hele
+    wagens naar boven en houdt naamgenoten weg. Maar de zoekmachine van Commons eist ALLE
+    woorden, ook dat ene, en het staat lang niet overal in de beschrijving. Bij de
+    Crossland X kostte dat de volle oogst: 'Opel Crossland X' geeft twintig bruikbare
+    treffers, 'Opel Crossland X car' precies één — en die werd (terecht) afgekeurd.
+    Zonder terugval was dat een 'niet gevonden' voor een wagen waar Commons een hele
+    categorie van heeft.
+
+    Vandaar twee pogingen. De scherpe eerst, want die geeft de betere volgorde; de brede
+    pas als de scherpe niets oplevert. Dat kost alleen een extra verzoek bij een misser.
+
+    De brede poging geldt ALLEEN voor de volledige modelnaam (`breed`). Dat is geen
+    zuinigheid maar kwaliteit: bij een afgeknotte naam is de eis die de keuring stelt zelf
+    al vaag geworden, en een brede zoekopdracht bovenop een vage eis levert een verkeerde
+    wagen. Gemeten: 'Renault New Zoë' zakt naar 'Renault New' en vond zo een Twingo,
+    'Kia New Picanto' een Soul, 'Hyundai 10 1.0' een i30 met '10-2024' in de bestandsnaam.
+    Bij de volledige naam kan dat niet: daar moet 'Crossland X' er voluit in staan.
+    """
+    vragen = [zoekterm + " car"] + ([zoekterm] if breed else [])
+    for vraag in vragen:
+        treffer = zoek_een(vraag, merk, model, gezocht_model, geweigerd)
+        if treffer:
+            return treffer
+        time.sleep(PAUZE_S)
+    return None
+
+
+def zoek_een(vraag: str, merk: str, model: str, gezocht_model: str,
+             geweigerd: set[str] | None = None) -> dict | None:
     """Eén zoekopdracht; geeft de eerste treffer terug die door de keuring komt."""
     try:
         data = haal_json({
             "action": "query", "format": "json",
             "generator": "search",
-            "gsrsearch": zoekterm + " car",
+            "gsrsearch": vraag,
             "gsrnamespace": "6",          # bestandsnaamruimte
             # Twintig in plaats van acht. Het kost niets extra (één oproep) en
             # geeft de afwijslijst ruimte: bij Skoda Octavia stonden de eerste tien
@@ -361,7 +393,7 @@ def zoek_foto(zoekterm: str, merk: str, model: str, gezocht_model: str,
             "clshow": "!hidden",
         })
     except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as e:
-        zeg(f"      netwerkfout bij {zoekterm!r}: {e}")
+        zeg(f"      netwerkfout bij {vraag!r}: {e}")
         return None
 
     paginas = data.get("query", {}).get("pages", {})
@@ -599,12 +631,14 @@ def main() -> int:
         if sleutel in zoek_als:
             zoekmerk, zoekmodel = zoek_als[sleutel].split("|", 1)
             zeg(f"      met de hand gezocht als {zoekmerk} {zoekmodel}")
+        volledig = f"{zoekmerk} {zoekmodel}"
         for variant, modeldeel in zoekvarianten(zoekmerk, zoekmodel):
-            treffer = zoek_foto(variant, merk, model, modeldeel, geweigerd)
+            treffer = zoek_foto(variant, merk, model, modeldeel, geweigerd,
+                                breed=(variant == volledig))
             time.sleep(PAUZE_S)
             if treffer:
                 gebruikt = modeldeel
-                if variant != f"{zoekmerk} {zoekmodel}":
+                if variant != volledig:
                     zeg(f"      geen treffer op de volledige naam; gezocht op {variant!r}")
                 break
 

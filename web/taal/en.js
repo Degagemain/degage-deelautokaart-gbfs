@@ -75,6 +75,8 @@
     "telling.nietGeladen": "not loaded",
 
     "filters.wissen": "Clear filters",
+    "filters.grijs": "Show filtered-out cars in grey",
+    "filters.scrollSluit": "Close filters when scrolling the map",
     "kop.soort": "Vehicle type",
     "kop.zitplaatsen": "Seats",
     "kop.brandstof": "Fuel",
@@ -125,10 +127,8 @@
     "melding.geduld": "One moment",
     "melding.laden": "Loading the parking spots.",
 
-    "instellingen.grijs": "Show filtered-out cars in grey",
     "instellingen.volgmuis": "Nearest-cars list follows the mouse",
     "instellingen.dichtbij": "Show the nearest-cars list",
-    "instellingen.scrollSluit": "Close filters when scrolling the map",
     "instellingen.legende": "Show the availability notice",
     "instellingen.taal": "Language",
     "melden.knop": "Report a problem",

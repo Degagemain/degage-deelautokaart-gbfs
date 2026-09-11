@@ -81,6 +81,8 @@
     "telling.nietGeladen": "non chargé",
 
     "filters.wissen": "Effacer les filtres",
+    "filters.grijs": "Afficher en gris les voitures filtrées",
+    "filters.scrollSluit": "Fermer les filtres en faisant défiler la carte",
     "kop.soort": "Type de véhicule",
     "kop.zitplaatsen": "Places assises",
     "kop.brandstof": "Carburant",
@@ -132,10 +134,8 @@
     "melding.geduld": "Un instant",
     "melding.laden": "Chargement des emplacements.",
 
-    "instellingen.grijs": "Afficher en gris les voitures filtrées",
     "instellingen.volgmuis": "La liste des voitures les plus proches suit la souris",
     "instellingen.dichtbij": "Afficher la liste des voitures les plus proches",
-    "instellingen.scrollSluit": "Fermer les filtres en faisant défiler la carte",
     "instellingen.legende": "Afficher l'avis sur la disponibilité",
     "instellingen.taal": "Langue",
     "melden.knop": "Signaler un problème",
