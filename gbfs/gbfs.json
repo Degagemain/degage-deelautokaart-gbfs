@@ -1,0 +1,29 @@
+{
+  "last_updated": "2026-07-31T00:00:00+02:00",
+  "ttl": 86400,
+  "version": "3.0",
+  "data": {
+    "feeds": [
+      {
+        "name": "gbfs",
+        "url": "https://degage.be/gbfs/gbfs.json"
+      },
+      {
+        "name": "system_information",
+        "url": "https://degage.be/gbfs/system_information.json"
+      },
+      {
+        "name": "vehicle_types",
+        "url": "https://degage.be/gbfs/vehicle_types.json"
+      },
+      {
+        "name": "station_information",
+        "url": "https://degage.be/gbfs/station_information.json"
+      },
+      {
+        "name": "station_status",
+        "url": "https://degage.be/gbfs/station_status.json"
+      }
+    ]
+  }
+}

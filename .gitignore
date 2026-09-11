@@ -1,0 +1,53 @@
+# ============================================================================
+# NOOIT COMMITTEN — databank, dumps, archieven
+# ============================================================================
+# De replica bevat nummerplaten, chassisnummers en huisadressen met coordinaten.
+# Die combinatie is herleidbaar tot een eigenaar. Eenmaal gecommit blijft zo'n
+# bestand in de git-historie staan, ook nadat je het verwijdert: dan moet de
+# historie herschreven worden en moet iedereen opnieuw klonen.
+#
+# Deze regels zijn een vangnet, geen garantie. Kijk `git status` na voor je commit.
+*.duckdb
+*.duckdb.wal
+*.db
+*.sqlite
+*.sqlite3
+*.sql
+*.sql.gz
+*.dump
+
+# Archieven — de replica wordt als zip geleverd
+*.zip
+*.7z
+*.tar
+*.tar.gz
+*.tgz
+*.rar
+
+# Mappen waar de replica belandt
+degage-replica/
+replica/
+data/
+
+# ============================================================================
+# Python
+# ============================================================================
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ============================================================================
+# Rommel van het besturingssysteem en de editor
+# ============================================================================
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+*~

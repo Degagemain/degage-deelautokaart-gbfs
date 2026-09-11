@@ -1,0 +1,295 @@
+{
+  "last_updated": "2026-07-31T00:00:00+02:00",
+  "ttl": 86400,
+  "version": "3.0",
+  "data": {
+    "vehicle_types": [
+      {
+        "vehicle_type_id": "car-combustion-freight-2",
+        "form_factor": "car",
+        "propulsion_type": "combustion",
+        "max_range_meters": 400000,
+        "name": [
+          {
+            "text": "Lichte vracht, benzine of gas, 2 zitplaatsen",
+            "language": "nl"
+          }
+        ],
+        "rider_capacity": 2
+      },
+      {
+        "vehicle_type_id": "car-combustion-passenger-2",
+        "form_factor": "car",
+        "propulsion_type": "combustion",
+        "max_range_meters": 400000,
+        "name": [
+          {
+            "text": "Personenwagen, benzine of gas, 2 zitplaatsen",
+            "language": "nl"
+          }
+        ],
+        "rider_capacity": 2
+      },
+      {
+        "vehicle_type_id": "car-combustion-passenger-3",
+        "form_factor": "car",
+        "propulsion_type": "combustion",
+        "max_range_meters": 400000,
+        "name": [
+          {
+            "text": "Personenwagen, benzine of gas, 3 zitplaatsen",
+            "language": "nl"
+          }
+        ],
+        "rider_capacity": 3
+      },
+      {
+        "vehicle_type_id": "car-combustion-passenger-4",
+        "form_factor": "car",
+        "propulsion_type": "combustion",
+        "max_range_meters": 400000,
+        "name": [
+          {
+            "text": "Personenwagen, benzine of gas, 4 zitplaatsen",
+            "language": "nl"
+          }
+        ],
+        "rider_capacity": 4
+      },
+      {
+        "vehicle_type_id": "car-combustion-passenger-5",
+        "form_factor": "car",
+        "propulsion_type": "combustion",
+        "max_range_meters": 400000,
+        "name": [
+          {
+            "text": "Personenwagen, benzine of gas, 5 zitplaatsen",
+            "language": "nl"
+          }
+        ],
+        "rider_capacity": 5
+      },
+      {
+        "vehicle_type_id": "car-combustion-passenger-7",
+        "form_factor": "car",
+        "propulsion_type": "combustion",
+        "max_range_meters": 400000,
+        "name": [
+          {
+            "text": "Personenwagen, benzine of gas, 7 zitplaatsen",
+            "language": "nl"
+          }
+        ],
+        "rider_capacity": 7
+      },
+      {
+        "vehicle_type_id": "car-combustion_diesel-freight-2",
+        "form_factor": "car",
+        "propulsion_type": "combustion_diesel",
+        "max_range_meters": 400000,
+        "name": [
+          {
+            "text": "Lichte vracht, diesel, 2 zitplaatsen",
+            "language": "nl"
+          }
+        ],
+        "rider_capacity": 2
+      },
+      {
+        "vehicle_type_id": "car-combustion_diesel-freight-3",
+        "form_factor": "car",
+        "propulsion_type": "combustion_diesel",
+        "max_range_meters": 400000,
+        "name": [
+          {
+            "text": "Lichte vracht, diesel, 3 zitplaatsen",
+            "language": "nl"
+          }
+        ],
+        "rider_capacity": 3
+      },
+      {
+        "vehicle_type_id": "car-combustion_diesel-freight-6",
+        "form_factor": "car",
+        "propulsion_type": "combustion_diesel",
+        "max_range_meters": 400000,
+        "name": [
+          {
+            "text": "Lichte vracht, diesel, 6 zitplaatsen",
+            "language": "nl"
+          }
+        ],
+        "rider_capacity": 6
+      },
+      {
+        "vehicle_type_id": "car-combustion_diesel-passenger-4",
+        "form_factor": "car",
+        "propulsion_type": "combustion_diesel",
+        "max_range_meters": 400000,
+        "name": [
+          {
+            "text": "Personenwagen, diesel, 4 zitplaatsen",
+            "language": "nl"
+          }
+        ],
+        "rider_capacity": 4
+      },
+      {
+        "vehicle_type_id": "car-combustion_diesel-passenger-5",
+        "form_factor": "car",
+        "propulsion_type": "combustion_diesel",
+        "max_range_meters": 400000,
+        "name": [
+          {
+            "text": "Personenwagen, diesel, 5 zitplaatsen",
+            "language": "nl"
+          }
+        ],
+        "rider_capacity": 5
+      },
+      {
+        "vehicle_type_id": "car-combustion_diesel-passenger-6",
+        "form_factor": "car",
+        "propulsion_type": "combustion_diesel",
+        "max_range_meters": 400000,
+        "name": [
+          {
+            "text": "Personenwagen, diesel, 6 zitplaatsen",
+            "language": "nl"
+          }
+        ],
+        "rider_capacity": 6
+      },
+      {
+        "vehicle_type_id": "car-combustion_diesel-passenger-7",
+        "form_factor": "car",
+        "propulsion_type": "combustion_diesel",
+        "max_range_meters": 400000,
+        "name": [
+          {
+            "text": "Personenwagen, diesel, 7 zitplaatsen",
+            "language": "nl"
+          }
+        ],
+        "rider_capacity": 7
+      },
+      {
+        "vehicle_type_id": "car-combustion_diesel-passenger-8",
+        "form_factor": "car",
+        "propulsion_type": "combustion_diesel",
+        "max_range_meters": 400000,
+        "name": [
+          {
+            "text": "Personenwagen, diesel, 8 zitplaatsen",
+            "language": "nl"
+          }
+        ],
+        "rider_capacity": 8
+      },
+      {
+        "vehicle_type_id": "car-combustion_diesel-passenger-9",
+        "form_factor": "car",
+        "propulsion_type": "combustion_diesel",
+        "max_range_meters": 400000,
+        "name": [
+          {
+            "text": "Personenwagen, diesel, 9 zitplaatsen",
+            "language": "nl"
+          }
+        ],
+        "rider_capacity": 9
+      },
+      {
+        "vehicle_type_id": "car-electric-freight-2",
+        "form_factor": "car",
+        "propulsion_type": "electric",
+        "max_range_meters": 100000,
+        "name": [
+          {
+            "text": "Lichte vracht, elektrisch, 2 zitplaatsen",
+            "language": "nl"
+          }
+        ],
+        "rider_capacity": 2
+      },
+      {
+        "vehicle_type_id": "car-electric-passenger-4",
+        "form_factor": "car",
+        "propulsion_type": "electric",
+        "max_range_meters": 100000,
+        "name": [
+          {
+            "text": "Personenwagen, elektrisch, 4 zitplaatsen",
+            "language": "nl"
+          }
+        ],
+        "rider_capacity": 4
+      },
+      {
+        "vehicle_type_id": "car-electric-passenger-5",
+        "form_factor": "car",
+        "propulsion_type": "electric",
+        "max_range_meters": 100000,
+        "name": [
+          {
+            "text": "Personenwagen, elektrisch, 5 zitplaatsen",
+            "language": "nl"
+          }
+        ],
+        "rider_capacity": 5
+      },
+      {
+        "vehicle_type_id": "car-hybrid-passenger-4",
+        "form_factor": "car",
+        "propulsion_type": "hybrid",
+        "max_range_meters": 400000,
+        "name": [
+          {
+            "text": "Personenwagen, hybride, 4 zitplaatsen",
+            "language": "nl"
+          }
+        ],
+        "rider_capacity": 4
+      },
+      {
+        "vehicle_type_id": "car-hybrid-passenger-5",
+        "form_factor": "car",
+        "propulsion_type": "hybrid",
+        "max_range_meters": 400000,
+        "name": [
+          {
+            "text": "Personenwagen, hybride, 5 zitplaatsen",
+            "language": "nl"
+          }
+        ],
+        "rider_capacity": 5
+      },
+      {
+        "vehicle_type_id": "car-hybrid-passenger-7",
+        "form_factor": "car",
+        "propulsion_type": "hybrid",
+        "max_range_meters": 400000,
+        "name": [
+          {
+            "text": "Personenwagen, hybride, 7 zitplaatsen",
+            "language": "nl"
+          }
+        ],
+        "rider_capacity": 7
+      },
+      {
+        "vehicle_type_id": "car-plug_in_hybrid-passenger-5",
+        "form_factor": "car",
+        "propulsion_type": "plug_in_hybrid",
+        "max_range_meters": 400000,
+        "name": [
+          {
+            "text": "Personenwagen, plug-in hybride, 5 zitplaatsen",
+            "language": "nl"
+          }
+        ],
+        "rider_capacity": 5
+      }
+    ]
+  }
+}
