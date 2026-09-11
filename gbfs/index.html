@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GBFS-feed van Dégage</title>
+
+<!--
+  Doorverwijzing naar de instappagina van de feed.
+
+  Wie `/gbfs` intikt, zoekt de feed. Zonder dit bestand geeft die map een 404 (GitHub
+  Pages toont geen mappenlijst) — en juist dat adres is wat een partner overhoudt als hij
+  het instapadres `/gbfs/gbfs.json` afkapt, of wat hij zelf probeert voordat hij de
+  documentatie leest. Dan hoort daar de uitleg te staan, niet niets.
+
+  De pagina zelf blijft in `web/gbfs.html` staan en wordt hier NIET gekopieerd. Ze leest
+  de feed via `../gbfs/` en verwijst naar `kaart.html` ernaast; een tweede exemplaar in
+  deze map zou die tweede link breken en bij elke wijziging uit de pas gaan lopen.
+
+  Dit bestand raakt de feed niet aan: een aggregator vraagt `gbfs.json` en de andere
+  bestanden rechtstreeks op, en die liggen gewoon naast dit bestandje. Alleen de map
+  ZELF opvragen belandt hier. De generator schrijft enkel de feedbestanden en ruimt niets
+  op, dus hij laat dit bestand met rust.
+
+  Drie lagen, net als in de root, want een doorverwijzing hoort niet van één ding af te
+  hangen: `meta refresh` werkt zonder JavaScript, `location.replace` gaat sneller en laat
+  geen lege stap in de geschiedenis achter, en de link eronder blijft over als allebei
+  geblokkeerd zijn.
+
+  Het pad is bewust RELATIEF, zodat het klopt op een projectrepo, op een eigen domein
+  en lokaal.
+-->
+<meta http-equiv="refresh" content="0; url=../web/gbfs.html">
+<link rel="canonical" href="../web/gbfs.html">
+
+<style>
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    color: #1d2a28; background: #f4f6f5;
+    text-align: center;
+  }
+  p { margin: 0; padding: 24px; }
+  a { color: #235348; }
+</style>
+</head>
+<body>
+  <p>De GBFS-pagina wordt geopend. Gebeurt er niets?
+     <a href="../web/gbfs.html">Ga naar de instappagina van de feed</a>.</p>
+  <script>location.replace("../web/gbfs.html");</script>
+</body>
+</html>
