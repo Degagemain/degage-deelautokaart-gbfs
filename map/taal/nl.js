@@ -4,9 +4,9 @@
    bestand terug. Wie hier iets toevoegt, hoort het dus ook in fr.js en en.js te zetten.
    --------------------------------------------------------------------------------------
 
-   Dit bestand wordt door `kaart.html` ingeladen met een gewone <script>-tag, vóór de
+   Dit bestand wordt door `index.html` ingeladen met een gewone <script>-tag, vóór de
    kaartcode zelf. Geen bouwstap, geen module: het hangt zichzelf in `window.DEGAGE_TALEN`
-   en de kaart leest het daar op. De volgorde van de scripttags in `kaart.html` is meteen
+   en de kaart leest het daar op. De volgorde van de scripttags in `index.html` is meteen
    de volgorde van de keuzelijst in de instellingen.
 
    Drie tabellen, elk met een eigen taak:
@@ -19,7 +19,7 @@
    · `vlaggen`  de toebehoren en afspraken. De sleutel komt uit de feed (FEEDSPEC.md).
 
    Een nieuwe taal toevoegen: kopieer `nl.js`, vertaal, en zet één scriptregel bij in
-   `kaart.html`. Verder is er niets aan te passen — de keuzelijst en de taaldetectie
+   `index.html`. Verder is er niets aan te passen — de keuzelijst en de taaldetectie
    volgen vanzelf.
 */
 (window.DEGAGE_TALEN = window.DEGAGE_TALEN || {}).nl = {
@@ -125,12 +125,13 @@
     "dichtbij.sluitenLang": "Lijst sluiten",
 
     "melding.geduld": "Even geduld",
-    "melding.laden": "De standplaatsen worden geladen.",
+    "melding.laden": "De kaart met deelauto's wordt geladen.",
 
     "instellingen.volgmuis": "Lijst dichtstbijzijnde auto's volgt muis",
     "instellingen.dichtbij": "Lijst dichtstbijzijnde auto's tonen",
     "instellingen.legende": "Melding over beschikbaarheid tonen",
     "instellingen.taal": "Taal",
+    "instellingen.pictogram": "Tabbladpictogram:",
     "melden.knop": "Probleem melden",
     "melden.titel": "Probleem melden of feedback geven — opent github.com in een nieuw tabblad",
 
@@ -154,6 +155,9 @@
     "popup.bereikMarge": "{van}–{tot} km bereik",
     "popup.bereikUitleg": "Bereik: schatting bij gemengd gebruik, geen WLTP. Een marge " +
                           "betekent dat het van de batterij afhangt. Bron:",
+    "popup.bereikUitlegHandmatig": "Bereik: schatting bij gemengd gebruik, geen WLTP. " +
+                          "Opgegeven door Dégage zelf, op basis van de batterij die in " +
+                          "deze wagens zit.",
     "ov.titel": "Mobiscore",
     "ov.geenScore": "niet beschikbaar",
     "ov.bushalte": "bushalte op {afstand} ({freq})",

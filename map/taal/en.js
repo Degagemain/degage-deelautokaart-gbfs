@@ -4,9 +4,9 @@
    met opzet: een half vertaald bestand levert een leesbare kaart op en geen gaten.
    --------------------------------------------------------------------------------------
 
-   Dit bestand wordt door `kaart.html` ingeladen met een gewone <script>-tag, vóór de
+   Dit bestand wordt door `index.html` ingeladen met een gewone <script>-tag, vóór de
    kaartcode zelf. Geen bouwstap, geen module: het hangt zichzelf in `window.DEGAGE_TALEN`
-   en de kaart leest het daar op. De volgorde van de scripttags in `kaart.html` is meteen
+   en de kaart leest het daar op. De volgorde van de scripttags in `index.html` is meteen
    de volgorde van de keuzelijst in de instellingen.
 
    Drie tabellen, elk met een eigen taak:
@@ -19,7 +19,7 @@
    · `vlaggen`  de toebehoren en afspraken. De sleutel komt uit de feed (FEEDSPEC.md).
 
    Een nieuwe taal toevoegen: kopieer `nl.js`, vertaal, en zet één scriptregel bij in
-   `kaart.html`. Verder is er niets aan te passen — de keuzelijst en de taaldetectie
+   `index.html`. Verder is er niets aan te passen — de keuzelijst en de taaldetectie
    volgen vanzelf.
 */
 (window.DEGAGE_TALEN = window.DEGAGE_TALEN || {}).en = {
@@ -125,12 +125,13 @@
     "dichtbij.sluitenLang": "Close list",
 
     "melding.geduld": "One moment",
-    "melding.laden": "Loading the parking spots.",
+    "melding.laden": "Loading the shared-car map.",
 
     "instellingen.volgmuis": "Nearest-cars list follows the mouse",
     "instellingen.dichtbij": "Show the nearest-cars list",
     "instellingen.legende": "Show the availability notice",
     "instellingen.taal": "Language",
+    "instellingen.pictogram": "Tab icon:",
     "melden.knop": "Report a problem",
     "melden.titel": "Report a problem or give feedback — opens github.com in a new tab",
 
@@ -154,6 +155,8 @@
     "popup.bereikMarge": "{van}–{tot} km range",
     "popup.bereikUitleg": "Range: estimate for mixed use, not WLTP. A spread means it " +
                           "depends on the battery. Source:",
+    "popup.bereikUitlegHandmatig": "Range: estimate for mixed use, not WLTP. Supplied by " +
+                          "Dégage itself, based on the battery fitted to these cars.",
     "ov.titel": "Mobiscore",
     "ov.geenScore": "not available",
     "ov.bushalte": "bus stop at {afstand} ({freq})",

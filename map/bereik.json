@@ -432,24 +432,12 @@
   },
   "Renault|Zoe|2020": {
    "km": [
-    140,
-    320
+    250,
+    300
    ],
-   "versie_bekend": false,
-   "jaar_gebruikt": true,
-   "varianten": [
-    "Zoe Q90",
-    "Zoe R110",
-    "Zoe R110 ZE40",
-    "Zoe R110 ZE50",
-    "Zoe R135 ZE50",
-    "Zoe R90",
-    "Zoe R90 Entry",
-    "Zoe ZE40 R110",
-    "Zoe ZE50 R110",
-    "Zoe ZE50 R135"
-   ],
-   "bron": "open-ev-data"
+   "versie_bekend": true,
+   "bron": "handmatig",
+   "toelichting": "De Zoe's van 2020 in de vloot zijn de 50 kWh-versie (ZE50)."
   },
   "Renault|Zoe|2021": {
    "km": [

@@ -4,7 +4,7 @@ Een beschrijving van de deelautokaart zoals een bezoeker haar tegenkomt: wat er 
 zien is, wat je ermee kunt, en welke keuzes daarachter zitten. Zonder code.
 
 Wie wil weten *hoe* het gebouwd is, leest [`TECHNIEK.md`](TECHNIEK.md). Wie de feed wil
-gebruiken, leest `web/gbfs.html`.
+gebruiken, leest `gbfs/index.html`.
 
 ---
 
@@ -333,7 +333,9 @@ Het paneel linksboven kun je **minimaliseren** met de knop naast het zoekveld; e
 dan alleen een hamburgerpictogram over en de kaart komt helemaal vrij. Nog eens klikken
 brengt het terug, met de cursor meteen in het zoekveld en de filters open. Typen doet
 hetzelfde. Op een telefoon of tablet komt alleen het paneel terug: de cursor in het
-zoekveld zou daar het schermtoetsenbord openen.
+zoekveld zou daar het schermtoetsenbord openen — maar stonden de filters open toen je
+minimaliseerde, dan staan ze bij het terughalen weer open. Wie het paneel wegklapt om even
+de kaart te zien, is niet klaar met filteren.
 
 ## Talen
 
@@ -365,9 +367,16 @@ de standaardtegels.
 
 Het paneel ligt bovenaan over de volle breedte, de zoomknoppen staan linksonder waar de
 duim zit, en de lijst met dichtstbijzijnde auto's loopt van rand tot rand. Klap je de
-filters open terwijl die lijst er staat, dan krimpt ze tot naam en afstand per auto en
-stopt de filterlijst net erboven — ze overlappen elkaar nooit. De lijst volgt
-daar geen muis — die is er niet — en meet vanaf het midden van de kaart.
+filters open terwijl die lijst er staat, dan gaat ze zolang helemaal weg: paneel en lijst
+liggen hier boven elkaar en laten samen nauwelijks kaart over. Ze komt ongewijzigd terug
+zodra de filters dichtgaan. De lijst volgt daar geen muis — die is er niet — en meet vanaf
+het midden van de kaart.
+
+Een popup valt op een telefoon nooit meer half buiten beeld. De knop **"Probleem melden"**
+gaat zolang weg — die stond er precies in de weg — en past de popup ook dan niet tussen het
+paneel en de lijst, dan neemt hij de plaats van de lijst in en stapt die zolang opzij.
+Allebei komen ze terug zodra je de popup sluit. Blijft er nog te weinig plaats, dan schuift
+de inhoud binnen de popup zelf.
 
 ## Wat de kaart bewust niet doet
 

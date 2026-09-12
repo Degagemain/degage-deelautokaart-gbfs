@@ -1,10 +1,10 @@
 /* De logica van de deelautokaart van Dégage.
    ------------------------------------------------------------------------------------
-   Hoort bij `kaart.html`, dat de opmaak en de pictogrammen draagt, en bij `taal/*.js`,
-   dat de teksten draagt. Alle drie worden ze door de browser rechtstreeks gelezen: geen
-   bouwstap, geen module, geen `import`.
+   Hoort bij `index.html`, dat de structuur en de pictogrammen draagt, bij `index.css`,
+   dat de opmaak draagt, en bij `taal/*.js`, dat de teksten draagt. Ze worden alle vier
+   door de browser rechtstreeks gelezen: geen bouwstap, geen module, geen `import`.
 
-   Dit bestand wordt met een gewone <script>-tag onderaan `kaart.html` geladen, ná
+   Dit bestand wordt met een gewone <script>-tag onderaan `index.html` geladen, ná
    Leaflet en ná de taalbestanden. Die volgorde is geen toeval:
 
    · Leaflet en Leaflet.markercluster moeten er zijn, want `L` wordt hier meteen gebruikt.
@@ -39,7 +39,7 @@
    DE ENIGE INSTELLING DIE JE MOET AANPASSEN ALS DE FEED VERHUIST
    ==========================================================================
    Relatief pad vanaf deze pagina naar de map met de GBFS-bestanden. Standaard staat
-   kaart.html in `web/` en de feed in `gbfs/`, dus één map omhoog. Zet hier de volledige
+   de kaart in `map/` en de feed in `gbfs/`, dus één map omhoog. Zet hier de volledige
    publieke URL zodra de feed op zijn eigen adres staat (zie de open punten in SCOPE.md).
    Let op: bij een absolute URL op een ánder domein moet die server CORS toestaan. */
 const GBFS_BASIS = "../gbfs";
@@ -495,7 +495,7 @@ const staat = {
   jaren: [],              // alle bouwjaren die in de data voorkomen, oplopend
   fotos: {},              // "merk|model" -> { bestand, licentie, auteur, bronpagina }
   bereik: {},             // "merk|model|bouwjaar" (of "merk|model") -> { km: [van, tot], ... }
-  ov: null,               // web/ov.json, maar alleen als het bij deze feed hoort
+  ov: null,               // map/ov.json, maar alleen als het bij deze feed hoort
   jaarVan: null,          // gekozen ondergrens bouwjaar; null = geen bouwjaarfilter
   busDrempels: [],        // de standen van de halteschuif, in meter, aflopend
   maxBus: null,           // gekozen bovengrens afstand tot een halte; null = geen filter
@@ -693,7 +693,7 @@ async function laden() {
   if (ovBestand && ovBestand.voor_feed === stationBestand.last_updated) {
     staat.ov = ovBestand;
   } else if (ovBestand) {
-    console.warn("web/ov.json hoort bij een andere feed (" + ovBestand.voor_feed +
+    console.warn("map/ov.json hoort bij een andere feed (" + ovBestand.voor_feed +
                  ") en wordt niet getoond. Draai scripts/haal_ov.py opnieuw.");
   }
   toonDatum();
@@ -1144,10 +1144,14 @@ function popupHtml(station) {
       feiten.push('<li class="feit feit--breed">' + pictogram("i-bereik") +
                   "<span>" + ontsnap(tekst) + "</span>" + uitlegKnop(id) + "</li>");
       /* Wat het getal is, en waar het vandaan komt — die naamsvermelding is een voorwaarde
-         van de licentie van Open EV Data (de README vermeldt ze ook). */
-      bereikUitleg = uitlegTekst(id, ontsnap(t("popup.bereikUitleg")) +
-        ' <a href="https://github.com/KilowattApp/open-ev-data" target="_blank" ' +
-        'rel="noopener">Open EV Data</a>');
+         van de licentie van Open EV Data (de README vermeldt ze ook). Een met de hand
+         ingevuld bereik komt NIET uit die bron en mag er dus ook niet naar verwijzen:
+         een onterechte naamsvermelding is even fout als een ontbrekende. */
+      bereikUitleg = uitlegTekst(id, bereik.bron === "handmatig"
+        ? ontsnap(t("popup.bereikUitlegHandmatig"))
+        : ontsnap(t("popup.bereikUitleg")) +
+          ' <a href="https://github.com/KilowattApp/open-ev-data" target="_blank" ' +
+          'rel="noopener">Open EV Data</a>');
     }
 
     /* Alleen aanwezige toebehoren en afspraken. Nooit "trekhaak: nee". */
@@ -1249,8 +1253,31 @@ function uitlegTekst(id, html) {
 }
 
 kaart.on("popupopen", (e) => {
+  /* Op een telefoon staat de meldknop linksonder over de kaart, en hij ligt hoger dan de
+     popuplaag van Leaflet: een popup die eroverheen valt, zou er een groene pil middenin
+     krijgen. popupRanden() houdt daarom geen plaats voor hem vrij (de popup mag daar
+     staan) en hier gaat hij zolang weg, net zoals hij dat al doet voor het
+     instellingendoosje. Zie `.toont-popup .melden` in de opmaak. */
+  document.body.classList.add("toont-popup");
+
   const el = e.popup.getElement();
   if (!el) return;
+
+  /* En raakt hij de balk ook nog, dan gaat die zolang weg. popupRanden() houdt daar plaats
+     voor vrij zolang er plaats ís; blijft er te weinig over, dan valt de popup er liever
+     overheen dan half buiten beeld — maar bovenop komt hij niet, want alle lagen van
+     Leaflet zitten in één stapelcontext onder de knoppen en de balk. Meten in plaats van
+     rekenen: pas hier staat de popup op zijn plaats en is zijn hoogte bekend. Zie
+     `.popup-over-balk` in de opmaak. */
+  if (window.matchMedia("(max-width: 640px)").matches && balkInBeeld()) {
+    const p = el.getBoundingClientRect();
+    const b = balkDoos().getBoundingClientRect();
+    const raakt = p.left < b.right && p.right > b.left && p.top < b.bottom && p.bottom > b.top;
+    if (raakt) {
+      document.body.classList.add("popup-over-balk");
+      meetDichtbij();
+    }
+  }
   /* Leaflets kruisje draagt "Close popup" voor schermlezers, altijd in het Engels. Bij
      elke opening opnieuw, want een markerpopup houdt zijn element en de taal kan intussen
      gewisseld zijn. */
@@ -1593,9 +1620,9 @@ function zetFilters(open) {
   $("filters").hidden = !open;
   /* Op een breed scherm blijft de balk onderaan staan waar ze staat: haar ruimte houdt de
      kolom van het paneel altijd vrij, ook met dichte filters (zie `.dichtbij` in de
-     opmaak), zodat er niets verspringt bij het openklappen. Op een telefoon krimpt ze wél
-     — daar liggen paneel en balk boven elkaar — en dat geeft een andere hoogte, dus
-     meteen opnieuw meten. */
+     opmaak), zodat er niets verspringt bij het openklappen. Op een telefoon verdwijnt ze
+     wél zolang de filters open staan — daar liggen paneel en balk boven elkaar — en dat
+     geeft een andere hoogte, dus meteen opnieuw meten. */
   $("paneel").classList.toggle("toont-filters", open);
   meetDichtbij();
 }
@@ -1679,10 +1706,22 @@ $("filters").addEventListener("click", (e) => {
 
 /* ---------- het paneel minimaliseren ---------------------------------------------------
    Ingeklapt blijft alleen de knop staan, met het hamburgerpictogram: de kaart komt vrij
-   en het paneel is één klik terug. De filters gaan mee dicht — anders staan ze bij het
-   openklappen open zonder dat iemand daarom gevraagd heeft. */
+   en het paneel is één klik terug. De filters gaan mee dicht — ingeklapt is er geen
+   paneel om ze in te tonen.
+
+   Maar niet vergeten: stonden ze open op het moment van minimaliseren, dan komen ze bij
+   het terughalen weer open. Wie het paneel wegklapt om even de kaart te zien, is niet
+   klaar met filteren, en de filters opnieuw moeten openen na elke blik op de kaart is op
+   een telefoon — waar het paneel het scherm vult en dus vaak wegklapt — een klik te veel
+   bij elke beurt. */
+let filtersWarenOpen = false;
+
 function zetPaneel(klein) {
   const knop = $("knop-paneel");
+  /* Alleen een échte wisseling telt voor het onthouden hieronder. pasTaalToe() roept deze
+     functie ook aan met de stand die er al is, enkel om de knoptitel te laten vertalen —
+     dat mag de onthouden filterstand niet wissen. */
+  const wisselt = $("paneel").classList.contains("is-klein") !== klein;
   $("paneel").classList.toggle("is-klein", klein);
   /* De sleutel blijft op het element staan, niet alleen de vertaalde tekst: zo weet
      vertaalPagina() bij een taalwissel welke van de twee er hoort te staan. */
@@ -1692,7 +1731,13 @@ function zetPaneel(klein) {
   const label = $("knop-paneel-tekst");
   label.setAttribute("data-i18n", sleutel);
   label.textContent = t(sleutel);
-  if (klein) zetFilters(false);
+  if (klein) {
+    if (wisselt) filtersWarenOpen = !$("filters").hidden;
+    zetFilters(false);
+  } else if (wisselt && filtersWarenOpen) {
+    filtersWarenOpen = false;
+    zetFilters(true);
+  }
 }
 
 $("knop-paneel").addEventListener("click", () => {
@@ -1913,9 +1958,17 @@ function balkDoos() {
   return $("dichtbij").querySelector(".dichtbij__doos");
 }
 
+/* Staat de balk er ook écht? `hidden` is één reden om weg te zijn, de opmaak is de
+   andere: op een telefoon verdwijnt ze zolang de filters open staan (zie
+   `.paneel.toont-filters ~ .dichtbij`). Wie haar uitmeet, moet dat verschil kennen — een
+   doos die display:none is, geeft een rechthoek van nul terug op positie nul, en daar
+   zou `--dichtbij-ruimte` het hele venster van maken. */
+function balkInBeeld() {
+  return !$("dichtbij").hidden && balkDoos().offsetParent !== null;
+}
+
 function bijDeBalk(punt) {
-  const balk = $("dichtbij");
-  if (balk.hidden) return false;
+  if (!balkInBeeld()) return false;
   /* De doos en niet de ruimte eromheen: naast de doos ligt gewoon kaart, en daar hoort de
      lijst gewoon mee te bewegen met de muis. Zie `.dichtbij` in de opmaak. */
   const b = balkDoos().getBoundingClientRect();
@@ -1970,18 +2023,20 @@ function bedekHoek(o, el, vak) {
   else o[vKant] = Math.max(o[vKant], vInzet);
 }
 
-function vrijeRuimte() {
+/* `opties.meldknop === false` laat de meldknop buiten beschouwing: op een telefoon mag een
+   popup zijn plaats innemen (zie popupRanden()). Voor het mikken van de kaart telt hij
+   gewoon mee — daar valt niets weg en hoort er niets onder te verdwijnen. */
+function vrijeRuimte(opties) {
   const vak = document.getElementById("kaart").getBoundingClientRect();
   const mobiel = window.matchMedia("(max-width: 640px)").matches;
   const paneel = $("paneel");
-  const balk = $("dichtbij");
   let links = 0, boven = 0, onder = 0;
 
   const p = paneel.getBoundingClientRect();
   if (mobiel) boven = p.bottom - vak.top;
   else links = p.right - vak.left;
 
-  if (!balk.hidden) onder = vak.bottom - balkDoos().getBoundingClientRect().top;
+  if (balkInBeeld()) onder = vak.bottom - balkDoos().getBoundingClientRect().top;
 
   const o = {
     links: Math.max(0, links),
@@ -1995,7 +2050,9 @@ function vrijeRuimte() {
      te zijn. De knoppenbalk wordt gemeten zoals ze staat, dus mét de uitzoomknop en het
      tandwiel eronder. */
   bedekHoek(o, document.querySelector(".leaflet-top.leaflet-left"), vak);
-  bedekHoek(o, document.querySelector(".melden"), vak);
+  if (!opties || opties.meldknop !== false) {
+    bedekHoek(o, document.querySelector(".melden"), vak);
+  }
 
   return o;
 }
@@ -2016,17 +2073,52 @@ function centreerVrij(punt, zoom) {
 /* Popupranden die dezelfde bedekking kennen, zodat Leaflets eigen bijsturing een popup
    nooit half onder het paneel laat staan. */
 function popupRanden() {
-  const o = vrijeRuimte();
+  /* Op een telefoon telt de meldknop hier niet mee. Hij ligt daar linksonder over de
+     kaart en is precies breed genoeg om een flinke strook van de hoogte op te eisen —
+     terwijl hij het minst belangrijke is wat er staat. Liever een popup die over die plek
+     valt dan een popup die daardoor niet meer past; de knop gaat zolang weg (zie
+     `.toont-popup .melden` in de opmaak en de `popupopen`-luisteraar).
+
+     Op een breed scherm blijft hij wél meetellen: daar is ruimte genoeg, hij staat
+     rechtsboven, en hij blijft staan terwijl de popup open is. */
+  const mobiel = window.matchMedia("(max-width: 640px)").matches;
+  const o = vrijeRuimte({ meldknop: !mobiel });
+
+  /* RAND is de lucht die een popup van de rand van het vrije vlak houdt; CHROOM is wat de
+     popup zelf bovenop zijn inhoud inneemt — de punt onderaan, de kaders en de marges.
+     MINSTENS is de hoogte waaronder een popup niet meer prettig leest, KRAP die waaronder
+     hij niets meer zegt. */
+  const RAND = 16, CHROOM = 48, MINSTENS = 190, KRAP = 120;
+  let boven = o.boven + RAND, onder = o.onder + RAND;
+  const hoogte = kaart.getSize().y;
+
   /* Op een telefoon is de ruimte tussen het paneel en de balk soms kleiner dan de popup
-     zelf — dan kan geen enkele verschuiving hem nog in beeld krijgen. Daarom een
-     bovengrens: Leaflet laat de inhoud dan binnen de popup scrollen in plaats van hem
-     onderaan af te snijden. Ondergrens van 190 px, want een popup van 40 px hoog helpt
-     niemand; liever een klein beetje overlap dan een onleesbaar strookje. */
-  const vrijeHoogte = kaart.getSize().y - o.boven - o.onder - 48;
+     zelf. Een bovengrens alleen lost dat niet op: onder de MINSTENS wordt een popup een
+     onleesbaar strookje, en Leaflet duwt hem dan tegen de bovenrand aan — waarna de
+     onderkant van het scherm valt. Daarom geven we bij plaatsgebrek de plaats ONDERAAN
+     terug: daar liggen de meldknop en de balk, en die stappen allebei opzij zodra een
+     popup ze raakt (zie de `popupopen`-luisteraar). Zo valt de popup over hún plek in
+     plaats van half buiten beeld. */
+  let vrij = hoogte - boven - onder - CHROOM;
+  if (vrij < MINSTENS) {
+    onder = Math.max(8, onder - (MINSTENS - vrij));
+    vrij = hoogte - boven - onder - CHROOM;
+  }
+
+  /* Blijft het dan nog te krap — een laag venster met een hoog paneel — dan pas over het
+     paneel heen. Dat is het laatste redmiddel: het paneel blijft bovenop liggen, dus wat
+     eronder komt, is niet te lezen. Liever dat dan een popup die van het scherm valt. */
+  if (vrij < KRAP) {
+    boven = Math.max(8, boven - (KRAP - vrij));
+    vrij = hoogte - boven - onder - CHROOM;
+  }
+
   return {
-    autoPanPaddingTopLeft: L.point(o.links + 16, o.boven + 16),
-    autoPanPaddingBottomRight: L.point(o.rechts + 16, o.onder + 16),
-    maxHeight: Math.max(190, Math.round(vrijeHoogte))
+    autoPanPaddingTopLeft: L.point(o.links + RAND, boven),
+    autoPanPaddingBottomRight: L.point(o.rechts + RAND, onder),
+    /* Nooit hoger dan wat er is: Leaflet laat de inhoud dan binnen de popup scrollen in
+       plaats van hem af te snijden. */
+    maxHeight: Math.max(KRAP, Math.round(vrij))
   };
 }
 
@@ -2189,14 +2281,14 @@ function toonLijst(rijen, titelFn, legeFn) {
    telefoon er niet onder verdwijnen. Wordt ook bij een venstermaatwijziging opnieuw
    gemeten: bij een smaller scherm breekt de titel en wordt de balk hoger. */
 function meetDichtbij() {
-  const balk = $("dichtbij");
-  const rechthoek = balk.hidden ? null : balkDoos().getBoundingClientRect();
+  const rechthoek = balkInBeeld() ? balkDoos().getBoundingClientRect() : null;
   const hoogte = rechthoek ? Math.ceil(rechthoek.height) + 12 : 0;
   document.documentElement.style.setProperty("--dichtbij-hoogte", hoogte + "px");
   /* Hoeveel er onderaan het venster bezet is, tot de bovenrand van de balk. Op een
-     telefoon blijft het paneel met open filters daarboven — zie `.paneel.toont-filters`
-     in de opmaak. zetFilters() roept dit aan ná het wisselen van de klasse, dus de balk
-     is dan al in haar smalle vorm gemeten. */
+     telefoon is dat nul zodra de filters open staan: de balk gaat dan weg (zie
+     `.paneel.toont-filters ~ .dichtbij` in de opmaak) en het paneel mag de volle hoogte
+     nemen. zetFilters() roept dit aan ná het wisselen van de klasse, dus er wordt
+     gemeten wat er dán staat. */
   const ruimte = rechthoek ? Math.ceil(window.innerHeight - rechthoek.top) : 0;
   document.documentElement.style.setProperty("--dichtbij-ruimte", ruimte + "px");
 }
@@ -2274,6 +2366,13 @@ function lijstBevroren() {
    — laat de lijst weer meelopen. Zo hoeft alleen dit ene plekje te weten wanneer de
    popup verdwijnt, en blijft `balkPopup` nooit ten onrechte staan. */
 kaart.on("popupclose", (e) => {
+  // Zie `popupopen` hierboven: de meldknop en de balk mogen terug. Leaflet houdt er
+  // hoogstens één popup open, dus er valt niets af te tellen.
+  document.body.classList.remove("toont-popup");
+  if (document.body.classList.contains("popup-over-balk")) {
+    document.body.classList.remove("popup-over-balk");
+    meetDichtbij();
+  }
   if (e.popup === balkPopup) { balkPopup = null; balkPopupStation = null; }
 });
 kaart.on("zoomend", bijwerkenAutoDichtbij);
@@ -2719,9 +2818,9 @@ if (TAALBESTANDEN_ONTBREKEN) {
   melding.hidden = false;
   melding.innerHTML =
     "<h2>Taalbestanden ontbreken</h2>" +
-    "<p>De map <code>web/taal/</code> is niet mee gepubliceerd. De kaart werkt, maar " +
+    "<p>De map <code>map/taal/</code> is niet mee gepubliceerd. De kaart werkt, maar " +
     "teksten uit het script blijven onvertaald.</p>";
-  console.error("DEGAGE_TALEN is leeg: laadt web/taal/*.js wel?");
+  console.error("DEGAGE_TALEN is leeg: laadt map/taal/*.js wel?");
 }
 
 /* De eerste keer: de opmaak staat nog in het Nederlands zoals ze in het bestand staat,

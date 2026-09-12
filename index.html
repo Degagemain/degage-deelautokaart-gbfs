@@ -5,11 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Deelautokaart van Dégage</title>
 
+<!-- Het pictogram in het tabblad. Twee maten: 32 px voor het tabblad zelf, de
+     512 voor wie de pagina aan zijn beginscherm hangt. Naamsvermelding staat in
+     de voettekst van /gbfs/, in het instellingenpaneel van de kaart en in de
+     README — dat is een voorwaarde van de licentie. -->
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+
 <!--
   Doorverwijzing naar de kaart.
 
-  De kaart zelf staat in `web/kaart.html` en blijft daar: ze leest de feed via `../gbfs`
-  en de foto's via `fotos/`, en die paden kloppen alleen vanuit `web/`. Dit bestandje
+  De kaart zelf staat in `map/index.html` en blijft daar: ze leest de feed via `../gbfs`
+  en de foto's via `fotos/`, en die paden kloppen alleen vanuit `map/`. Dit bestandje
   bestaat enkel zodat de root van de site geen 404 geeft — GitHub Pages toont daar
   anders niets, want er is geen index.
 
@@ -22,8 +30,8 @@
   Het pad is bewust RELATIEF. Zo werkt het zowel op een projectrepo
   (degagemain.github.io/degage-deelautokaart-gbfs/) als op een eigen domein of lokaal.
 -->
-<meta http-equiv="refresh" content="0; url=web/kaart.html">
-<link rel="canonical" href="web/kaart.html">
+<meta http-equiv="refresh" content="0; url=map/">
+<link rel="canonical" href="map/">
 
 <style>
   body {
@@ -40,7 +48,7 @@
 </head>
 <body>
   <p>De kaart wordt geopend. Gebeurt er niets?
-     <a href="web/kaart.html">Ga naar de deelautokaart</a>.</p>
-  <script>location.replace("web/kaart.html");</script>
+     <a href="map/">Ga naar de deelautokaart</a>.</p>
+  <script>location.replace("map/");</script>
 </body>
 </html>

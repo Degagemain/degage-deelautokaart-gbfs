@@ -2,14 +2,14 @@
 """Het rijbereik van de elektrische wagens, als marge per model.
 
 Leest de elektrische wagens uit `gbfs/degage_vehicles.json`, zoekt hun model op in
-Open EV Data, en schrijft per merk+model een bereik naar `web/bereik.json`. De kaart
+Open EV Data, en schrijft per merk+model een bereik naar `map/bereik.json`. De kaart
 toont dat in de popup.
 
 Draaien
 -------
     py scripts/haal_bereik.py
 
-Ná `genereer_gbfs.py`. Wat al in `web/bereik.json` staat en met de hand is ingevuld
+Ná `genereer_gbfs.py`. Wat al in `map/bereik.json` staat en met de hand is ingevuld
 (`"bron": "handmatig"`), blijft onaangeroerd.
 
 Waarom een apart script
@@ -215,7 +215,7 @@ def zoek(merk: str, model: str, per_merk: dict[str, list[dict]],
 def main() -> int:
     repo = Path(__file__).resolve().parent.parent
     feed = repo / "gbfs" / "degage_vehicles.json"
-    uit = repo / "web" / "bereik.json"
+    uit = repo / "map" / "bereik.json"
     if not feed.exists():
         zeg(f"FOUT: {feed} bestaat niet. Draai eerst genereer_gbfs.py.")
         return 2
@@ -277,7 +277,7 @@ def main() -> int:
         zeg(f"niet in de bron ({len(niet_gevonden)}) — die tonen geen bereik:")
         for s in niet_gevonden:
             zeg(f"  {s.replace('|', ' ')}")
-        zeg("  Weet je het bereik wel? Zet het in web/bereik.json met \"bron\": \"handmatig\".")
+        zeg("  Weet je het bereik wel? Zet het in map/bereik.json met \"bron\": \"handmatig\".")
     zeg()
 
     bestand = {

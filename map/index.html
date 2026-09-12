@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Deelauto's van Dégage</title>
+
+<!-- Het pictogram in het tabblad. Twee maten: 32 px voor het tabblad zelf, de
+     512 voor wie de pagina aan zijn beginscherm hangt. Naamsvermelding staat in
+     de voettekst van /gbfs/, in het instellingenpaneel van de kaart en in de
+     README — dat is een voorwaarde van de licentie. -->
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../favicon.png">
+<link rel="apple-touch-icon" href="../favicon.png">
+
+<!--
+  Deelautokaart van Dégage — bedoeld als iframe op degage.be.
+
+  Dit bestand draagt de STRUCTUUR en de pictogrammen. De rest staat ernaast, en de browser
+  leest alles rechtstreeks — geen bouwstap, geen module:
+
+    index.css      de opmaak
+    index.js       alle logica
+    taal/nl.js     de teksten, één bestand per taal
+    taal/fr.js
+    taal/en.js
+
+  De scripttags onderaan laden ze in de juiste volgorde; waarom die volgorde uitmaakt,
+  staat in de kop van `index.js`.
+
+  De feed wordt uit `gbfs/` gelezen via relatieve paden. Dat pad staat als één constante
+  bovenaan `index.js` (GBFS_BASIS); dat is het enige dat je moet aanpassen als de feed
+  ergens anders komt te staan.
+
+  Wat deze kaart bewust NIET doet
+  -------------------------------
+  · Ze toont géén live beschikbaarheid. De feed kent die niet: `num_vehicles_available`
+    is het aantal wagens dat op een standplaats staat, niet het aantal dat nu vrij is.
+    Dat staat daarom letterlijk in de legende, samen met de datum van de gegevens.
+  · Ze toont nooit een afwezig toebehoren. Geen "trekhaak: nee". In de brondata is een
+    nul dubbelzinnig — "niet aanwezig" of "nooit ingevuld" zijn niet te scheiden — dus
+    `degage_vehicles.json` draagt alleen wat op true staat, en deze kaart toont alleen
+    wat het bestand draagt.
+  · Om dezelfde reden kan er alleen POSITIEF gefilterd worden ("toon enkel wagens met
+    trekhaak"). Een filter op afwezigheid zou onwetendheid als feit presenteren.
+    Zie FEEDSPEC.md, sectie "Toebehoren: enkel wat aan staat".
+
+  Externe afhankelijkheden: alleen Leaflet + Leaflet.markercluster (versie gepind, met
+  SRI-hash) en de OpenStreetMap-tegels — in het Frans die van OpenStreetMap France, voor de
+  Franse plaatsnamen (zie TEGELS_PER_TAAL in index.js). Geen externe fonts, geen tracking, geen andere
+  CDN's. De OSM-attributie is een licentievoorwaarde en staat vast in de kaart.
+-->
+
+<link rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H"
+      crossorigin="anonymous">
+<link rel="stylesheet"
+      href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"
+      integrity="sha384-pmjIAcz2bAn0xukfxADbZIb3t8oRT9Sv0rvO+BR5Csr6Dhqq+nZs59P0pPKQJkEV"
+      crossorigin="anonymous">
+<link rel="stylesheet"
+      href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"
+      integrity="sha384-wgw+aLYNQ7dlhK47ZPK7FRACiq7ROZwgFNg0m04avm4CaXS+Z9Y7nMu8yNjBKYC+"
+      crossorigin="anonymous">
+
+<link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+
+<!-- Pictogrammen als sprite: één keer de padvorm, daarna alleen nog <use>. Zonder dit
+     staat dezelfde SVG honderden keren in de popups. Puur decoratief, want naast elk
+     pictogram staat altijd het woord zelf — schermlezers slaan ze dus over. -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+  <symbol id="i-brandstof" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 20V5a2 2 0 0 1 2-2h5a2 2 0 0 1 2 2v15M3 20h11M6 9h5"/>
+    <path d="M16 11h2a2 2 0 0 1 2 2v3a1.5 1.5 0 0 0 3 0V9l-3-3"/>
+  </symbol>
+  <symbol id="i-stroom" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M13.5 2 5 13.2h5.2L9.4 22 19 10.4h-5.4z"/>
+  </symbol>
+  <symbol id="i-zit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="7.5" r="3.2"/><path d="M5.5 20a6.5 6.5 0 0 1 13 0"/>
+  </symbol>
+  <symbol id="i-bak" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 4v16M12 4v16M18 4v8M6 12h12M4.4 4h3.2M10.4 4h3.2M16.4 4h3.2"/>
+  </symbol>
+  <symbol id="i-norm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 19c0-7 4.5-12 14-12 0 8-4.5 12-10 12H5zM7 17c1.5-4 4-6.5 7.5-8"/>
+  </symbol>
+  <symbol id="i-plaats" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 21s7-5.4 7-11a7 7 0 1 0-14 0c0 5.6 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>
+  </symbol>
+  <symbol id="i-vink" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+          stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 12.5 10 17.5 19 7"/>
+  </symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="m3.6 6.8 8.4 6 8.4-6"/>
+  </symbol>
+  <!-- Plaatsvervanger als er geen modelfoto is: een tekening, duidelijk géén foto.
+       Zo blijft de popup even hoog en oogt een wagen zonder foto niet als een fout. -->
+  <!-- Rijbereik: een batterij met een bliksem. -->
+  <symbol id="i-bereik" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round">
+    <rect x="2.5" y="7" width="17" height="10" rx="2"/><path d="M21.5 10.5v3"/>
+    <path d="M11.8 9 9.6 12.2h3l-2.2 3.3"/>
+  </symbol>
+  <!-- Openbaar vervoer: een bus van voren. -->
+  <symbol id="i-ov" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round">
+    <rect x="5" y="3" width="14" height="14.5" rx="2.5"/><path d="M5 10.5h14M8 17.5V20M16 17.5V20"/>
+    <circle cx="8.5" cy="14" r=".9" fill="currentColor"/><circle cx="15.5" cy="14" r=".9" fill="currentColor"/>
+  </symbol>
+  <!-- Uitleg: een i in een cirkel. -->
+  <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round">
+    <circle cx="12" cy="12" r="9"/><path d="M12 11v5.5"/>
+    <circle cx="12" cy="7.6" r=".7" fill="currentColor"/>
+  </symbol>
+  <symbol id="i-geen-foto" viewBox="0 0 120 68" fill="none" stroke="currentColor"
+          stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 46h92M16 46V34l8-14h48l14 14h16a4 4 0 0 1 4 4v8"/>
+    <path d="M44 20v14M16 34h74"/>
+    <circle cx="36" cy="46" r="7"/><circle cx="86" cy="46" r="7"/>
+  </symbol>
+</svg>
+
+<div id="kaart" role="application" data-i18n-aria="app.kaartLabel"
+     aria-label="Kaart met de auto's van Dégage"></div>
+
+<!-- Probleem melden of feedback geven. Gaat naar het formulier voor een nieuw issue op
+     GitHub, in een nieuw tabblad: de kaart met al je filters blijft staan. Hij hangt aan
+     de pagina en niet aan de kaart, net als het paneel — Leaflet hoeft er niets van te
+     weten, want er valt niets te pannen of te zoomen aan een link. -->
+<a class="melden" id="knop-melden"
+   href="https://github.com/Degagemain/degage-deelautokaart-gbfs/issues/new"
+   target="_blank" rel="noopener"
+   title="Probleem melden of feedback geven — opent github.com in een nieuw tabblad"
+   data-i18n-title="melden.titel">
+  <!-- Een tekstballon met een uitroepteken: je zegt iets, en het gaat over iets dat
+       misloopt. -->
+  <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor"
+       stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 12a8 8 0 0 1-8 8H8l-4 3v-4.3A8 8 0 0 1 13 4a8 8 0 0 1 8 8z"/>
+    <path d="M13 8.2v4"/>
+    <circle cx="13" cy="15.2" r=".9" fill="currentColor" stroke="none"/>
+  </svg>
+  <span data-i18n="melden.knop">Probleem melden</span>
+</a>
+
+<!-- Weergavekeuzes en de taalkeuze, geen filters: ze veranderen niets aan wélke wagens
+     passen. Daarom niet in het paneel maar bij de kaartknoppen, achter het tandwiel onder
+     de uitzoomknop — je zet ze één keer en kijkt er daarna niet meer naar om. De
+     schakelaars staan standaard aan. JavaScript hangt dit doosje onder die knop; het
+     staat hier alleen omdat de vakjes zich beter in opmaak dan in JavaScript laten lezen.
+
+     De teksten dragen `data-i18n`-sleutels; zie vertaalPagina() in het script. -->
+<div class="instellingen" id="instellingen" hidden>
+  <label class="schakel">
+    <input type="checkbox" id="knop-volgmuis" checked>
+    <span data-i18n="instellingen.volgmuis">Lijst dichtstbijzijnde auto's volgt muis</span>
+  </label>
+  <label class="schakel">
+    <input type="checkbox" id="knop-dichtbij" checked>
+    <span data-i18n="instellingen.dichtbij">Lijst dichtstbijzijnde auto's tonen</span>
+  </label>
+  <label class="schakel">
+    <input type="checkbox" id="knop-legende" checked>
+    <span data-i18n="instellingen.legende">Melding over beschikbaarheid tonen</span>
+  </label>
+  <label class="schakel schakel--taal">
+    <span data-i18n="instellingen.taal">Taal</span>
+    <!-- Leeg: JavaScript vult hem met de talen die werkelijk geladen zijn, elk onder
+         zijn eigen naam. Zo hoeft een nieuwe taal hier niet ook nog bijgezet te worden. -->
+    <select id="taalkeuze"></select>
+  </label>
+  <!-- Naamsvermelding van het tabbladpictogram. Een voorwaarde van de gratis licentie van
+       Flaticon, net als de OSM-attributie onderaan de kaart: alleen het zinnetje ervoor
+       vertaalt mee, de opgegeven formulering en de link blijven staan zoals ze zijn. -->
+  <p class="colofon">
+    <span data-i18n="instellingen.pictogram">Tabbladpictogram:</span>
+    <a href="https://www.flaticon.com/free-icons/car-sharing" title="car sharing icons"
+       target="_blank" rel="noopener">Car sharing icons created by afif fudin - Flaticon</a>
+  </p>
+</div>
+
+<!-- Eén doos linksboven, met de zoekbalk als kop.
+     ------------------------------------------------------------------------------------
+     Alles wat over de vloot gaat hangt aan het zoekveld: de teller en de legende staan er
+     onder, de filters klappen eronder open zodra je in het veld klikt. Er is dus geen
+     aparte filterknop en geen apart zoekdoosje meer — één ding om naar te kijken.
+
+     De legende staat er standaard bij, ook met de filters dicht. Wie ze gelezen heeft, kan
+     ze na een bevestiging wegklikken en in de instellingen terugzetten. -->
+<div class="paneel" id="paneel">
+  <!-- Alleen voor schermlezers: de kaart hoort een kop te hebben, maar in beeld doet de
+       titel niets wat de omringende pagina niet al zegt. -->
+  <h1 class="enkel-schermlezer" data-i18n="app.titel">Auto's van Dégage</h1>
+
+  <div class="paneel__kop">
+    <div class="kopregel">
+      <form class="zoek" id="zoekform" role="search">
+        <input type="search" id="zoekveld"
+               placeholder="Autonaam, adres of gemeente…"
+               data-i18n-plh="zoek.plaatshouder" data-i18n-aria="zoek.aria"
+               aria-label="Zoek een autonaam, adres of gemeente; klikken toont ook de filters"
+               aria-expanded="false" aria-controls="filters" autocomplete="off">
+        <button type="submit" class="zoek__knop" id="zoekknop"
+                title="Zoeken" data-i18n-title="zoek.knop">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round">
+            <circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/>
+          </svg>
+          <span class="enkel-schermlezer" data-i18n="zoek.knop">Zoeken</span>
+        </button>
+        <!-- "Auto's in mijn buurt". Staat in het zoekformulier, want het is dezelfde
+             vraag als een adres intikken — alleen laat je de browser het adres invullen.
+             Wit en niet groen: zoeken blijft de hoofdhandeling van deze regel. -->
+        <button type="button" class="zoek__locatie" id="knop-locatie"
+                title="Auto's in mijn buurt" data-i18n-title="zoek.locatie">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round">
+            <circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.4" fill="currentColor"
+              stroke="none"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22"/>
+          </svg>
+          <span class="enkel-schermlezer" data-i18n="zoek.locatie">Auto's in mijn buurt</span>
+        </button>
+      </form>
+      <!-- Minimaliseren. Ingeklapt blijft alleen deze knop over — dan met het
+           hamburgerpictogram, want dat is wat een dichtgeklapt menu heet te tonen.
+           De titel wisselt mee met de stand; zetPaneel() zet de juiste sleutel. -->
+      <button type="button" class="knop knop--ico" id="knop-paneel"
+              title="Paneel minimaliseren" data-i18n-title="paneel.minimaliseren">
+        <svg class="ico-min" viewBox="0 0 24 24" aria-hidden="true" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M5 12h14"/>
+        </svg>
+        <svg class="ico-menu" viewBox="0 0 24 24" aria-hidden="true" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M4 7h16M4 12h16M4 17h16"/>
+        </svg>
+        <span class="enkel-schermlezer" id="knop-paneel-tekst"
+              data-i18n="paneel.minimaliseren">Paneel minimaliseren</span>
+      </button>
+    </div>
+
+    <p class="zoek__melding" id="zoekmelding" hidden></p>
+
+    <!-- De teller, en rechts ervan — recht onder de minimaliseerknop — de knop die alle
+         filters wist. Die knop staat er alleen als er iets te wissen valt; zie teken(). -->
+    <div class="tellingregel">
+      <p class="telling"><span id="telling" data-i18n="telling.laden">bezig met laden…</span><span
+         class="telling__datum" id="datumregel"></span></p>
+      <button type="button" class="herstel-knop" id="knop-herstel" hidden
+              title="Filters wissen" data-i18n-title="filters.wissen">
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 4h14l-5.5 6.5V17l-3 1.5v-8z"/><path d="M15.5 14.5l5 5M20.5 14.5l-5 5"/>
+        </svg>
+        <span class="enkel-schermlezer" data-i18n="filters.wissen">Filters wissen</span>
+      </button>
+    </div>
+
+    <div class="legende" id="legende">
+      <p data-i18n-html="legende"><strong>Dit is géén live beschikbaarheid.</strong> De kaart toont enkel de locatie van de auto's, niet welke er op dit moment vrij zijn.</p>
+      <!-- Wegklikken vraagt eerst een bevestiging; zie zetLegende() in het script. -->
+      <button type="button" class="legende__sluit" id="legende-sluit"
+              title="Melding verbergen" data-i18n-title="legende.verbergen">
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor"
+             stroke-width="2.2" stroke-linecap="round">
+          <path d="M6 6l12 12M18 6L6 18"/>
+        </svg>
+        <span class="enkel-schermlezer" data-i18n="legende.verbergen">Melding verbergen</span>
+      </button>
+      <div class="legende__vraag" id="legende-vraag" hidden>
+        <p data-i18n="legende.vraag">Deze melding verbergen? Je kunt ze altijd terugzetten in
+          de instellingen.</p>
+        <div class="legende__knoppen">
+          <button type="button" class="legende__ja" id="legende-ja"
+                  data-i18n="legende.ja">Verbergen</button>
+          <button type="button" id="legende-nee" data-i18n="legende.nee">Laten staan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="filters" id="filters" hidden>
+    <!-- De twee schakelaars die over het filteren zelf gaan, staan bij de filters en niet
+         bij de weergavekeuzes achter het tandwiel: wie filtert, beslist hier meteen wat er
+         met de weggefilterde auto's gebeurt en of de lijst bij scrollen dichtklapt. -->
+    <div class="filterschakels">
+      <label class="schakel">
+        <input type="checkbox" id="knop-grijs" checked>
+        <span data-i18n="filters.grijs">Gefilterde auto's grijs tonen</span>
+      </label>
+      <label class="schakel">
+        <input type="checkbox" id="knop-scrollsluit" checked>
+        <span data-i18n="filters.scrollSluit">Filters sluiten bij scrollen in de kaart</span>
+      </label>
+    </div>
+
+    <h2 data-i18n="kop.soort">Soort auto</h2>
+    <div class="keuzes" id="filter-soort"></div>
+
+    <h2 data-i18n="kop.zitplaatsen">Zitplaatsen</h2>
+    <div class="schuif">
+      <input type="range" id="zit-schuif" min="0" step="1" value="0">
+      <p class="schuif__waarde" id="zit-waarde"></p>
+    </div>
+
+    <h2 data-i18n="kop.brandstof">Brandstof</h2>
+    <div class="keuzes" id="filter-brandstof"></div>
+
+    <h2 data-i18n="kop.bak">Versnellingsbak</h2>
+    <div class="keuzes" id="filter-bak"></div>
+
+    <h2 data-i18n="kop.toebehoren">Toebehoren</h2>
+    <div class="keuzes" id="filter-toebehoren"></div>
+
+    <h2 data-i18n="kop.afspraken">Afspraken</h2>
+    <div class="keuzes" id="filter-afspraken"></div>
+
+    <!-- Openbaar vervoer. Deze twee horen bij de STANDPLAATS, niet bij de wagen: wie hier
+         filtert, zoekt een auto die hij kan combineren met bus of trein — heen met de auto,
+         terug met de trein, of omgekeerd. Een blok verdwijnt als er geen OV-gegevens bij
+         deze feed horen, of als alle standplaatsen even ver van zo'n halte liggen; dan valt
+         er niets te kiezen. -->
+    <div id="filter-bushalte">
+      <!-- De uitleg staat achter een ⓘ, zoals in de popups: wie weet wat er staat, hoeft er
+           niet telkens overheen te lezen. Zie de klikafhandeling bij de filters. -->
+      <h2><span data-i18n="kop.bushalte">Afstand tot een bushalte</span><button type="button"
+          class="uitleg-knop" aria-expanded="false" aria-controls="bus-uitleg"
+          title="Uitleg" data-i18n-title="popup.uitleg"><svg class="ico" aria-hidden="true"><use
+          href="#i-info"/></svg><span class="enkel-schermlezer"
+          data-i18n="popup.uitleg">Uitleg</span></button></h2>
+      <div class="schuif">
+        <input type="range" id="bus-schuif" min="0" step="1" value="0">
+        <p class="schuif__waarde" id="bus-waarde"></p>
+        <p class="schuif__uitleg" id="bus-uitleg" hidden
+           data-i18n="bushalte.uitleg">De hemelsbrede afstand van de standplaats tot de
+          dichtstbijzijnde bus- of tramhalte waar vaste lijnen stoppen. Elke stand toont die
+          afstand en alles daaronder. Te voet is de weg altijd wat langer.</p>
+      </div>
+    </div>
+
+    <div id="filter-station">
+      <h2><span data-i18n="kop.station">Afstand tot een treinstation</span><button type="button"
+          class="uitleg-knop" aria-expanded="false" aria-controls="trein-uitleg"
+          title="Uitleg" data-i18n-title="popup.uitleg"><svg class="ico" aria-hidden="true"><use
+          href="#i-info"/></svg><span class="enkel-schermlezer"
+          data-i18n="popup.uitleg">Uitleg</span></button></h2>
+      <div class="schuif">
+        <input type="range" id="trein-schuif" min="0" step="1" value="0">
+        <p class="schuif__waarde" id="trein-waarde"></p>
+        <p class="schuif__uitleg" id="trein-uitleg" hidden
+           data-i18n="station.uitleg">De hemelsbrede afstand van de standplaats tot het
+          dichtstbijzijnde treinstation. Elke stand toont die afstand en alles daaronder.
+          Naar een station fietst of rijdt men; vandaar dat de schaal verder reikt dan bij
+          een halte.</p>
+      </div>
+    </div>
+
+    <!-- Euronorm en bouwjaar staan dicht: het zijn details waar de meeste bezoekers niet
+         naar zoeken, en opengeklapt duwen ze de rest van de filters uit beeld. -->
+    <details class="vouw" id="vouw-euronorm">
+      <summary data-i18n="kop.euronorm">Euronorm</summary>
+      <div class="schuif">
+        <input type="range" id="euronorm-schuif" min="0" step="1" value="0">
+        <p class="schuif__waarde" id="euronorm-waarde"></p>
+        <p class="schuif__uitleg" data-i18n="euronorm.uitleg">Elke stand toont die norm én
+          alles daarboven. Elektrische en hybride auto's staan bovenaan op de schaal; zij
+          dragen zelf geen euronorm.</p>
+      </div>
+    </details>
+
+    <details class="vouw" id="vouw-bouwjaar">
+      <summary data-i18n="kop.bouwjaar">Bouwjaar</summary>
+      <div class="schuif">
+        <input type="range" id="bouwjaar-schuif" min="0" step="1" value="0">
+        <p class="schuif__waarde" id="bouwjaar-waarde"></p>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- Balk onderaan met de dichtstbijzijnde wagens na een adreszoekopdracht. -->
+<!-- Het buitenste element is de ruimte waarin de balk mag staan, het binnenste de balk
+     zelf; zie `.dichtbij` in de opmaak waarom dat twee elementen zijn. -->
+<div class="dichtbij" id="dichtbij" hidden>
+ <div class="dichtbij__doos">
+  <div class="dichtbij__kop">
+    <p class="dichtbij__titel" id="dichtbij-titel"></p>
+    <button type="button" class="dichtbij__sluit" id="dichtbij-sluit"
+            title="Sluiten" data-i18n-title="dichtbij.sluiten">
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor"
+           stroke-width="2.2" stroke-linecap="round">
+        <path d="M6 6l12 12M18 6L6 18"/>
+      </svg>
+      <span class="enkel-schermlezer" data-i18n="dichtbij.sluitenLang">Lijst sluiten</span>
+    </button>
+  </div>
+  <ul class="dichtbij__lijst" id="dichtbij-lijst"></ul>
+ </div>
+</div>
+
+<div class="melding" id="melding">
+  <h2 data-i18n="melding.geduld">Even geduld</h2>
+  <p data-i18n="melding.laden">De kaart met deelauto's wordt geladen.</p>
+</div>
+
+<!-- De teksten, één bestand per taal. Klassieke scripttags: ze blokkeren, dus alles
+     staat er voordat de kaartcode hieronder begint — geen bouwstap, geen wachten.
+     De volgorde hier is de volgorde van de keuzelijst in de instellingen. Een taal
+     toevoegen is een bestand neerzetten en hier één regel bijschrijven. -->
+<script src="taal/nl.js"></script>
+<script src="taal/fr.js"></script>
+<script src="taal/en.js"></script>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH"
+        crossorigin="anonymous"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"
+        integrity="sha384-eXVCORTRlv4FUUgS/xmOyr66XBVraen8ATNLMESp92FKXLAMiKkerixTiBvXriZr"
+        crossorigin="anonymous"></script>
+
+<!-- De logica. Ná Leaflet en ná de taalbestanden, en onderaan de body omdat er
+     rechtstreeks in de pagina gezocht wordt. Zie de kop van index.js. -->
+<script src="index.js"></script>
+
+</body>
+</html>
