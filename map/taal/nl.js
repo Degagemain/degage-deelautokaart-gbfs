@@ -77,6 +77,7 @@
     "filters.wissen": "Filters wissen",
     "filters.grijs": "Gefilterde auto's grijs tonen",
     "filters.scrollSluit": "Filters sluiten bij scrollen in de kaart",
+    "filters.sluiten": "Filters sluiten",
     "kop.soort": "Soort auto",
     "kop.zitplaatsen": "Zitplaatsen",
     "kop.brandstof": "Brandstof",

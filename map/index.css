@@ -618,6 +618,20 @@ body {
 .filters::-webkit-scrollbar-thumb { background: #c5cecb; border-radius: 4px; }
 .filters:hover::-webkit-scrollbar-thumb { background: #a9b5b1; }
 
+/* ---------- filters sluiten ---------------------------------------------------------
+   Alleen op een telefoon; zie de HTML en het `@media`-blok onderaan. */
+.filters__voet { display: none; }
+.filters__sluit {
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  width: 100%; min-height: 40px; padding: 8px 12px;
+  font: inherit; font-size: 14px; font-weight: 600; color: #fff;
+  background: var(--groen);
+  border: 1px solid var(--groen); border-radius: 8px;
+  cursor: pointer;
+}
+.filters__sluit svg { width: 16px; height: 16px; flex: none; }
+.filters__sluit:focus-visible { outline: 2px solid var(--groen); outline-offset: 2px; }
+
 /* ---------- markers en clusters -------------------------------------------------- */
 .pin-wrap { background: none; border: 0; }
 .pin {
@@ -859,7 +873,108 @@ body {
     top: auto; bottom: 0;
     right: auto; left: calc(100% + 8px);
   }
-  .filters { padding: 2px 13px 12px; max-height: 46vh; }
+  .filters { padding: 0 11px 8px; max-height: 46vh; }
+  /* Compacte filterlijst: op een telefoon telt elke regel, want de lijst deelt het
+     scherm met de kaart. Kleinere chips, kleinere koppen en minder lucht ertussen,
+     zodat er meer filters tegelijk in beeld staan. Op een breed scherm is er ruimte
+     genoeg en blijft alles zoals hierboven. */
+  /* De schakelaars zelf staan hier in het instellingendoosje; zie plaatsFilterschakels()
+     in het script. Het lege blokje met zijn streep blijft dan niet staan. */
+  .filterschakels { display: none; }
+  /* Schakelaars die op een telefoon niets te zeggen hebben ("volgt muis", "sluiten bij
+     scrollen"): weg uit het instellingendoosje. Ze blijven op hun standaardwaarde. */
+  .schakel--breed { display: none; }
+  /* Labels in een vast raster, opties in één vak eronder (zie plaatsOpties() in het
+     script). Niets aan een label mag van grootte veranderen door iets aan te klikken —
+     anders verspringt het onder je vinger. Dus:
+     · elk label neemt één kolom, open of dicht, altijd op dezelfde plek;
+     · het open label kleurt alleen, het wordt niet breder of hoger;
+     · het telbolletje ligt in een vooraf vrijgehouden strook rechts in het label, zodat
+       het verschijnen ervan de tekst niet opschuift of op een extra regel duwt;
+     · labels van schuiven komen met `order` onder die van de chips; daaronder de
+       sluitknop over de volle breedte. De opties zelf zweven onder het paneel; zie
+       `.filters__opties` hieronder. */
+  .filters:not([hidden]) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 12px;
+    align-content: start;
+  }
+  .filters h2,
+  .vouw > summary {
+    position: relative;
+    display: flex; align-items: center; gap: 5px;
+    margin: 0; padding: 7px 24px 7px 0;
+    font-size: 10.5px; line-height: 1.3;
+    cursor: pointer; user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .filters h2::before {
+    content: ""; flex: none;
+    width: 0; height: 0;
+    border-left: 5px solid currentColor;
+    border-top: 4px solid transparent; border-bottom: 4px solid transparent;
+    transition: transform .12s;
+  }
+  .sectie.is-open > h2,
+  .sectie.is-open > summary { color: var(--groen); }
+  .sectie.is-open > h2::before,
+  .sectie.is-open > summary::before { transform: rotate(90deg); }
+  .filters h2:focus-visible { outline: 2px solid var(--groen); outline-offset: 2px; }
+  .sectie { min-width: 0; }
+  .sectie--schuif { order: 1; }
+  /* De opties van het open label: een zwevend kaartje net onder het paneel, over de
+     kaart. In de filterlijst zelf vielen ze vaak onder de scrollrand. `fixed` ontsnapt
+     aan de `overflow: hidden` van het paneel (dat geen transform draagt); top en
+     max-height zet plaatsOptieVak() in het script. Dicht mee met de filters. */
+  .filters__opties:not([hidden]) {
+    display: block;
+    position: fixed; left: 8px; right: 8px; z-index: 1;
+    overflow-y: auto; overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    padding: 8px 11px 4px;
+    background: var(--vlak);
+    border: 1px solid var(--lijn); border-radius: var(--radius);
+    box-shadow: var(--schaduw);
+  }
+  .paneel:not(.toont-filters) > .filters__opties,
+  .paneel.is-klein > .filters__opties { display: none; }
+  .sectie__opties { padding: 2px 0 6px; }
+  .sectie__opties--chips:not([hidden]) { display: flex; flex-wrap: wrap; gap: 4px; }
+  .sectie__opties--chips .keuzes { display: contents; }
+  .filters__voet { grid-column: 1 / -1; order: 3; }
+  /* Telbolletje: zoveel filters staan er achter dit label aan; zie werkKoppenBij(). */
+  .filters h2[data-aantal]::after,
+  .vouw > summary[data-aantal]::after {
+    content: attr(data-aantal);
+    position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+    min-width: 16px; padding: 0 5px; box-sizing: border-box;
+    font-size: 10px; font-weight: 600; line-height: 16px; letter-spacing: 0;
+    text-align: center;
+    color: #fff; background: var(--groen); border-radius: 8px;
+  }
+  .keuzes { gap: 4px; margin-top: 4px; }
+  .keuze span { min-height: 26px; padding: 2px 8px; gap: 4px; font-size: 12px; border-radius: 13px; }
+  .keuze em { font-size: 10.5px; }
+  .schuif { margin-top: 4px; }
+  .schuif__waarde { margin-top: 2px; font-size: 12px; }
+  .schuif__uitleg { margin-top: 2px; font-size: 11px; }
+  /* Euronorm en bouwjaar: hun label krijgt hierboven dezelfde opmaak als de andere, en
+     hun opties staan net als de rest in het vak onder de labels. */
+  .vouw { margin-top: 0; }
+  .uitleg-knop { width: 20px; height: 20px; }
+  /* Plakt onderaan de scrollende lijst. De negatieve marges heffen de padding van
+     `.filters` op, zodat de witte strook de volle breedte neemt en er geen chips onder
+     de knop door schemeren. */
+  .filters__voet {
+    display: block;
+    position: sticky; bottom: -8px; z-index: 1;
+    margin: 6px -11px -8px; padding: 5px 11px;
+    background: var(--vlak);
+    border-top: 1px solid var(--lijn);
+  }
+  .filters__sluit { min-height: 30px; padding: 4px 10px; gap: 5px; font-size: 12.5px; border-radius: 7px; }
+  .filters__sluit svg { width: 12px; height: 12px; }
   .legende { font-size: 12px; }
   /* Op een telefoon beslaat het paneel de volle breedte: de zoomknoppen naar onderaan,
      en weer naar links, want daar zit de duim.
@@ -919,5 +1034,5 @@ body {
   .paneel.toont-filters ~ .dichtbij { display: none; }
 }
 @media (max-width: 380px) {
-  .keuze span { font-size: 12.5px; padding: 5px 8px; }
+  .keuze span { font-size: 11.5px; padding: 2px 7px; }
 }

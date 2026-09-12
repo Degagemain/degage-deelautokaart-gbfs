@@ -83,6 +83,7 @@
     "filters.wissen": "Effacer les filtres",
     "filters.grijs": "Afficher en gris les voitures filtrées",
     "filters.scrollSluit": "Fermer les filtres en faisant défiler la carte",
+    "filters.sluiten": "Fermer les filtres",
     "kop.soort": "Type de véhicule",
     "kop.zitplaatsen": "Places assises",
     "kop.brandstof": "Carburant",

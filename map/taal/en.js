@@ -77,6 +77,7 @@
     "filters.wissen": "Clear filters",
     "filters.grijs": "Show filtered-out cars in grey",
     "filters.scrollSluit": "Close filters when scrolling the map",
+    "filters.sluiten": "Close filters",
     "kop.soort": "Vehicle type",
     "kop.zitplaatsen": "Seats",
     "kop.brandstof": "Fuel",
