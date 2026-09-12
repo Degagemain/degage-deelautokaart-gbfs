@@ -2,7 +2,7 @@
 """Hoe bereikbaar is elke standplaats? De Mobiscore, en wat er aan openbaar vervoer rijdt.
 
 Leest de standplaatsen uit `gbfs/station_information.json` en schrijft per standplaats naar
-`web/ov.json`:
+`map/ov.json`:
 
 · de MOBISCORE — de officiële score van de Vlaamse overheid (Departement Omgeving), dezelfde
   die Immoweb bij een woning toont: van 0 tot 10, hoger is beter;
@@ -96,7 +96,7 @@ Bronnen
 · Mobiscore — Departement Omgeving, via Mercator.
 · De Lijn — via data.gtfs.be, dat de officiële GTFS van De Lijn herpubliceert.
 · NMBS — via gtfs.irail.be, dat de officiële GTFS van de NMBS herpubliceert.
-Allemaal vermeld op de kaart en in `web/ov.json`.
+Allemaal vermeld op de kaart en in `map/ov.json`.
 """
 
 from __future__ import annotations
@@ -553,7 +553,7 @@ def main() -> int:
 
     repo = Path(__file__).resolve().parent.parent
     feed = repo / "gbfs" / "station_information.json"
-    uit = repo / "web" / "ov.json"
+    uit = repo / "map" / "ov.json"
     if not feed.exists():
         zeg(f"FOUT: {feed} bestaat niet. Draai eerst genereer_gbfs.py.")
         return 2

@@ -4,9 +4,9 @@
    met opzet: een half vertaald bestand levert een leesbare kaart op en geen gaten.
    --------------------------------------------------------------------------------------
 
-   Dit bestand wordt door `kaart.html` ingeladen met een gewone <script>-tag, vóór de
+   Dit bestand wordt door `index.html` ingeladen met een gewone <script>-tag, vóór de
    kaartcode zelf. Geen bouwstap, geen module: het hangt zichzelf in `window.DEGAGE_TALEN`
-   en de kaart leest het daar op. De volgorde van de scripttags in `kaart.html` is meteen
+   en de kaart leest het daar op. De volgorde van de scripttags in `index.html` is meteen
    de volgorde van de keuzelijst in de instellingen.
 
    Drie tabellen, elk met een eigen taak:
@@ -19,7 +19,7 @@
    · `vlaggen`  de toebehoren en afspraken. De sleutel komt uit de feed (FEEDSPEC.md).
 
    Een nieuwe taal toevoegen: kopieer `nl.js`, vertaal, en zet één scriptregel bij in
-   `kaart.html`. Verder is er niets aan te passen — de keuzelijst en de taaldetectie
+   `index.html`. Verder is er niets aan te passen — de keuzelijst en de taaldetectie
    volgen vanzelf.
 */
 (window.DEGAGE_TALEN = window.DEGAGE_TALEN || {}).fr = {
@@ -132,12 +132,13 @@
     "dichtbij.sluitenLang": "Fermer la liste",
 
     "melding.geduld": "Un instant",
-    "melding.laden": "Chargement des emplacements.",
+    "melding.laden": "Chargement de la carte des voitures partagées.",
 
     "instellingen.volgmuis": "La liste des voitures les plus proches suit la souris",
     "instellingen.dichtbij": "Afficher la liste des voitures les plus proches",
     "instellingen.legende": "Afficher l'avis sur la disponibilité",
     "instellingen.taal": "Langue",
+    "instellingen.pictogram": "Icône de l'onglet :",
     "melden.knop": "Signaler un problème",
     "melden.titel": "Signaler un problème ou donner un avis — ouvre github.com dans un nouvel onglet",
 
@@ -161,6 +162,9 @@
     "popup.bereikMarge": "{van}–{tot} km d'autonomie",
     "popup.bereikUitleg": "Autonomie : estimation en usage mixte, pas WLTP. Une " +
                           "fourchette signifie qu'elle dépend de la batterie. Source :",
+    "popup.bereikUitlegHandmatig": "Autonomie : estimation en usage mixte, pas WLTP. " +
+                          "Indiquée par Dégage même, d'après la batterie équipant ces " +
+                          "véhicules.",
     "ov.titel": "Mobiscore",
     "ov.geenScore": "non disponible",
     "ov.bushalte": "arrêt de bus à {afstand} ({freq})",

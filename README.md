@@ -6,34 +6,38 @@ de internationale standaard voor deelmobiliteit. Twee dingen dus:
 1. **De feed** (`gbfs/`) is het strategische stuk. Eenmaal publiek kunnen Way To Go,
    Nazka en andere aggregatoren Dégage zélf opnemen, zonder dat wij per platform een
    embed moeten laten bouwen.
-2. **De kaart** (`web/kaart.html`) leest die feed en gaat als iframe op degage.be.
+2. **De kaart** (`map/index.html`) leest die feed en gaat als iframe op degage.be.
 
 Er is **geen live verbinding met de databank**. De feed beschrijft de toestand van de
-laatste dump, en dat staat ook zo op de kaart. Verversen gebeurt per kwartaal, met de
-hand.
+laatste dump, en dat staat ook zo op de kaart. Verversen gebeurt per kwartaal, met de hand —
+met één opdracht: [**Bijwerken: alles in één keer**](#bijwerken-alles-in-één-keer).
 
 ## Wat waar staat
 
 | pad | waarvoor |
 |---|---|
-| `web/kaart.html` | de kaartpagina: opmaak en pictogrammen |
-| `web/kaart.js` | de logica van de kaart |
-| `web/taal/` | de teksten, één bestand per taal (`nl.js`, `fr.js`, `en.js`) |
+| `map/index.html` | de kaartpagina: structuur en pictogrammen |
+| `map/index.css` | de opmaak van de kaart |
+| `map/index.js` | de logica van de kaart |
+| `map/taal/` | de teksten, één bestand per taal (`nl.js`, `fr.js`, `en.js`) |
 | `FUNCTIONEEL.md` | wat de kaart doet: wat een bezoeker ziet en kan, en waarom |
 | `TECHNIEK.md` | hoe ze gebouwd is: architectuur, uitbreidpunten, beperkingen |
-| `web/gbfs.html` | instappagina voor aggregatoren: instapadres, bestanden, wat de feed niet belooft |
-| `web/fotos/` | modelfoto's van Wikimedia Commons + `fotos.json` met licentie en auteur |
+| `gbfs/index.html` | instappagina voor aggregatoren: instapadres, bestanden, wat de feed niet belooft |
+| `map/fotos/` | modelfoto's van Wikimedia Commons + `fotos.json` met licentie en auteur |
 | `gbfs/` | de gegenereerde feed + de officiële JSON Schemas |
-| `index.html`, `gbfs/index.html` | doorverwijzingen: de root naar de kaart, `/gbfs` naar de instappagina |
+| `index.html` | doorverwijzing: de root naar de kaart |
+| `favicon.png`, `favicon-32.png` | het pictogram in het tabblad, op alle drie de pagina's (512 px en 32 px) |
+| `BIJWERKEN.bat` | **dubbelklik hierop om alles bij te werken** (Windows) |
+| `scripts/bijwerken.py` | hetzelfde, vanaf de opdrachtregel: roept de vier scripts hieronder in de juiste volgorde aan |
 | `scripts/genereer_gbfs.py` | de generator: databank → feed |
 | `scripts/carrosserie.json` | handmatige lijst: personenwagen of bestelwagen, per model |
 | `scripts/districten.json` | handmatige lijst: contactadres per lokale groep |
 | `scripts/haal_stockfotos.py` | haalt één vrij gelicentieerde modelfoto per merk+model |
-| `scripts/haal_bereik.py` | zoekt het rijbereik van de elektrische modellen op → `web/bereik.json` |
-| `scripts/haal_ov.py` | haalt de Mobiscore op en telt het openbaar vervoer → `web/ov.json` |
+| `scripts/haal_bereik.py` | zoekt het rijbereik van de elektrische modellen op → `map/bereik.json` |
+| `scripts/haal_ov.py` | haalt de Mobiscore op en telt het openbaar vervoer → `map/ov.json` |
 
-**Dit document gaat over het bedienen van het gereedschap** — de feed genereren, foto's
-ophalen, hosten. Voor de kaart zelf zijn er twee andere documenten:
+**Dit document gaat over het bedienen van het gereedschap** — bijwerken, publiceren,
+hosten. Voor de kaart zelf zijn er twee andere documenten:
 
 - **[`FUNCTIONEEL.md`](FUNCTIONEEL.md)** — wat de kaart doet: wat een bezoeker ziet, wat
   de filters betekenen, waarom er geen beschikbaarheid op staat. Zonder code.
@@ -46,24 +50,147 @@ ophalen, hosten. Voor de kaart zelf zijn er twee andere documenten:
 > Verwijzingen naar `SCOPE.md` en `FEEDSPEC.md` in de code slaan daarop.
 >
 > **Wie de feed wil gebruiken heeft ze niet nodig.** De feed volgt GBFS v3.0; wat je moet
-> weten staat op `web/gbfs.html` en in de officiële
+> weten staat op de instappagina `/gbfs/` en in de officiële
 > [GBFS-specificatie](https://github.com/MobilityData/gbfs).
+
+## Bijwerken: alles in één keer
+
+**Dit is het hele verhaal. Eén opdracht, en de kaart is bij.**
+
+```
+py scripts/bijwerken.py
+```
+
+Op Windows hoef je daar zelfs geen venster voor te openen: **dubbelklik op `BIJWERKEN.bat`**
+in deze map. Dat doet precies hetzelfde en houdt het venster daarna open, zodat je kunt lezen
+wat er gebeurd is.
+
+### Wat je vooraf nodig hebt
+
+1. **Python.** Staat het er niet, dan zegt `BIJWERKEN.bat` dat en waar je het haalt. Vink bij
+   het installeren *"Add python.exe to PATH"* aan.
+2. **Twee modules**, eenmalig te installeren:
+
+   ```
+   py -m pip install duckdb jsonschema
+   ```
+
+3. **De databankreplica** — het bestand `degage.duckdb`. Dat zit **niet** in deze map en
+   hoort daar ook nooit in te komen: er staan persoonsgegevens in. Pak de laatste
+   replica-zip uit in een map `degage-replica` **naast** deze map:
+
+   ```
+   ...\Degage\degage-replica\degage.duckdb          <- de replica
+   ...\Degage\degage-deelautokaart-gbfs\            <- deze map
+   ```
+
+   Staat ze ergens anders, geef het pad dan mee:
+   `py scripts/bijwerken.py --replica <pad naar degage.duckdb>`
+
+Het script kijkt dit alle drie na **vóór** het begint, en zegt in gewone taal wat er
+ontbreekt en hoe je het oplost. Klopt er iets niet, dan draait er niets en verandert er
+niets.
+
+### Wat er dan gebeurt
+
+Vier stappen, in deze volgorde, samen ongeveer een minuut:
+
+| | wat | waarvandaan | resultaat |
+|---|---|---|---|
+| 1 | de feed | de databankreplica | `gbfs/` |
+| 2 | de modelfoto's | Wikimedia Commons | `map/fotos/` |
+| 3 | het rijbereik | Open EV Data | `map/bereik.json` |
+| 4 | openbaar vervoer en Mobiscore | De Lijn, NMBS, Mercator | `map/ov.json` |
+
+De volgorde ligt vast en dáárom bestaat dit script: stap 2 tot 4 lezen uit de feed die stap 1
+schrijft. `map/ov.json` draagt zelfs de datum van die feed, en de kaart toont die gegevens
+alleen als ze klopt — vergeet je stap 4, dan verdwijnt het OV-blok uit alle popups. Met één
+opdracht kan dat niet meer misgaan.
+
+Je hoeft niets te beslissen onderweg. Eén uitzondering: zit er een **auto van een merk of
+model dat er nog nooit was** bij, dan vraagt stap 1 of dat een personenwagen of een
+bestelwagen is. Dat kan de databank niet beantwoorden. Typ het antwoord en het script gaat
+verder; het onthoudt het voorgoed in `scripts/carrosserie.json`.
+
+Aan het eind staat er wat er veranderd is. **Geen enkel bestand veranderd is geen fout:**
+dezelfde dump erin betekent byte-voor-byte dezelfde feed eruit.
+
+### Als er iets misgaat
+
+Het script **stopt meteen** bij het eerste probleem en draait de volgende stappen niet — met
+een half resultaat verder gaan levert een kaart op die niet klopt. Onderaan staat wat er
+misging en wat je eraan kunt doen.
+
+Er raakt daarbij niets stuk. Faalt de feedcontrole of de privacyscan, dan wordt er **niets**
+weggeschreven en blijft de vorige feed ongeschonden staan. Dat is opzet, geen bug.
+
+Los het op en start gewoon opnieuw. Wat al gelukt was, is meestal in een oogwenk over; alleen
+wat nog moet:
+
+```
+py scripts/bijwerken.py --alleen fotos,bereik,ov
+```
+
+### Nakijken en publiceren
+
+Vóór het online gaat, kijk je even naar de kaart zelf:
+
+```
+py -m http.server 8000
+```
+
+Open dan <http://localhost:8000/map/>. Staan de auto's op de kaart, opent er een
+popup als je erop klikt, werken de filters en de taalwissel (`?taal=nl`, `?taal=fr`,
+`?taal=en`)? Dan is het goed.
+
+Daarna vraagt het script of het mag publiceren. **Het doet dat nooit uit zichzelf** — pas als
+je `ja` typt. Het legt alleen de bijgewerkte gegevens vast (`gbfs/`, `map/fotos/`,
+`map/bereik.json`, `map/ov.json`, `scripts/carrosserie.json`) en laat werk aan de kaart zelf
+met rust. Wat er precies online gaat, staat op je scherm voor je antwoordt.
+
+Heb je "nee" geantwoord en wil je het later alsnog:
+
+```
+py scripts/bijwerken.py --alleen-publiceren
+```
+
+Een paar minuten later staat het op GitHub Pages. Controleer dan nog de feed op
+[gbfs-validator.mobilitydata.org](https://gbfs-validator.mobilitydata.org) — elke fout én
+elke waarschuwing hoort opgelost te worden.
+
+### De vlaggen
+
+Je hebt ze zelden nodig; zonder vlaggen doet het script wat nodig is.
+
+| vlag | waarvoor |
+|---|---|
+| `--alleen feed,fotos,bereik,ov` | draai alleen deze stappen |
+| `--alleen-publiceren` | werk niets bij, zet alleen online wat al klaar staat |
+| `--replica <pad>` | een replica die ergens anders staat |
+| `--dump-datum <datum>` | een replica zonder `_meta`-tabel |
+| `--basis-url <url>` | een ander adres dan `CNAME` of de git-remote |
+| `--opnieuw-fotos` | zoek élke modelfoto opnieuw, ook die er al zijn |
+| `--vernieuw-ov` | haal de dienstregelingen opnieuw op in plaats van uit de cache |
+| `--publiceer` | publiceer na afloop zonder het te vragen |
+| `--niet-publiceren` | vraag achteraf niets over publiceren |
+| `--no-interactive` | vraag niets, aan niemand; faal luid in plaats van te vragen |
+
+Verderop staat per onderdeel wat het doet en wat je eraan kunt bijstellen — een lelijke foto
+weigeren, een bereik met de hand invullen. Voor een gewone verversing hoef je dat niet te
+lezen.
 
 ## Voor aggregatoren en partners
 
 Er is een instappagina die alles op een rij zet — het instapadres, elk bestand met zijn
-inhoud, en wat de feed uitdrukkelijk *niet* belooft:
-
-```
-https://degagemain.github.io/degage-deelautokaart-gbfs/web/gbfs.html
-```
-
-Wie de map van de feed zelf opvraagt, komt daar ook uit — `gbfs/index.html` stuurt door.
-Dat is het adres dat een partner overhoudt als hij het instapadres afkapt:
+inhoud, en wat de feed uitdrukkelijk *niet* belooft. Ze staat op de feedmap zelf:
 
 ```
 https://degagemain.github.io/degage-deelautokaart-gbfs/gbfs/
 ```
+
+Dat is precies het adres dat een partner overhoudt als hij het instapadres
+(`…/gbfs/gbfs.json`) afkapt. Wie daar belandt, krijgt dus de uitleg in plaats van een 404 —
+daar is geen doorverwijzing meer voor nodig.
 
 Alles op die pagina wordt uit de feed zelf gelezen: de aantallen, de datum en de
 bestandsmaten kloppen dus altijd, ook na een verversing. Ze controleert ook of de URL's
@@ -85,24 +212,29 @@ De generator print bij elke run welk adres hij gebruikt en waar het vandaan komt
 
 ## De kaart lokaal bekijken
 
-De pagina leest de feed via relatieve paden, dus ze heeft een webserver nodig — als
-`file://` blokkeert de browser het inlezen.
-
 ```bash
-python -m http.server 8000
+py -m http.server 8000
 ```
 
-Dan `http://localhost:8000/web/kaart.html`.
+Dan `http://localhost:8000/map/`. Een webserver is nodig omdat de pagina de feed
+via relatieve paden leest — als `file://` blokkeert de browser dat.
 
-## De feed opnieuw genereren
+---
 
-Vereist de databankreplica; die zit **niet** in deze repo.
+# De onderdelen apart
+
+Hieronder staat per script wat het doet en wat je eraan kunt bijstellen. **Voor een gewone
+verversing hoef je dit niet te lezen** — `py scripts/bijwerken.py` doet alles hierboven al in
+de juiste volgorde. Dit is er voor wie iets met de hand wil aanpassen, of wil weten waarom
+iets gaat zoals het gaat.
+
+## De feed — `genereer_gbfs.py`
 
 ```bash
-python scripts/genereer_gbfs.py
+py scripts/genereer_gbfs.py
 ```
 
-Meer is er niet nodig. De generator zoekt zelf uit waar de replica staat, welke dumpdatum
+Vereist de databankreplica; die zit **niet** in deze repo. De generator zoekt zelf uit waar de replica staat, welke dumpdatum
 erbij hoort en wat de publieke basis-URL is, en **print bij elke waarde waar ze vandaan
 komt** — zodat in het logboek staat waarop een feed gebouwd is:
 
@@ -118,7 +250,8 @@ Wat hij niet kan vinden, vult hij niet in: dan faalt hij en zegt hij wat je mee 
 geven. De dumpdatum komt uit de tabel `_meta` in de replica en nooit van de klok —
 zelfde dump in betekent byte-voor-byte dezelfde bestanden uit.
 
-Overrulen kan, maar hoeft niet:
+Overrulen kan, maar hoeft niet. Op `--uit` na kun je al deze vlaggen ook aan
+`bijwerken.py` meegeven:
 
 | vlag | in plaats van |
 |---|---|
@@ -135,14 +268,14 @@ Zijn er nieuwe merk/model-combinaties bij gekomen, dan vraagt hij per nieuw mode
 een personenwagen of een bestelwagen is. Zonder terminal — in een geplande run — vraagt
 hij niets en faalt hij luid met de ontbrekende modellen erbij.
 
-## Modelfoto's bijwerken
+## Modelfoto's — `haal_stockfotos.py`
 
 ```bash
-python scripts/haal_stockfotos.py
+py scripts/haal_stockfotos.py
 ```
 
 Staat bewust **buiten** de generator: die moet deterministisch en zonder netwerk draaien.
-Alles wat al in `web/fotos/fotos.json` staat wordt overgeslagen zónder netwerkverkeer, dus
+Alles wat al in `map/fotos/fotos.json` staat wordt overgeslagen zónder netwerkverkeer, dus
 een run over een ongewijzigde vloot doet nul verzoeken.
 
 De foto's komen van **Wikimedia Commons**, uitsluitend onder een vrije licentie (CC of
@@ -156,7 +289,7 @@ een tekening van een auto. Beter dat dan een foto van de verkeerde auto.
 
 Het script zeeft op bestandsnaam, categorie en beeldverhouding, maar smaak kun je niet
 programmeren — soms is een foto technisch in orde en gewoon lelijk. Zet dan de
-bestandsnaam in de lijst `geweigerd` in `web/fotos/fotos.json`:
+bestandsnaam in de lijst `geweigerd` in `map/fotos/fotos.json`:
 
 ```json
 "geweigerd": ["File:Toyota Auris Touring Sports Hybrid.JPG"]
@@ -165,7 +298,7 @@ bestandsnaam in de lijst `geweigerd` in `web/fotos/fotos.json`:
 De volgende run gooit die foto weg en kiest de eerstvolgende kandidaat. Die lijst
 **overleeft ook `--opnieuw`**: ze is met de hand gemaakt en wordt nooit weggegooid.
 
-Wil je zelf een foto aanleveren, zet het bestand dan in `web/fotos/` en pas de regel in
+Wil je zelf een foto aanleveren, zet het bestand dan in `map/fotos/` en pas de regel in
 `fotos.json` aan (met auteur en licentie erbij). Het script laat bestaande sleutels met
 rust, dus die keuze blijft staan.
 
@@ -177,7 +310,7 @@ nergens zo — daar is het een *Mercedes-Benz W169*. Zoeken op "Mercedes A-150" 
 een vooroorlogse Grosser Mercedes op, die (terecht) afgekeurd wordt, en de wagen blijft
 zonder foto. Daar bestaat geen regel voor: het is geen patroon maar kennis van auto's.
 
-Zet zo'n geval met de hand in `zoek_als` in `web/fotos/fotos.json`:
+Zet zo'n geval met de hand in `zoek_als` in `map/fotos/fotos.json`:
 
 ```json
 "zoek_als": { "Mercedes|A-150": "Mercedes-Benz|W169" }
@@ -188,17 +321,17 @@ onder de **linkersleutel** in het manifest terecht, want daarmee vraagt de kaart
 Ook deze lijst **overleeft `--opnieuw`**. Een sleutel die hier in staat, staat nooit in
 `niet_gevonden`: je voegt zo'n regel juist toe voor een wagen die eerder niets opleverde.
 
-## Rijbereik en openbaar vervoer bijwerken
+## Rijbereik en openbaar vervoer — `haal_bereik.py`, `haal_ov.py`
 
 ```bash
-python scripts/haal_bereik.py
-python scripts/haal_ov.py
+py scripts/haal_bereik.py
+py scripts/haal_ov.py
 ```
 
-Allebei **ná** `genereer_gbfs.py`, want ze lezen uit de feed. Net als het fotoscript staan
+Allebei **ná** `genereer_gbfs.py`, want ze lezen uit de feed — `bijwerken.py` regelt dat. Net als het fotoscript staan
 ze buiten de generator: ze hebben netwerk nodig.
 
-**`haal_ov.py` moet na elke nieuwe feed opnieuw draaien.** `web/ov.json` draagt de datum
+**`haal_ov.py` moet na elke nieuwe feed opnieuw draaien.** `map/ov.json` draagt de datum
 van de feed waarvoor het berekend is, en de kaart toont het alleen als die klopt — anders
 zou een verhuisde standplaats de bereikbaarheid van haar oude adres dragen. De eerste run
 haalt de dienstregelingen van De Lijn (±210 MB) en de NMBS (±9 MB) binnen, in
@@ -206,8 +339,17 @@ haalt de dienstregelingen van De Lijn (±210 MB) en de NMBS (±9 MB) binnen, in
 haalt ze toch opnieuw.
 
 **`haal_bereik.py`** is alleen nodig als er elektrische modellen bij komen. Het zegt welke
-het niet vindt. Weet je het bereik van zo'n model wel, zet het dan in `web/bereik.json` met
-`"bron": "handmatig"` — het script laat die regels daarna met rust.
+het niet vindt. Weet je het bereik van zo'n model wel, zet het dan in `map/bereik.json` met
+`"bron": "handmatig"` — het script laat die regels daarna met rust. Dat werkt ook om een
+schatting te **overschrijven**: kent Open EV Data voor een bouwjaar meerdere batterijversies,
+dan komt er een brede marge uit, en weet je welke versie in de vloot zit, dan is één
+handmatige regel nauwkeuriger.
+
+De sleutel is `merk|model|bouwjaar`, of `merk|model` voor een regel die voor elk bouwjaar
+geldt. **Per wagen kan niet** — een handmatige regel geldt voor élke wagen van dat model en
+bouwjaar. De kaart schrijft zo'n bereik ook niet toe aan Open EV Data maar aan Dégage zelf
+(`popup.bereikUitlegHandmatig` in `map/taal/`); een onterechte naamsvermelding is even fout
+als een ontbrekende.
 
 Wat de cijfers betekenen en welke keuzes erachter zitten, staat in `FUNCTIONEEL.md` en in de
 kop van elk script.
@@ -216,10 +358,23 @@ kop van elk script.
 
 - **Open EV Data** ([github.com/KilowattApp/open-ev-data](https://github.com/KilowattApp/open-ev-data))
   levert de gegevens voor het rijbereik, onder de MIT-licentie met verplichte
-  naamsvermelding. De kaart noemt de bron in elke popup met een bereik.
+  naamsvermelding. De kaart noemt de bron in elke popup met een bereik — behalve bij een
+  handmatig ingevuld bereik, want dat komt daar niet vandaan.
 - **Mobiscore** — Departement Omgeving, Vlaamse overheid, laag `ni:ni_mobiscore_ha` op
   Mercator, onder de Modellicentie Gratis Hergebruik. De kaart noemt de bron onder elk
   Mobiscore-blok.
+- **Flaticon** levert het pictogram in het tabblad (`favicon.png`), onder de gratis
+  licentie met verplichte naamsvermelding: *Car sharing icons created by afif fudin –
+  Flaticon*. Die staat in de voettekst van `gbfs/index.html` en in het instellingenpaneel van
+  de kaart, met de opgegeven formulering en link. **Vervang je het pictogram, haal die regel
+  dan ook weg** — en omgekeerd.
+
+  Het figuur is bewerkt, wat de licentie toestaat: het origineel is zwart op een
+  doorzichtige achtergrond en verdwijnt daarmee in een donker tabblad. Hier staat het in
+  wit op een afgeronde tegel in `--groen-diep` (`#235348`, dezelfde kleur als in
+  `map/index.css`), op 72 % van de zijde. Zo houdt het stand op een lichte én een donkere
+  achtergrond. Moet het opnieuw gemaakt worden, dan is dat de hele ingreep: het alfakanaal
+  van het bronbestand als masker, wit ingekleurd, op die tegel gezet.
 - **De Lijn** en de **NMBS** leveren de dienstregelingen, via
   [data.gtfs.be](https://data.gtfs.be) en [gtfs.irail.be](https://gtfs.irail.be). De kaart
   noemt ze onder elk OV-blok.
@@ -229,13 +384,16 @@ kop van elk script.
 
 Alleen adressen op @degage.be worden aanvaard. Een persoonlijk adres zorgt ervoor dat de generator faalt.
 
-## Hosting
+---
 
-Gehost op GitHub Pages. Alleen `web/` en `gbfs/` hoeven gehost te worden; de scripts
-staan erbij omdat ze bij het project horen, niet omdat ze publiek uitgevoerd worden.
+# Hosting
 
-**`web/kaart.js` en `web/taal/` horen er altijd bij.** De pagina laadt ze met gewone
-scripttags. Ontbreekt `kaart.js`, dan blijft er een lege kaart over; ontbreken de
+Gehost op GitHub Pages. Alleen `map/`, `gbfs/` en de twee `favicon`-bestanden in de root
+hoeven gehost te worden; de scripts staan erbij omdat ze bij het project horen, niet omdat
+ze publiek uitgevoerd worden.
+
+**`map/index.js` en `map/taal/` horen er altijd bij.** De pagina laadt ze met gewone
+scripttags. Ontbreekt `index.js`, dan blijft er een lege kaart over; ontbreken de
 taalbestanden, dan werkt de kaart wel maar blijven de teksten uit het script onvertaald —
 en dan zet ze een waarschuwing in beeld.
 
@@ -243,7 +401,7 @@ en dan zet ze een waarschuwing in beeld.
 de knop "Auto's in mijn buurt", ook als de bezoeker toestemming geeft:
 
 ```html
-<iframe src="https://<adres>/web/kaart.html" allow="geolocation"
+<iframe src="https://<adres>/map/" allow="geolocation"
         style="width:100%;height:640px;border:0" title="Deelautokaart van Dégage"></iframe>
 ```
 

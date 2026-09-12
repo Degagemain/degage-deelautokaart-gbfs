@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Haal één vrij gelicentieerde stockfoto per merk+model op naar `web/fotos/`.
+"""Haal één vrij gelicentieerde stockfoto per merk+model op naar `map/fotos/`.
 
 Waarom dit een APART script is en niet in `genereer_gbfs.py` zit
 ----------------------------------------------------------------
@@ -7,7 +7,7 @@ De generator heeft een hard contract: zelfde dump in -> byte-voor-byte dezelfde
 bestanden uit, en hij draait zonder netwerk. Zoekopdrachten naar buiten breken dat
 allebei — vandaag levert een zoekopdracht een andere foto op dan volgende maand. Dit
 script staat er dus naast: het raakt de GBFS-feed niet aan en schrijft alleen in
-`web/fotos/`.
+`map/fotos/`.
 
 Waarom Wikimedia Commons en niet "een foto van het internet"
 ------------------------------------------------------------
@@ -37,7 +37,7 @@ komt onder de LINKERsleutel in het manifest, want daar vraagt de kaart hem mee o
 
 Snel bij een tweede run
 -----------------------
-Alles wat al opgehaald is, staat in `web/fotos/fotos.json`. Bij een volgende run wordt
+Alles wat al opgehaald is, staat in `map/fotos/fotos.json`. Bij een volgende run wordt
 elke sleutel die daar al in staat overgeslagen ZONDER netwerkverkeer — ook de sleutels
 waarvoor niets gevonden werd, want anders zoekt het script elke keer opnieuw naar iets
 wat er niet is. Een tweede run over een ongewijzigde vloot doet dus nul verzoeken en is
@@ -449,7 +449,7 @@ def main() -> int:
     ap.add_argument("--feed", type=Path, default=None,
                     help="pad naar degage_vehicles.json (standaard: ../gbfs/…)")
     ap.add_argument("--uit", type=Path, default=None,
-                    help="fotomap (standaard: ../web/fotos)")
+                    help="fotomap (standaard: ../map/fotos)")
     ap.add_argument("--opnieuw", action="store_true",
                     help="negeer wat er al opgehaald is en zoek alles opnieuw")
     ap.add_argument("--max", type=int, default=0,
@@ -458,7 +458,7 @@ def main() -> int:
 
     wortel = Path(__file__).resolve().parent.parent
     feed = args.feed or wortel / "gbfs" / "degage_vehicles.json"
-    uit = args.uit or wortel / "web" / "fotos"
+    uit = args.uit or wortel / "map" / "fotos"
     manifest_pad = uit / "fotos.json"
 
     def bewaar() -> None:

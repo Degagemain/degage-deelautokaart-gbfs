@@ -64,7 +64,7 @@
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "$comment": "Geschrapt op 17-08-2026, na afstemming met Pieter (FEEDSPEC.md): `deuren`, het volledige kofferblok (`koffer` met liter/breedte_cm/hoogte_cm/diepte_cm) en `car_start_sharing`. Ze staan bewust niet meer in `properties`, zodat `additionalProperties: false` hierboven ze ook actief tegenhoudt in plaats van ze alleen niet te eisen.",
+            "$comment": "Geschrapt op 17-08-2026, na afstemming met Pieter (FEEDSPEC.md): `deuren`, het volledige kofferblok (`koffer` met liter/breedte_cm/hoogte_cm/diepte_cm) en `car_start_sharing`. Ze staan bewust niet meer in `properties`, zodat `additionalProperties: false` hierboven ze ook actief tegenhoudt in plaats van ze alleen niet te eisen. Op 12-09-2026 ging `inschrijving` er op dezelfde manier uit: de fiscale categorie (car_car_type) leest als een vorm terwijl ze een belastingregime is, en de kaart deed er niets mee. `carrosserie` blijft het veld dat zegt hoe een wagen eruitziet; car_car_type zit nog in `vehicle_type_id`.",
             "required": [
               "station_id",
               "vehicle_type_id",
@@ -72,7 +72,6 @@
               "merk",
               "model",
               "carrosserie",
-              "inschrijving",
               "brandstof",
               "zitplaatsen",
               "bouwjaar",
@@ -110,14 +109,6 @@
                 "enum": [
                   "Personenwagen",
                   "Bestelwagen"
-                ]
-              },
-              "inschrijving": {
-                "description": "car_car_type in mensentaal: de fiscale INSCHRIJVING, niet de carrosserie. 'Lichte vracht' is de Belgische categorie (bestelwagen zonder achterbank). Hetzelfde model staat in beide categorieen naargelang het exemplaar: Renault Kangoo 1 lichte vracht tegen 18 personenwagen, Citroen Berlingo 2 tegen 11. Blijft in de feed omdat het een feit is; de kaart filtert erop niet, want een lid zoekt op vorm en niet op belastingregime.",
-                "type": "string",
-                "enum": [
-                  "Personenwagen",
-                  "Lichte vracht"
                 ]
               },
               "brandstof": {

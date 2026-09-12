@@ -1190,10 +1190,9 @@ def bouw(vloot: list[dict], stempel: str, basis_url: str,
             "model": model_map[r["car_type"]],
             # Het soort voertuig komt uit de handmatige lijst, niet uit de databank.
             "carrosserie": carrosserie[r["carrosserie_sleutel"]],
-            # De inschrijving is iets anders: de fiscale categorie. Ze blijft mee in de
-            # feed omdat ze een feit is, maar de kaart filtert erop niet — zie de
-            # toelichting bij CAR_TYPE_NL.
-            "inschrijving": CAR_TYPE_NL[r["car_car_type"]],
+            # De inschrijving (de fiscale categorie, zie CAR_TYPE_NL) staat bewust niet
+            # in de feed: ze leest als een vorm terwijl ze een belastingregime is, en
+            # niets in de kaart doet er iets mee. Ze zit nog wel in vehicle_type_id.
             "brandstof": FUEL_NL[r["car_fuel"]],
             "zitplaatsen": int(r["car_seats"]),
             "bouwjaar": int(r["car_year"]),

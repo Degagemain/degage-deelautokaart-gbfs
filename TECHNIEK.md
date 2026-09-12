@@ -1,12 +1,12 @@
 # De kaart van binnen
 
-Technische documentatie bij `web/kaart.js` en `web/kaart.html` — voor wie de kaart moet wijzigen, overnemen
+Technische documentatie bij `map/index.js` en `map/index.html` — voor wie de kaart moet wijzigen, overnemen
 of ergens anders opnieuw opbouwen.
 
 Dit document beschrijft **hoe het gebouwd is**. Wát de kaart voor een bezoeker doet en
 waarom, staat in [`FUNCTIONEEL.md`](FUNCTIONEEL.md) — de regels achter de filters, de balk
 en de talen worden daar uitgelegd en hier niet herhaald. Het gaat ook niet over de feed:
-wat daarin staat leest een partner op `web/gbfs.html` en in de
+wat daarin staat leest een partner op `gbfs/index.html` en in de
 [GBFS-specificatie](https://github.com/MobilityData/gbfs). Voor het bedienen van het
 gereedschap is `README.md` de plek.
 
@@ -21,22 +21,23 @@ bestand in een editor, je slaat op, je ververst de browser. Dat is met opzet: di
 over vijf jaar nog te wijzigen zijn door iemand die de toenmalige gereedschapsketen niet
 kent.
 
-De kaart bestaat daarom uit **vijf bestanden die de browser rechtstreeks leest**:
+De kaart bestaat daarom uit **zes bestanden die de browser rechtstreeks leest**:
 
 | bestand | inhoud |
 |---|---|
-| `web/kaart.html` | de opmaak en de pictogrammen |
-| `web/kaart.js` | alle logica |
-| `web/taal/nl.js` · `fr.js` · `en.js` | alles wat de bezoeker leest, per taal |
+| `map/index.html` | de structuur en de pictogrammen |
+| `map/index.css` | alle opmaak |
+| `map/index.js` | alle logica |
+| `map/taal/nl.js` · `fr.js` · `en.js` | alles wat de bezoeker leest, per taal |
 
 Alles hangt aan gewone `<script>`-tags onderaan de body, in deze volgorde: **de talen, dan
-Leaflet, dan `kaart.js`**. Klassieke scripttags blokkeren en draaien op volgorde, dus er is
+Leaflet, dan `index.js`**. Klassieke scripttags blokkeren en draaien op volgorde, dus er is
 geen module, geen `await` en geen laadvolgorde om over na te denken — maar de volgorde
 zelf is wel echt:
 
-- `kaart.js` gebruikt `L` meteen, dus Leaflet moet er al zijn;
-- `TALEN` wordt afgeleid uit `window.DEGAGE_TALEN` zodra `kaart.js` begint;
-- `kaart.js` zoekt rechtstreeks in de pagina (`$("paneel")`), vandaar onderaan de body.
+- `index.js` gebruikt `L` meteen, dus Leaflet moet er al zijn;
+- `TALEN` wordt afgeleid uit `window.DEGAGE_TALEN` zodra `index.js` begint;
+- `index.js` zoekt rechtstreeks in de pagina (`$("paneel")`), vandaar onderaan de body.
 
 Zet er dus geen `async` op en verplaats de tag niet naar de kop zonder `defer`: dan breekt
 het op een plek die niets met de oorzaak te maken heeft.
@@ -68,7 +69,7 @@ vervangen** — anders laadt de kaart niet meer, en de reden staat alleen in de 
 
 ## 3. De feed die de kaart leest
 
-De kaart haalt **twee** bestanden op uit `../gbfs` (`GBFS_BASIS`, bovenaan `kaart.js`):
+De kaart haalt **twee** bestanden op uit `../gbfs` (`GBFS_BASIS`, bovenaan `index.js`):
 
 - `station_information.json` — de standplaatsen: `station_id`, `lat`, `lon`. De velden
   `name` en `post_code` worden **niet** gebruikt: plaatsnaam en postcode komen per auto
@@ -91,9 +92,9 @@ stuk gewoon niet in de popup:
 
 | bestand | gemaakt door | sleutel | inhoud |
 |---|---|---|---|
-| `web/fotos/fotos.json` | `scripts/haal_stockfotos.py` | merk\|model | modelfoto met auteur en licentie |
-| `web/bereik.json` | `scripts/haal_bereik.py` | merk\|model\|bouwjaar | rijbereik `km: [van, tot]` |
-| `web/ov.json` | `scripts/haal_ov.py` | station_id | Mobiscore, dichtste halte, station |
+| `map/fotos/fotos.json` | `scripts/haal_stockfotos.py` | merk\|model | modelfoto met auteur en licentie |
+| `map/bereik.json` | `scripts/haal_bereik.py` | merk\|model\|bouwjaar | rijbereik `km: [van, tot]` |
+| `map/ov.json` | `scripts/haal_ov.py` | station_id | Mobiscore, dichtste halte, station |
 
 Alle drie komen uit een script dat **buiten de generator** draait, want ze hebben netwerk
 nodig en een externe bron kan morgen iets anders zeggen; de generator blijft zo zonder
@@ -214,6 +215,27 @@ de balk kan dicht staan, en op een telefoon ligt het paneel bovenaan in plaats v
 `centreerVrij()` verschuift **zonder animatie**. Dat is geen luiheid: een popup die opengaat
 terwijl de kaart nog schuift, laat Leaflets bijsturing tegen een bewegend doel rekenen — de
 popup kwam dan half boven het scherm uit. Eerst stilstaan, dan openen.
+
+### Een popup die niet past
+
+Op een telefoon is wat er tussen het paneel en de balk overblijft soms kleiner dan de popup
+zelf. Een `maxHeight` alleen lost dat niet op: onder een leesbare hoogte duwt Leaflet de
+popup tegen de bovenrand en valt de onderkant van het scherm. `popupRanden()` geeft daarom
+bij plaatsgebrek de plaats **onderaan** terug — daar liggen de meldknop en de balk — en pas
+als het dan nog steeds te krap is, die bovenaan.
+
+Onderaan mag dat, want allebei die dingen stappen opzij:
+
+- de **meldknop** verdwijnt zolang er een popup openstaat (`toont-popup`, gezet bij
+  `popupopen`), net zoals hij dat al deed voor het instellingendoosje;
+- de **balk** verdwijnt alleen als de popup haar écht raakt. Dat wordt ná het openen
+  gemeten — pas dan staat de popup op zijn plaats — en zet `popup-over-balk`.
+
+Waarom wegnemen en niet eroverheen leggen: alle lagen van Leaflet zitten samen in één
+stapelcontext (`.leaflet-map-pane`, `z-index: 400`) en komen dus nooit boven de 1000 van de
+knoppen, de balk en het paneel. Die z-index optrekken zou de tegels óók boven het paneel
+leggen. Het paneel blijft daarom wél bovenop: daar komt de popup enkel onder in het
+allerlaatste geval, als er anders niets van hem in beeld zou staan.
 
 ### De balk met dichtstbijzijnde auto's
 
@@ -344,7 +366,7 @@ de sleutel zelf terug — zichtbaar, en dus vindbaar.
 
 Is er **geen enkel** taalbestand geladen (`TAALBESTANDEN_ONTBREKEN`), dan blijft het
 meldingsvak in beeld staan, ook nadat het laden klaar is. Dat is een publicatiefout — de map
-`web/taal/` is niet meegegaan — en die hoort niemand stil te ontdekken.
+`map/taal/` is niet meegegaan — en die hoort niemand stil te ontdekken.
 
 **Wisselen herlaadt niets.** `pasTaalToe()` laat alles wat er al staat zich opnieuw
 opschrijven: de opmaak, de filterchips (die ook opnieuw sorteren, want de volgorde hangt van
@@ -384,18 +406,21 @@ naast het paneel, want dan reikt zelfs de kop tot waar de balk staat. De kaartje
 nooit een schuifbalk: ze delen de breedte (`flex: 1 1 0`, minstens 112 px), en
 containerqueries op `.dichtbij` verbergen van achteren af wat niet meer past.
 
-Op een telefoon liggen paneel en balk boven elkaar. Met open filters krimpt de balk tot
-naam en afstand, en krijgt het paneel `max-height: calc(100% - 16px - var(--dichtbij-ruimte))`:
-`meetDichtbij()` meet hoeveel er onderaan het venster bezet is tot de bovenrand van de
-balk, zodat het paneel altijd 8 px erboven stopt.
+Op een telefoon liggen paneel en balk boven elkaar. Met open filters verdwijnt de balk
+(`.paneel.toont-filters ~ .dichtbij { display: none }`) en houdt het paneel
+`max-height: calc(100% - 16px - var(--dichtbij-ruimte))` over: `meetDichtbij()` meet
+hoeveel er onderaan het venster bezet is tot de bovenrand van de balk, en dat is nul
+zolang de balk er niet staat. Meten gebeurt via `balkInBeeld()` en niet via `hidden`
+alleen — een doos die `display: none` is, geeft een rechthoek van nul terug op positie
+nul, en `--dichtbij-ruimte` zou daar het hele venster van maken.
 
 ## 12. Iets wijzigen
 
-**Een tekst.** Nooit in de opmaak: zoek de sleutel in `web/taal/nl.js` en pas hem in alle
+**Een tekst.** Nooit in de opmaak: zoek de sleutel in `map/taal/nl.js` en pas hem in alle
 drie de bestanden aan. Staat er een `{haakje}` in, laat dat staan — de kaart vult het in.
 
-**Een nieuwe taal.** Kopieer `web/taal/nl.js` naar `web/taal/<code>.js`, vertaal, en zet één
-`<script>`-regel bij in `kaart.html`. Verder niets: de keuzelijst, de taaldetectie en de
+**Een nieuwe taal.** Kopieer `map/taal/nl.js` naar `map/taal/<code>.js`, vertaal, en zet één
+`<script>`-regel bij in `index.html`. Verder niets: de keuzelijst, de taaldetectie en de
 terugval volgen vanzelf. Een half vertaald bestand breekt niets — ontbrekende sleutels komen
 uit het Nederlands.
 
@@ -403,7 +428,7 @@ uit het Nederlands.
 hem te tónen — hij verschijnt vanzelf in het filter. Voor het label: een rij in `waarden` in
 `fr.js` en `en.js`.
 
-**Een nieuwe toebehorenvlag.** De sleutel in `TOEBEHOREN` of `AFSPRAKEN` in `kaart.js` (dat
+**Een nieuwe toebehorenvlag.** De sleutel in `TOEBEHOREN` of `AFSPRAKEN` in `index.js` (dat
 verschil gaat over wat er ín de auto zit tegenover wat je met de eigenaar afspreekt), plus
 een rij in `vlaggen` in alle drie de taalbestanden. De generator moet de vlag natuurlijk al
 in de feed zetten.
@@ -415,14 +440,15 @@ opmaak, een regel in `vulKeuzes()`, een `Set` in `staat`, en een regel in `wagen
 `scripts/haal_ov.py` opnieuw, na de generator. De keuzes staan als constanten bovenaan die
 scripts — `EEN_GETAL_KM`, `BATTERIJ_MARGE_KWH`, `MODELJAAR_NIEUW` en `MODELJAAR_OUD` voor het bereik, `HALTE_M`,
 `HALTE_ZOEK_M` en `TREIN_M` voor het openbaar vervoer — met in de kop van elk script waarom ze zo staan. Een
-bereik met de hand zetten kan in `web/bereik.json`, met `"bron": "handmatig"`: dat laat het
+bereik met de hand zetten kan in `map/bereik.json`, met `"bron": "handmatig"`: dat laat het
 script daarna ongemoeid.
 
 **Een bibliotheek opwaarderen.** Versie én SRI-hash, in het `<link>` én in het `<script>`.
 Vergeet je de hash, dan laadt de kaart niet meer en staat de reden alleen in de console.
 
-**Iets aan de logica.** Dat staat allemaal in `web/kaart.js`; de kop van dat bestand zet
-op een rij wat waar staat. `kaart.html` draagt alleen nog opmaak en pictogrammen.
+**Iets aan de logica.** Dat staat allemaal in `map/index.js`; de kop van dat bestand zet
+op een rij wat waar staat. `index.html` draagt alleen nog structuur en pictogrammen, en
+`index.css` alleen nog opmaak.
 
 ## 13. Bekende beperkingen
 
@@ -445,7 +471,7 @@ op een rij wat waar staat. `kaart.html` draagt alleen nog opmaak en pictogrammen
 
 ## 14. Lokaal draaien
 
-De pagina leest de feed, `kaart.js` en de taalbestanden via relatieve paden, dus
+De pagina leest de feed, `index.js` en de taalbestanden via relatieve paden, dus
 `file://` werkt niet — de browser blokkeert dan het inlezen. Start een webserver in de
 root van de repo:
 
@@ -453,5 +479,5 @@ root van de repo:
 python -m http.server 8000
 ```
 
-Dan `http://localhost:8000/web/kaart.html`. Een andere taal afdwingen:
-`http://localhost:8000/web/kaart.html?taal=fr`.
+Dan `http://localhost:8000/map/index.html`. Een andere taal afdwingen:
+`http://localhost:8000/map/index.html?taal=fr`.
