@@ -786,7 +786,9 @@ function bouwFilters() {
     bak: staat.gekozenBak,
     vlag: staat.gekozenVlaggen
   };
-  $("filters").addEventListener("change", (e) => {
+  /* Op het paneel en niet op #filters: op een telefoon staan de chips in het zwevende
+     optievak, dat wél in het paneel hangt maar buiten de filterlijst (zie plaatsOpties()). */
+  $("paneel").addEventListener("change", (e) => {
     const vakje = e.target.closest('.keuze input[type="checkbox"]');
     if (!vakje) return;
     const doel = groepen[vakje.dataset.groep];
@@ -1495,6 +1497,8 @@ function teken() {
      hier onzichtbaar maar laat zijn plaats staan (zie `.herstel-knop` in de opmaak), zodat
      de tellerregel niet verspringt bij de eerste filter. */
   $("knop-herstel").hidden = gefilterd === 0;
+  // De telbolletjes op de labels (telefoon); zie werkKoppenBij().
+  werkKoppenBij();
 
   /* De teller draagt bij het opstarten "bezig met laden…" als vertaalde tekst; zodra er
      een echt getal in staat, mag vertaalPagina() er niet meer aan komen. */
@@ -1542,7 +1546,10 @@ const AllesInBeeld = L.Control.extend({
     /* `stop` houdt de klik bij de kaart vandaan: zonder dat pant Leaflet mee en springt
        de pagina naar boven door de href. */
     L.DomEvent.on(knop, "click", L.DomEvent.stop);
-    L.DomEvent.on(knop, "click", () => kaart.fitBounds(VOLLEDIGE_BBOX, { padding: [24, 24] }));
+    L.DomEvent.on(knop, "click", () => {
+      sluitFilters();   // wie de hele kaart wil zien, wil de lijst er niet over
+      kaart.fitBounds(VOLLEDIGE_BBOX, { padding: [24, 24] });
+    });
 
     /* Het tandwiel eronder, in dezelfde balk. De weergavekeuzes stonden vroeger in het
        paneel; daar namen ze de plaats in van de kop, en het zijn geen filters. Als
@@ -1589,8 +1596,20 @@ kaart.addControl(new AllesInBeeld());
 function instellingenOpen() {
   return !$("instellingen").hidden;
 }
+/* Filters dicht bij een tik op een kaartknop (tandwiel, "alles tonen"). Wie daarop drukt,
+   is klaar met filteren. Een klik buiten het paneel sluit de filters normaal al, maar
+   Leaflet houdt klikken op zijn knoppen tegen (disableClickPropagation), dus die knoppen
+   roepen dit expliciet aan. Het zoekveld laat ook los, anders klapt de lijst bij de
+   volgende focus weer open en blijft op een telefoon het toetsenbord staan. */
+function sluitFilters() {
+  if ($("filters").hidden) return;
+  zetFilters(false);
+  $("zoekveld").blur();
+}
+
 function zetInstellingen(open) {
   $("instellingen").hidden = !open;
+  if (open) sluitFilters();
   const knop = document.querySelector(".tandwiel-knop");
   if (knop) knop.setAttribute("aria-expanded", String(open));
   /* Op een telefoon klapt het doosje open op de plek waar de meldknop staat; zie
@@ -1636,6 +1655,12 @@ document.addEventListener("mousedown", (e) => {
 });
 document.addEventListener("keydown", (e) => {
   if (e.key !== "Escape" || $("filters").hidden) return;
+  zetFilters(false);
+  $("zoekveld").blur();
+});
+/* De sluitknop onderaan de lijst (alleen op een telefoon te zien). Het zoekveld laat ook
+   de aandacht los, anders blijft het schermtoetsenbord openstaan. */
+$("knop-filters-sluit").addEventListener("click", () => {
   zetFilters(false);
   $("zoekveld").blur();
 });
@@ -1702,6 +1727,170 @@ $("filters").addEventListener("click", (e) => {
   const open = knop.getAttribute("aria-expanded") === "true";
   knop.setAttribute("aria-expanded", String(!open));
   doel.hidden = open;
+});
+
+/* ---------- labels als schakelaar, alleen op een telefoon ------------------------------
+   Op een smal scherm toont de filterlijst alleen de labels, per twee naast elkaar. Tikken
+   op een label toont zijn opties; nog eens tikken, of een ander label, verbergt ze.
+
+   De labels mogen daarbij NOOIT verspringen — een knop die wegschuift op het moment dat
+   je hem aanraakt, is erger dan een lange lijst. Daarom gaan de opties op een telefoon
+   niet onder hun eigen label open, maar in één vak onder het hele raster van labels: de
+   labels staan er dan altijd op dezelfde plek, open of dicht. Er staat telkens maar één
+   label open, en dat kleurt groen; zo is duidelijk bij welk label het vak hoort.
+
+   Daarvoor verhuizen de opties echt (net als plaatsFilterschakels()): de luisteraars en
+   ids blijven gelden, en op een breed scherm gaan ze terug onder hun eigen kop, waar
+   niets van dit alles speelt. Euronorm en bouwjaar zijn een <details>; op een telefoon
+   klapt die zelf niet meer open maar doet mee als de andere labels. */
+const smalScherm = window.matchMedia("(max-width: 640px)");
+const optieVak = document.createElement("div");
+optieVak.className = "filters__opties";
+const optiesVan = new Map();   // sectie → haar eigen vak in `optieVak`
+let openSectie = null;
+
+function filterSecties() {
+  return document.querySelectorAll("#filters .sectie");
+}
+
+function kopVan(sectie) {
+  return sectie.querySelector(":scope > h2, :scope > summary");
+}
+
+function plaatsOpties() {
+  if (smalScherm.matches) {
+    /* In het paneel, niet in de filterlijst: die scrolt en is op een telefoon laag, dus
+       daar viel het vak vaak onder de rand. Het zweeft nu onder het paneel over de kaart
+       (zie `.filters__opties` en plaatsOptieVak()). Wél binnen #paneel, zodat een tik
+       erin telt als een tik in het paneel en de filters niet dichtklappen. */
+    $("paneel").appendChild(optieVak);
+    for (const sectie of filterSecties()) {
+      let vak = optiesVan.get(sectie);
+      if (!vak) {
+        vak = document.createElement("div");
+        vak.className = "sectie__opties" +
+          (sectie.classList.contains("sectie--chips") ? " sectie__opties--chips" : "");
+        optiesVan.set(sectie, vak);
+      }
+      const kop = kopVan(sectie);
+      for (const kind of [...sectie.children]) if (kind !== kop) vak.appendChild(kind);
+      optieVak.appendChild(vak);
+    }
+  } else {
+    for (const [sectie, vak] of optiesVan) {
+      while (vak.firstElementChild) sectie.appendChild(vak.firstElementChild);
+    }
+    optieVak.remove();
+  }
+  toonOpenSectie();
+}
+
+function toonOpenSectie() {
+  const smal = smalScherm.matches;
+  optieVak.hidden = !(smal && openSectie);
+  for (const sectie of filterSecties()) {
+    const open = smal && sectie === openSectie;
+    sectie.classList.toggle("is-open", open);
+    const vak = optiesVan.get(sectie);
+    if (vak) vak.hidden = !open;
+    const kop = kopVan(sectie);
+    if (kop.tagName !== "H2") continue;   // een <summary> is vanzelf een knop
+    if (smal) {
+      kop.setAttribute("role", "button");
+      kop.tabIndex = 0;
+      kop.setAttribute("aria-expanded", String(open));
+    } else {
+      kop.removeAttribute("role");
+      kop.removeAttribute("tabindex");
+      kop.removeAttribute("aria-expanded");
+    }
+  }
+}
+
+function wisselSectie(sectie) {
+  openSectie = openSectie === sectie ? null : sectie;
+  toonOpenSectie();
+  plaatsOptieVak();
+}
+
+/* Het zwevende optievak hangt net onder het paneel en mag tot boven de kaartknoppen
+   onderaan reiken; wordt het hoger, dan scrolt het zelf. Het paneel verandert van hoogte
+   als de filters open- of dichtgaan of de legende verdwijnt, dus bij elke maatwijziging
+   opnieuw. `position: fixed` rekent vanaf het venster, en dat is ook waar
+   getBoundingClientRect() in meet. */
+function plaatsOptieVak() {
+  if (optieVak.hidden || !optieVak.isConnected) return;
+  const onder = Math.round($("paneel").getBoundingClientRect().bottom + 6);
+  optieVak.style.top = onder + "px";
+  optieVak.style.maxHeight = Math.max(120, window.innerHeight - onder - 70) + "px";
+}
+
+/* Het telbolletje op een label: zoveel filters staan er in die sectie aan, zodat een dicht
+   label niet verzwijgt dat de kaart uitgedund wordt. Schuiven tellen als één filter zodra
+   ze niet op stand 0 staan; chips per aangevinkte keuze. Aangeroepen vanuit teken(). De
+   opties kunnen in de sectie zelf of in haar vak staan, dus beide tellen mee. */
+function werkKoppenBij() {
+  for (const sectie of filterSecties()) {
+    const kop = kopVan(sectie);
+    if (!kop) continue;
+    let n = 0;
+    for (const bereik of [sectie, optiesVan.get(sectie)]) {
+      if (!bereik) continue;
+      n += bereik.querySelectorAll(".keuze input:checked").length;
+      const schuif = bereik.querySelector('input[type="range"]');
+      if (schuif && schuif.value !== "0") n += 1;
+    }
+    if (n > 0) kop.dataset.aantal = String(n);
+    else delete kop.dataset.aantal;
+  }
+}
+
+plaatsOpties();
+smalScherm.addEventListener("change", plaatsOpties);
+new ResizeObserver(plaatsOptieVak).observe($("paneel"));
+window.addEventListener("resize", plaatsOptieVak);
+
+/* De twee filterschakelaars ("grijs tonen", "sluiten bij scrollen") verhuizen op een
+   telefoon naar het instellingendoosje achter het tandwiel. Daar is de filterlijst
+   krap, en het zijn keuzes die je één keer zet. Op een breed scherm staan ze bovenaan
+   de filters, waar ze bij het filteren meteen bij de hand zijn.
+
+   Echt verplaatsen, niet dupliceren: de luisteraars hangen aan de vakjes zelf, dus ze
+   blijven werken, en er is maar één vakje om bij te houden. */
+function plaatsFilterschakels() {
+  const schakels = [$("knop-grijs"), $("knop-scrollsluit")].map((v) => v.closest(".schakel"));
+  if (smalScherm.matches) {
+    const taal = $("taalkeuze").closest(".schakel");
+    for (const s of schakels) taal.parentNode.insertBefore(s, taal);
+  } else {
+    const blok = document.querySelector("#filters .filterschakels");
+    for (const s of schakels) blok.appendChild(s);
+  }
+}
+plaatsFilterschakels();
+smalScherm.addEventListener("change", plaatsFilterschakels);
+
+$("filters").addEventListener("click", (e) => {
+  if (!smalScherm.matches) return;
+  const kop = e.target.closest("#filters .sectie > h2, #filters .sectie > summary");
+  if (!kop) return;
+  // Een <details> klapt hier niet zelf open: zijn opties staan in het vak eronder.
+  if (kop.tagName === "SUMMARY") e.preventDefault();
+  const sectie = kop.parentElement;
+  // Een ⓘ op een dicht label: open de sectie mee, anders valt de uitleg in iets verborgens.
+  if (e.target.closest(".uitleg-knop")) {
+    if (openSectie !== sectie) wisselSectie(sectie);
+    return;
+  }
+  wisselSectie(sectie);
+});
+// Enter en spatie op een label; een <summary> doet dat vanzelf via `click`.
+$("filters").addEventListener("keydown", (e) => {
+  if (!smalScherm.matches || (e.key !== "Enter" && e.key !== " ")) return;
+  const kop = e.target.closest("#filters .sectie > h2");
+  if (!kop || e.target !== kop) return;
+  e.preventDefault();
+  wisselSectie(kop.parentElement);
 });
 
 /* ---------- het paneel minimaliseren ---------------------------------------------------

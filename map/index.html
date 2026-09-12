@@ -164,7 +164,8 @@
 
      De teksten dragen `data-i18n`-sleutels; zie vertaalPagina() in het script. -->
 <div class="instellingen" id="instellingen" hidden>
-  <label class="schakel">
+  <!-- `schakel--breed`: alleen op een breed scherm; op een telefoon is er geen muis. -->
+  <label class="schakel schakel--breed">
     <input type="checkbox" id="knop-volgmuis" checked>
     <span data-i18n="instellingen.volgmuis">Lijst dichtstbijzijnde auto's volgt muis</span>
   </label>
@@ -301,39 +302,56 @@
         <input type="checkbox" id="knop-grijs" checked>
         <span data-i18n="filters.grijs">Gefilterde auto's grijs tonen</span>
       </label>
-      <label class="schakel">
+      <!-- `schakel--breed`: op een telefoon verborgen en dus altijd aan — daar laat een
+           open filterlijst zo weinig kaart over dat ze bij het vegen hoort weg te gaan. -->
+      <label class="schakel schakel--breed">
         <input type="checkbox" id="knop-scrollsluit" checked>
         <span data-i18n="filters.scrollSluit">Filters sluiten bij scrollen in de kaart</span>
       </label>
     </div>
 
-    <h2 data-i18n="kop.soort">Soort auto</h2>
-    <div class="keuzes" id="filter-soort"></div>
-
-    <h2 data-i18n="kop.zitplaatsen">Zitplaatsen</h2>
-    <div class="schuif">
-      <input type="range" id="zit-schuif" min="0" step="1" value="0">
-      <p class="schuif__waarde" id="zit-waarde"></p>
+    <!-- Elke kop staat met zijn keuzes in een eigen blokje. Op een breed scherm doet dat
+         niets; op een telefoon komen chips op dezelfde regel als hun kop en staan de
+         schuiven per twee naast elkaar — zie `.sectie--chips` en `.sectie--schuif`. -->
+    <div class="sectie sectie--chips">
+      <h2 data-i18n="kop.soort">Soort auto</h2>
+      <div class="keuzes" id="filter-soort"></div>
     </div>
 
-    <h2 data-i18n="kop.brandstof">Brandstof</h2>
-    <div class="keuzes" id="filter-brandstof"></div>
+    <div class="sectie sectie--schuif">
+      <h2 data-i18n="kop.zitplaatsen">Zitplaatsen</h2>
+      <div class="schuif">
+        <input type="range" id="zit-schuif" min="0" step="1" value="0">
+        <p class="schuif__waarde" id="zit-waarde"></p>
+      </div>
+    </div>
 
-    <h2 data-i18n="kop.bak">Versnellingsbak</h2>
-    <div class="keuzes" id="filter-bak"></div>
+    <div class="sectie sectie--chips">
+      <h2 data-i18n="kop.brandstof">Brandstof</h2>
+      <div class="keuzes" id="filter-brandstof"></div>
+    </div>
 
-    <h2 data-i18n="kop.toebehoren">Toebehoren</h2>
-    <div class="keuzes" id="filter-toebehoren"></div>
+    <div class="sectie sectie--chips">
+      <h2 data-i18n="kop.bak">Versnellingsbak</h2>
+      <div class="keuzes" id="filter-bak"></div>
+    </div>
 
-    <h2 data-i18n="kop.afspraken">Afspraken</h2>
-    <div class="keuzes" id="filter-afspraken"></div>
+    <div class="sectie sectie--chips">
+      <h2 data-i18n="kop.toebehoren">Toebehoren</h2>
+      <div class="keuzes" id="filter-toebehoren"></div>
+    </div>
+
+    <div class="sectie sectie--chips">
+      <h2 data-i18n="kop.afspraken">Afspraken</h2>
+      <div class="keuzes" id="filter-afspraken"></div>
+    </div>
 
     <!-- Openbaar vervoer. Deze twee horen bij de STANDPLAATS, niet bij de wagen: wie hier
          filtert, zoekt een auto die hij kan combineren met bus of trein — heen met de auto,
          terug met de trein, of omgekeerd. Een blok verdwijnt als er geen OV-gegevens bij
          deze feed horen, of als alle standplaatsen even ver van zo'n halte liggen; dan valt
          er niets te kiezen. -->
-    <div id="filter-bushalte">
+    <div class="sectie sectie--schuif" id="filter-bushalte">
       <!-- De uitleg staat achter een ⓘ, zoals in de popups: wie weet wat er staat, hoeft er
            niet telkens overheen te lezen. Zie de klikafhandeling bij de filters. -->
       <h2><span data-i18n="kop.bushalte">Afstand tot een bushalte</span><button type="button"
@@ -351,7 +369,7 @@
       </div>
     </div>
 
-    <div id="filter-station">
+    <div class="sectie sectie--schuif" id="filter-station">
       <h2><span data-i18n="kop.station">Afstand tot een treinstation</span><button type="button"
           class="uitleg-knop" aria-expanded="false" aria-controls="trein-uitleg"
           title="Uitleg" data-i18n-title="popup.uitleg"><svg class="ico" aria-hidden="true"><use
@@ -370,7 +388,7 @@
 
     <!-- Euronorm en bouwjaar staan dicht: het zijn details waar de meeste bezoekers niet
          naar zoeken, en opengeklapt duwen ze de rest van de filters uit beeld. -->
-    <details class="vouw" id="vouw-euronorm">
+    <details class="vouw sectie sectie--schuif" id="vouw-euronorm">
       <summary data-i18n="kop.euronorm">Euronorm</summary>
       <div class="schuif">
         <input type="range" id="euronorm-schuif" min="0" step="1" value="0">
@@ -381,13 +399,28 @@
       </div>
     </details>
 
-    <details class="vouw" id="vouw-bouwjaar">
+    <details class="vouw sectie sectie--schuif" id="vouw-bouwjaar">
       <summary data-i18n="kop.bouwjaar">Bouwjaar</summary>
       <div class="schuif">
         <input type="range" id="bouwjaar-schuif" min="0" step="1" value="0">
         <p class="schuif__waarde" id="bouwjaar-waarde"></p>
       </div>
     </details>
+
+    <!-- Sluitknop, alleen op een telefoon. Daar is er naast het paneel nauwelijks kaart
+         om "buiten" in te klikken, en Escape bestaat er niet: zonder deze knop weet
+         niemand hoe de lijst weer dicht moet. Hij plakt onderaan de lijst, dus hij blijft
+         in beeld hoe ver je ook scrolt. Op een breed scherm volstaat een klik naast het
+         paneel; zie `.filters__voet` in de opmaak. -->
+    <div class="filters__voet">
+      <button type="button" class="filters__sluit" id="knop-filters-sluit">
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor"
+             stroke-width="2.4" stroke-linecap="round">
+          <path d="M6 6l12 12M18 6L6 18"/>
+        </svg>
+        <span data-i18n="filters.sluiten">Filters sluiten</span>
+      </button>
+    </div>
   </div>
 </div>
 
