@@ -12,7 +12,7 @@
    · de kleuren en maten als variabelen op `:root` — verander een kleur daar en nergens
      anders;
    · de pagina zelf, het paneel linksboven en alles wat eromheen over de kaart ligt: de
-     meldknop, de legende, de knoppen, het instellingendoosje, het zoekveld;
+     meldknop, het voorbehoud, de knoppen, het instellingendoosje, het zoekveld;
    · de balk met dichtstbijzijnde auto's onderaan;
    · de filters in het paneel: chips, schuiven, inklapbare secties;
    · de kaart zelf: pins, clusters, naamlabels, popups, en het laadscherm;
@@ -130,46 +130,75 @@ body {
 /* De datum hoort bij de telling: het aantal wagens is maar waar op één dag. */
 .telling__datum:not(:empty)::before { content: " · "; }
 
-/* ---------- de eerlijke legende -------------------------------------------------------
-   Standaard zichtbaar, want het is de belangrijkste grens van deze kaart. Wegklikken kan
-   met het kruisje, maar pas na een bevestiging; de instellingen zetten haar terug. */
-.legende {
-  position: relative;
-  margin: 11px 0 0;
-  padding: 9px 30px 9px 11px;
-  background: var(--vlak-zacht);
-  border: 1px solid var(--lijn);
-  border-left: 3px solid var(--groen);
-  border-radius: 7px;
-  font-size: 12.5px; line-height: 1.4; color: var(--inkt-zacht);
-}
-.legende strong { color: var(--inkt); font-weight: 600; }
-.legende p { margin: 0; }
-.legende p + p { margin-top: 5px; }
-.legende[hidden] { display: none; }
-.legende__sluit {
-  position: absolute; top: 4px; right: 4px;
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 22px; height: 22px; padding: 0;
-  color: var(--inkt-zacht); background: none;
-  border: 1px solid transparent; border-radius: 6px; cursor: pointer;
-}
-.legende__sluit svg { width: 13px; height: 13px; }
-.legende__sluit:hover { background: var(--vlak); border-color: var(--lijn); color: var(--inkt); }
-.legende__sluit:focus-visible { outline: 2px solid var(--groen); outline-offset: 1px; }
-.legende__sluit[hidden], .legende__vraag[hidden] { display: none; }
-/* De bevestiging klapt onder de tekst open in plaats van een venster van de browser:
-   `confirm()` kan in een iframe geblokkeerd zijn, en dan verdwijnt de vraag gewoon. */
-.legende__vraag { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--lijn); }
-.legende__knoppen { display: flex; gap: 6px; margin-top: 7px; }
-.legende__knoppen button {
-  min-height: 28px; padding: 3px 10px;
-  font: inherit; font-size: 12.5px; color: var(--inkt);
+/* ---------- het voorbehoud bij het openen ----------------------------------------------
+   Een kaart onderaan in het midden, die van onderen binnenschuift: over de kaart, maar
+   zonder haar af te dekken, en weg van het paneel en de knoppen bovenaan. Boven de
+   overlays (1000), onder de laadmelding en de taalvraag.
+
+   Het groene balkje langs de onderrand telt de 15 seconden af; als het leeg is, sluit
+   het script het venster (`animationend`). Met een muis erop of de focus erin staat het
+   stil. Alleen voor een echte muis: op een aanraakscherm blijft `:hover` na een tik
+   hangen, en dan zou het voorbehoud nooit meer vanzelf weggaan. */
+.voorbehoud {
+  position: fixed; z-index: 1100;
+  left: 16px; right: 16px;
+  bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  max-width: 440px; margin: 0 auto;
+  padding: 13px 42px 16px 16px;
+  font-size: 13px; line-height: 1.45; color: var(--inkt-zacht);
   background: var(--vlak);
-  border: 1px solid var(--lijn); border-radius: 7px; cursor: pointer;
+  border: 1px solid var(--lijn); border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(29,42,40,.08), 0 12px 32px rgba(29,42,40,.18);
+  overflow: hidden;
+  animation: voorbehoud-in .35s cubic-bezier(.2,.8,.3,1);
 }
-.legende__knoppen .legende__ja { background: var(--groen); border-color: var(--groen); color: #fff; }
-.legende__knoppen button:focus-visible { outline: 2px solid var(--groen); outline-offset: 2px; }
+.voorbehoud[hidden] { display: none; }
+.voorbehoud h2 { margin: 0 0 8px; font-size: 14px; color: var(--inkt); }
+.voorbehoud ul { list-style: none; margin: 0; padding: 0; }
+.voorbehoud li { position: relative; padding-left: 15px; }
+.voorbehoud li + li { margin-top: 7px; }
+/* Een groen bolletje in plaats van een opsommingsteken: rustiger, en in de kleur van
+   Dégage. Op de hoogte van de eerste regel. */
+.voorbehoud li::before {
+  content: ""; position: absolute; left: 1px; top: .55em;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--groen);
+}
+.voorbehoud strong { color: var(--inkt); font-weight: 600; }
+.voorbehoud__sluit {
+  position: absolute; top: 8px; right: 8px;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px; padding: 0;
+  color: var(--inkt-zacht); background: none;
+  border: 1px solid transparent; border-radius: 8px; cursor: pointer;
+}
+.voorbehoud__sluit svg { width: 14px; height: 14px; }
+.voorbehoud__sluit:hover { background: var(--vlak-zacht); border-color: var(--lijn); color: var(--inkt); }
+.voorbehoud__sluit:focus-visible { outline: 2px solid var(--groen); outline-offset: 1px; }
+.voorbehoud__tijd {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  height: 3px;
+  background: var(--groen);
+  transform-origin: left;
+  animation: voorbehoud-tijd 15s linear forwards;
+}
+.voorbehoud:focus-within .voorbehoud__tijd { animation-play-state: paused; }
+@media (hover: hover) {
+  .voorbehoud:hover .voorbehoud__tijd { animation-play-state: paused; }
+}
+@keyframes voorbehoud-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes voorbehoud-tijd {
+  from { transform: scaleX(1); }
+  to   { transform: scaleX(0); }
+}
+/* Zonder het binnenschuiven; het aftelbalkje blijft, want het is geen beweging maar een
+   klok — en zonder die animatie zou het venster nooit vanzelf sluiten. */
+@media (prefers-reduced-motion: reduce) {
+  .voorbehoud { animation: none; }
+}
 
 /* ---------- knoppen -------------------------------------------------------------- */
 .knop {
@@ -208,7 +237,6 @@ body {
 .paneel.is-klein .zoek,
 .paneel.is-klein .zoek__melding,
 .paneel.is-klein .tellingregel,
-.paneel.is-klein .legende,
 .paneel.is-klein .filters { display: none; }
 .paneel.is-klein .knop--ico { border-color: transparent; }
 /* Open staat er een minteken in de knop, ingeklapt het hamburgerpictogram. Aan de
@@ -253,6 +281,20 @@ body {
   border: 1px solid var(--lijn); border-radius: 7px;
   cursor: pointer;
 }
+/* Of de taal bewaard is, en een knop om dat te vergeten. Bewust zo klein en zacht als
+   de colofon eronder: iets voor wie het zoekt, geen keuze die aandacht vraagt. */
+.taalonthouden {
+  margin: 4px 0 0;
+  font-size: 11.5px; color: var(--inkt-zacht);
+}
+.taalonthouden[hidden] { display: none; }
+.taalonthouden button {
+  padding: 0; margin: 0;
+  font: inherit; color: inherit; text-decoration: underline;
+  background: none; border: 0; cursor: pointer;
+}
+.taalonthouden button:hover { color: var(--inkt); }
+.taalonthouden button:focus-visible { outline: 2px solid var(--groen); outline-offset: 2px; }
 .schakel--taal select:focus-visible { outline: 2px solid var(--groen); outline-offset: 2px; }
 /* Leaflet geeft zijn knoppen een vaste regelhoogte en centreert de tekst; binnen dit
    doosje zou dat de labels uit elkaar trekken. */
@@ -274,6 +316,32 @@ body {
   line-height: inherit; text-align: left;
   background: none; border: 0;
   color: inherit; text-decoration: underline;
+}
+
+/* Het wolkje na de taalvraag: "hier kan je de taal altijd aanpassen". Het staat naast
+   het tandwiel, dat onderaan de knoppenbalk hangt, en het pijltje wijst er recht naar.
+   Groen, zodat het opvalt tussen de witte kaartknoppen; het gaat na 7 s vanzelf weg. */
+.tandwielhint {
+  position: absolute;
+  bottom: 0; right: calc(100% + 10px);
+  width: max-content; max-width: 220px;
+  margin: 0; padding: 7px 10px;
+  font-family: var(--font); font-size: 13px; line-height: 1.4; color: #fff;
+  background: var(--groen); border-radius: 8px;
+  box-shadow: var(--schaduw);
+  cursor: pointer;
+  animation: tandwielhint-in .25s ease-out;
+}
+.tandwielhint[hidden] { display: none; }
+/* Het pijltje, midden op de hoogte van het tandwiel (30 px). */
+.tandwielhint::after {
+  content: ""; position: absolute;
+  bottom: 9px; left: 100%;
+  border: 6px solid transparent; border-left-color: var(--groen);
+}
+@keyframes tandwielhint-in {
+  from { opacity: 0; transform: translateX(-6px); }
+  to   { opacity: 1; transform: none; }
 }
 
 /* Anker voor het uitklapdoosje hierboven: zonder dit hangt het aan de pagina. */
@@ -716,11 +784,15 @@ body {
 
 /* ---------- popup ---------------------------------------------------------------- */
 .leaflet-popup-content-wrapper { border-radius: var(--radius); }
-.leaflet-popup-content { margin: 12px 14px; font-family: var(--font); line-height: 1.45; }
+.leaflet-popup-content { margin: 9px 14px 12px; font-family: var(--font); line-height: 1.45; }
 .popup { min-width: 210px; max-width: 262px; font-size: 13.5px; }
-.wagen + .wagen { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--lijn); }
-.wagen__naam { margin: 0; font-size: 15.5px; font-weight: 600; color: var(--inkt); }
-.wagen__model { margin: 1px 0 0; color: var(--inkt-zacht); font-size: 12.5px; }
+.wagen + .wagen { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--lijn); }
+/* Strak op elkaar: de naam en het model zijn samen één kop. Met `.popup` ervoor, want
+   Leaflet geeft elke <p> in een popup `margin: 1.3em 0` via `.leaflet-popup-content p`,
+   en die regel wint van een gewone klasse: zonder dit stond er boven en onder de naam
+   zo'n 20 px lucht. Alleen de kop; de rest van de popup houdt de ruimte van Leaflet. */
+.popup .wagen__naam { margin: 0; font-size: 15.5px; line-height: 1.25; font-weight: 600; color: var(--inkt); }
+.popup .wagen__model { margin: 1px 0 0; line-height: 1.3; color: var(--inkt-zacht); font-size: 12.5px; }
 /* De gemeente tussen haakjes achter de autonaam: erbij, maar zachter dan de naam zelf. */
 .wagen__plaats { font-weight: 400; color: var(--inkt-zacht); }
 /* Waarom deze wagen buiten de filters valt. Grijs randje, zoals de grijze pin: het
@@ -796,27 +868,37 @@ body {
 }
 
 /* Bereikbaarheid met openbaar vervoer. Een eigen blokje onder de wagens, want het hoort
-   bij de standplaats en niet bij één wagen. Het niveau vooraan, de feiten eronder: een
-   woord alleen is een oordeel, met de getallen erbij is het een samenvatting. */
+   bij de standplaats en niet bij één wagen. Per halte of station één regel: pictogram,
+   de soort (bushalte, treinstation) met naam en frequentie klein eronder, en rechts de
+   afstand — groot en groen, want dat is wat je eerst wilt weten. De Mobiscore staat
+   klein in de voetregel. */
 .ov {
   margin: 10px 0 0; padding: 8px 10px;
   background: var(--vlak-zacht);
   border: 1px solid var(--lijn); border-radius: 7px;
-  font-size: 12.5px; line-height: 1.4; color: var(--inkt-zacht);
+  font-size: 12.5px; line-height: 1.35; color: var(--inkt-zacht);
 }
 .ov p { margin: 0; }
-.ov__kop {
-  display: flex; align-items: center; gap: 6px;
-  margin-bottom: 3px !important;
-  color: var(--inkt); font-weight: 600;
+.ov__lijst { list-style: none; margin: 0; padding: 0; }
+.ov__rij {
+  display: flex; align-items: center; gap: 8px;
 }
-.ov__kop .ico { width: 15px; height: 15px; flex: none; }
-/* De Mobiscore zelf: het getal groot, "/ 10" klein erachter, zoals je hem kent van een
-   woningzoekertje. Eén kleur voor elke score — kleurdrempels zouden een oordeel toevoegen
-   dat de Mobiscore zelf niet geeft. */
-.ov__score { font-size: 16px; font-weight: 700; color: var(--groen); font-variant-numeric: tabular-nums; }
-.ov__schaal { font-weight: 500; color: var(--inkt-zacht); }
-.ov__kop .uitleg-knop { margin-left: auto; }
+.ov__rij + .ov__rij { margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--lijn); }
+.ov__rij .ico { width: 18px; height: 18px; flex: none; color: var(--groen); }
+.ov__wat { flex: 1 1 auto; min-width: 0; color: var(--inkt); font-weight: 600; }
+.ov__naam { display: block; font-size: 11.5px; font-weight: 400; color: var(--inkt-zacht); }
+.ov__afstand {
+  flex: none;
+  font-size: 16px; font-weight: 700; color: var(--groen);
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+/* De Mobiscore: klein en zacht, met de ⓘ voor de uitleg van het hele blok erachter. */
+.ov__voet {
+  display: flex; align-items: center; gap: 2px;
+  margin-top: 7px !important;
+  font-size: 11.5px; color: var(--inkt-zacht);
+  font-variant-numeric: tabular-nums;
+}
 
 /* Uitleg achter een ⓘ. De popup toont de feiten; wat een getal betekent en waar het
    vandaan komt, staat één klik verder — wie het wil weten vindt het, wie niet, leest
@@ -838,6 +920,60 @@ body {
 .uitleg[hidden] { display: none; }
 .popup__voet a { color: var(--groen-diep); }
 
+/* ---------- de popup op een breed scherm -------------------------------------------
+   Smal stond alles onder elkaar: naam, foto, feiten, labels, openbaar vervoer — een lange
+   strook die op een laptopscherm al gauw moest scrollen. Op een breed scherm is er plaats
+   genoeg om naast elkaar te zetten wat bij elkaar hoort:
+
+   · per wagen de kop over de volle breedte, dan de foto links en de feiten rechts, en
+     de toebehoren weer over de volle breedte. Het HTML blijft in de volgorde waarin het
+     op een telefoon leest; het rooster hieronder schikt het anders;
+   · de halte en het station naast elkaar in plaats van onder elkaar.
+
+   Dezelfde grens als `mobiel` in popupRanden(), dat Leaflet hier de ruimte voor geeft. */
+@media (min-width: 641px) {
+  /* De foto 225 × 127 (16:9): tussen de volle breedte van vroeger (± 260, te groot) en
+     de 190 van de eerste tweekolomsversie (te klein) in. De popup is daarop afgestemd,
+     zodat de feiten ernaast nog in twee kolommen passen. */
+  .popup { width: 490px; min-width: 0; max-width: none; }
+  /* De kop — naam, model en eventueel waarom de wagen buiten de filters valt — staat
+     altijd bovenaan over de volle breedte, ook boven de foto: dat is waar je eerst naar
+     kijkt. Daaronder de foto links en de feiten rechts, en helemaal onderaan de
+     toebehoren weer over de volle breedte, want dat zijn losse labels die liggen waar
+     plaats is.
+
+     De foto spant de rijen van de feiten, de uitleg bij het bereik en een rij van 1fr.
+     Een item dat over een flexibele rij spant, zet zijn hoogte alleen in die rij: is de
+     foto hoger dan de feiten, dan komt de rest daar en schuiven de feiten niet uit
+     elkaar. Wat een wagen niet heeft (geen uitleg, geen labels), is een lege rij van 0. */
+  .wagen {
+    display: grid; grid-template-columns: 225px minmax(0, 1fr);
+    grid-template-areas:
+      "naam   naam"
+      "model  model"
+      "buiten buiten"
+      "beeld  feiten"
+      "beeld  uitleg"
+      "beeld  ."
+      "labels labels";
+    grid-template-rows: auto auto auto auto auto 1fr auto;
+    column-gap: 14px; align-items: start;
+  }
+  .wagen > .wagen__naam   { grid-area: naam; }
+  .wagen > .wagen__model  { grid-area: model; }
+  .wagen > .wagen__buiten { grid-area: buiten; }
+  .wagen > .wagen__beeld  { grid-area: beeld; }
+  .wagen > .feiten        { grid-area: feiten; }
+  .wagen > .uitleg        { grid-area: uitleg; }
+  .wagen > .labels        { grid-area: labels; }
+
+  .ov__lijst { display: grid; grid-template-columns: 1fr 1fr; column-gap: 12px; }
+  .ov__rij + .ov__rij {
+    margin-top: 0; padding-top: 0; border-top: 0;
+    padding-left: 12px; border-left: 1px solid var(--lijn);
+  }
+}
+
 /* ---------- laden en fouten ------------------------------------------------------ */
 .melding {
   position: absolute; z-index: 1200; left: 50%; top: 50%;
@@ -856,6 +992,36 @@ body {
   background: var(--vlak-zacht); padding: 1px 4px; border-radius: 4px;
 }
 
+/* De taalvraag ligt boven alles, ook boven de laadmelding: tot er een taal gekozen is,
+   heeft lezen weinig zin. Knoppen in plaats van `confirm()`: in een iframe kan dat
+   venster geblokkeerd zijn, en dan verdwijnt de vraag gewoon. */
+.taalvraag {
+  position: fixed; inset: 0; z-index: 1300;
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px;
+  background: rgba(29,42,40,.35);
+}
+.taalvraag[hidden] { display: none; }
+.taalvraag__kader {
+  max-width: 340px; width: 100%;
+  padding: 16px 18px;
+  text-align: center;
+  background: var(--vlak); border: 1px solid var(--lijn); border-radius: var(--radius);
+  box-shadow: var(--schaduw);
+}
+.taalvraag h2 { margin: 0 0 12px; font-size: 15px; }
+.taalvraag__knoppen { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+.taalvraag__knoppen button {
+  flex: 1 1 auto; min-height: 36px; padding: 6px 12px;
+  font: inherit; font-size: 13.5px; color: var(--inkt);
+  background: var(--vlak);
+  border: 1px solid var(--lijn); border-radius: 8px; cursor: pointer;
+}
+.taalvraag__knoppen button:hover { background: var(--vlak-zacht); }
+.taalvraag__knoppen .taalvraag__huidig { background: var(--groen); border-color: var(--groen); color: #fff; }
+.taalvraag__knoppen .taalvraag__huidig:hover { background: var(--groen-diep); }
+.taalvraag__knoppen button:focus-visible { outline: 2px solid var(--groen); outline-offset: 2px; }
+
 /* ---------- telefoon -------------------------------------------------------------- */
 @media (max-width: 640px) {
   .paneel {
@@ -872,6 +1038,12 @@ body {
   .instellingen {
     top: auto; bottom: 0;
     right: auto; left: calc(100% + 8px);
+  }
+  /* Het wolkje bij het tandwiel volgt: rechts ervan, met het pijltje naar links. */
+  .tandwielhint { right: auto; left: calc(100% + 10px); }
+  .tandwielhint::after {
+    left: auto; right: 100%;
+    border-left-color: transparent; border-right-color: var(--groen);
   }
   .filters { padding: 0 11px 8px; max-height: 46vh; }
   /* Compacte filterlijst: op een telefoon telt elke regel, want de lijst deelt het
@@ -975,7 +1147,15 @@ body {
   }
   .filters__sluit { min-height: 30px; padding: 4px 10px; gap: 5px; font-size: 12.5px; border-radius: 7px; }
   .filters__sluit svg { width: 12px; height: 12px; }
-  .legende { font-size: 12px; }
+  /* Het voorbehoud dichter tegen de onderrand en iets compacter: zo blijft er boven het
+     venster zoveel mogelijk kaart over. */
+  .voorbehoud {
+    left: 8px; right: 8px;
+    bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+    padding: 11px 40px 14px 14px;
+    font-size: 12.5px;
+  }
+  .voorbehoud h2 { margin-bottom: 6px; font-size: 13.5px; }
   /* Op een telefoon beslaat het paneel de volle breedte: de zoomknoppen naar onderaan,
      en weer naar links, want daar zit de duim.
 

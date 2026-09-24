@@ -36,7 +36,7 @@
   -------------------------------
   · Ze toont géén live beschikbaarheid. De feed kent die niet: `num_vehicles_available`
     is het aantal wagens dat op een standplaats staat, niet het aantal dat nu vrij is.
-    Dat staat daarom letterlijk in de legende, samen met de datum van de gegevens.
+    Dat staat daarom letterlijk in het voorbehoud dat bij elke opening even in beeld komt.
   · Ze toont nooit een afwezig toebehoren. Geen "trekhaak: nee". In de brondata is een
     nul dubbelzinnig — "niet aanwezig" of "nooit ingevuld" zijn niet te scheiden — dus
     `degage_vehicles.json` draagt alleen wat op true staat, en deze kaart toont alleen
@@ -119,6 +119,14 @@
     <rect x="5" y="3" width="14" height="14.5" rx="2.5"/><path d="M5 10.5h14M8 17.5V20M16 17.5V20"/>
     <circle cx="8.5" cy="14" r=".9" fill="currentColor"/><circle cx="15.5" cy="14" r=".9" fill="currentColor"/>
   </symbol>
+  <!-- Station: een trein van voren, met een ronde neus en schuine sporen eronder — anders
+       dan de bus hierboven, zodat de twee regels in de popup meteen te onderscheiden zijn. -->
+  <symbol id="i-trein" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round">
+    <path d="M7 3.5h10a2 2 0 0 1 2 2V15a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 5 15V5.5a2 2 0 0 1 2-2z"/>
+    <path d="M5 10h14M12 3.5V10M8 21l2-3.5M16 21l-2-3.5"/>
+    <circle cx="8.5" cy="13.8" r=".9" fill="currentColor"/><circle cx="15.5" cy="13.8" r=".9" fill="currentColor"/>
+  </symbol>
   <!-- Uitleg: een i in een cirkel. -->
   <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
           stroke-linecap="round">
@@ -173,16 +181,18 @@
     <input type="checkbox" id="knop-dichtbij" checked>
     <span data-i18n="instellingen.dichtbij">Lijst dichtstbijzijnde auto's tonen</span>
   </label>
-  <label class="schakel">
-    <input type="checkbox" id="knop-legende" checked>
-    <span data-i18n="instellingen.legende">Melding over beschikbaarheid tonen</span>
-  </label>
   <label class="schakel schakel--taal">
     <span data-i18n="instellingen.taal">Taal</span>
     <!-- Leeg: JavaScript vult hem met de talen die werkelijk geladen zijn, elk onder
          zijn eigen naam. Zo hoeft een nieuwe taal hier niet ook nog bijgezet te worden. -->
     <select id="taalkeuze"></select>
   </label>
+  <!-- Alleen zichtbaar als de taal in localStorage staat. "Vergeten" haalt ze daar weg:
+       bij het volgende bezoek beslissen de URL en de browser weer. Zie toonTaalOnthouden(). -->
+  <p class="taalonthouden" id="taalonthouden" hidden>
+    <span data-i18n="instellingen.taalOnthouden">Taal onthouden in deze browser.</span>
+    <button type="button" id="taalvergeten" data-i18n="instellingen.taalVergeten">Vergeten</button>
+  </p>
   <!-- Naamsvermelding van het tabbladpictogram. Een voorwaarde van de gratis licentie van
        Flaticon, net als de OSM-attributie onderaan de kaart: alleen het zinnetje ervoor
        vertaalt mee, de opgegeven formulering en de link blijven staan zoals ze zijn. -->
@@ -195,12 +205,9 @@
 
 <!-- Eén doos linksboven, met de zoekbalk als kop.
      ------------------------------------------------------------------------------------
-     Alles wat over de vloot gaat hangt aan het zoekveld: de teller en de legende staan er
+     Alles wat over de vloot gaat hangt aan het zoekveld: de teller staat er
      onder, de filters klappen eronder open zodra je in het veld klikt. Er is dus geen
-     aparte filterknop en geen apart zoekdoosje meer — één ding om naar te kijken.
-
-     De legende staat er standaard bij, ook met de filters dicht. Wie ze gelezen heeft, kan
-     ze na een bevestiging wegklikken en in de instellingen terugzetten. -->
+     aparte filterknop en geen apart zoekdoosje meer — één ding om naar te kijken. -->
 <div class="paneel" id="paneel">
   <!-- Alleen voor schermlezers: de kaart hoort een kop te hebben, maar in beeld doet de
        titel niets wat de omringende pagina niet al zegt. -->
@@ -268,28 +275,6 @@
         </svg>
         <span class="enkel-schermlezer" data-i18n="filters.wissen">Filters wissen</span>
       </button>
-    </div>
-
-    <div class="legende" id="legende">
-      <p data-i18n-html="legende"><strong>Dit is géén live beschikbaarheid.</strong> De kaart toont enkel de locatie van de auto's, niet welke er op dit moment vrij zijn.</p>
-      <!-- Wegklikken vraagt eerst een bevestiging; zie zetLegende() in het script. -->
-      <button type="button" class="legende__sluit" id="legende-sluit"
-              title="Melding verbergen" data-i18n-title="legende.verbergen">
-        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor"
-             stroke-width="2.2" stroke-linecap="round">
-          <path d="M6 6l12 12M18 6L6 18"/>
-        </svg>
-        <span class="enkel-schermlezer" data-i18n="legende.verbergen">Melding verbergen</span>
-      </button>
-      <div class="legende__vraag" id="legende-vraag" hidden>
-        <p data-i18n="legende.vraag">Deze melding verbergen? Je kunt ze altijd terugzetten in
-          de instellingen.</p>
-        <div class="legende__knoppen">
-          <button type="button" class="legende__ja" id="legende-ja"
-                  data-i18n="legende.ja">Verbergen</button>
-          <button type="button" id="legende-nee" data-i18n="legende.nee">Laten staan</button>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -448,6 +433,52 @@
   <h2 data-i18n="melding.geduld">Even geduld</h2>
   <p data-i18n="melding.laden">De kaart met deelauto's wordt geladen.</p>
 </div>
+
+<!-- Het voorbehoud: wat de kaart níet belooft. Bij elke opening onderaan in beeld, over de
+     kaart maar zonder haar af te dekken; na 15 seconden gaat het vanzelf weg, en het
+     kruisje sluit het meteen. Het balkje onderaan telt die 15 seconden af — en staat stil
+     zolang de muis erop staat of de focus erin zit, zodat niemand halverwege een zin zijn
+     tekst kwijtraakt. Zie toonVoorbehoud() in het script. -->
+<aside class="voorbehoud" id="voorbehoud" aria-labelledby="voorbehoud-titel" hidden>
+  <h2 id="voorbehoud-titel" data-i18n="voorbehoud.titel">Goed om te weten</h2>
+  <button type="button" class="voorbehoud__sluit" id="voorbehoud-sluit"
+          title="Sluiten" data-i18n-title="voorbehoud.sluiten">
+    <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor"
+         stroke-width="2.2" stroke-linecap="round">
+      <path d="M6 6l12 12M18 6L6 18"/>
+    </svg>
+    <span class="enkel-schermlezer" data-i18n="voorbehoud.sluiten">Sluiten</span>
+  </button>
+  <ul>
+    <li data-i18n-html="voorbehoud.live"><strong>Dit is géén live beschikbaarheid.</strong>
+      De kaart toont enkel de locatie van de auto's, niet welke er op dit moment vrij
+      zijn.</li>
+    <li data-i18n-html="voorbehoud.aanbod"><strong>Ons aanbod kan wijzigen</strong> nadat je
+      je lidmaatschap hebt afgesloten. We kunnen niet garanderen dat het aanbod en de
+      bijbehorende mogelijkheden tijdens je lidmaatschap hetzelfde blijven.</li>
+    <li data-i18n-html="voorbehoud.fotos"><strong>De foto's zijn voorbeeldfoto's</strong> van
+      het model, niet van de auto zelf.</li>
+  </ul>
+  <div class="voorbehoud__tijd" id="voorbehoud-tijd" aria-hidden="true"></div>
+</aside>
+
+<!-- Het wolkje naast het tandwiel na de taalvraag hieronder. Net als het
+     instellingendoosje hangt JavaScript het in de kaartbediening; zie toonTandwielhint(). -->
+<p class="tandwielhint" id="tandwielhint" role="status" hidden
+   data-i18n="tandwielhint">Je kunt de taal hier altijd aanpassen, in de instellingen.</p>
+
+<!-- Alleen voor wie de kaart in het Engels krijgt omdat de browser dat opgeeft: klopt
+     die taal? De knoppen vult index.js, één per geladen taal. Zie toonTaalvraag(). -->
+<div class="taalvraag" id="taalvraag" hidden>
+  <div class="taalvraag__kader" role="dialog" aria-modal="true"
+       aria-labelledby="taalvraag-titel">
+    <h2 id="taalvraag-titel" data-i18n="taalvraag.titel">In welke taal wil je de kaart?</h2>
+    <div class="taalvraag__knoppen" id="taalvraag-knoppen"></div>
+  </div>
+</div>
+
+<!-- Wat je aan de kaart kunt instellen zonder de code aan te raken; zie config.js. -->
+<script src="config.js"></script>
 
 <!-- De teksten, één bestand per taal. Klassieke scripttags: ze blokkeren, dus alles
      staat er voordat de kaartcode hieronder begint — geen bouwstap, geen wachten.

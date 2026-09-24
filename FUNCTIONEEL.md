@@ -115,20 +115,27 @@ auto tonen is erger dan geen foto.
 **Wat er níét in de popup staat:** niets over de eigenaar. Geen naam, geen e-mailadres,
 geen telefoonnummer. Het enige adres dat getoond wordt, is dat van de lokale groep.
 
-## Mobiscore en openbaar vervoer
+## Openbaar vervoer en Mobiscore
 
-Onder de auto's staat de **Mobiscore** van de standplaats, met eronder wat er aan openbaar
-vervoer rijdt:
+Onder de auto's staat hoe ver het openbaar vervoer is. De afstand staat groot rechts, want
+dat is wat je eerst wilt weten; de Mobiscore staat klein onderaan:
 
-> **Mobiscore 8,7 / 10**  
-> Bushalte op 480 meter (5/u)  
-> Station Melsele op 1,5 kilometer (2/u)
+> 🚌 **Bushalte** ……………………………… **0,5 km**  
+> Zevergem Zevergemdorp · 5/u  
+> 🚆 **Treinstation** ………………………… **1,5 km**  
+> Melsele · 2/u  
+> Mobiscore 8,7 / 10 ⓘ
+
+Eerst wat het is — bushalte, tramhalte of treinstation — en de naam eronder.
 
 De regel met het station staat er alleen als er een binnen tien kilometer ligt — en dat is
 bij elke standplaats zo.
 
-Tussen haakjes staat hoeveel er per uur vertrekt, **per richting**. Rijdt er minder dan één
-per uur, dan staat er "(<1/u)"; is de halte ook een tramhalte, dan heet ze zo.
+De afstanden staan altijd in kilometer, op één decimaal, zodat halte en station naast
+elkaar te vergelijken zijn.
+
+Achter de naam staat hoeveel er per uur vertrekt, **per richting**. Rijdt er minder dan één
+per uur, dan staat er "<1/u"; is de halte ook een tramhalte, dan heet ze zo.
 
 **De Mobiscore** is de officiële score van de Vlaamse overheid (Departement Omgeving) — de
 score die je ook bij een woning op Immoweb ziet. Ze meet hoe dicht een plek ligt bij vijf

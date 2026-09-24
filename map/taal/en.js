@@ -32,13 +32,15 @@
     "app.titel": "Dégage vehicles",
     "app.kaartLabel": "Map of Dégage vehicles",
 
-    "legende": "<strong>This is not live availability.</strong> The map only shows where " +
-               "the cars are parked, not which ones are free right now.",
-
-    "legende.verbergen": "Hide notice",
-    "legende.vraag": "Hide this notice? You can always turn it back on in the settings.",
-    "legende.ja": "Hide",
-    "legende.nee": "Keep",
+    "voorbehoud.titel": "Good to know",
+    "voorbehoud.sluiten": "Close",
+    "voorbehoud.live": "<strong>This is not live availability.</strong> The map only shows " +
+                       "where the cars are parked, not which ones are free right now.",
+    "voorbehoud.aanbod": "<strong>Our offer may change</strong> after you have taken out your " +
+                         "membership. We cannot guarantee that the offer and the options that " +
+                         "come with it will stay the same during your membership.",
+    "voorbehoud.fotos": "<strong>The photos are example photos</strong> of the model, " +
+                        "not of the car itself.",
 
     "zoek.plaatshouder": "Car name, address or town…",
     "zoek.aria": "Search for a car name, address or town; clicking also shows the filters",
@@ -127,11 +129,14 @@
 
     "melding.geduld": "One moment",
     "melding.laden": "Loading the shared-car map.",
+    "taalvraag.titel": "Which language would you like the map in?",
+    "tandwielhint": "You can always change the language here, in the settings.",
 
     "instellingen.volgmuis": "Nearest-cars list follows the mouse",
     "instellingen.dichtbij": "Show the nearest-cars list",
-    "instellingen.legende": "Show the availability notice",
     "instellingen.taal": "Language",
+    "instellingen.taalOnthouden": "Language remembered in this browser.",
+    "instellingen.taalVergeten": "Forget",
     "instellingen.pictogram": "Tab icon:",
     "melden.knop": "Report a problem",
     "melden.titel": "Report a problem or give feedback — opens github.com in a new tab",
@@ -149,7 +154,6 @@
     "popup.plaatsen": "{n} seats",
     "popup.geenFoto": "No example photo available for this model",
     "popup.fotoAlt": "Example photo of a {model}",
-    "popup.fotoBron": "Example photo of this model, not of this car.",
     "popup.locatieVaag": "Approximate location for privacy reasons.",
     "popup.uitleg": "Explanation",
     "popup.bereikEen": "± {km} km range",
@@ -160,17 +164,17 @@
                           "Dégage itself, based on the battery fitted to these cars.",
     "ov.titel": "Mobiscore",
     "ov.geenScore": "not available",
-    "ov.bushalte": "bus stop at {afstand} ({freq})",
-    "ov.tramhalte": "tram stop at {afstand} ({freq})",
-    "ov.geenHalte": "no bus or tram stop within {straal}",
-    "ov.station": "{station} station at {afstand} ({freq})",
-    "ov.stationKlinker": "{station} station at {afstand} ({freq})",
+    "ov.bushalte": "Bus stop",
+    "ov.tramhalte": "Tram stop",
+    "ov.geenHalte": "No bus or tram stop within {straal}",
+    "ov.station": "Train station",
     "ov.perUur": "{n}/h",
     "ov.minderDanEen": "<1/h",
     "ov.meter": "{n} metres",
     "ov.kilometer": "{n} kilometres",
     "ov.kilometerEen": "1 kilometre",
-    "ov.bron": "In brackets: departures per hour, per direction. " +
+    "ov.kmKort": "{n} km",
+    "ov.bron": "After the name: departures per hour, per direction. " +
               "Mobiscore: Flemish government (Departement Omgeving) — shops, schools, care, " +
               "leisure and public transport within walking and cycling distance. Buses and " +
               "trams: De Lijn, per direction, on the busier side of the stop. Trains: NMBS, all " +

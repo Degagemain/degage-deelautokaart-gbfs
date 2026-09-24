@@ -32,14 +32,17 @@
     "app.titel": "Véhicules de Dégage",
     "app.kaartLabel": "Carte des véhicules de Dégage",
 
-    "legende": "<strong>Ceci n'est pas la disponibilité en temps réel.</strong> La carte " +
-               "indique uniquement où se trouvent les voitures, pas lesquelles sont " +
-               "libres en ce moment.",
-
-    "legende.verbergen": "Masquer l'avis",
-    "legende.vraag": "Masquer cet avis ? Vous pouvez toujours le réafficher dans les paramètres.",
-    "legende.ja": "Masquer",
-    "legende.nee": "Garder",
+    "voorbehoud.titel": "Bon à savoir",
+    "voorbehoud.sluiten": "Fermer",
+    "voorbehoud.live": "<strong>Ceci n'est pas la disponibilité en temps réel.</strong> La " +
+                       "carte indique uniquement où se trouvent les voitures, pas lesquelles " +
+                       "sont libres en ce moment.",
+    "voorbehoud.aanbod": "<strong>Notre offre peut changer</strong> après la souscription de " +
+                         "votre abonnement. Nous ne pouvons pas garantir que l'offre et les " +
+                         "possibilités qui y sont liées resteront les mêmes pendant votre " +
+                         "abonnement.",
+    "voorbehoud.fotos": "<strong>Les photos sont des photos d'exemple</strong> du modèle, " +
+                        "pas de la voiture elle-même.",
 
     "zoek.plaatshouder": "Nom de voiture, adresse ou commune…",
     "zoek.aria": "Rechercher un nom de voiture, une adresse ou une commune ; cliquer " +
@@ -134,11 +137,14 @@
 
     "melding.geduld": "Un instant",
     "melding.laden": "Chargement de la carte des voitures partagées.",
+    "taalvraag.titel": "Dans quelle langue voulez-vous la carte ?",
+    "tandwielhint": "Vous pouvez toujours changer la langue ici, dans les paramètres.",
 
     "instellingen.volgmuis": "La liste des voitures les plus proches suit la souris",
     "instellingen.dichtbij": "Afficher la liste des voitures les plus proches",
-    "instellingen.legende": "Afficher l'avis sur la disponibilité",
     "instellingen.taal": "Langue",
+    "instellingen.taalOnthouden": "Langue mémorisée dans ce navigateur.",
+    "instellingen.taalVergeten": "Oublier",
     "instellingen.pictogram": "Icône de l'onglet :",
     "melden.knop": "Signaler un problème",
     "melden.titel": "Signaler un problème ou donner un avis — ouvre github.com dans un nouvel onglet",
@@ -156,7 +162,6 @@
     "popup.plaatsen": "{n} places",
     "popup.geenFoto": "Aucune photo d'exemple disponible pour ce modèle",
     "popup.fotoAlt": "Photo d'exemple d'une {model}",
-    "popup.fotoBron": "Photo d'exemple de ce modèle, pas de cette voiture.",
     "popup.locatieVaag": "Position approximative pour des raisons de confidentialité.",
     "popup.uitleg": "Explication",
     "popup.bereikEen": "± {km} km d'autonomie",
@@ -168,17 +173,17 @@
                           "véhicules.",
     "ov.titel": "Mobiscore",
     "ov.geenScore": "non disponible",
-    "ov.bushalte": "arrêt de bus à {afstand} ({freq})",
-    "ov.tramhalte": "arrêt de tram à {afstand} ({freq})",
-    "ov.geenHalte": "aucun arrêt de bus ou de tram à moins de {straal}",
-    "ov.station": "gare de {station} à {afstand} ({freq})",
-    "ov.stationKlinker": "gare d'{station} à {afstand} ({freq})",
+    "ov.bushalte": "Arrêt de bus",
+    "ov.tramhalte": "Arrêt de tram",
+    "ov.geenHalte": "Aucun arrêt de bus ou de tram à moins de {straal}",
+    "ov.station": "Gare",
     "ov.perUur": "{n}/h",
     "ov.minderDanEen": "<1/h",
     "ov.meter": "{n} mètres",
     "ov.kilometer": "{n} kilomètres",
     "ov.kilometerEen": "1 kilomètre",
-    "ov.bron": "Entre parenthèses : départs par heure et par sens. " +
+    "ov.kmKort": "{n} km",
+    "ov.bron": "Après le nom : départs par heure et par sens. " +
               "Mobiscore : Departement Omgeving, gouvernement flamand — commerces, écoles, " +
               "soins, loisirs et transports en commun à distance de marche et de vélo. Bus et " +
               "trams : De Lijn, par sens, du côté le plus fréquenté de l'arrêt. Trains : SNCB, " +

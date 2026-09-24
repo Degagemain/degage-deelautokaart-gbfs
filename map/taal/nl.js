@@ -32,13 +32,15 @@
     "app.titel": "Auto's van Dégage",
     "app.kaartLabel": "Kaart met de auto's van Dégage",
 
-    "legende": "<strong>Dit is géén live beschikbaarheid.</strong> De kaart toont enkel " +
-               "de locatie van de auto's, niet welke er op dit moment vrij zijn.",
-
-    "legende.verbergen": "Melding verbergen",
-    "legende.vraag": "Deze melding verbergen? Je kunt ze altijd terugzetten in de instellingen.",
-    "legende.ja": "Verbergen",
-    "legende.nee": "Laten staan",
+    "voorbehoud.titel": "Goed om te weten",
+    "voorbehoud.sluiten": "Sluiten",
+    "voorbehoud.live": "<strong>Dit is géén live beschikbaarheid.</strong> De kaart toont " +
+                       "enkel de locatie van de auto's, niet welke er op dit moment vrij zijn.",
+    "voorbehoud.aanbod": "<strong>Ons aanbod kan wijzigen</strong> nadat je je lidmaatschap " +
+                         "hebt afgesloten. We kunnen niet garanderen dat het aanbod en de " +
+                         "bijbehorende mogelijkheden tijdens je lidmaatschap hetzelfde blijven.",
+    "voorbehoud.fotos": "<strong>De foto's zijn voorbeeldfoto's</strong> van het model, " +
+                        "niet van de auto zelf.",
 
     "zoek.plaatshouder": "Autonaam, adres of gemeente…",
     "zoek.aria": "Zoek een autonaam, adres of gemeente; klikken toont ook de filters",
@@ -127,11 +129,14 @@
 
     "melding.geduld": "Even geduld",
     "melding.laden": "De kaart met deelauto's wordt geladen.",
+    "taalvraag.titel": "In welke taal wil je de kaart?",
+    "tandwielhint": "Je kunt de taal hier altijd aanpassen, in de instellingen.",
 
     "instellingen.volgmuis": "Lijst dichtstbijzijnde auto's volgt muis",
     "instellingen.dichtbij": "Lijst dichtstbijzijnde auto's tonen",
-    "instellingen.legende": "Melding over beschikbaarheid tonen",
     "instellingen.taal": "Taal",
+    "instellingen.taalOnthouden": "Taal onthouden in deze browser.",
+    "instellingen.taalVergeten": "Vergeten",
     "instellingen.pictogram": "Tabbladpictogram:",
     "melden.knop": "Probleem melden",
     "melden.titel": "Probleem melden of feedback geven — opent github.com in een nieuw tabblad",
@@ -149,7 +154,6 @@
     "popup.plaatsen": "{n} plaatsen",
     "popup.geenFoto": "Geen voorbeeldfoto van dit model beschikbaar",
     "popup.fotoAlt": "Voorbeeldfoto van een {model}",
-    "popup.fotoBron": "Voorbeeldfoto van dit model, niet van deze auto.",
     "popup.locatieVaag": "Locatie bij benadering vanwege privacy.",
     "popup.uitleg": "Uitleg",
     "popup.bereikEen": "± {km} km bereik",
@@ -161,17 +165,17 @@
                           "deze wagens zit.",
     "ov.titel": "Mobiscore",
     "ov.geenScore": "niet beschikbaar",
-    "ov.bushalte": "bushalte op {afstand} ({freq})",
-    "ov.tramhalte": "tramhalte op {afstand} ({freq})",
-    "ov.geenHalte": "geen bus- of tramhalte binnen {straal}",
-    "ov.station": "station {station} op {afstand} ({freq})",
-    "ov.stationKlinker": "station {station} op {afstand} ({freq})",
+    "ov.bushalte": "Bushalte",
+    "ov.tramhalte": "Tramhalte",
+    "ov.geenHalte": "Geen bus- of tramhalte binnen {straal}",
+    "ov.station": "Treinstation",
     "ov.perUur": "{n}/u",
     "ov.minderDanEen": "<1/u",
     "ov.meter": "{n} meter",
     "ov.kilometer": "{n} kilometer",
     "ov.kilometerEen": "1 kilometer",
-    "ov.bron": "Tussen haakjes: vertrekken per uur, per richting. " +
+    "ov.kmKort": "{n} km",
+    "ov.bron": "Achter de naam: vertrekken per uur, per richting. " +
               "Mobiscore: Departement Omgeving, Vlaamse overheid — winkels, scholen, zorg, " +
               "vrije tijd en openbaar vervoer op wandel- en fietsafstand. Bussen en trams: De " +
               "Lijn, per richting, aan de drukste kant van de halte. Treinen: NMBS, alle treinen " +

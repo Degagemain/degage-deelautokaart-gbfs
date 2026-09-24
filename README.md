@@ -20,6 +20,7 @@ met één opdracht: [**Bijwerken: alles in één keer**](#bijwerken-alles-in-é�
 | `map/index.css` | de opmaak van de kaart |
 | `map/index.js` | de logica van de kaart |
 | `map/taal/` | de teksten, één bestand per taal (`nl.js`, `fr.js`, `en.js`) |
+| `map/config.js` | instellingen zonder code: welke toebehoren de kaart verbergt |
 | `FUNCTIONEEL.md` | wat de kaart doet: wat een bezoeker ziet en kan, en waarom |
 | `TECHNIEK.md` | hoe ze gebouwd is: architectuur, uitbreidpunten, beperkingen |
 | `gbfs/index.html` | instappagina voor aggregatoren: instapadres, bestanden, wat de feed niet belooft |

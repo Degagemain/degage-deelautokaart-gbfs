@@ -72,7 +72,8 @@ const OV_BESTAND = "ov.json";
    · `?taal=fr` (of `?lang=fr`) in de URL — voor de inbedding: de pagina eromheen weet
      in welke taal ze staat en kan dat meegeven.
    · anders de keuze die de bezoeker zelf eerder maakte (localStorage).
-   · anders de browsertaal, uit `navigator.languages`.
+   · anders de browsertaal, uit `navigator.languages`. Is dat Engels, dan vraagt de
+     kaart één keer of dat klopt (toonTaalvraag()).
    · anders Nederlands.
 
    Wat NIET vertaald wordt: eigennamen (Dégage, OpenStreetMap, Wikimedia Commons), de
@@ -114,17 +115,46 @@ function bewaarTaal(code) {
   } catch (e) {
     /* Niets aan te doen; de keuze geldt dan alleen voor dit bezoek. */
   }
+  toonTaalOnthouden();
 }
+
+function vergeetTaal() {
+  try {
+    localStorage.removeItem(TAAL_SLEUTEL);
+  } catch (e) {
+    /* Dan stond er ook niets om te vergeten. */
+  }
+  toonTaalOnthouden();
+}
+
+/* Het zinnetje onder de taalkeuze in de instellingen: staat de taal bewaard, dan zegt het
+   dat, met een knop om ze te vergeten. De taal van dit bezoek blijft staan; pas bij het
+   volgende bezoek beslissen de URL en de browser weer — en krijgt een Engelse browser
+   de taalvraag opnieuw. */
+function toonTaalOnthouden() {
+  $("taalonthouden").hidden = !taalcode(bewaardeTaal());
+}
+
+/* "fr-BE", "FR" en "fr" moeten alle drie op Frans uitkomen. */
+function taalcode(kandidaat) {
+  const code = kandidaat ? String(kandidaat).toLowerCase().slice(0, 2) : "";
+  return TALEN.includes(code) ? code : null;
+}
+
+/* Kwam de taal uit een Engelse browser, dan vraagt de kaart één keer of dat klopt — zie
+   toonTaalvraag(). Engels staat op heel wat computers in België gewoon omdat het
+   besturingssysteem zo geleverd werd, niet omdat de gebruiker het zo wil. */
+let taalTeBevestigen = false;
 
 function kiesTaal() {
   const uitUrl = new URLSearchParams(location.search);
-  const gevraagd = uitUrl.get("taal") || uitUrl.get("lang");
-  const kandidaten = [gevraagd, bewaardeTaal(), ...(navigator.languages || [navigator.language])];
-  for (const kandidaat of kandidaten) {
-    if (!kandidaat) continue;
-    // "fr-BE", "FR" en "fr" moeten alle drie op Frans uitkomen.
-    const code = String(kandidaat).toLowerCase().slice(0, 2);
-    if (TALEN.includes(code)) return code;
+  const gekozen = taalcode(uitUrl.get("taal") || uitUrl.get("lang")) || taalcode(bewaardeTaal());
+  if (gekozen) return gekozen;
+  for (const kandidaat of navigator.languages || [navigator.language]) {
+    const code = taalcode(kandidaat);
+    if (!code) continue;
+    taalTeBevestigen = code === "en";
+    return code;
   }
   return STANDAARDTAAL;
 }
@@ -174,8 +204,8 @@ function getal(n) {
 
 /* Alle statische teksten in de opmaak. Vier attributen, omdat een tekst nu eens de
    inhoud van een element is en dan weer een titel, een tekstballon voor een schermlezer
-   of een plaatshouder. `data-i18n-html` bestaat alleen voor de legende, die een <strong>
-   in het midden van haar zin heeft staan. */
+   of een plaatshouder. `data-i18n-html` bestaat alleen voor het voorbehoud, dat een <strong>
+   in zijn zinnen heeft staan. */
 function vertaalPagina() {
   document.documentElement.lang = taal;
   document.title = t("app.titel");
@@ -208,9 +238,15 @@ const VOLLEDIGE_BBOX = [[50.7249, 2.7098], [51.2461, 4.7341]];
 
    Alleen de sleutels staan hier; het label komt uit de tabel `vlaggen` in het
    taalbestand van de bezoeker (zie `taal/nl.js`). Alfabetisch gesorteerd wordt er pas bij het tekenen, want de volgorde hangt
-   van dat label af — zie vulKeuzes(). */
-const TOEBEHOREN = ["aanhanger", "bed", "fietsdrager", "gps", "kinderzitje", "trekhaak"];
-const AFSPRAKEN = ["huisdieren", "leren_autorijden"];
+   van dat label af — zie vulKeuzes().
+
+   Wat in `config.js` onder `verborgenVlaggen` staat, valt hier al weg: dan bestaat die
+   vlag voor de hele kaart niet — geen filter, geen regel in de popup. */
+const VERBORGEN_VLAGGEN = new Set((window.DEGAGE_CONFIG || {}).verborgenVlaggen || []);
+const zichtbaar = (sleutel) => !VERBORGEN_VLAGGEN.has(sleutel);
+const TOEBEHOREN = ["aanhanger", "bed", "fietsdrager", "gps", "kinderzitje", "trekhaak"]
+  .filter(zichtbaar);
+const AFSPRAKEN = ["huisdieren", "leren_autorijden"].filter(zichtbaar);
 /* Voor de popup: één lijst, zodat elke vlag die een wagen draagt ook getoond wordt. */
 const ALLE_VLAGGEN = [...TOEBEHOREN, ...AFSPRAKEN];
 
@@ -1178,7 +1214,8 @@ function popupHtml(station) {
                ? '<p class="wagen__buiten">' +
                    ontsnap(t("reden.buiten", { redenen: buiten.join(" · ") })) + "</p>"
                : "") +
-             fotoHtml(w) +
+             /* In een eigen vak: op een breed scherm staat dat links naast de rest. */
+             '<div class="wagen__beeld">' + fotoHtml(w) + "</div>" +
              '<ul class="feiten">' + feiten.join("") + "</ul>" + bereikUitleg +
              (labels ? '<div class="labels">' + labels + "</div>" : "") +
            "</div>";
@@ -1308,13 +1345,15 @@ kaart.on("popupopen", (e) => {
   });
 });
 
-/* De Mobiscore en het openbaar vervoer bij een standplaats (scripts/haal_ov.py).
+/* Het openbaar vervoer bij een standplaats (scripts/haal_ov.py).
 
-   De Mobiscore is de officiële score van de Vlaamse overheid — dezelfde als bij een
-   woningzoekertje — en staat daarom bovenaan, als getal op tien. De regels eronder zijn
-   onze eigen feiten over wat er rijdt: de dichtste halte met vaste lijnen en hoe vaak daar
-   iets vertrekt, en het dichtste station. Die zeggen waarom een plek scoort zoals ze
-   scoort, voor het deel dat over openbaar vervoer gaat. */
+   Wat een bezoeker wil weten, is hoe ver het stappen is: de dichtste halte met vaste
+   lijnen en het dichtste station, elk op een eigen regel met de afstand groot rechts —
+   dat getal lees je eerst. Hoe vaak er iets vertrekt, staat klein onder de naam.
+
+   De Mobiscore van de Vlaamse overheid staat er nog, maar klein onderaan: hij gaat ook
+   over winkels, scholen en zorg, en zegt dus minder over "kan ik hier met de bus
+   naartoe" dan de afstanden erboven. */
 /* Een afstand voluit, voor de OV-regel: "480 meter", "2 kilometer", "1,5 kilometer".
    Onder de kilometer op tientallen meters, daarboven op een halve kilometer — preciezer
    zou een nauwkeurigheid beweren die een afstand in vogelvlucht niet heeft. */
@@ -1325,18 +1364,27 @@ function ovAfstand(m) {
   return t(km === 1 ? "ov.kilometerEen" : "ov.kilometer", { n: km.toLocaleString(locale()) });
 }
 
+/* Dezelfde afstand kort, voor de grote cijfers rechts, altijd in kilometer en op één
+   decimaal: "0,5 km", "1,5 km", "2,0 km". Eén eenheid en één schrijfwijze, zodat halte en
+   station in één oogopslag te vergelijken zijn. Nooit onder 0,1 km: "0,0 km" zou zeggen
+   dat de halte op de standplaats zelf staat. */
+function ovAfstandKort(m) {
+  const km = Math.max(0.1, Math.round(m / 100) / 10);
+  return t("ov.kmKort", { n: km.toLocaleString(locale(),
+    { minimumFractionDigits: 1, maximumFractionDigits: 1 }) });
+}
+
 function ovHtml(station) {
   const ov = staat.ov && staat.ov.stations[station.station_id];
   if (!ov) return "";
-  const regels = [];
 
-  /* Twee korte, concrete regels: hoe ver de dichtste halte en het dichtste station liggen,
-     en hoe vaak er daar iets vertrekt —
-         Bushalte op 480 meter (5/u)
-         Station Melsele op 1,5 kilometer (2/u)
-     Het station met zijn naam, want "trein" zegt niet wáár je opstapt. De halte zonder:
-     wie een plek beoordeelt, wil weten of er iets rijdt en hoe vaak, niet hoe de halte
-     heet. Het aantal haltes in de buurt staat er ook niet meer bij.
+  /* Eén regel per halte of station, met wat het is als kop en de naam eronder:
+         [bus]    Bushalte                   0,5 km
+                  Zevergem Zevergemdorp · 5/u
+         [trein]  Treinstation               1,5 km
+                  Melsele · 2/u
+     De soort voorop, want die lees je eerst: is hier een bus, is hier een trein. De naam
+     zegt daarna wáár je opstapt. Een ov.json zonder halte-naam toont alleen de frequentie.
 
      De frequentie is per richting, niet beide richtingen samen: wie aan de halte staat,
      wacht op de bus naar één kant. Een ouder ov.json zonder per_richting valt terug op de
@@ -1344,49 +1392,51 @@ function ovHtml(station) {
      is, zegt de uitleg achter de ⓘ. */
   const perUur = (pr) => (pr >= 1 ? t("ov.perUur", { n: getal(Math.round(pr)) })
                                   : t("ov.minderDanEen"));
-  const regel = (tekst) => ontsnap(tekst.charAt(0).toLocaleUpperCase(locale()) + tekst.slice(1));
+  const rij = (icoon, wat, onder, m) =>
+    '<li class="ov__rij">' + pictogram(icoon) +
+      '<span class="ov__wat">' + ontsnap(wat) +
+        (onder ? '<span class="ov__naam">' + ontsnap(onder) + "</span>" : "") + "</span>" +
+      (m !== undefined ? '<span class="ov__afstand">' + ontsnap(ovAfstandKort(m)) + "</span>" : "") +
+    "</li>";
+  const naamEnFreq = (naam, freq) => (naam ? naam + " · " + freq : freq);
+
+  const rijen = [];
   if (ov.halte) {
     const h = ov.halte;
     const pr = typeof h.per_richting === "number" ? h.per_richting : h.per_uur / 2;
-    regels.push(regel(t(h.tram ? "ov.tramhalte" : "ov.bushalte",
-                        { afstand: ovAfstand(h.m), freq: perUur(pr) })));
+    rijen.push(rij("i-ov", t(h.tram ? "ov.tramhalte" : "ov.bushalte"),
+                   naamEnFreq(h.naam, perUur(pr)), h.m));
   } else {
     /* `halte_ver` is de straal waarbinnen `haal_ov.py` doorzoekt; `halte_zoek` is de oudere,
        kleinere naam en blijft als terugval staan voor een ov.json van vóór die verruiming. */
     const straal = staat.ov.stralen_m.halte_ver || staat.ov.stralen_m.halte_zoek;
-    regels.push(regel(t("ov.geenHalte", { straal: ovAfstand(straal) })));
+    rijen.push(rij("i-ov", t("ov.geenHalte", { straal: ovAfstand(straal) })));
   }
   if (ov.trein) {
     const naam = ov.trein.naam[taal] || ov.trein.naam.nl || ov.trein.naam.fr;
     // Per richting: alle treinen van het station gedeeld door twee — zie haal_ov.py.
     const pr = typeof ov.trein.per_richting === "number" ? ov.trein.per_richting
                                                           : ov.trein.per_uur / 2;
-    /* Een aparte sleutel voor een naam die met een klinker begint: het Frans zegt "gare
-       d'Anvers", niet "gare de Anvers". In de andere talen zijn de twee gelijk. */
-    const sleutel = /^[aeiouyàâäéèêëîïôöûü]/i.test(naam) ? "ov.stationKlinker" : "ov.station";
-    regels.push(regel(t(sleutel, { station: naam, afstand: ovAfstand(ov.trein.m),
-                                   freq: perUur(pr) })));
+    rijen.push(rij("i-trein", t("ov.station"), naamEnFreq(naam, perUur(pr)), ov.trein.m));
   }
 
   const score = typeof ov.mobiscore === "number"
-    ? '<span class="ov__score">' + ontsnap(ov.mobiscore.toLocaleString(locale(),
-        { minimumFractionDigits: 1, maximumFractionDigits: 1 })) +
-      '</span><span class="ov__schaal"> / 10</span>'
-    : '<span class="ov__schaal">' + ontsnap(t("ov.geenScore")) + "</span>";
+    ? ontsnap(ov.mobiscore.toLocaleString(locale(),
+        { minimumFractionDigits: 1, maximumFractionDigits: 1 })) + " / 10"
+    : ontsnap(t("ov.geenScore"));
 
   const id = nieuweUitlegId();
   return '<div class="ov">' +
-           '<p class="ov__kop">' + pictogram("i-ov") +
-             "<span>" + ontsnap(t("ov.titel")) + " " + score + "</span>" + uitlegKnop(id) + "</p>" +
-           regels.map((r) => "<p>" + r + "</p>").join("") +
+           '<ul class="ov__lijst">' + rijen.join("") + "</ul>" +
+           '<p class="ov__voet">' + ontsnap(t("ov.titel")) + " " + score + uitlegKnop(id) + "</p>" +
            uitlegTekst(id, ontsnap(t("ov.bron"))) +
          "</div>";
 }
 
 /* De stockfoto van dit model, met de naamsvermelding die de licentie eist.
 
-   Twee dingen die de bezoeker moet weten en die hier dus letterlijk staan:
-   het is een foto van het MODEL en niet van deze wagen, en ze komt van iemand anders.
+   Dat het een foto van het MODEL is en niet van deze wagen, staat in het voorbehoud
+   bij het openen (zie toonVoorbehoud()); hier alleen van wie ze komt.
    Voor een model zonder foto komt er niets — een verkeerde auto tonen is erger. */
 function fotoHtml(w) {
   const foto = staat.fotos[w.fotoSleutel || (w.merk + "|" + w.model)];
@@ -1399,14 +1449,17 @@ function fotoHtml(w) {
              '<svg viewBox="0 0 120 68" aria-hidden="true"><use href="#i-geen-foto"/></svg>' +
            "</div>";
   }
-  const bron = foto.bronpagina
-    ? '<a href="' + ontsnap(foto.bronpagina) + '" target="_blank" rel="noopener">Wikimedia Commons</a>'
-    : "Wikimedia Commons";
+  /* Kort: "© auteur — licentie". De licentie linkt naar de bronpagina op Commons,
+     waar de volledige vermelding staat; zo blijft de naamsvermelding volledig. */
+  const licentie = foto.bronpagina
+    ? '<a href="' + ontsnap(foto.bronpagina) + '" target="_blank" rel="noopener">' +
+        ontsnap(foto.licentie) + "</a>"
+    : ontsnap(foto.licentie);
   return '<img class="wagen__foto" loading="lazy" ' +
            'src="' + ontsnap(FOTO_BASIS + "/" + foto.bestand) + '" ' +
            'alt="' + ontsnap(t("popup.fotoAlt", { model: w.merk + " " + w.model })) + '">' +
-         '<p class="wagen__bron">' + t("popup.fotoBron") + " " +
-           ontsnap(foto.auteur) + " · " + ontsnap(foto.licentie) + " · " + bron + "</p>";
+         '<p class="wagen__bron">© ' +
+           ontsnap(foto.auteur) + " — " + licentie + "</p>";
 }
 
 function pictogram(naam) {
@@ -1582,6 +1635,7 @@ const AllesInBeeld = L.Control.extend({
     /* Het doosje hangt onder de knop, binnen dezelfde control. Zo verhuist het mee naar
        onderaan op een telefoon, zonder een tweede plaatsberekening. */
     doos.appendChild($("instellingen"));
+    doos.appendChild($("tandwielhint"));
     /* Klikken en scrollen binnen de control blijven bij de control: anders pant of zoomt
        de kaart mee terwijl je een vakje aankruist. */
     L.DomEvent.disableClickPropagation(doos);
@@ -1609,7 +1663,7 @@ function sluitFilters() {
 
 function zetInstellingen(open) {
   $("instellingen").hidden = !open;
-  if (open) sluitFilters();
+  if (open) { sluitFilters(); verbergTandwielhint(); }
   const knop = document.querySelector(".tandwiel-knop");
   if (knop) knop.setAttribute("aria-expanded", String(open));
   /* Op een telefoon klapt het doosje open op de plek waar de meldknop staat; zie
@@ -1617,6 +1671,28 @@ function zetInstellingen(open) {
      hangt in de kaartbediening en is dus geen buur van die knop. */
   document.body.classList.toggle("toont-instellingen", open);
 }
+/* Het wolkje naast het tandwiel, na een antwoord op de taalvraag: daar kan de taal
+   later nog altijd anders. Het gaat vanzelf weg na TANDWIELHINT_MS, bij een tik erop, en
+   zodra de instellingen opengaan — dan heeft het zijn werk gedaan. */
+const TANDWIELHINT_MS = 7000;
+let tandwielhintKlok = null;
+
+function toonTandwielhint() {
+  clearTimeout(tandwielhintKlok);
+  $("tandwielhint").hidden = false;
+  // Op een telefoon valt het wolkje over de meldknop, net als het instellingendoosje.
+  document.body.classList.add("toont-instellingen");
+  tandwielhintKlok = setTimeout(verbergTandwielhint, TANDWIELHINT_MS);
+}
+
+function verbergTandwielhint() {
+  clearTimeout(tandwielhintKlok);
+  if ($("tandwielhint").hidden) return;
+  $("tandwielhint").hidden = true;
+  document.body.classList.toggle("toont-instellingen", instellingenOpen());
+}
+$("tandwielhint").addEventListener("click", verbergTandwielhint);
+
 document.addEventListener("mousedown", (e) => {
   if (!instellingenOpen()) return;
   if (!e.target.closest(".kaartknoppen")) zetInstellingen(false);
@@ -1815,7 +1891,7 @@ function wisselSectie(sectie) {
 
 /* Het zwevende optievak hangt net onder het paneel en mag tot boven de kaartknoppen
    onderaan reiken; wordt het hoger, dan scrolt het zelf. Het paneel verandert van hoogte
-   als de filters open- of dichtgaan of de legende verdwijnt, dus bij elke maatwijziging
+   als de filters open- of dichtgaan, dus bij elke maatwijziging
    opnieuw. `position: fixed` rekent vanaf het venster, en dat is ook waar
    getBoundingClientRect() in meet. */
 function plaatsOptieVak() {
@@ -1973,49 +2049,33 @@ $("knop-scrollsluit").addEventListener("change", (e) => {
   filtersSluitenBijScrollen = e.target.checked;
 });
 
-/* ---------- de melding "géén live beschikbaarheid" wegklikken --------------------------
-   Ze staat standaard in het paneel, want het is de belangrijkste grens van deze kaart.
-   Wie ze gelezen heeft, mag ze wegklikken — maar pas na een bevestiging, zodat een misklik
-   haar niet stilletjes laat verdwijnen, en met de uitweg erbij: de instellingen zetten
-   haar terug. De keuze wordt onthouden, net als de taal; `localStorage` kan in een strenge
-   iframe gooien, en dan geldt de keuze alleen voor dit bezoek. */
-const LEGENDE_SLEUTEL = "degage-kaart-legende";
+/* ---------- het voorbehoud bij het openen ----------------------------------------------
+   Wat de kaart níet belooft — geen live beschikbaarheid, en geen aanbod dat altijd zo
+   blijft — komt bij elke opening onderaan in beeld. Elke keer, en niet één keer per
+   browser: wie de kaart vorige maand opende, weet dat vandaag niet meer zeker.
 
-function legendeVerborgen() {
-  try {
-    return localStorage.getItem(LEGENDE_SLEUTEL) === "verborgen";
-  } catch (e) {
-    return false;
-  }
+   De 15 seconden telt de opmaak af, niet een setTimeout: het balkje onderaan krimpt met
+   een CSS-animatie en `animationend` sluit het venster. Zo loopt de tijd die je ziet
+   altijd gelijk met de tijd die overblijft, en pauzeren bij muis of focus (zie de
+   opmaak) is één regel CSS in plaats van een klok die je moet stilzetten en herrekenen.
+   Een tabblad op de achtergrond pauzeert zijn animaties ook: wie de kaart in een ander
+   tabblad opende, krijgt het voorbehoud nog te zien bij terugkomst.
+
+   Komt eerst de taalvraag, dan wacht het voorbehoud tot die beantwoord is — anders
+   staat het er in een taal die de bezoeker misschien niet wil. */
+function toonVoorbehoud() {
+  $("voorbehoud").hidden = false;
 }
 
-function zetLegende(tonen, bewaren) {
-  $("legende").hidden = !tonen;
-  $("legende-vraag").hidden = true;
-  $("legende-sluit").hidden = false;
-  $("knop-legende").checked = tonen;
-  if (!bewaren) return;
-  try {
-    if (tonen) localStorage.removeItem(LEGENDE_SLEUTEL);
-    else localStorage.setItem(LEGENDE_SLEUTEL, "verborgen");
-  } catch (e) {
-    /* Niets aan te doen; de keuze geldt dan alleen voor dit bezoek. */
-  }
+function sluitVoorbehoud() {
+  $("voorbehoud").hidden = true;
 }
 
-$("legende-sluit").addEventListener("click", () => {
-  $("legende-sluit").hidden = true;
-  $("legende-vraag").hidden = false;
-  $("legende-ja").focus();
+$("voorbehoud-sluit").addEventListener("click", sluitVoorbehoud);
+$("voorbehoud-tijd").addEventListener("animationend", sluitVoorbehoud);
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && !$("voorbehoud").hidden && $("taalvraag").hidden) sluitVoorbehoud();
 });
-$("legende-ja").addEventListener("click", () => zetLegende(false, true));
-$("legende-nee").addEventListener("click", () => {
-  $("legende-vraag").hidden = true;
-  $("legende-sluit").hidden = false;
-  $("legende-sluit").focus();
-});
-$("knop-legende").addEventListener("change", (e) => zetLegende(e.target.checked, true));
-if (legendeVerborgen()) zetLegende(false, false);
 
 /* ==========================================================================
    adres zoeken
@@ -2303,6 +2363,10 @@ function popupRanden() {
   }
 
   return {
+    /* Leaflet houdt een popup standaard op 300 px. Op een breed scherm staat de foto
+       naast de gegevens (zie `.wagen` in de opmaak), en daarvoor is meer breedte nodig;
+       de opmaak legt de echte breedte vast, dit is alleen het plafond. */
+    maxWidth: mobiel ? 300 : 540,
     autoPanPaddingTopLeft: L.point(o.links + RAND, boven),
     autoPanPaddingBottomRight: L.point(o.rechts + RAND, onder),
     /* Nooit hoger dan wat er is: Leaflet laat de inhoud dan binnen de popup scrollen in
@@ -2995,8 +3059,46 @@ function vulTaalkeuze() {
   lijst.closest(".schakel").hidden = TALEN.length < 2;
 }
 
+/* De taalvraag, voor wie de kaart in het Engels krijgt omdat de browser dat zo opgeeft.
+   Eén knop per taal, elk in haar eigen naam, met de huidige taal voorop. Welke knop het
+   ook wordt, de keuze wordt bewaard: daarna komt de taal uit localStorage en verschijnt
+   de vraag niet meer. Wie intussen de keuzelijst gebruikt, heeft ook geantwoord. */
+function sluitTaalvraag() {
+  $("taalvraag").hidden = true;
+}
+
+function toonTaalvraag() {
+  const knoppen = $("taalvraag-knoppen");
+  knoppen.innerHTML = "";
+  for (const code of [taal, ...TALEN.filter((c) => c !== taal)]) {
+    const knop = document.createElement("button");
+    knop.type = "button";
+    knop.lang = code;
+    knop.textContent = (taalblok(code) || {}).naam || code;
+    if (code === taal) knop.className = "taalvraag__huidig";
+    knop.addEventListener("click", () => {
+      bewaarTaal(code);       // ook als het de huidige is: pasTaalToe() slaat die over
+      pasTaalToe(code);
+      $("taalkeuze").value = code;
+      sluitTaalvraag();
+      toonTandwielhint();
+      toonVoorbehoud();
+    });
+    knoppen.appendChild(knop);
+  }
+  $("taalvraag").hidden = false;
+  knoppen.firstChild.focus();
+}
+
 vulTaalkeuze();
-$("taalkeuze").addEventListener("change", (e) => pasTaalToe(e.target.value));
+toonTaalOnthouden();
+$("taalvergeten").addEventListener("click", vergeetTaal);
+$("taalkeuze").addEventListener("change", (e) => {
+  pasTaalToe(e.target.value);
+  sluitTaalvraag();
+});
+if (taalTeBevestigen && TALEN.length > 1) toonTaalvraag();
+else toonVoorbehoud();
 
 /* Geen enkel taalbestand geladen — dan is `taal/` niet meegepubliceerd. De kaart blijft
    werken (de opmaak draagt de Nederlandse tekst al), maar alles wat uit JavaScript komt
@@ -3018,8 +3120,8 @@ if (TAALBESTANDEN_ONTBREKEN) {
 vertaalPagina();
 vertaalKaart();
 
-/* De filters beginnen dicht. Het paneel toont dan alleen de zoekbalk, de teller en de
-   legende — genoeg om te weten waar je naar kijkt, en de kaart blijft vrij. Eén klik in
+/* De filters beginnen dicht. Het paneel toont dan alleen de zoekbalk en de teller
+   — genoeg om te weten waar je naar kijkt, en de kaart blijft vrij. Eén klik in
    het zoekveld haalt de rest tevoorschijn. */
 
 laden().catch((fout) => {
