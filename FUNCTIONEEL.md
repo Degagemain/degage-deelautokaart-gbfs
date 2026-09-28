@@ -23,8 +23,60 @@ Daarom staat er standaard een regel in beeld:
 Wie ze gelezen heeft, kan ze wegklikken met het kruisje. De kaart vraagt eerst een
 bevestiging, en in de instellingen zet je ze terug. Je browser onthoudt die keuze.
 
-De gegevens worden **per kwartaal met de hand** ververst. De datum van de laatste
-verversing staat naast de teller, zodat je altijd ziet hoe oud het beeld is.
+**Welke auto's er zijn en waar ze staan, is live.** Bij elk openen vraagt de kaart de
+actuele vloot op bij Dégage zelf (zie [De live vloot](#de-live-vloot-welke-autos-er-zijn)).
+De **details** van elke auto — merk, model, bouwjaar, toebehoren, gemeente — komen uit
+een bestand dat **per kwartaal met de hand** ververst wordt.
+
+Naast de teller staat daarom **geen datum**: wat je op de kaart ziet, klopt met vandaag.
+Een datum daar zou doen denken dat het beeld oud is. Hoe oud de details zijn, is een
+voetnoot en staat in de instellingen (het tandwiel): *"De auto's en hun standplaats zijn
+actueel. Merk, model en toebehoren zijn bijgewerkt op 31 juli 2026."*
+
+Lukt het live opvragen niet, dan toont de kaart gewoon dat bestand. Dan is heel het beeld
+van die datum, en staat ze wél naast de teller: *"577 auto's · bijgewerkt 31 juli 2026"*.
+
+## De live vloot: welke auto's er zijn
+
+De lijst van Dégage op
+[`degapp.be/api/v1/car/stands`](https://degapp.be/api/v1/car/stands) is **de enige
+waarheid** over welke auto's er zijn en waar ze staan. Daaruit volgen drie regels:
+
+1. **Staat een auto niet in die lijst, dan bestaat hij niet.** Ook als hij nog in het
+   kwartaalbestand staat: hij verdwijnt van de kaart, uit de teller, uit de filters en uit
+   de zoekresultaten.
+2. **Staat een auto er wél in maar niet in het kwartaalbestand, dan is hij nieuw.** Hij
+   komt op de kaart, met een groen label **"Nieuwe auto"** in de popup (en in de lijst
+   met dichtstbijzijnde auto's) waar anders merk en model staan.
+3. **Is een auto verhuisd, dan staat hij meteen op zijn nieuwe plek.**
+
+**Een nieuwe auto toont alleen wat de live lijst over hem weet:** zijn naam, zijn
+brandstof en zijn versnellingsbak. Al de rest — merk, model, bouwjaar, zitplaatsen,
+euronorm, toebehoren, gemeente, district, contactadres, modelfoto, rijbereik, openbaar
+vervoer — kent de live lijst niet, en **dat laten we gewoon weg**. Er wordt niets
+bijgeraden. De popup zegt: *"Nog niet in de gegevens van de kaart. Merk, model en de
+andere details volgen bij de volgende bijwerking van de kaart."* Bij de volgende
+kwartaalverversing staat hij in het bestand en verdwijnt het label vanzelf.
+
+Wat dat betekent voor de filters: zet je een filter op iets wat we van een nieuwe auto
+niet weten (zitplaatsen, bouwjaar, soort auto, euronorm, een toebehoren, afstand tot het
+openbaar vervoer), dan valt hij af — net als een auto waarvan de euronorm onbekend is. Van
+een auto waarvan we het niet weten, kunnen we niet volhouden dat hij voldoet. Op brandstof
+en versnellingsbak filter je hem wel gewoon.
+
+**Alle nieuwe auto's in één keer zien** kan met het filter **"Nieuw in de vloot"**,
+bovenaan de filterlijst. Het heeft één keuze, *"Nieuwe auto's, nog zonder details"*, met
+het aantal erachter. Vink je die aan, dan blijven alleen de nieuwe auto's gekleurd en
+toont de lijst met dichtstbijzijnde auto's alleen nog nieuwe. Een grijze pin zegt dan
+"geen nieuwe auto". Zijn er geen nieuwe auto's (of lukt het live opvragen niet), dan staat
+dat filter er niet.
+
+**De stip van een nieuwe of verhuisde auto wordt op precies dezelfde manier vervaagd** als
+alle andere: twintig meter opzij, in een vaste richting die uit het punt zelf volgt (zie
+[Wat je ziet](#wat-je-ziet)). Een auto die niet verhuisd is, houdt zijn vertrouwde stip.
+
+Hoe een auto uit de live lijst herkend wordt als een auto uit het bestand, en de andere
+technische keuzes, staan in [`TECHNIEK.md`](TECHNIEK.md#de-live-vloot).
 
 ## Wat je ziet
 
@@ -396,8 +448,10 @@ de inhoud binnen de popup zelf.
 - **Geen officieel rijbereik.** Het bereik is een schatting bij gemengd gebruik uit een
   open databank, geen WLTP-cijfer van de fabrikant — en een marge waar de batterij niet
   bekend is.
-- **Geen live verbinding met de databank.** De kaart leest een bestand dat per kwartaal
-  met de hand wordt vernieuwd.
+- **Geen live details.** Welke auto's er zijn en waar ze staan, is live; al de rest komt
+  uit een bestand dat per kwartaal met de hand wordt vernieuwd. Een nieuwe auto staat dus
+  op de kaart zonder merk, model of toebehoren tot die verversing — zie
+  [De live vloot](#de-live-vloot-welke-autos-er-zijn).
 - **Niets doen met je locatie.** Vraag je "auto's in mijn buurt", dan blijft dat punt in
   je browser: het gaat niet naar Dégage, niet naar een server, en het wordt niet bewaard.
   De kaart rekent er alleen ter plekke de afstanden mee uit.

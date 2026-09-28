@@ -307,6 +307,8 @@ body {
   border-top: 1px solid var(--lijn);
   font-size: 11.5px; color: var(--inkt-zacht);
 }
+/* Hoe actueel de gegevens zijn en de naamsvermelding: samen één voetnoot, één streep. */
+.instellingen .colofon + .colofon { margin-top: 6px; padding-top: 0; border-top: 0; }
 /* Dit paneel hangt in een `.leaflet-bar`, en Leaflet kleedt élke <a> daarin aan als een
    knop: display:block, 30x30, gecentreerd, met een rand eronder. Dat is prima voor + en −,
    maar het knipt een lopende zin af tot één vierkantje. Alles daarvan hier terugzetten —
@@ -795,6 +797,17 @@ body {
 .popup .wagen__model { margin: 1px 0 0; line-height: 1.3; color: var(--inkt-zacht); font-size: 12.5px; }
 /* De gemeente tussen haakjes achter de autonaam: erbij, maar zachter dan de naam zelf. */
 .wagen__plaats { font-weight: 400; color: var(--inkt-zacht); }
+/* Een nieuwe auto: staat in de live vloot maar nog niet in de feed (zie "de live vloot"
+   in index.js). Het label staat waar anders merk en model staan. */
+.wagen__nieuw {
+  display: inline-block; padding: 1px 8px;
+  font-size: 11.5px; font-weight: 600; color: #fff;
+  background: var(--groen); border-radius: 11px;
+}
+.wagen__nieuwuitleg {
+  display: block; margin: 4px 0 0;
+  font-size: 11.5px; line-height: 1.4; color: var(--inkt-zacht);
+}
 /* Waarom deze wagen buiten de filters valt. Grijs randje, zoals de grijze pin: het
    hoort bij dezelfde uitleg. */
 .wagen__buiten {
@@ -961,8 +974,7 @@ body {
   }
   .wagen > .wagen__naam   { grid-area: naam; }
   .wagen > .wagen__model  { grid-area: model; }
-  .wagen > .wagen__buiten { grid-area: buiten; }
-  .wagen > .wagen__beeld  { grid-area: beeld; }
+  .wagen > .wagen__buiten { grid-area: buiten; }  .wagen > .wagen__beeld  { grid-area: beeld; }
   .wagen > .feiten        { grid-area: feiten; }
   .wagen > .uitleg        { grid-area: uitleg; }
   .wagen > .labels        { grid-area: labels; }

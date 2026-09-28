@@ -193,6 +193,8 @@
     <span data-i18n="instellingen.taalOnthouden">Taal onthouden in deze browser.</span>
     <button type="button" id="taalvergeten" data-i18n="instellingen.taalVergeten">Vergeten</button>
   </p>
+  <!-- Hoe actueel de gegevens zijn. Leeg tot de kaart geladen is; zie toonDatum(). -->
+  <p class="colofon" id="bronregel" hidden></p>
   <!-- Naamsvermelding van het tabbladpictogram. Een voorwaarde van de gratis licentie van
        Flaticon, net als de OSM-attributie onderaan de kaart: alleen het zinnetje ervoor
        vertaalt mee, de opgegeven formulering en de link blijven staan zoals ze zijn. -->
@@ -298,6 +300,13 @@
     <!-- Elke kop staat met zijn keuzes in een eigen blokje. Op een breed scherm doet dat
          niets; op een telefoon komen chips op dezelfde regel als hun kop en staan de
          schuiven per twee naast elkaar — zie `.sectie--chips` en `.sectie--schuif`. -->
+    <!-- Auto's die al in de live vloot staan maar nog niet in de feed, en dus nog zonder
+         details. Verborgen zolang er geen zijn; zie bouwFilters(). -->
+    <div class="sectie sectie--chips" id="sectie-nieuw" hidden>
+      <h2 data-i18n="kop.nieuw">Nieuw in de vloot</h2>
+      <div class="keuzes" id="filter-nieuw"></div>
+    </div>
+
     <div class="sectie sectie--chips">
       <h2 data-i18n="kop.soort">Soort auto</h2>
       <div class="keuzes" id="filter-soort"></div>

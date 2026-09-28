@@ -26,6 +26,7 @@
      kaart               de Leaflet-kaart, de tegels, het clusteren
      hulpjes             ontsnappen, datums, meervoud
      data                `staat` — alles wat de kaart weet — en het inladen van de feed
+     de live vloot       VLOOT_API: welke auto's er zijn en waar; nieuwe auto's
      filters             de filterlijst opbouwen en toepassen
      tekenen             popups, markers, de telling
      bediening           de kaartknoppen, het paneel, de instellingen
@@ -54,6 +55,13 @@ const FOTO_BASIS = "fotos";
    scripts/haal_ov.py, die net als het fotoscript buiten de generator draaien. */
 const BEREIK_BESTAND = "bereik.json";
 const OV_BESTAND = "ov.json";
+
+/* De live vloot van Dégage: welke auto's er NU zijn en waar ze staan. Dit is de bron van
+   waarheid voor het bestaan en de plaats van een auto; de feed levert alleen nog de
+   details erbij. Zie "de live vloot" hieronder en FUNCTIONEEL.md. Antwoordt deze bron
+   niet binnen VLOOT_WACHTTIJD_MS, dan toont de kaart gewoon de feed. */
+const VLOOT_API = "https://degapp.be/api/v1/car/stands";
+const VLOOT_WACHTTIJD_MS = 8000;
 
 /* ==========================================================================
    TAAL
@@ -542,8 +550,11 @@ const staat = {
   gekozenSoort: new Set(),
   gekozenBak: new Set(),
   gekozenVlaggen: new Set(),   // toebehoren én afspraken; de sleutels zijn uniek
+  gekozenNieuw: new Set(),     // "nieuw" of leeg: enkel de nieuwe auto's uit de live vloot
+  aantalNieuw: 0,              // hoeveel nieuwe auto's er zijn; 0 = het filter verdwijnt
   totaalWagens: 0,
-  bijgewerkt: null        // `last_updated` uit de feed, voor de datumregel
+  bijgewerkt: null,       // `last_updated` uit de feed, voor de datumregel
+  live: false             // true als de standplaatsen uit VLOOT_API komen, niet uit de feed
 };
 
 /* ==========================================================================
@@ -582,7 +593,9 @@ function vergelijkbaar(s) {
 
 function vlootindex(wagens) {
   const index = new Map();
-  const paren = [...new Set(wagens.map((w) => w.merk + "|" + w.model))].sort();
+  // Een nieuwe wagen uit de live vloot heeft geen merk of model; die doet hier niet mee.
+  const paren = [...new Set(wagens.filter((w) => w.merk)
+                                  .map((w) => w.merk + "|" + w.model))].sort();
   for (const paar of paren) {
     const sleutel = vergelijkbaar(paar.split("|")[0]) + "|" +
                     vergelijkbaar(paar.split("|").slice(1).join("|"));
@@ -592,6 +605,7 @@ function vlootindex(wagens) {
 }
 
 function fotoSleutel(w, index) {
+  if (!w.merk) return null;
   const woorden = w.merk.split(/\s+/).filter(Boolean);
   for (let i = woorden.length - 1; i > 0; i--) {
     const merkdeel = woorden.slice(0, i).join(" ");
@@ -650,26 +664,281 @@ async function laadOv() {
   }
 }
 
+/* ==========================================================================
+   de live vloot
+   ==========================================================================
+   De feed is een momentopname van een databankdump, en die wordt maar per kwartaal
+   ververst. Wat de kaart toont, moet echter kloppen met de vloot van VANDAAG. Daarom
+   leest ze bij het openen ook VLOOT_API, die per auto alleen dit draagt:
+
+     id, displayName, geoPosition {latitude, longitude},
+     vehicleInformation {fuelType, type}, stationType
+
+   Die bron is de baas over twee dingen, en over niets anders:
+
+   · BESTAAN. Staat een auto niet in de API, dan bestaat hij niet — ook al staat hij nog
+     in de feed. Hij verdwijnt van de kaart.
+   · PLAATS. Een auto die verhuisd is, staat meteen op zijn nieuwe plek (zie "Waar de
+     stip komt" hieronder).
+
+   Staat een auto in de API maar niet in de feed, dan is hij NIEUW. Hij komt op de kaart
+   met alleen wat de API over hem weet — naam, brandstof, versnellingsbak — en de popup
+   zegt dat de rest volgt. Wat we niet weten (merk, model, bouwjaar, zitplaatsen,
+   toebehoren, gemeente, contact) laten we weg; er wordt niets bijgeraden. Filteren op
+   zo'n onbekend gegeven laat hem vallen, net als een wagen zonder gekende euronorm.
+
+   Hoe een API-auto aan een feedwagen gekoppeld wordt: de feed draagt geen [intern], maar
+   het station_id IS "st-" + het laagste [intern] op die plek. Eerst dus op id: staat er
+   in de feed één wagen op "st-<id>", dan is hij het (ook als hij intussen van
+   naam veranderd is); staan er meer, dan die met dezelfde naam. Daarna, voor wat
+   overblijft, op naam — de namen zijn uniek in de vloot. Wie op geen van beide past,
+   is nieuw.
+
+   Waar de stip komt
+   -----------------
+   De coördinaten in de API en in de dump zijn niet bit voor bit gelijk, en het vervagen
+   neemt zijn richting uit een hash van het punt: elk verschil geeft een heel andere
+   richting. Elk API-punt opnieuw vervagen zou dus bijna elke stip doen verspringen
+   tegenover de feed — dat leest als data die niet klopt, en kost de OV-gegevens (die aan
+   de feedstip hangen).
+
+   Daarom, per plek (auto's op exact hetzelfde API-punt horen samen):
+
+   · Staat er een gekoppelde auto die NIET verhuisd is — zijn API-punt ligt binnen de
+     vervaging + VERHUIS_MARGE_M van zijn feedstip — dan blijft de plek op die feedstip,
+     met haar OV-gegevens. Een nieuwe auto op datzelfde punt komt erbij.
+   · Anders (een nieuwe auto op een nieuwe plek, of een verhuisde auto) wordt het
+     API-punt EXACT ZO vervaagd als de generator het doet (`verschuif()` in
+     scripts/genereer_gbfs.py): een vaste afstand opzij in een richting uit een SHA-256
+     van het afgeronde punt. Wijzigt de ene, wijzig dan de andere mee. Zo'n plek heeft
+     (nog) geen OV-gegevens.
+
+   Het station_id volgt de regel van de generator: "st-" + het laagste id op die plek.
+
+   Terugvallen op de feed (met een waarschuwing in de console) doen we als de API niet
+   antwoordt, een lege lijst geeft, de feed geen `locatie_nauwkeurigheid_m` draagt, of de
+   browser geen `crypto.subtle` kent (alleen op https of localhost). Zonder vervaging
+   komt er niets uit de API op de kaart. */
+const METER_PER_GRAAD = 111320;
+
+/* Hoe ver een API-punt buiten de vervaging van zijn feedstip mag liggen voor hij als
+   verhuisd telt. Bepaald op een meting van 28-09-2026 (zie de interne notities). */
+const VERHUIS_MARGE_M = 10;
+
+/* De waarden van de API in de woorden van de feed. Een waarde die hier niet staat, wordt
+   weggelaten in plaats van geraden. */
+const API_BRANDSTOF = {
+  gasoline: "benzine",
+  diesel: "diesel",
+  electric: "elektrisch",
+  hybrid: "hybride",
+  pluginhybrid: "plug-in hybride",
+  cng: "CNG",
+  lpg: "LPG"
+};
+const API_BAK = { manual: "manueel", automatic: "automatisch" };
+
+async function laadVloot() {
+  const stop = new AbortController();
+  const wekker = setTimeout(() => stop.abort(), VLOOT_WACHTTIJD_MS);
+  try {
+    const antwoord = await fetch(VLOOT_API, { cache: "no-cache", signal: stop.signal });
+    if (!antwoord.ok) throw new Error("status " + antwoord.status);
+    const lijst = await antwoord.json();
+    if (!Array.isArray(lijst)) throw new Error("geen lijst");
+    return lijst;
+  } catch (e) {
+    console.warn("live vloot niet geladen (" + VLOOT_API + "): " + e.message +
+                 " — de kaart toont de feed.");
+    return null;
+  } finally {
+    clearTimeout(wekker);
+  }
+}
+
+/* De tegenhanger van `verschuif()` in scripts/genereer_gbfs.py, regel voor regel. */
+async function verschuif(lat, lon, meter) {
+  const sleutel = new TextEncoder().encode(lat.toFixed(6) + "," + lon.toFixed(6));
+  const hash = new DataView(await crypto.subtle.digest("SHA-256", sleutel));
+  // De eerste 8 bytes, big-endian — Pythons int.from_bytes(..., "big").
+  const hoek = (Number(hash.getBigUint64(0)) / 2 ** 64) * 2 * Math.PI;
+  const nieuweLat = lat + (meter * Math.cos(hoek)) / METER_PER_GRAAD;
+  const nieuweLon = lon + (meter * Math.sin(hoek)) /
+                    (METER_PER_GRAAD * Math.cos(lat * (Math.PI / 180)));
+  return [Number(nieuweLat.toFixed(6)), Number(nieuweLon.toFixed(6))];
+}
+
+const puntSleutel = (lat, lon) => lat.toFixed(6) + "," + lon.toFixed(6);
+
+/* De feed herschikken volgens de live vloot. Geeft stations en wagens terug in dezelfde
+   vorm als de feed, zodat laden() daarna niet hoeft te weten waar ze vandaan komen, en
+   een OV-bestand dat op de NIEUWE station_id's gesleuteld is. Geeft null als er niets
+   bruikbaars in de API staat. */
+async function metLiveVloot(api, feedStations, feedWagens, ov, meter) {
+  const auto = api.filter((v) =>
+    v && Number.isInteger(v.id) && v.geoPosition &&
+    Number.isFinite(v.geoPosition.latitude) && Number.isFinite(v.geoPosition.longitude) &&
+    v.geoPosition.latitude !== 0 && v.geoPosition.longitude !== 0);
+  if (!auto.length) return null;
+
+  // --- koppelen: eerst op id, dan op naam --------------------------------------------
+  const feedPerStation = new Map();
+  for (const w of feedWagens) {
+    if (!feedPerStation.has(w.station_id)) feedPerStation.set(w.station_id, []);
+    feedPerStation.get(w.station_id).push(w);
+  }
+  const feedOpNaam = new Map(feedWagens.map((w) => [w.naam, w]));
+  const naamVan = (v) => String(v.displayName || "").trim();
+  const koppeling = new Map();   // API-auto -> feedwagen
+  const gebruikt = new Set();
+  for (const v of auto) {
+    const daar = feedPerStation.get("st-" + v.id) || [];
+    const w = daar.length === 1 ? daar[0] : daar.find((x) => x.naam === naamVan(v));
+    if (w && !gebruikt.has(w)) { koppeling.set(v, w); gebruikt.add(w); }
+  }
+  for (const v of auto) {
+    if (koppeling.has(v)) continue;
+    const w = feedOpNaam.get(naamVan(v));
+    if (w && !gebruikt.has(w)) { koppeling.set(v, w); gebruikt.add(w); }
+  }
+
+  // --- groeperen op het API-punt ----------------------------------------------------
+  const perPunt = new Map();
+  for (const v of auto) {
+    const lat = Number(v.geoPosition.latitude.toFixed(6));
+    const lon = Number(v.geoPosition.longitude.toFixed(6));
+    const k = puntSleutel(lat, lon);
+    if (!perPunt.has(k)) perPunt.set(k, { lat, lon, autos: [] });
+    perPunt.get(k).autos.push(v);
+  }
+
+  // --- per punt: de feedstip houden, of vervagen ("Waar de stip komt") --------------
+  const feedStation = new Map(feedStations.map((s) => [s.station_id, s]));
+  const meterTussen = (a, b) => Math.hypot(
+    (a.lat - b.lat) * METER_PER_GRAAD,
+    (a.lon - b.lon) * METER_PER_GRAAD * Math.cos(a.lat * (Math.PI / 180)));
+  const plekken = new Map();   // sleutel -> { lat, lon, feed_id, autos[] }
+  for (const [k, punt] of perPunt) {
+    let anker = null;
+    for (const v of punt.autos) {
+      const f = koppeling.get(v);
+      const s = f && feedStation.get(f.station_id);
+      if (s && meterTussen(punt, s) <= meter + VERHUIS_MARGE_M) { anker = s; break; }
+    }
+    /* Twee API-punten die bij dezelfde feedstip horen, blijven één plek: in de feed
+       stonden die auto's samen, en twee pins op dezelfde stip zijn er één te veel. */
+    const sleutel = anker ? "feed:" + anker.station_id : "punt:" + k;
+    if (!plekken.has(sleutel)) {
+      const [lat, lon] = anker ? [anker.lat, anker.lon]
+                               : await verschuif(punt.lat, punt.lon, meter);
+      plekken.set(sleutel, { lat, lon, feed_id: anker && anker.station_id, autos: [] });
+    }
+    plekken.get(sleutel).autos.push(...punt.autos);
+  }
+
+  const stations = [];
+  const wagens = [];
+  const ovStations = {};
+  let nieuw = 0, verhuisd = 0;
+  for (const plek of plekken.values()) {
+    plek.autos.sort((a, b) => a.id - b.id);
+    const station_id = "st-" + plek.autos[0].id;
+    stations.push({ station_id, lat: plek.lat, lon: plek.lon });
+    // De OV-gegevens hangen aan de feedstip; een nieuwe stip heeft er (nog) geen.
+    if (ov && plek.feed_id && ov.stations[plek.feed_id]) {
+      ovStations[station_id] = ov.stations[plek.feed_id];
+    }
+    if (!plek.feed_id) verhuisd += plek.autos.filter((v) => koppeling.has(v)).length;
+
+    for (const v of plek.autos) {
+      const f = koppeling.get(v);
+      if (f) {
+        // Alles uit de feed, behalve de standplaats en de naam: die zijn live.
+        wagens.push(Object.assign({}, f, { station_id, naam: naamVan(v) || f.naam }));
+        continue;
+      }
+      nieuw++;
+      const w = { station_id, naam: naamVan(v) || "#" + v.id, nieuw: true, toebehoren: {} };
+      const info = v.vehicleInformation || {};
+      if (API_BRANDSTOF[info.fuelType]) w.brandstof = API_BRANDSTOF[info.fuelType];
+      if (API_BAK[info.type]) w.versnellingsbak = API_BAK[info.type];
+      wagens.push(w);
+    }
+  }
+
+  const weg = feedWagens.filter((w) => !gebruikt.has(w));
+  console.info("live vloot: " + wagens.length + " auto's, waarvan " + nieuw +
+               " nieuw en " + verhuisd + " verhuisd; " + weg.length + " uit de feed bestaan niet meer" +
+               (weg.length ? " (" + weg.map((w) => w.naam).join(", ") + ")" : "") + ".");
+
+  return {
+    stations,
+    wagens,
+    ov: ov ? Object.assign({}, ov, { stations: ovStations }) : null
+  };
+}
+
 async function laden() {
-  const [stationBestand, wagenBestand, , , ovBestand] = await Promise.all([
+  const [stationBestand, wagenBestand, , , ovBestand, vloot] = await Promise.all([
     haal("station_information"),
     haal("degage_vehicles"),
     laadFotos(),
     laadBereik(),
-    laadOv()
+    laadOv(),
+    laadVloot()
   ]);
+
+  locatieVaagheid = wagenBestand.locatie_nauwkeurigheid_m || null;
+  staat.bijgewerkt = stationBestand.last_updated;
+
+  /* De OV-gegevens alleen als ze bij DEZE feed horen. Een standplaats kan tussen twee
+     dumps verhuizen en toch hetzelfde station_id houden; zonder deze test zou ze dan de
+     bereikbaarheid van haar oude adres dragen — een fout die niemand zou opmerken. */
+  let ov = null;
+  if (ovBestand && ovBestand.voor_feed === stationBestand.last_updated) {
+    ov = ovBestand;
+  } else if (ovBestand) {
+    console.warn("map/ov.json hoort bij een andere feed (" + ovBestand.voor_feed +
+                 ") en wordt niet getoond. Draai scripts/haal_ov.py opnieuw.");
+  }
+
+  /* De live vloot beslist welke auto's er zijn en waar ze staan; zie "de live vloot". */
+  let feedStations = stationBestand.data.stations;
+  let feedWagens = wagenBestand.data.vehicles;
+  let live = null;
+  if (vloot && !locatieVaagheid) {
+    console.warn("de feed draagt geen locatie_nauwkeurigheid_m: de live vloot kan niet " +
+                 "vervaagd worden en wordt niet gebruikt.");
+  } else if (vloot && !(window.crypto && crypto.subtle)) {
+    console.warn("geen crypto.subtle (geen https?): de live vloot kan niet vervaagd " +
+                 "worden en wordt niet gebruikt.");
+  } else if (vloot) {
+    try {
+      live = await metLiveVloot(vloot, feedStations, feedWagens, ov, locatieVaagheid);
+      if (!live) console.warn("de live vloot is leeg — de kaart toont de feed.");
+    } catch (e) {
+      console.warn("live vloot niet verwerkt: " + e.message + " — de kaart toont de feed.");
+    }
+  }
+  if (live) {
+    feedStations = live.stations;
+    feedWagens = live.wagens;
+    ov = live.ov;
+  }
+  staat.live = !!live;
+  staat.ov = ov;
 
   const wagensPerStation = new Map();
   /* Eén keer over de hele feed voor de index, daarna per wagen de sleutel erbij zetten:
      `fotoHtml()` draait bij elke popup en hoeft dit dan niet opnieuw uit te rekenen. */
-  const index = vlootindex(wagenBestand.data.vehicles);
-  for (const w of wagenBestand.data.vehicles) {
+  const index = vlootindex(feedWagens);
+  for (const w of feedWagens) {
     w.fotoSleutel = fotoSleutel(w, index);
     if (!wagensPerStation.has(w.station_id)) wagensPerStation.set(w.station_id, []);
     wagensPerStation.get(w.station_id).push(w);
   }
 
-  staat.stations = stationBestand.data.stations.map((s) => ({
+  staat.stations = feedStations.map((s) => ({
     station_id: s.station_id,
     lat: s.lat,
     lon: s.lon,
@@ -677,12 +946,16 @@ async function laden() {
   })).filter((s) => s.wagens.length > 0);
 
   staat.totaalWagens = staat.stations.reduce((n, s) => n + s.wagens.length, 0);
+  staat.aantalNieuw = staat.stations.reduce((n, s) => n + s.wagens.filter((w) => w.nieuw).length, 0);
 
   /* Brandstoffen uit de data halen in plaats van ze hier vast te leggen: duikt er in een
      volgende dump een achtste op, dan verschijnt die vanzelf in het filter. */
   const telling = new Map();
   for (const s of staat.stations) {
-    for (const w of s.wagens) telling.set(w.brandstof, (telling.get(w.brandstof) || 0) + 1);
+    for (const w of s.wagens) {
+      // Een nieuwe wagen met een brandstof die we niet kennen, telt nergens mee.
+      if (w.brandstof) telling.set(w.brandstof, (telling.get(w.brandstof) || 0) + 1);
+    }
   }
   /* Alle keuzelijsten alfabetisch. Op aantal sorteren zet de grootste groep vooraan,
      maar dan verspringt de volgorde bij elke nieuwe dump en moet je elke keer opnieuw
@@ -720,18 +993,6 @@ async function laden() {
   staat.jaren = [...jaren].sort((a, b) => a - b);
   staat.jaarVan = null;
 
-  locatieVaagheid = wagenBestand.locatie_nauwkeurigheid_m || null;
-  staat.bijgewerkt = stationBestand.last_updated;
-
-  /* De OV-gegevens alleen als ze bij DEZE feed horen. Een standplaats kan tussen twee
-     dumps verhuizen en toch hetzelfde station_id houden; zonder deze test zou ze dan de
-     bereikbaarheid van haar oude adres dragen — een fout die niemand zou opmerken. */
-  if (ovBestand && ovBestand.voor_feed === stationBestand.last_updated) {
-    staat.ov = ovBestand;
-  } else if (ovBestand) {
-    console.warn("map/ov.json hoort bij een andere feed (" + ovBestand.voor_feed +
-                 ") en wordt niet getoond. Draai scripts/haal_ov.py opnieuw.");
-  }
   toonDatum();
 
   bouwFilters();
@@ -745,7 +1006,15 @@ async function laden() {
    ook na een taalwissel opnieuw geschreven worden. */
 function toonDatum() {
   const datum = datumInWoorden(staat.bijgewerkt);
-  $("datumregel").textContent = datum ? t("telling.bijgewerkt", { datum: datum }) : "";
+  /* Met de live vloot klopt wat er op de kaart staat met vandaag; een datum naast de
+     teller zou dan suggereren dat het beeld oud is. Die datum gaat alleen nog over de
+     details, en dat is een voetnoot: ze staat in de instellingen. Zonder live vloot is
+     het hele beeld wél van die datum, en dan hoort ze naast de teller. */
+  $("datumregel").textContent = datum && !staat.live ? t("telling.bijgewerkt", { datum }) : "";
+  const bron = $("bronregel");
+  bron.textContent = !datum ? ""
+    : t(staat.live ? "instellingen.bronLive" : "instellingen.bronDump", { datum });
+  bron.hidden = !datum;
 }
 
 /* ==========================================================================
@@ -776,6 +1045,8 @@ function vlagTelling(sleutel) {
    `staat` en niet in de opmaak, dus opnieuw tekenen verliest geen enkele keuze. */
 function vulKeuzes() {
   const groepen = [
+    ["nieuw", "filter-nieuw",
+     [["nieuw", t("filter.nieuw"), staat.aantalNieuw]], staat.gekozenNieuw],
     ["soort", "filter-soort",
      staat.soorten.map(([w, n]) => [w, waarde(w), n]), staat.gekozenSoort],
     ["brandstof", "filter-brandstof",
@@ -806,6 +1077,9 @@ function vulKeuzes() {
 }
 
 function bouwFilters() {
+  /* Het blokje "Nieuw in de vloot" staat er alleen als er nieuwe auto's zijn: zonder live
+     vloot, of na een verversing die ze allemaal in de feed zette, is er niets te kiezen. */
+  $("sectie-nieuw").hidden = staat.aantalNieuw === 0;
   vulKeuzes();
   bouwZitplaatsen();
   bouwEuronorm();
@@ -820,6 +1094,7 @@ function bouwFilters() {
     brandstof: staat.gekozenBrandstof,
     soort: staat.gekozenSoort,
     bak: staat.gekozenBak,
+    nieuw: staat.gekozenNieuw,
     vlag: staat.gekozenVlaggen
   };
   /* Op het paneel en niet op #filters: op een telefoon staan de chips in het zwevende
@@ -1031,6 +1306,7 @@ function stationAfstandVan(w) {
    aangevinkte hebben ("met trekhaak én fietsdrager"). Er bestaat geen negatieve
    variant — op een ontbrekend toebehoren kan niet gefilterd worden. */
 function wagenPast(w) {
+  if (staat.gekozenNieuw.size && !w.nieuw) return false;
   if (staat.gekozenBrandstof.size && !staat.gekozenBrandstof.has(w.brandstof)) return false;
   if (staat.gekozenSoort.size && !staat.gekozenSoort.has(w.carrosserie)) return false;
   if (staat.minZit !== null && !(w.zitplaatsen >= staat.minZit)) return false;
@@ -1065,6 +1341,7 @@ function redenen(w) {
   const r = [];
   const onbekend = t("reden.onbekend");
   const paar = (kop, tekst) => t("reden.paar", { kop: t(kop), waarde: tekst });
+  if (staat.gekozenNieuw.size && !w.nieuw) r.push(t("reden.nietNieuw"));
   if (staat.gekozenSoort.size && !staat.gekozenSoort.has(w.carrosserie)) {
     r.push(paar("kop.soort", w.carrosserie ? waarde(w.carrosserie) : onbekend));
   }
@@ -1113,6 +1390,7 @@ function uitgefilterdTitel(station, naam) {
 }
 
 function herstelFilters() {
+  staat.gekozenNieuw.clear();
   staat.gekozenBrandstof.clear();
   staat.gekozenSoort.clear();
   staat.gekozenBak.clear();
@@ -1208,8 +1486,15 @@ function popupHtml(station) {
              '<p class="wagen__naam">' + ontsnap(w.naam) +
                (w.plaats ? ' <span class="wagen__plaats">(' + ontsnap(w.plaats) + ")</span>" : "") +
              "</p>" +
-             '<p class="wagen__model">' + ontsnap(w.merk + " " + w.model) +
-               (w.bouwjaar ? " · " + ontsnap(w.bouwjaar) : "") + "</p>" +
+             /* Een nieuwe wagen (alleen in de live vloot, nog niet in de feed) heeft geen
+                merk of model: in de plaats daarvan het label en wat er nog volgt. */
+             (w.nieuw
+               ? '<p class="wagen__model"><span class="wagen__nieuw">' +
+                   ontsnap(t("popup.nieuw")) + "</span>" +
+                   '<span class="wagen__nieuwuitleg">' + ontsnap(t("popup.nieuwUitleg")) +
+                   "</span></p>"
+               : '<p class="wagen__model">' + ontsnap(w.merk + " " + w.model) +
+                   (w.bouwjaar ? " · " + ontsnap(w.bouwjaar) : "") + "</p>") +
              (buiten.length
                ? '<p class="wagen__buiten">' +
                    ontsnap(t("reden.buiten", { redenen: buiten.join(" · ") })) + "</p>"
@@ -1540,6 +1825,7 @@ function teken() {
   toonNamen();
 
   const gefilterd = staat.gekozenBrandstof.size + staat.gekozenSoort.size +
+                    staat.gekozenNieuw.size +
                     staat.gekozenBak.size + staat.gekozenVlaggen.size +
                     (staat.minZit !== null ? 1 : 0) +
                     (staat.minNorm !== null ? 1 : 0) +
@@ -2491,7 +2777,8 @@ function toonLijst(rijen, titelFn, legeFn) {
     const waar = [r.wagen.plaats, waarde(r.wagen.brandstof)].filter(Boolean).join(" · ");
     return '<li><button type="button" class="dichtbij__kaartje" data-i="' + i + '">' +
       '<span class="dichtbij__naam">' + ontsnap(r.wagen.naam) + "</span>" +
-      '<span class="dichtbij__model">' + ontsnap(r.wagen.merk + " " + r.wagen.model) + "</span>" +
+      '<span class="dichtbij__model">' +
+        ontsnap(r.wagen.nieuw ? t("popup.nieuw") : r.wagen.merk + " " + r.wagen.model) + "</span>" +
       '<span class="dichtbij__waar">' + ontsnap(waar) + "</span>" +
       // Bij zoeken op naam is er geen punt om vanaf te meten, dus geen afstand.
       (r.meters === undefined ? ""

@@ -42,12 +42,13 @@ zelf is wel echt:
 Zet er dus geen `async` op en verplaats de tag niet naar de kop zonder `defer`: dan breekt
 het op een plek die niets met de oorzaak te maken heeft.
 
-**Geen backend.** De pagina leest twee JSON-bestanden en tekent wat erin staat. Geen
-server, geen databank, geen sessie. Ze draait van elke statische hosting.
+**Geen eigen backend.** De pagina leest twee JSON-bestanden, legt ze naast de live vloot
+van Dégage (één publiek GET-verzoek, zie "De live vloot") en tekent wat eruit komt. Geen
+eigen server, geen databank, geen sessie. Ze draait van elke statische hosting.
 
 **Geen tracking, geen externe fonts.** Het enige verkeer naar buiten: de kaarttegels van
-OpenStreetMap, de twee bibliotheken van unpkg, en — alleen als de bezoeker een adres
-intikt — één verzoek naar Nominatim.
+OpenStreetMap, de twee bibliotheken van unpkg, de live vloot van degapp.be, en — alleen
+als de bezoeker een adres intikt — één verzoek naar Nominatim.
 
 **Bedoeld als iframe.** De pagina hangt in een WordPress-omgeving die haar maat pas ná het
 laden vaststelt. Alles wat met afmetingen te maken heeft, houdt daar rekening mee (zie
@@ -62,6 +63,7 @@ laden vaststelt. Alles wat met afmetingen te maken heeft, houdt daar rekening me
 | tile.openstreetmap.org | de kaarttegels | attributie is een licentievoorwaarde |
 | tile.openstreetmap.fr | de kaarttegels in het Frans (Franse plaatsnamen) | eigen naamsvermelding; bij storing terug naar de standaardtegels (`TEGELS_PER_TAAL`) |
 | nominatim.openstreetmap.org | adres → coördinaat | alleen bij verzenden, zie "Zoeken" |
+| degapp.be/api/v1/car/stands | de live vloot: welke auto's er zijn en waar | `VLOOT_API`; bij fout of na `VLOOT_WACHTTIJD_MS` terug naar de feed, zie "De live vloot" |
 
 De SRI-hashes (`integrity=`) zijn geen sier: verandert het bestand op de CDN, dan weigert
 de browser het uit te voeren. Wie een versie opwaardeert, moet dus **ook de hash
@@ -107,6 +109,101 @@ en toch hetzelfde `station_id` houden; zonder die test zou ze de bereikbaarheid 
 oude adres dragen. Past het niet, dan staat er een waarschuwing in de console en geen
 OV-blok in de popup.
 
+### De live vloot
+
+De feed is een kwartaaldump; de vloot verandert elke week. Daarom haalt `laden()` ook
+**`VLOOT_API`** op (`https://degapp.be/api/v1/car/stands`, publiek, CORS `*`). Die geeft
+per auto alleen dit:
+
+```json
+{ "id": 3, "displayName": "BlackBird",
+  "geoPosition": { "latitude": 51.0545, "longitude": 3.7213 },
+  "vehicleInformation": { "fuelType": "diesel", "type": "manual" },
+  "stationType": "fixed" }
+```
+
+**De regel: die lijst beslist wélke auto's er zijn en wáár ze staan. De feed levert alleen
+nog de details.** `metLiveVloot()` herschikt de feed daarnaar en geeft stations, wagens en
+een OV-bestand terug in precies de vorm van de feed, zodat de rest van `laden()` en de hele
+kaart niet hoeft te weten waar ze vandaan komen.
+
+**1. Koppelen.** De feed draagt geen `[intern]`, maar het `station_id` ís `"st-"` + het
+laagste `[intern]` op die plek (zie de generator). Dus, in twee rondes:
+
+- **op id** — staat er op `st-<id>` één feedwagen, dan is hij het, ook als hij
+  intussen een andere naam draagt; staan er meer, dan die met dezelfde naam;
+- **op naam** — voor wat overblijft; namen zijn uniek in de vloot (nagekeken op
+  28-09-2026, aan beide kanten).
+
+Twee rondes, en niet per auto beide na elkaar: anders kan een naamtreffer een feedwagen
+inpikken die in de volgende stap op id aan een andere auto zou hangen.
+
+**2. Wat met elke auto gebeurt.**
+
+| | in de API | niet in de API |
+|---|---|---|
+| **in de feed** | feedwagen, met de naam uit de API en de standplaats van hieronder | **weg** — bestaat niet meer |
+| **niet in de feed** | **nieuw**: `{ naam, brandstof?, versnellingsbak?, toebehoren: {}, nieuw: true }` | — |
+
+Een nieuwe wagen draagt **alleen** wat de API weet. `fuelType` en `type` worden vertaald
+met `API_BRANDSTOF` en `API_BAK` naar de woorden van de feed; een waarde die daar niet in
+staat, wordt weggelaten in plaats van geraden. Alle andere velden ontbreken, en de kaart
+kan daar al tegen: een popup toont wat er is, en een filter op een ontbrekend gegeven laat
+de wagen vallen (`wagenPast()`, dezelfde regel als voor een onbekende euronorm). De popup
+toont het label `popup.nieuw` op de plaats van merk en model, met `popup.nieuwUitleg`
+eronder; de balk met dichtstbijzijnde auto's toont hetzelfde label. De stijl is
+`.wagen__nieuw` in `index.css`.
+
+Om ze te vinden is er een eigen filtergroep, `nieuw`: de sectie `#sectie-nieuw` bovenaan
+de filters, met één keuze (`filter.nieuw`) in `#filter-nieuw`, de set
+`staat.gekozenNieuw` en een regel in `wagenPast()` en `redenen()`
+(`reden.nietNieuw`). `staat.aantalNieuw` telt ze in `laden()`; bij 0 verbergt
+`bouwFilters()` de hele sectie.
+
+Een API-auto zonder bruikbare `geoPosition` (ontbrekend, geen getal, of 0) wordt
+overgeslagen: een auto zonder plek kan niet op een kaart.
+
+**3. Waar de stip komt.** Eerst groeperen op het exacte API-punt (op 6 decimalen, net als
+de generator). Dan per punt:
+
+- ligt er een **gekoppelde auto die niet verhuisd is** — zijn API-punt ligt binnen
+  `locatie_nauwkeurigheid_m` + `VERHUIS_MARGE_M` (20 + 10 m) van zijn feedstip — dan blijft
+  de plek **op die feedstip**, met haar OV-gegevens. Een nieuwe auto op datzelfde punt komt
+  erbij. Twee API-punten bij dezelfde feedstip worden één plek;
+- anders (**nieuwe plek of verhuisd**) wordt het API-punt vervaagd met **`verschuif()`**,
+  de regel-voor-regel-kopie van `verschuif()` in `scripts/genereer_gbfs.py`: SHA-256 van
+  `"lat,lon"` op 6 decimalen, de eerste 8 bytes big-endian als hoek, en
+  `locatie_nauwkeurigheid_m` meter in die richting. Zo'n plek heeft geen OV-gegevens.
+
+Het `station_id` volgt de regel van de generator: `"st-"` + het laagste `id`.
+
+*Waarom niet gewoon elk API-punt opnieuw vervagen?* De coördinaten in de API en in de dump
+zijn niet bit voor bit gelijk, en de hash ziet elk verschil: opnieuw vervagen gaf bijna
+élke stip een andere richting — verspringende stippen tegenover de feed, en geen enkele
+OV-regel meer. Wijzig je `verschuif()` in de generator, wijzig dan deze mee; dat beide
+versies dezelfde uitkomst geven, is op 28-09-2026 nagekeken.
+
+*Waarom `VERHUIS_MARGE_M = 10`?* Bepaald op een meting van 28-09-2026; de cijfers staan in
+de interne notities (zie `README.md`).
+
+**4. Terugvallen.** De kaart toont gewoon de feed, met een waarschuwing in de console, als:
+
+- de API niet antwoordt binnen `VLOOT_WACHTTIJD_MS` (8 s), een fout geeft, of geen lijst;
+- de lijst leeg is (of geen enkele auto met een plek bevat) — een lege vloot is eerder een
+  storing dan de waarheid;
+- de feed geen `locatie_nauwkeurigheid_m` draagt — dan is er geen afstand om mee te vervagen;
+- de browser geen `crypto.subtle` heeft (alleen op `https` of `localhost`) — zonder
+  vervaging komt er niets uit de API op de kaart.
+
+`staat.live` zegt welke van de twee er getoond wordt, en `toonDatum()` volgt dat: live
+staat er geen datum naast de teller en zegt `#bronregel` in de instellingen hoe oud de
+details zijn (`instellingen.bronLive`); zonder live vloot staat `telling.bijgewerkt` naast
+de teller en in de instellingen `instellingen.bronDump`. Bij succes staat er een regel in de
+console met het aantal nieuwe, verhuisde en verdwenen auto's, en de namen van die laatste.
+
+**Wat dit niet raakt:** de GBFS-feed zelf. Aggregatoren lezen nog altijd de kwartaaldump;
+de live vloot bestaat alleen in de kaart.
+
 ## 4. Datastroom
 
 ```
@@ -119,8 +216,11 @@ laden()
   ├── haal("degage_vehicles")  ────┤
   ├── laadFotos()              ────┤ parallel
   ├── laadBereik()             ────┤
-  └── laadOv()                 ────┘  (pas na de test op voor_feed in staat.ov)
+  ├── laadOv()                 ────┤  (daarna de test op voor_feed)
+  └── laadVloot()              ────┘  (VLOOT_API; null bij fout)
         │
+        ├─ metLiveVloot()  → stations, wagens en OV volgens de live vloot
+        │                    (overgeslagen bij fout: dan gewoon de feed)
         ├─ wagens groeperen per station_id
         ├─ staat.stations vullen (alleen stations mét wagens)
         ├─ filterwaarden uit de data afleiden (brandstoffen, soorten, bakken,

@@ -9,8 +9,27 @@ de internationale standaard voor deelmobiliteit. Twee dingen dus:
 2. **De kaart** (`map/index.html`) leest die feed en gaat als iframe op degage.be.
 
 Er is **geen live verbinding met de databank**. De feed beschrijft de toestand van de
-laatste dump, en dat staat ook zo op de kaart. Verversen gebeurt per kwartaal, met de hand —
+laatste dump. Verversen gebeurt per kwartaal, met de hand —
 met één opdracht: [**Bijwerken: alles in één keer**](#bijwerken-alles-in-één-keer).
+
+**De kaart is wél live over één ding: welke auto's er zijn en waar ze staan.** Bij het
+openen leest ze de publieke lijst op
+[`degapp.be/api/v1/car/stands`](https://degapp.be/api/v1/car/stands), en die lijst is de
+baas:
+
+- **Staat een auto daar niet in, dan bestaat hij niet** — ook niet als hij nog in de feed
+  staat. Hij verdwijnt van de kaart.
+- **Staat hij er wel in maar niet in de feed, dan is hij nieuw.** Hij komt op de kaart met
+  alleen wat die lijst weet (naam, brandstof, versnellingsbak), met hetzelfde vervagen van
+  de standplaats als alle andere, en met het label **"Nieuwe auto"** in de popup. Wat we
+  niet weten — merk, model, bouwjaar, toebehoren, gemeente... — laten we weg.
+- **Is een auto verhuisd, dan staat hij op zijn nieuwe plek.**
+
+De details komen dus nog altijd uit de kwartaalverversing; daarna verdwijnt het label
+"Nieuwe auto" vanzelf. Antwoordt de lijst niet, dan toont de kaart gewoon de feed. De
+**GBFS-feed** voor aggregatoren verandert hier niet door. Hoe het werkt:
+[`FUNCTIONEEL.md`](FUNCTIONEEL.md#de-live-vloot-welke-autos-er-zijn) voor wat de bezoeker
+ziet, [`TECHNIEK.md`](TECHNIEK.md#de-live-vloot) voor de koppeling en het vervagen.
 
 ## Wat waar staat
 
@@ -49,6 +68,9 @@ hosten. Voor de kaart zelf zijn er twee andere documenten:
 > (afbakening, datamodel, privacygrenzen), `FEEDSPEC.md` (de volledige veldspecificatie),
 > `WERKWIJZE.md` (de kwartaalverversing), `OPENSTAAND.md` en de interne controlescripts.
 > Verwijzingen naar `SCOPE.md` en `FEEDSPEC.md` in de code slaan daarop.
+> Interne notities die niet in deze repo horen, staan in de map
+> `degage-deelautokaart-gbfs-private` naast deze map; "de interne notities" in de code en
+> in `TECHNIEK.md` slaan daarop.
 >
 > **Wie de feed wil gebruiken heeft ze niet nodig.** De feed volgt GBFS v3.0; wat je moet
 > weten staat op de instappagina `/gbfs/` en in de officiële
