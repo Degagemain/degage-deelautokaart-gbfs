@@ -3,18 +3,18 @@
   "bron": "Wikimedia Commons",
   "fotos": {
     "Alfa Romeo|Giulia": {
-      "auteur": "Ermell",
+      "auteur": "AIMHO'S REBELLION 8490s",
       "bestand": "alfa-romeo-giulia.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Alfa_Romeo_Giulia_1300_Super_Kulmbach_2018_6170124.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2020_ALFA_ROMEO_GIULIA_FRONT_VIEW_IN_BRUNEI.jpg",
       "categorieen": [
-        "Category:Alfa Romeo Giulia 1300 Super",
-        "Category:June 2018 Bavaria photographs",
-        "Category:Oldtimertreffen Kulmbach 2018"
+        "Category:2020 Alfa Romeo automobiles",
+        "Category:Alfa Romeo Giulia (2015–2023)",
+        "Category:Self-published work"
       ],
-      "gezocht_op": "Giulia",
+      "gezocht_op": "Alfa Romeo Giulia (type 952)",
       "licentie": "CC BY-SA 4.0",
-      "titel": "File:Alfa Romeo Giulia 1300 Super Kulmbach 2018 6170124.jpg",
-      "verhouding": 1.414
+      "titel": "File:2020 ALFA ROMEO GIULIA FRONT VIEW IN BRUNEI.jpg",
+      "verhouding": 1.333
     },
     "Audi|Q2": {
       "auteur": "Bindydad123",
@@ -31,47 +31,52 @@
       "verhouding": 1.333
     },
     "BMW|116d": {
-      "auteur": "Rob Purvis",
+      "auteur": "M 93",
       "bestand": "bmw-116d.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:BMW_116d_entering_Gore_Lane_from_Maer_Lane_(geograph_5001595).jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:BMW_118d_M-Sportpaket_(F20)_%E2%80%93_Frontansicht,_21._April_2014,_D%C3%BCsseldorf.jpg",
       "categorieen": [
-        "Category:BMW E81",
-        "Category:White BMW hatchbacks"
+        "Category:BMW F20",
+        "Category:Images with extracted images",
+        "Category:Information field template with formatting",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "116d",
-      "licentie": "CC BY-SA 2.0",
-      "titel": "File:BMW 116d entering Gore Lane from Maer Lane (geograph 5001595).jpg",
-      "verhouding": 1.336
+      "gezocht_op": "BMW F20",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:BMW 118d M-Sportpaket (F20) – Frontansicht, 21. April 2014, Düsseldorf.jpg",
+      "verhouding": 1.936
     },
     "Citroën|Berlingo": {
-      "auteur": "Alexander Migl",
+      "auteur": "M 93",
       "bestand": "citroen-berlingo.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Citroen_e-Berlingo_Auto_Zuerich_2021_IMG_0097.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Citro%C3%ABn_Berlingo_Multispace_VTi_120_Selection_(II,_Facelift)_%E2%80%93_Frontansicht,_15._Juli_2012,_D%C3%BCsseldorf.jpg",
       "categorieen": [
-        "Category:Citroën at Auto Zürich 2021",
-        "Category:Citroën ë-Berlingo",
-        "Category:Fotoprojekt Auto Zürich Car Show 2021 (supported by Wikimedia Deutschland)",
-        "Category:Silver minivans"
+        "Category:Blue minivans",
+        "Category:Citroën Berlingo II",
+        "Category:Information field template with formatting",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "Berlingo",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:Citroen e-Berlingo Auto Zuerich 2021 IMG 0097.jpg",
-      "verhouding": 1.57
+      "gezocht_op": "Citroën Berlingo II",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Citroën Berlingo Multispace VTi 120 Selection (II, Facelift) – Frontansicht, 15. Juli 2012, Düsseldorf.jpg",
+      "verhouding": 1.696
     },
     "Citroën|Berlingo Multispace": {
-      "auteur": "Alexander Migl",
+      "auteur": "M 93",
       "bestand": "citroen-berlingo-multispace.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Citroen_e-Berlingo_Auto_Zuerich_2021_IMG_0097.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Citro%C3%ABn_Berlingo_Multispace_VTi_120_Selection_(II,_Facelift)_%E2%80%93_Frontansicht,_15._Juli_2012,_D%C3%BCsseldorf.jpg",
       "categorieen": [
-        "Category:Citroën at Auto Zürich 2021",
-        "Category:Citroën ë-Berlingo",
-        "Category:Fotoprojekt Auto Zürich Car Show 2021 (supported by Wikimedia Deutschland)",
-        "Category:Silver minivans"
+        "Category:Blue minivans",
+        "Category:Citroën Berlingo II",
+        "Category:Information field template with formatting",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "Berlingo",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:Citroen e-Berlingo Auto Zuerich 2021 IMG 0097.jpg",
-      "verhouding": 1.57
+      "gezocht_op": "Citroën Berlingo II",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Citroën Berlingo Multispace VTi 120 Selection (II, Facelift) – Frontansicht, 15. Juli 2012, Düsseldorf.jpg",
+      "verhouding": 1.696
     },
     "Citroën|Berlingo XL": {
       "auteur": "Alexander Migl",
@@ -89,45 +94,50 @@
       "verhouding": 1.57
     },
     "Citroën|C1": {
-      "auteur": "Calreyn88",
+      "auteur": "M 93",
       "bestand": "citroen-c1.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Citroen_C1_BRSCC_City_Car_Cup.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Citro%C3%ABn_C1_PureTech_82_Airscape_Feel_Edition_(II)_%E2%80%93_Frontansicht,_19._September_2015,_Frankfurt.jpg",
       "categorieen": [
-        "Category:Bicester Heritage Scramble in January 2025",
-        "Category:Citroën C1"
+        "Category:Citroën C1 (2014)",
+        "Category:Citroën at IAA 2015",
+        "Category:Information field template with formatting",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "C1",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:Citroen C1 BRSCC City Car Cup.jpg",
-      "verhouding": 1.334
+      "gezocht_op": "Citroën C1 (2014)",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Citroën C1 PureTech 82 Airscape Feel Edition (II) – Frontansicht, 19. September 2015, Frankfurt.jpg",
+      "verhouding": 1.695
     },
     "Citroën|C3": {
-      "auteur": "Retired electrician",
+      "auteur": "M 93",
       "bestand": "citroen-c3.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Moscow,_Citroen_C3_blueish-silver,_Sept_2025_01.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Citro%C3%ABn_C3_VTi_82_Selection_(II,_Facelift)_%E2%80%93_Frontansicht,_1._M%C3%A4rz_2014,_Wuppertal.jpg",
       "categorieen": [
-        "Category:Automobiles in Moscow photographed in 2025",
-        "Category:Citroën C3 (1st generation)",
-        "Category:Citroën automobiles in Moscow"
+        "Category:Citroën C3 (2013)",
+        "Category:Information field template with formatting",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "C3",
-      "licentie": "CC0",
-      "titel": "File:Moscow, Citroen C3 blueish-silver, Sept 2025 01.jpg",
-      "verhouding": 1.393
+      "gezocht_op": "Citroën C3 (2nd generation)",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Citroën C3 VTi 82 Selection (II, Facelift) – Frontansicht, 1. März 2014, Wuppertal.jpg",
+      "verhouding": 1.697
     },
     "Citroën|C3 1.2 Puretech 83 S&S BVM Live": {
-      "auteur": "MoCars",
+      "auteur": "© M 93",
       "bestand": "citroen-c3-1-2-puretech-83-s-s-bvm-live.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:2024_Citro%C3%ABn_C3_Aircross_1.2_PureTech_in_TSM_Bandung_outside_01.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Citro%C3%ABn_C3_BlueHDi_100_Shine_(III)_%E2%80%93_Frontansicht,_24._Juni_2017,_D%C3%BCsseldorf.jpg",
       "categorieen": [
-        "Category:2024 Citroën automobiles",
-        "Category:Blue Citroën SUVs",
-        "Category:Citroën C3 Aircross (CC24)"
+        "Category:Citroën C3 (3rd generation)",
+        "Category:Information field template with formatting",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "C3 1.2",
-      "licentie": "CC0",
-      "titel": "File:2024 Citroën C3 Aircross 1.2 PureTech in TSM Bandung outside 01.jpg",
-      "verhouding": 1.778
+      "gezocht_op": "Citroën C3 (3rd generation)",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Citroën C3 BlueHDi 100 Shine (III) – Frontansicht, 24. Juni 2017, Düsseldorf.jpg",
+      "verhouding": 1.57
     },
     "Citroën|C3 Aircross": {
       "auteur": "Acabashi",
@@ -156,18 +166,19 @@
       "verhouding": 1.333
     },
     "Citroën|C3 Exclusive": {
-      "auteur": "Retired electrician",
+      "auteur": "M 93",
       "bestand": "citroen-c3-exclusive.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Moscow,_Citroen_C3_blueish-silver,_Sept_2025_01.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Citro%C3%ABn_C3_VTi_82_Selection_(II,_Facelift)_%E2%80%93_Frontansicht,_1._M%C3%A4rz_2014,_Wuppertal.jpg",
       "categorieen": [
-        "Category:Automobiles in Moscow photographed in 2025",
-        "Category:Citroën C3 (1st generation)",
-        "Category:Citroën automobiles in Moscow"
+        "Category:Citroën C3 (2013)",
+        "Category:Information field template with formatting",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "C3",
-      "licentie": "CC0",
-      "titel": "File:Moscow, Citroen C3 blueish-silver, Sept 2025 01.jpg",
-      "verhouding": 1.393
+      "gezocht_op": "Citroën C3 (2nd generation)",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Citroën C3 VTi 82 Selection (II, Facelift) – Frontansicht, 1. März 2014, Wuppertal.jpg",
+      "verhouding": 1.697
     },
     "Citroën|C3 Picasso": {
       "auteur": "Vauxford",
@@ -196,84 +207,80 @@
       "verhouding": 1.501
     },
     "Citroën|C4 Picasso": {
-      "auteur": "Alexander-93",
+      "auteur": "© M 93",
       "bestand": "citroen-c4-picasso.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:2025_Citro%C3%ABn_C4_Auto_Zuerich_2024_DSC_6108.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Citro%C3%ABn_Grand_C4_Picasso_(II,_Facelift)_%E2%80%93_Frontansicht,_3._Juni_2017,_D%C3%BCsseldorf.jpg",
       "categorieen": [
-        "Category:Automobiles at Auto Zürich 2024",
-        "Category:Citroën C4 (2020)",
-        "Category:Citroën at Auto Zürich 2024",
-        "Category:Fotoprojekt Auto Zürich Car Show 2024 (supported by Wikimedia Deutschland)",
-        "Category:Red Citroën SUVs"
+        "Category:Citroën C4 Picasso (2nd generation)",
+        "Category:Information field template with formatting",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "C4",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:2025 Citroën C4 Auto Zuerich 2024 DSC 6108.jpg",
-      "verhouding": 1.551
+      "gezocht_op": "Citroën C4 Picasso (2nd generation)",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Citroën Grand C4 Picasso (II, Facelift) – Frontansicht, 3. Juni 2017, Düsseldorf.jpg",
+      "verhouding": 1.663
     },
     "Citroën|C4 Spacetourer": {
-      "auteur": "Alexander-93",
+      "auteur": "Vauxford",
       "bestand": "citroen-c4-spacetourer.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:2025_Citro%C3%ABn_C4_Auto_Zuerich_2024_DSC_6108.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2018_Citroen_C4_Spacetourer_Flair_BlueHDi_1.6_Front.jpg",
       "categorieen": [
-        "Category:Automobiles at Auto Zürich 2024",
-        "Category:Citroën C4 (2020)",
-        "Category:Citroën at Auto Zürich 2024",
-        "Category:Fotoprojekt Auto Zürich Car Show 2024 (supported by Wikimedia Deutschland)",
-        "Category:Red Citroën SUVs"
+        "Category:2018 Citroën automobiles",
+        "Category:Citroën C4 SpaceTourer",
+        "Category:Citroën automobiles in the United Kingdom",
+        "Category:Photographs by Vauxford — 2018",
+        "Category:Self-published work"
       ],
-      "gezocht_op": "C4",
+      "gezocht_op": "Citroën C4 SpaceTourer",
       "licentie": "CC BY-SA 4.0",
-      "titel": "File:2025 Citroën C4 Auto Zuerich 2024 DSC 6108.jpg",
-      "verhouding": 1.551
+      "titel": "File:2018 Citroen C4 Spacetourer Flair BlueHDi 1.6 Front.jpg",
+      "verhouding": 1.85
     },
     "Citroën|C4 grand Picasso": {
-      "auteur": "Alexander-93",
+      "auteur": "© M 93",
       "bestand": "citroen-c4-grand-picasso.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:2025_Citro%C3%ABn_C4_Auto_Zuerich_2024_DSC_6108.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Citro%C3%ABn_Grand_C4_Picasso_(II,_Facelift)_%E2%80%93_Frontansicht,_3._Juni_2017,_D%C3%BCsseldorf.jpg",
       "categorieen": [
-        "Category:Automobiles at Auto Zürich 2024",
-        "Category:Citroën C4 (2020)",
-        "Category:Citroën at Auto Zürich 2024",
-        "Category:Fotoprojekt Auto Zürich Car Show 2024 (supported by Wikimedia Deutschland)",
-        "Category:Red Citroën SUVs"
+        "Category:Citroën C4 Picasso (2nd generation)",
+        "Category:Information field template with formatting",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "C4",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:2025 Citroën C4 Auto Zuerich 2024 DSC 6108.jpg",
-      "verhouding": 1.551
+      "gezocht_op": "Citroën C4 Picasso (2nd generation)",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Citroën Grand C4 Picasso (II, Facelift) – Frontansicht, 3. Juni 2017, Düsseldorf.jpg",
+      "verhouding": 1.663
     },
     "Citroën|C4 grand Picasso 1.6": {
-      "auteur": "Alexander-93",
+      "auteur": "M 93",
       "bestand": "citroen-c4-grand-picasso-1-6.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:2025_Citro%C3%ABn_C4_Auto_Zuerich_2024_DSC_6108.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Citro%C3%ABn_Grand_C4_Picasso_HDi_110_Tendance_(Facelift)_%E2%80%93_Frontansicht,_16._April_2011,_D%C3%BCsseldorf.jpg",
       "categorieen": [
-        "Category:Automobiles at Auto Zürich 2024",
-        "Category:Citroën C4 (2020)",
-        "Category:Citroën at Auto Zürich 2024",
-        "Category:Fotoprojekt Auto Zürich Car Show 2024 (supported by Wikimedia Deutschland)",
-        "Category:Red Citroën SUVs"
+        "Category:Black station wagons",
+        "Category:Citroën C4 Picasso (1st generation)",
+        "Category:Taken with Casio Exilim EX-Z1080"
       ],
-      "gezocht_op": "C4",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:2025 Citroën C4 Auto Zuerich 2024 DSC 6108.jpg",
-      "verhouding": 1.551
+      "gezocht_op": "Citroën C4 Picasso (1st generation)",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Citroën Grand C4 Picasso HDi 110 Tendance (Facelift) – Frontansicht, 16. April 2011, Düsseldorf.jpg",
+      "verhouding": 1.704
     },
     "Citroën|C4 grand spacetourer": {
-      "auteur": "Alexander-93",
+      "auteur": "Vauxford",
       "bestand": "citroen-c4-grand-spacetourer.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:2025_Citro%C3%ABn_C4_Auto_Zuerich_2024_DSC_6108.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2018_Citroen_C4_Grand_Spacetourer_Feel_BlueHDi_S_1.5_Front.jpg",
       "categorieen": [
-        "Category:Automobiles at Auto Zürich 2024",
-        "Category:Citroën C4 (2020)",
-        "Category:Citroën at Auto Zürich 2024",
-        "Category:Fotoprojekt Auto Zürich Car Show 2024 (supported by Wikimedia Deutschland)",
-        "Category:Red Citroën SUVs"
+        "Category:2018 Citroën automobiles",
+        "Category:Citroën C4 SpaceTourer",
+        "Category:Citroën automobiles in the United Kingdom",
+        "Category:Photographs by Vauxford — 2018",
+        "Category:Self-published work"
       ],
-      "gezocht_op": "C4",
+      "gezocht_op": "Citroën C4 SpaceTourer",
       "licentie": "CC BY-SA 4.0",
-      "titel": "File:2025 Citroën C4 Auto Zuerich 2024 DSC 6108.jpg",
-      "verhouding": 1.551
+      "titel": "File:2018 Citroen C4 Grand Spacetourer Feel BlueHDi S 1.5 Front.jpg",
+      "verhouding": 1.665
     },
     "Citroën|C5 X": {
       "auteur": "Alexander Migl",
@@ -307,20 +314,21 @@
       "verhouding": 1.57
     },
     "Citroën|Jumpy": {
-      "auteur": "Retired electrician",
+      "auteur": "Cutlass",
       "bestand": "citroen-jumpy.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Moscow,_Citro%C3%ABn_Jumpy_(2nd_gen)_white_Sept_2025_01.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2022_Citro%C3%ABn_Dispatch,_front_left,_06-05-2025.jpg",
       "categorieen": [
-        "Category:Automobiles in Moscow photographed in 2025",
-        "Category:Citroën Jumpy (second generation)",
-        "Category:Citroën automobiles in Moscow",
-        "Category:White Citroën vans",
-        "Category:Zatsepsky Val Street"
+        "Category:CC-Zero",
+        "Category:Citroën Jumpy (third generation)",
+        "Category:Photographs taken by Cutlass",
+        "Category:Self-published work",
+        "Category:Vehicles in Galway",
+        "Category:White Citroën vans"
       ],
-      "gezocht_op": "Jumpy",
+      "gezocht_op": "Citroën Jumpy (third generation)",
       "licentie": "CC0",
-      "titel": "File:Moscow, Citroën Jumpy (2nd gen) white Sept 2025 01.jpg",
-      "verhouding": 1.616
+      "titel": "File:2022 Citroën Dispatch, front left, 06-05-2025.jpg",
+      "verhouding": 1.567
     },
     "Citroën|Nemo": {
       "auteur": "CORLIN",
@@ -390,17 +398,20 @@
       "verhouding": 1.57
     },
     "Dacia|DUSTER": {
-      "auteur": "Alexander-93",
+      "auteur": "M 93",
       "bestand": "dacia-duster.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Dacia_Duster_III_IMG_8961.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Dacia_Duster_TCe_125_4x2_Prestige_(Facelift)_%E2%80%93_Frontansicht,_13._Juli_2014,_Ratingen.jpg",
       "categorieen": [
-        "Category:Dacia Duster III",
-        "Category:Grey Dacia SUVs"
+        "Category:Dacia Duster I",
+        "Category:Information field template with formatting",
+        "Category:Self-published work",
+        "Category:Silver Dacia SUVs",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "DUSTER",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:Dacia Duster III IMG 8961.jpg",
-      "verhouding": 1.503
+      "gezocht_op": "Dacia Duster I",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Dacia Duster TCe 125 4x2 Prestige (Facelift) – Frontansicht, 13. Juli 2014, Ratingen.jpg",
+      "verhouding": 1.728
     },
     "Dacia|Dokker": {
       "auteur": "Overlaet",
@@ -449,44 +460,50 @@
       "verhouding": 1.334
     },
     "Dacia|Logan": {
-      "auteur": "JanekJankowski",
+      "auteur": "(G)jabz",
       "bestand": "dacia-logan.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Dacia_Logan_III.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Dacia_Logan_2012%E2%80%932017_(front).jpg",
       "categorieen": [
-        "Category:Dacia Logan III"
+        "Category:2012 Dacia automobiles",
+        "Category:Dacia Logan II",
+        "Category:Self-published work"
       ],
-      "gezocht_op": "Logan",
+      "gezocht_op": "Dacia Logan II",
       "licentie": "CC BY-SA 4.0",
-      "titel": "File:Dacia Logan III.jpg",
-      "verhouding": 1.509
+      "titel": "File:Dacia Logan 2012–2017 (front).jpg",
+      "verhouding": 1.73
     },
     "Dacia|Logan MCV": {
-      "auteur": "Huhu Uet",
+      "auteur": "Vauxford",
       "bestand": "dacia-logan-mcv.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Dacia_Logan_MCV_Model_2009_06.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2017_Dacia_Logan_MCV_Laureate_DCi_1.5_Front.jpg",
       "categorieen": [
-        "Category:2009 Dacia automobiles",
-        "Category:Blue station wagons",
-        "Category:Dacia Logan MCV facelift"
+        "Category:Dacia Logan II MCV",
+        "Category:Dacia automobiles in the United Kingdom",
+        "Category:Diesel-powered Dacia automobiles",
+        "Category:Photographs by Vauxford — 2017",
+        "Category:Self-published work"
       ],
-      "gezocht_op": "Logan MCV",
-      "licentie": "CC BY-SA 3.0",
-      "titel": "File:Dacia Logan MCV Model 2009 06.jpg",
-      "verhouding": 1.41
+      "gezocht_op": "Dacia Logan II MCV",
+      "licentie": "CC BY-SA 4.0",
+      "titel": "File:2017 Dacia Logan MCV Laureate DCi 1.5 Front.jpg",
+      "verhouding": 1.746
     },
     "Dacia|Logan MCV SCe 75": {
-      "auteur": "Huhu Uet",
+      "auteur": "Vauxford",
       "bestand": "dacia-logan-mcv-sce-75.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Dacia_Logan_MCV_Model_2009_06.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2017_Dacia_Logan_MCV_Laureate_DCi_1.5_Front.jpg",
       "categorieen": [
-        "Category:2009 Dacia automobiles",
-        "Category:Blue station wagons",
-        "Category:Dacia Logan MCV facelift"
+        "Category:Dacia Logan II MCV",
+        "Category:Dacia automobiles in the United Kingdom",
+        "Category:Diesel-powered Dacia automobiles",
+        "Category:Photographs by Vauxford — 2017",
+        "Category:Self-published work"
       ],
-      "gezocht_op": "Logan MCV",
-      "licentie": "CC BY-SA 3.0",
-      "titel": "File:Dacia Logan MCV Model 2009 06.jpg",
-      "verhouding": 1.41
+      "gezocht_op": "Dacia Logan II MCV",
+      "licentie": "CC BY-SA 4.0",
+      "titel": "File:2017 Dacia Logan MCV Laureate DCi 1.5 Front.jpg",
+      "verhouding": 1.746
     },
     "Dacia|New Sandero": {
       "auteur": "crash71100",
@@ -501,17 +518,21 @@
       "verhouding": 1.689
     },
     "Dacia|Sandero": {
-      "auteur": "Alexander Migl",
+      "auteur": "M 93",
       "bestand": "dacia-sandero.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Dacia_Sandero_III_1X7A6451.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Dacia_Sandero_TCe_90_eco%C2%B2_Laur%C3%A9ate_(II)_%E2%80%93_Frontansicht,_21._April_2013,_M%C3%BCnster.jpg",
       "categorieen": [
-        "Category:Dacia Sandero III",
-        "Category:Silver Dacia hatchbacks"
+        "Category:Automobiles with license plates of Münster (Westfalen)",
+        "Category:Blue Dacia hatchbacks",
+        "Category:Dacia Sandero II",
+        "Category:Information field template with formatting",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "Sandero",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:Dacia Sandero III 1X7A6451.jpg",
-      "verhouding": 1.683
+      "gezocht_op": "Dacia Sandero II",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Dacia Sandero TCe 90 eco² Lauréate (II) – Frontansicht, 21. April 2013, Münster.jpg",
+      "verhouding": 1.696
     },
     "Dacia|Spring Extreme Electric 65 - EcoSmart": {
       "auteur": "Alexander Migl",
@@ -582,44 +603,49 @@
       "verhouding": 2.035
     },
     "Fiat|500": {
-      "auteur": "böhringer friedrich",
+      "auteur": "Harvey Bold",
       "bestand": "fiat-500.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Fiat_Nuova_500_20.JPG",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2019_FIAT_500_Rockstar_-_1242cc_1.2_(69PS)_Petrol_-_White_-_06-2024,_Front.jpg",
       "categorieen": [
-        "Category:2011 Fiat automobiles",
-        "Category:Automobiles lined up on the line",
-        "Category:Fiat 500 (1957-1975)"
+        "Category:Fiat 500 (type 312)",
+        "Category:Self-published work"
       ],
-      "gezocht_op": "500",
-      "licentie": "CC BY-SA 2.5",
-      "titel": "File:Fiat Nuova 500 20.JPG",
-      "verhouding": 1.506
+      "gezocht_op": "Fiat 500 (type 312)",
+      "licentie": "CC BY 4.0",
+      "titel": "File:2019 FIAT 500 Rockstar - 1242cc 1.2 (69PS) Petrol - White - 06-2024, Front.jpg",
+      "verhouding": 1.549
     },
     "Fiat|500L": {
-      "auteur": "The Car Spy",
+      "auteur": "M 93",
       "bestand": "fiat-500l.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:1970_FIAT_500L_-_Flickr_-_The_Car_Spy.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Fiat_500L_1.4_16V_Easy_%E2%80%93_Frontansicht,_17._November_2012,_Heiligenhaus.jpg",
       "categorieen": [
-        "Category:1970 Fiat automobiles",
-        "Category:Fiat 500 L"
+        "Category:Automobiles facing right",
+        "Category:Fiat 500L",
+        "Category:Information field template with formatting",
+        "Category:Microvans",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000",
+        "Category:White minivans"
       ],
-      "gezocht_op": "500L",
-      "licentie": "CC BY 2.0",
-      "titel": "File:1970 FIAT 500L - Flickr - The Car Spy.jpg",
-      "verhouding": 1.333
+      "gezocht_op": "Fiat 500L",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Fiat 500L 1.4 16V Easy – Frontansicht, 17. November 2012, Heiligenhaus.jpg",
+      "verhouding": 1.727
     },
     "Fiat|DOBLO EASY 1.4TJET CNG 120PK": {
-      "auteur": "Alexander-93",
+      "auteur": "Vauxford",
       "bestand": "fiat-doblo-easy-1-4tjet-cng-120pk.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Fiat_Dobl%C3%B2_Mk3_1X7A7462.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2016_Fiat_Doblo_Easy_Multijet_1.6_Front.jpg",
       "categorieen": [
-        "Category:Automobiles with license plates of Nuremberg",
-        "Category:Fiat Doblò Mk3"
+        "Category:Fiat Doblò Mk2",
+        "Category:Photographs by Vauxford — 2016",
+        "Category:Self-published work"
       ],
-      "gezocht_op": "DOBLO",
+      "gezocht_op": "Fiat Doblò Mk2",
       "licentie": "CC BY-SA 4.0",
-      "titel": "File:Fiat Doblò Mk3 1X7A7462.jpg",
-      "verhouding": 1.7
+      "titel": "File:2016 Fiat Doblo Easy Multijet 1.6 Front.jpg",
+      "verhouding": 1.576
     },
     "Fiat|Doblo Cargo": {
       "auteur": "M 93",
@@ -648,17 +674,18 @@
       "verhouding": 1.683
     },
     "Fiat|Doblo Maxi": {
-      "auteur": "Alexander-93",
+      "auteur": "Vauxford",
       "bestand": "fiat-doblo-maxi.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Fiat_Dobl%C3%B2_Mk3_1X7A7462.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2016_Fiat_Doblo_Easy_Multijet_1.6_Front.jpg",
       "categorieen": [
-        "Category:Automobiles with license plates of Nuremberg",
-        "Category:Fiat Doblò Mk3"
+        "Category:Fiat Doblò Mk2",
+        "Category:Photographs by Vauxford — 2016",
+        "Category:Self-published work"
       ],
-      "gezocht_op": "Doblo",
+      "gezocht_op": "Fiat Doblò Mk2",
       "licentie": "CC BY-SA 4.0",
-      "titel": "File:Fiat Doblò Mk3 1X7A7462.jpg",
-      "verhouding": 1.7
+      "titel": "File:2016 Fiat Doblo Easy Multijet 1.6 Front.jpg",
+      "verhouding": 1.576
     },
     "Fiat|Panda": {
       "auteur": "Alexander-93",
@@ -691,49 +718,49 @@
       "verhouding": 1.333
     },
     "Fiat|Tipo": {
-      "auteur": "Charlie from United Kingdom",
+      "auteur": "© M 93",
       "bestand": "fiat-tipo.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:1994_Fiat_Tipo_1.7_DS_(11693417126).jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Fiat_Tipo_1.4_T-Jet_Lounge_(II)_%E2%80%93_Frontansicht,_24._Juni_2017,_D%C3%BCsseldorf.jpg",
       "categorieen": [
-        "Category:1994 Fiat automobiles",
-        "Category:Automobiles in the United Kingdom photographed in 2013",
-        "Category:Blue automobiles in the United Kingdom",
-        "Category:Fiat Tipo (type 160)",
-        "Category:Fiat automobiles in the United Kingdom"
+        "Category:Black Fiat hatchbacks",
+        "Category:Fiat Tipo (type 356) hatchback",
+        "Category:Information field template with formatting",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "Tipo",
-      "licentie": "CC BY 2.0",
-      "titel": "File:1994 Fiat Tipo 1.7 DS (11693417126).jpg",
-      "verhouding": 1.5
+      "gezocht_op": "Fiat Tipo (type 356)",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Fiat Tipo 1.4 T-Jet Lounge (II) – Frontansicht, 24. Juni 2017, Düsseldorf.jpg",
+      "verhouding": 1.889
     },
     "Fiat|Tipo (break)": {
-      "auteur": "Charlie from United Kingdom",
+      "auteur": "Raf24~commonswiki",
       "bestand": "fiat-tipo-break.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:1994_Fiat_Tipo_1.7_DS_(11693417126).jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Fiat_Tipo,_WAW,_front.jpg",
       "categorieen": [
-        "Category:1994 Fiat automobiles",
-        "Category:Automobiles in the United Kingdom photographed in 2013",
-        "Category:Blue automobiles in the United Kingdom",
-        "Category:Fiat Tipo (type 160)",
-        "Category:Fiat automobiles in the United Kingdom"
+        "Category:Automobiles in Warsaw",
+        "Category:Fiat Tipo Station Wagon",
+        "Category:Fiat automobiles in Poland",
+        "Category:Self-published work"
       ],
-      "gezocht_op": "Tipo",
-      "licentie": "CC BY 2.0",
-      "titel": "File:1994 Fiat Tipo 1.7 DS (11693417126).jpg",
-      "verhouding": 1.5
+      "gezocht_op": "Fiat Tipo (type 356)",
+      "licentie": "CC BY-SA 4.0",
+      "titel": "File:Fiat Tipo, WAW, front.jpg",
+      "verhouding": 1.778
     },
     "Fiat|doblo": {
-      "auteur": "Alexander-93",
+      "auteur": "Vauxford",
       "bestand": "fiat-doblo.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Fiat_Dobl%C3%B2_Mk3_1X7A7462.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2016_Fiat_Doblo_Easy_Multijet_1.6_Front.jpg",
       "categorieen": [
-        "Category:Automobiles with license plates of Nuremberg",
-        "Category:Fiat Doblò Mk3"
+        "Category:Fiat Doblò Mk2",
+        "Category:Photographs by Vauxford — 2016",
+        "Category:Self-published work"
       ],
-      "gezocht_op": "doblo",
+      "gezocht_op": "Fiat Doblò Mk2",
       "licentie": "CC BY-SA 4.0",
-      "titel": "File:Fiat Doblò Mk3 1X7A7462.jpg",
-      "verhouding": 1.7
+      "titel": "File:2016 Fiat Doblo Easy Multijet 1.6 Front.jpg",
+      "verhouding": 1.576
     },
     "Ford|B max": {
       "auteur": "M 93",
@@ -774,16 +801,18 @@
       "verhouding": 1.336
     },
     "Ford|C-Max 1.6 Duratec 5-deur": {
-      "auteur": "Alexander Migl",
+      "auteur": "Vauxford",
       "bestand": "ford-c-max-1-6-duratec-5-deur.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Ford_C-Max_Energi_P4220631.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2010_Ford_C-Max_Zetec_TD_115_1.8_Front.jpg",
       "categorieen": [
-        "Category:Ford C-Max Energi"
+        "Category:Ford C-Max (First generation)",
+        "Category:Photographs by Vauxford — 2010",
+        "Category:Self-published work"
       ],
-      "gezocht_op": "C Max",
+      "gezocht_op": "Ford C-Max (First generation)",
       "licentie": "CC BY-SA 4.0",
-      "titel": "File:Ford C-Max Energi P4220631.jpg",
-      "verhouding": 1.336
+      "titel": "File:2010 Ford C-Max Zetec TD 115 1.8 Front.jpg",
+      "verhouding": 1.744
     },
     "Ford|C-max": {
       "auteur": "Alexander Migl",
@@ -798,20 +827,19 @@
       "verhouding": 1.336
     },
     "Ford|Fiesta": {
-      "auteur": "Rutger van der Maar",
+      "auteur": "Vauxford",
       "bestand": "ford-fiesta.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Ford_Fiesta_sedan_front.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2017_Ford_Fiesta_Zetec_1.1_Front.jpg",
       "categorieen": [
-        "Category:Automobiles in Liping",
-        "Category:Chang'an Ford vehicles",
-        "Category:Ford Fiesta MK4 Sedan",
-        "Category:Ford automobiles in China",
-        "Category:Red Ford sedans"
+        "Category:Ford Fiesta MK7",
+        "Category:Ford automobiles in the United Kingdom",
+        "Category:Photographs by Vauxford — 2017",
+        "Category:Self-published work"
       ],
-      "gezocht_op": "Fiesta",
-      "licentie": "CC BY 2.0",
-      "titel": "File:Ford Fiesta sedan front.jpg",
-      "verhouding": 1.474
+      "gezocht_op": "Ford Fiesta MK7",
+      "licentie": "CC BY-SA 4.0",
+      "titel": "File:2017 Ford Fiesta Zetec 1.1 Front.jpg",
+      "verhouding": 1.79
     },
     "Ford|Focus": {
       "auteur": "Peżot",
@@ -846,98 +874,108 @@
       "verhouding": 1.347
     },
     "Ford|Galaxy": {
-      "auteur": "Robert Lamb",
+      "auteur": "DieselFordMondeo",
       "bestand": "ford-galaxy.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:View_of_a_Ford_Galaxy_in_the_Classic_Car_Boot_Sale_-_geograph.org.uk_-_4176342.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2020_Ford_Galaxy_Titanium_2.0_EcoBlue_190_(Front).jpg",
       "categorieen": [
-        "Category:Automobiles in the London Borough of Newham",
-        "Category:Ford automobiles in London"
+        "Category:Ford Galaxy (3rd generation)",
+        "Category:Self-published work"
       ],
-      "gezocht_op": "Galaxy",
-      "licentie": "CC BY-SA 2.0",
-      "titel": "File:View of a Ford Galaxy in the Classic Car Boot Sale - geograph.org.uk - 4176342.jpg",
-      "verhouding": 1.494
+      "gezocht_op": "Ford Galaxy (3rd generation)",
+      "licentie": "CC BY-SA 4.0",
+      "titel": "File:2020 Ford Galaxy Titanium 2.0 EcoBlue 190 (Front).jpg",
+      "verhouding": 1.737
     },
     "Ford|Grand C max": {
-      "auteur": "Yu Chu Chin",
+      "auteur": "M 93",
       "bestand": "ford-grand-c-max.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Ford_Falcon_(EB)_of_Dick_Johnson_at_the_2025_Adelaide_Grand_Final.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Ford_Grand_C-Max_Champions_Edition_(II)_%E2%80%93_Frontansicht,_31._Dezember_2012,_Ratingen.jpg",
       "categorieen": [
-        "Category:2025 Adelaide 500",
-        "Category:Dick Johnson",
-        "Category:Ford Falcon (EB)"
+        "Category:Ford Grand C-Max (2009)",
+        "Category:Information field template with formatting",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "Grand",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:Ford Falcon (EB) of Dick Johnson at the 2025 Adelaide Grand Final.jpg",
-      "verhouding": 1.5
+      "gezocht_op": "Ford Grand C-Max",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Ford Grand C-Max Champions Edition (II) – Frontansicht, 31. Dezember 2012, Ratingen.jpg",
+      "verhouding": 1.831
     },
     "Ford|Grand C-MAX": {
-      "auteur": "Yu Chu Chin",
+      "auteur": "M 93",
       "bestand": "ford-grand-c-max.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Ford_Falcon_(EB)_of_Dick_Johnson_at_the_2025_Adelaide_Grand_Final.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Ford_Grand_C-Max_Champions_Edition_(II)_%E2%80%93_Frontansicht,_31._Dezember_2012,_Ratingen.jpg",
       "categorieen": [
-        "Category:2025 Adelaide 500",
-        "Category:Dick Johnson",
-        "Category:Ford Falcon (EB)"
+        "Category:Ford Grand C-Max (2009)",
+        "Category:Information field template with formatting",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "Grand",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:Ford Falcon (EB) of Dick Johnson at the 2025 Adelaide Grand Final.jpg",
-      "verhouding": 1.5
+      "gezocht_op": "Ford Grand C-Max",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Ford Grand C-Max Champions Edition (II) – Frontansicht, 31. Dezember 2012, Ratingen.jpg",
+      "verhouding": 1.831
     },
     "Ford|Grand c max 1.5i EcoBoost Grand A6 150Hp Titanium": {
-      "auteur": "Yu Chu Chin",
+      "auteur": "M 93",
       "bestand": "ford-grand-c-max-1-5i-ecoboost-grand-a6-150hp-titanium.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Ford_Falcon_(EB)_of_Dick_Johnson_at_the_2025_Adelaide_Grand_Final.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Ford_Grand_C-Max_Trend_(II,_Facelift)_%E2%80%93_Frontansicht,_16._Juni_2015,_D%C3%BCsseldorf.jpg",
       "categorieen": [
-        "Category:2025 Adelaide 500",
-        "Category:Dick Johnson",
-        "Category:Ford Falcon (EB)"
+        "Category:Ford Grand C-Max (2014)",
+        "Category:Information field template with formatting",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "Grand",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:Ford Falcon (EB) of Dick Johnson at the 2025 Adelaide Grand Final.jpg",
-      "verhouding": 1.5
+      "gezocht_op": "Ford Grand C-Max",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Ford Grand C-Max Trend (II, Facelift) – Frontansicht, 16. Juni 2015, Düsseldorf.jpg",
+      "verhouding": 1.652
     },
     "Ford|Mondeo": {
-      "auteur": "JustAnotherCarDesigner",
+      "auteur": "Vauxford",
       "bestand": "ford-mondeo.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Ford_Mondeo_V_002.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2018_Ford_Mondeo_Titanium_Edition_ECOnetic_2.0_Front.jpg",
       "categorieen": [
-        "Category:Ford Mondeo (China, 2022)"
+        "Category:2018 Ford automobiles",
+        "Category:Blue Ford liftbacks",
+        "Category:Ford Mondeo Mk V (hatchback)",
+        "Category:Ford automobiles in the United Kingdom",
+        "Category:Photographs by Vauxford — 2018",
+        "Category:Self-published work"
       ],
-      "gezocht_op": "Mondeo",
+      "gezocht_op": "Ford Mondeo Mk V",
       "licentie": "CC BY-SA 4.0",
-      "titel": "File:Ford Mondeo V 002.jpg",
-      "verhouding": 1.333
+      "titel": "File:2018 Ford Mondeo Titanium Edition ECOnetic 2.0 Front.jpg",
+      "verhouding": 1.858
     },
     "Ford|Tourneo Connect": {
-      "auteur": "Alexander Migl",
+      "auteur": "Vauxford",
       "bestand": "ford-tourneo-connect.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Ford_Tourneo_Connect_Active_(3rd_generation)_Auto_Zuerich_2021_IMG_0402.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2015_Ford_Grand_Tourneo_Connect_Zetec_1.5_Front.jpg",
       "categorieen": [
-        "Category:Blue Ford minivans",
-        "Category:Ford Tourneo Connect (3rd generation)",
-        "Category:Ford at Auto Zürich 2021",
-        "Category:Fotoprojekt Auto Zürich Car Show 2021 (supported by Wikimedia Deutschland)"
+        "Category:Ford Tourneo Connect (2nd generation)",
+        "Category:Photographs by Vauxford — 2015",
+        "Category:Self-published work"
       ],
-      "gezocht_op": "Tourneo Connect",
+      "gezocht_op": "Ford Tourneo Connect (2nd generation)",
       "licentie": "CC BY-SA 4.0",
-      "titel": "File:Ford Tourneo Connect Active (3rd generation) Auto Zuerich 2021 IMG 0402.jpg",
-      "verhouding": 1.639
+      "titel": "File:2015 Ford Grand Tourneo Connect Zetec 1.5 Front.jpg",
+      "verhouding": 1.629
     },
     "Ford|Transit Courier": {
-      "auteur": "JustAnotherCarDesigner",
+      "auteur": "Vauxford",
       "bestand": "ford-transit-courier.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Ford_Transit_V362_002.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2018_Ford_Transit_Courier_Trend_facelift_1.5_Front.jpg",
       "categorieen": [
-        "Category:Ford Transit (China, 3rd gen.)"
+        "Category:Ford Transit Courier (1st generation)",
+        "Category:Ford vehicles in the United Kingdom",
+        "Category:Photographs by Vauxford — 2018",
+        "Category:Self-published work"
       ],
-      "gezocht_op": "Transit",
-      "licentie": "CC0",
-      "titel": "File:Ford Transit V362 002.jpg",
-      "verhouding": 1.333
+      "gezocht_op": "Ford Transit Courier (1st generation)",
+      "licentie": "CC BY-SA 4.0",
+      "titel": "File:2018 Ford Transit Courier Trend facelift 1.5 Front.jpg",
+      "verhouding": 1.409
     },
     "Honda|Civic Hybride": {
       "auteur": "crash71100",
@@ -954,47 +992,49 @@
       "verhouding": 1.531
     },
     "Honda|HR-V": {
-      "auteur": "Alexander Migl",
+      "auteur": "Vauxford",
       "bestand": "honda-hr-v.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Honda_HR-V_Hybrid_Auto_Zuerich_2021_IMG_0619.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2018_Honda_HR-V_SE_i-VTEC_1.5_Front.jpg",
       "categorieen": [
-        "Category:Automobiles with license plates of Frankfurt am Main",
-        "Category:Fotoprojekt Auto Zürich Car Show 2021 (supported by Wikimedia Deutschland)",
-        "Category:Honda HR-V e:HEV (RV)",
-        "Category:Honda at Auto Zürich 2021",
-        "Category:White Honda SUVs"
+        "Category:Honda HR-V (2nd generation)",
+        "Category:Honda automobiles in the United Kingdom",
+        "Category:Photographs by Vauxford — 2018",
+        "Category:Self-published work"
       ],
-      "gezocht_op": "HR-V",
+      "gezocht_op": "Honda HR-V (2nd generation)",
       "licentie": "CC BY-SA 4.0",
-      "titel": "File:Honda HR-V Hybrid Auto Zuerich 2021 IMG 0619.jpg",
-      "verhouding": 1.8
+      "titel": "File:2018 Honda HR-V SE i-VTEC 1.5 Front.jpg",
+      "verhouding": 1.653
     },
     "Honda|Jazz": {
-      "auteur": "Alexander-93",
+      "auteur": "MercurySable99",
       "bestand": "honda-jazz.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:2023_Honda_Jazz_(4th_generation)_hybrid_Advance_Sport_Auto_Zuerich_2023_1X7A1443.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2012_Honda_Fit,_front_right,_10-28-2023.jpg",
       "categorieen": [
-        "Category:Fotoprojekt Auto Zürich Car Show 2023 (supported by Wikimedia Deutschland)",
-        "Category:Grey Honda hatchbacks",
-        "Category:Honda Jazz (4th generation) hybrid",
-        "Category:Honda at Auto Zürich 2023"
+        "Category:2012 Honda automobiles",
+        "Category:Blue Honda hatchbacks",
+        "Category:Honda Fit (2nd generation)",
+        "Category:Self-published work"
       ],
-      "gezocht_op": "Jazz",
+      "gezocht_op": "Honda Fit (2nd generation)",
       "licentie": "CC BY-SA 4.0",
-      "titel": "File:2023 Honda Jazz (4th generation) hybrid Advance Sport Auto Zuerich 2023 1X7A1443.jpg",
-      "verhouding": 1.671
+      "titel": "File:2012 Honda Fit, front right, 10-28-2023.jpg",
+      "verhouding": 1.678
     },
     "Hyundai|10 1.0 limited edition 66M5": {
-      "auteur": "Rakshika_Prasad",
+      "auteur": "Makizox",
       "bestand": "hyundai-10-1-0-limited-edition-66m5.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Car_by_maker_Hyundai,_model_i10.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2017_Hyundai_i10_Premium_SE_Automatic_1.2_Front.jpg",
       "categorieen": [
-        "Category:Hyundai i10 (PA)"
+        "Category:Hyundai automobiles in the United Kingdom",
+        "Category:Hyundai i10 (IA)",
+        "Category:Photographs by Vauxford — 2017",
+        "Category:Self-published work"
       ],
-      "gezocht_op": "10",
-      "licentie": "CC BY-SA 3.0",
-      "titel": "File:Car by maker Hyundai, model i10.jpg",
-      "verhouding": 1.333
+      "gezocht_op": "Hyundai i10 (IA)",
+      "licentie": "CC BY-SA 4.0",
+      "titel": "File:2017 Hyundai i10 Premium SE Automatic 1.2 Front.jpg",
+      "verhouding": 1.668
     },
     "Hyundai|Bayon": {
       "auteur": "Alexander Migl",
@@ -1028,122 +1068,125 @@
       "verhouding": 1.511
     },
     "Hyundai|I 120": {
-      "auteur": "Mariordo (Mario Roberto Durán Ortiz)",
+      "auteur": "Vauxford",
       "bestand": "hyundai-i-120.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:BMW_i3_%26_Hyundai_Ioniq_CRI_05_2021_8960.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2018_Hyundai_i20_facelift_Front.jpg",
       "categorieen": [
-        "Category:2 automobiles",
-        "Category:BMW i3 (2017–2022)",
-        "Category:Electrically-powered automobiles in Costa Rica",
-        "Category:Hyundai Ioniq Electric",
-        "Category:Hyundai automobiles in Costa Rica"
+        "Category:Hyundai automobiles in the United Kingdom",
+        "Category:Hyundai i20 (GB)",
+        "Category:Photographs by Vauxford — 2018",
+        "Category:Self-published work"
       ],
-      "gezocht_op": "I",
+      "gezocht_op": "Hyundai i20 (GB)",
       "licentie": "CC BY-SA 4.0",
-      "titel": "File:BMW i3 & Hyundai Ioniq CRI 05 2021 8960.jpg",
-      "verhouding": 1.5
+      "titel": "File:2018 Hyundai i20 facelift Front.jpg",
+      "verhouding": 1.601
     },
     "Hyundai|I10": {
-      "auteur": "Mohammed Hamad",
+      "auteur": "M 93",
       "bestand": "hyundai-i10.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Hyundai_Grand_I10_Sedan.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Hyundai_i10_1.2_Style_(II)_%E2%80%93_Frontansicht,_26._Dezember_2013,_D%C3%BCsseldorf.jpg",
       "categorieen": [
-        "Category:Hyundai i10 (AI3)",
-        "Category:White Hyundai sedans"
+        "Category:Hyundai i10 (IA)",
+        "Category:Information field template with formatting",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "I10",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:Hyundai Grand I10 Sedan.jpg",
-      "verhouding": 1.333
+      "gezocht_op": "Hyundai i10 (IA)",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Hyundai i10 1.2 Style (II) – Frontansicht, 26. Dezember 2013, Düsseldorf.jpg",
+      "verhouding": 1.691
     },
     "Hyundai|Kona": {
-      "auteur": "Alexander-93",
+      "auteur": "© M 93",
       "bestand": "hyundai-kona.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Hyundai_Kona_Electric_(SX2)_Auto_Zuerich_2023_1X7A1021.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Hyundai_Kona_1.0_T-GDI_Trend_%E2%80%93_Frontansicht,_24._Dezember_2017,_D%C3%BCsseldorf.jpg",
       "categorieen": [
-        "Category:Fotoprojekt Auto Zürich Car Show 2023 (supported by Wikimedia Deutschland)",
-        "Category:Gray Hyundai SUVs",
-        "Category:Hyundai Kona Electric (SX2)",
-        "Category:Hyundai at Auto Zürich 2023"
+        "Category:Hyundai Kona (OS)",
+        "Category:Information field template with formatting",
+        "Category:Red Hyundai SUVs",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "Kona",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:Hyundai Kona Electric (SX2) Auto Zuerich 2023 1X7A1021.jpg",
-      "verhouding": 1.66
+      "gezocht_op": "Hyundai Kona (OS)",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Hyundai Kona 1.0 T-GDI Trend – Frontansicht, 24. Dezember 2017, Düsseldorf.jpg",
+      "verhouding": 1.804
     },
     "Hyundai|Kona Kauai": {
-      "auteur": "Alexander-93",
+      "auteur": "© M 93",
       "bestand": "hyundai-kona-kauai.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Hyundai_Kona_Electric_(SX2)_Auto_Zuerich_2023_1X7A1021.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Hyundai_Kona_1.0_T-GDI_Trend_%E2%80%93_Frontansicht,_24._Dezember_2017,_D%C3%BCsseldorf.jpg",
       "categorieen": [
-        "Category:Fotoprojekt Auto Zürich Car Show 2023 (supported by Wikimedia Deutschland)",
-        "Category:Gray Hyundai SUVs",
-        "Category:Hyundai Kona Electric (SX2)",
-        "Category:Hyundai at Auto Zürich 2023"
+        "Category:Hyundai Kona (OS)",
+        "Category:Information field template with formatting",
+        "Category:Red Hyundai SUVs",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "Kona",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:Hyundai Kona Electric (SX2) Auto Zuerich 2023 1X7A1021.jpg",
-      "verhouding": 1.66
+      "gezocht_op": "Hyundai Kona (OS)",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Hyundai Kona 1.0 T-GDI Trend – Frontansicht, 24. Dezember 2017, Düsseldorf.jpg",
+      "verhouding": 1.804
     },
     "Hyundai|i 10": {
-      "auteur": "Mariordo (Mario Roberto Durán Ortiz)",
+      "auteur": "Vauxford",
       "bestand": "hyundai-i-10.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:BMW_i3_%26_Hyundai_Ioniq_CRI_05_2021_8960.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2022_Hyundai_i10_SE_Connect_MPi_1.0_Front.jpg",
       "categorieen": [
-        "Category:2 automobiles",
-        "Category:BMW i3 (2017–2022)",
-        "Category:Electrically-powered automobiles in Costa Rica",
-        "Category:Hyundai Ioniq Electric",
-        "Category:Hyundai automobiles in Costa Rica"
+        "Category:Hyundai i10 (AC3)",
+        "Category:Photographs by Vauxford — 2022",
+        "Category:Self-published work"
       ],
-      "gezocht_op": "i",
+      "gezocht_op": "Hyundai i10 (AC3)",
       "licentie": "CC BY-SA 4.0",
-      "titel": "File:BMW i3 & Hyundai Ioniq CRI 05 2021 8960.jpg",
-      "verhouding": 1.5
+      "titel": "File:2022 Hyundai i10 SE Connect MPi 1.0 Front.jpg",
+      "verhouding": 1.866
     },
     "Hyundai|i10 1.0": {
-      "auteur": "Mohammed Hamad",
+      "auteur": "M 93",
       "bestand": "hyundai-i10-1-0.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Hyundai_Grand_I10_Sedan.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Hyundai_i10_1.2_Style_(II)_%E2%80%93_Frontansicht,_26._Dezember_2013,_D%C3%BCsseldorf.jpg",
       "categorieen": [
-        "Category:Hyundai i10 (AI3)",
-        "Category:White Hyundai sedans"
+        "Category:Hyundai i10 (IA)",
+        "Category:Information field template with formatting",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "i10",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:Hyundai Grand I10 Sedan.jpg",
-      "verhouding": 1.333
+      "gezocht_op": "Hyundai i10 (IA)",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Hyundai i10 1.2 Style (II) – Frontansicht, 26. Dezember 2013, Düsseldorf.jpg",
+      "verhouding": 1.691
     },
     "Hyundai|i20": {
-      "auteur": "Alexander-93",
+      "auteur": "M 93",
       "bestand": "hyundai-i20.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Hyundai_i20_(BC3)_Facelift_Auto_Zuerich_2023_1X7A0968.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Hyundai_i20_Trend_(II)_%E2%80%93_Frontansicht,_21._Dezember_2014,_D%C3%BCsseldorf.jpg",
       "categorieen": [
-        "Category:Fotoprojekt Auto Zürich Car Show 2023 (supported by Wikimedia Deutschland)",
-        "Category:Green Hyundai hatchbacks",
-        "Category:Hyundai at Auto Zürich 2023",
-        "Category:Hyundai i20 (BC3)"
+        "Category:Hyundai i20 (GB)",
+        "Category:Information field template with formatting",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "i20",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:Hyundai i20 (BC3) Facelift Auto Zuerich 2023 1X7A0968.jpg",
-      "verhouding": 1.622
+      "gezocht_op": "Hyundai i20 (GB)",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Hyundai i20 Trend (II) – Frontansicht, 21. Dezember 2014, Düsseldorf.jpg",
+      "verhouding": 1.656
     },
     "Hyundai|i20 3deurs": {
-      "auteur": "Alexander-93",
+      "auteur": "Vauxford",
       "bestand": "hyundai-i20-3deurs.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Hyundai_i20_(BC3)_Facelift_Auto_Zuerich_2023_1X7A0968.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2017_Hyundai_I20_Sport_NAV_MPi_Coupe_1.25_Front.jpg",
       "categorieen": [
-        "Category:Fotoprojekt Auto Zürich Car Show 2023 (supported by Wikimedia Deutschland)",
-        "Category:Green Hyundai hatchbacks",
-        "Category:Hyundai at Auto Zürich 2023",
-        "Category:Hyundai i20 (BC3)"
+        "Category:Hyundai automobiles in the United Kingdom",
+        "Category:Hyundai i20 Coupe",
+        "Category:Photographs by Vauxford — 2017",
+        "Category:Self-published work"
       ],
-      "gezocht_op": "i20",
+      "gezocht_op": "Hyundai i20 Coupe",
       "licentie": "CC BY-SA 4.0",
-      "titel": "File:Hyundai i20 (BC3) Facelift Auto Zuerich 2023 1X7A0968.jpg",
-      "verhouding": 1.622
+      "titel": "File:2017 Hyundai I20 Sport NAV MPi Coupe 1.25 Front.jpg",
+      "verhouding": 1.861
     },
     "Hyundai|i30": {
       "auteur": "Andrew Bone from Weymouth, England",
@@ -1170,17 +1213,21 @@
       "verhouding": 1.556
     },
     "Kia|Cee'd": {
-      "auteur": "Johan.V. (Johan Viirok)",
+      "auteur": "M 93",
       "bestand": "kia-cee-d.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Kia_cee%27d_xR.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Kia_cee%27d_1.6_CRDi_128_Spirit_(JD)_%E2%80%93_Frontansicht,_11._April_2015,_D%C3%BCsseldorf.jpg",
       "categorieen": [
-        "Category:Kia cee'd (ED, 2006)",
-        "Category:Yellow Kia hatchbacks"
+        "Category:Automobiles with license plates of North Rhine-Westphalia",
+        "Category:Information field template with formatting",
+        "Category:Kia cee'd (JD)",
+        "Category:License plates of Kreis Mettmann",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "Cee'd",
-      "licentie": "CC BY 2.0",
-      "titel": "File:Kia cee'd xR.jpg",
-      "verhouding": 1.515
+      "gezocht_op": "Kia cee'd (JD)",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Kia cee'd 1.6 CRDi 128 Spirit (JD) – Frontansicht, 11. April 2015, Düsseldorf.jpg",
+      "verhouding": 1.927
     },
     "Kia|Ceed": {
       "auteur": "Alexander Migl",
@@ -1226,32 +1273,32 @@
       "verhouding": 1.515
     },
     "Kia|Rio": {
-      "auteur": "Nilo42",
+      "auteur": "M 93",
       "bestand": "kia-rio.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:KIA_Rio_X-Line_BelkaCar.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Kia_Rio_1.4_CVVT_Edition_7_(UB)_%E2%80%93_Frontansicht_(1),_25._Oktober_2011,_D%C3%BCsseldorf.jpg",
       "categorieen": [
-        "Category:BelkaCar in Moscow",
-        "Category:Kia Rio (FB)"
+        "Category:Kia Rio (UB)",
+        "Category:Silver Kia hatchbacks",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "Rio",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:KIA Rio X-Line BelkaCar.jpg",
-      "verhouding": 1.498
+      "gezocht_op": "Kia Rio (UB)",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Kia Rio 1.4 CVVT Edition 7 (UB) – Frontansicht (1), 25. Oktober 2011, Düsseldorf.jpg",
+      "verhouding": 1.692
     },
     "Kia|Sportage": {
-      "auteur": "Jakub CA",
+      "auteur": "Makizox",
       "bestand": "kia-sportage.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Kia_Sportage_(NQ5;_2021).jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2016_Kia_Sportage_First_Edition_CRDI_Automatic_2.0_Front.jpg",
       "categorieen": [
-        "Category:Car parks in Slovakia",
-        "Category:Kia Sportage (NQ5)",
-        "Category:Transport in Považská Bystrica",
-        "Category:Vehicles with license plates of Slovakia"
+        "Category:Kia Sportage (QL)",
+        "Category:Photographs by Vauxford — 2016",
+        "Category:Self-published work"
       ],
-      "gezocht_op": "Sportage",
-      "licentie": "CC BY 4.0",
-      "titel": "File:Kia Sportage (NQ5; 2021).jpg",
-      "verhouding": 1.333
+      "gezocht_op": "Kia Sportage (QL)",
+      "licentie": "CC BY-SA 4.0",
+      "titel": "File:2016 Kia Sportage First Edition CRDI Automatic 2.0 Front.jpg",
+      "verhouding": 1.602
     },
     "Kia|e-Niro": {
       "auteur": "Jakub CA",
@@ -1280,34 +1327,34 @@
       "verhouding": 1.334
     },
     "Kia|eNiro": {
-      "auteur": "Jan Ainali",
+      "auteur": "Alexander Migl",
       "bestand": "kia-eniro.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Kia-eNiro-front-right.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Kia_Niro_EV_(2021)_IMG_5313.jpg",
       "categorieen": [
-        "Category:Automobiles photographed in 2022",
-        "Category:Fully Charged Live Europe 2022",
-        "Category:Kia Niro EV (SG2)",
-        "Category:Three-quarter views of Kia automobiles",
-        "Category:White Kia SUVs"
+        "Category:Files uploaded by Wmigda's script",
+        "Category:Grey Kia SUVs",
+        "Category:Kia Niro EV (DE)",
+        "Category:Self-published work",
+        "Category:User Alexander Migl - Stuttgart-Vaihingen in September 2021"
       ],
-      "gezocht_op": "eNiro",
+      "gezocht_op": "Kia Niro EV (DE)",
       "licentie": "CC BY-SA 4.0",
-      "titel": "File:Kia-eNiro-front-right.jpg",
-      "verhouding": 1.555
+      "titel": "File:Kia Niro EV (2021) IMG 5313.jpg",
+      "verhouding": 1.585
     },
     "MG|MG MG RX6 PLUGIN Hybride": {
-      "auteur": "DeFacto",
+      "auteur": "Rutger van der Maar",
       "bestand": "mg-mg-mg-rx6-plugin-hybride.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:MG_Maestro_1986.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2021_MG_EHS_1.5T_PHEV_front_view.jpg",
       "categorieen": [
-        "Category:1986 MG automobiles",
-        "Category:MG Maestro",
-        "Category:White MG hatchbacks"
+        "Category:MG (China) automobiles in the Netherlands",
+        "Category:MG EHS",
+        "Category:Silver SUVs"
       ],
-      "gezocht_op": "MG MG",
-      "licentie": "CC BY-SA 2.5",
-      "titel": "File:MG Maestro 1986.jpg",
-      "verhouding": 1.636
+      "gezocht_op": "MG EHS",
+      "licentie": "CC BY 2.0",
+      "titel": "File:2021 MG EHS 1.5T PHEV front view.jpg",
+      "verhouding": 1.518
     },
     "MG|MG5": {
       "auteur": "Ogidya",
@@ -1323,30 +1370,33 @@
       "verhouding": 1.441
     },
     "Mazda|2": {
-      "auteur": "M 93",
+      "auteur": "Harvey Bold",
       "bestand": "mazda-2.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Mazda2_(DY)_%E2%80%93_Frontansicht,_25._August_2013,_D%C3%BCsseldorf.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2009_Mazda_2_Sport_-_1498cc_1.5_(103PS)_Petrol_-_Silver_-_02-2024,_Front.jpg",
       "categorieen": [
-        "Category:Mazda2 (DY)"
+        "Category:Mazda2 (DE)",
+        "Category:Self-published work",
+        "Category:Silver Mazda hatchbacks"
       ],
-      "gezocht_op": "2",
-      "licentie": "CC BY-SA 3.0 de",
-      "titel": "File:Mazda2 (DY) – Frontansicht, 25. August 2013, Düsseldorf.jpg",
-      "verhouding": 1.646
+      "gezocht_op": "Mazda2 (DE)",
+      "licentie": "CC BY 4.0",
+      "titel": "File:2009 Mazda 2 Sport - 1498cc 1.5 (103PS) Petrol - Silver - 02-2024, Front.jpg",
+      "verhouding": 1.711
     },
     "Mazda|3": {
-      "auteur": "Riley from Christchurch, New Zealand",
+      "auteur": "Kickaffe (Mario von Berg)",
       "bestand": "mazda-3.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:1974_Mazda_RX-3_(5942576514).jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Mazda3_BM_Sports-Line_2.2_SKYACTIV-D_150_Vorderansicht.jpg",
       "categorieen": [
-        "Category:1974 Mazda automobiles",
-        "Category:Mazda RX-3",
-        "Category:Mazda automobiles in New Zealand"
+        "Category:Mazda3 (BM)",
+        "Category:Red Mazda hatchbacks",
+        "Category:Self-published work",
+        "Category:Taken with Fujifilm FinePix S1600"
       ],
-      "gezocht_op": "3",
-      "licentie": "CC BY 2.0",
-      "titel": "File:1974 Mazda RX-3 (5942576514).jpg",
-      "verhouding": 1.333
+      "gezocht_op": "Mazda3 (BM)",
+      "licentie": "CC BY-SA 3.0",
+      "titel": "File:Mazda3 BM Sports-Line 2.2 SKYACTIV-D 150 Vorderansicht.jpg",
+      "verhouding": 1.47
     },
     "Mazda|CX-3": {
       "auteur": "Vauxford",
@@ -1375,33 +1425,34 @@
       "verhouding": 1.504
     },
     "Mercedes|A": {
-      "auteur": "Matti Blume",
+      "auteur": "© M 93",
       "bestand": "mercedes-a.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Mercedes-Benz_A_200,_GIMS_2018,_Le_Grand-Saconnex_(1X7A0529).jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Mercedes-Benz_A_180_Urban_(W_176,_Facelift)_%E2%80%93_Frontansicht,_27._Juli_2016,_Velbert.jpg",
       "categorieen": [
-        "Category:Automobiles at GIMS 2018",
-        "Category:Geneva International Motor Show 2018 - Daimler press conference",
-        "Category:Mercedes-Benz W 177 (2018–2022)",
-        "Category:Mercedes-Benz at the Motorshow Geneva 2018",
-        "Category:Red Mercedes-Benz hatchbacks"
+        "Category:Information field template with formatting",
+        "Category:Mercedes-Benz 180",
+        "Category:Mercedes-Benz W176 (2015)",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "A",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:Mercedes-Benz A 200, GIMS 2018, Le Grand-Saconnex (1X7A0529).jpg",
-      "verhouding": 1.5
+      "gezocht_op": "Mercedes-Benz W176",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Mercedes-Benz A 180 Urban (W 176, Facelift) – Frontansicht, 27. Juli 2016, Velbert.jpg",
+      "verhouding": 2.053
     },
     "Mercedes|A 160 CDI": {
-      "auteur": "Nacho from Oviedo, España",
+      "auteur": "M 93",
       "bestand": "mercedes-a-160-cdi.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Mercedes_A_160_(6558284067).jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Mercedes-Benz_A_160_BlueEFFICIENCY_Serienausstattung_(W_169,_Facelift)_%E2%80%93_Frontansicht,_13._November_2011,_Heiligenhaus.jpg",
       "categorieen": [
-        "Category:Mercedes-Benz A160",
-        "Category:Red Mercedes-Benz hatchbacks"
+        "Category:Mercedes-Benz W169",
+        "Category:Silver Mercedes-Benz hatchbacks",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "A 160",
-      "licentie": "CC BY 2.0",
-      "titel": "File:Mercedes A 160 (6558284067).jpg",
-      "verhouding": 1.333
+      "gezocht_op": "Mercedes-Benz W169",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Mercedes-Benz A 160 BlueEFFICIENCY Serienausstattung (W 169, Facelift) – Frontansicht, 13. November 2011, Heiligenhaus.jpg",
+      "verhouding": 1.729
     },
     "Mercedes|A-150": {
       "auteur": "K. Jähne",
@@ -1430,59 +1481,65 @@
       "verhouding": 1.807
     },
     "Mitsubishi|Colt": {
-      "auteur": "Alexander-93",
+      "auteur": "M 93",
       "bestand": "mitsubishi-colt.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Mitsubishi_Colt_(2023)_Auto_Zuerich_2023_1X7A1118.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Mitsubishi_Colt_CZ3_1.3_Invite_(Z30,_Facelift)_%E2%80%93_Frontansicht,_20._Mai_2011,_Mettmann.jpg",
       "categorieen": [
-        "Category:Fotoprojekt Auto Zürich Car Show 2023 (supported by Wikimedia Deutschland)",
-        "Category:Mitsubishi Colt Hybrid",
-        "Category:Mitsubishi at Auto Zürich 2023",
-        "Category:Red Mitsubishi hatchbacks"
+        "Category:Mitsubishi Colt (2008)",
+        "Category:Taken with Casio Exilim EX-Z1080"
       ],
-      "gezocht_op": "Colt",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:Mitsubishi Colt (2023) Auto Zuerich 2023 1X7A1118.jpg",
-      "verhouding": 1.813
+      "gezocht_op": "Mitsubishi Colt Z30",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Mitsubishi Colt CZ3 1.3 Invite (Z30, Facelift) – Frontansicht, 20. Mai 2011, Mettmann.jpg",
+      "verhouding": 1.524
     },
     "Nissan|LEAF 40KWH": {
-      "auteur": "EurovisionNim",
+      "auteur": "Vauxford",
       "bestand": "nissan-leaf-40kwh.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:2017_Nissan_LEAF_(ZE0_MY17)_hatchback_(2018-11-02)_01.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2018_Nissan_Leaf_Tekna_Front.jpg",
       "categorieen": [
-        "Category:Automobiles with license plates of Western Australia",
-        "Category:Blue Nissan hatchbacks",
-        "Category:Nissan Leaf (ZE0)"
+        "Category:2018 Nissan automobiles",
+        "Category:Nissan Leaf (ZE1)",
+        "Category:Nissan automobiles in the United Kingdom",
+        "Category:Photographs by Vauxford — 2018",
+        "Category:Self-published work"
       ],
-      "gezocht_op": "LEAF",
+      "gezocht_op": "Nissan Leaf (ZE1)",
       "licentie": "CC BY-SA 4.0",
-      "titel": "File:2017 Nissan LEAF (ZE0 MY17) hatchback (2018-11-02) 01.jpg",
-      "verhouding": 2.014
+      "titel": "File:2018 Nissan Leaf Tekna Front.jpg",
+      "verhouding": 1.694
     },
     "Nissan|Leaf": {
-      "auteur": "EurovisionNim",
+      "auteur": "Vauxford",
       "bestand": "nissan-leaf.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:2017_Nissan_LEAF_(ZE0_MY17)_hatchback_(2018-11-02)_01.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2018_Nissan_Leaf_Tekna_Front.jpg",
       "categorieen": [
-        "Category:Automobiles with license plates of Western Australia",
-        "Category:Blue Nissan hatchbacks",
-        "Category:Nissan Leaf (ZE0)"
+        "Category:2018 Nissan automobiles",
+        "Category:Nissan Leaf (ZE1)",
+        "Category:Nissan automobiles in the United Kingdom",
+        "Category:Photographs by Vauxford — 2018",
+        "Category:Self-published work"
       ],
-      "gezocht_op": "Leaf",
+      "gezocht_op": "Nissan Leaf (ZE1)",
       "licentie": "CC BY-SA 4.0",
-      "titel": "File:2017 Nissan LEAF (ZE0 MY17) hatchback (2018-11-02) 01.jpg",
-      "verhouding": 2.014
+      "titel": "File:2018 Nissan Leaf Tekna Front.jpg",
+      "verhouding": 1.694
     },
     "Nissan|Micra": {
-      "auteur": "Wheatley Hill",
+      "auteur": "M 93",
       "bestand": "nissan-micra.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Nissan_Micra_UK_specification.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Nissan_Micra_(K13,_Facelift)_%E2%80%93_Frontansicht,_5._Juli_2014,_D%C3%BCsseldorf.jpg",
       "categorieen": [
-        "Category:Nissan Micra (K10)"
+        "Category:Information field template with formatting",
+        "Category:Nissan Micra (K13)",
+        "Category:Self-published work",
+        "Category:Silver Nissan hatchbacks",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "Micra",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:Nissan Micra UK specification.jpg",
-      "verhouding": 1.527
+      "gezocht_op": "Nissan Micra (K13)",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Nissan Micra (K13, Facelift) – Frontansicht, 5. Juli 2014, Düsseldorf.jpg",
+      "verhouding": 1.547
     },
     "Nissan|NV200": {
       "auteur": "Kārlis Dambrāns from Latvia",
@@ -1498,30 +1555,34 @@
       "verhouding": 1.5
     },
     "Nissan|Note": {
-      "auteur": "Corsadent56709",
+      "auteur": "WessexUsedCars",
       "bestand": "nissan-note.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Nissan_Note_E13_facelift,_HK_Guardforce_staff_car.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2013_Nissan_Note_N-TEC%2B_front.png",
       "categorieen": [
-        "Category:Guardforce Group",
-        "Category:Nissan Note (E13)"
+        "Category:Beige Nissan hatchbacks",
+        "Category:Media from YouTube",
+        "Category:Nissan Note (E11, 2009)",
+        "Category:Retouched pictures"
       ],
-      "gezocht_op": "Note",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:Nissan Note E13 facelift, HK Guardforce staff car.jpg",
-      "verhouding": 1.333
+      "gezocht_op": "Nissan Note (E11, Europe)",
+      "licentie": "CC BY 3.0",
+      "titel": "File:2013 Nissan Note N-TEC+ front.png",
+      "verhouding": 1.655
     },
     "Nissan|Primera": {
-      "auteur": "Tokumeigakarinoaoshima",
+      "auteur": "Rudolf Stricker",
       "bestand": "nissan-primera.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Nissan_Primera_GT_(Series_Champion_of_British_Touring_Car_Championship_in_1999)_rear.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Nissan_Primera_front_20071112.jpg",
       "categorieen": [
-        "Category:1990s Nissan automobiles in the Nissan Global Headquarters Gallery",
-        "Category:Nissan Primera GT of Laurent Aïello in 1999"
+        "Category:GFDL",
+        "Category:License migration completed",
+        "Category:Nissan Primera (P11) hatchback",
+        "Category:Self-published work"
       ],
-      "gezocht_op": "Primera",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:Nissan Primera GT (Series Champion of British Touring Car Championship in 1999) rear.jpg",
-      "verhouding": 1.333
+      "gezocht_op": "Nissan Primera (P11)",
+      "licentie": "CC BY-SA 3.0",
+      "titel": "File:Nissan Primera front 20071112.jpg",
+      "verhouding": 1.758
     },
     "Nissan|Townstar": {
       "auteur": "Alexander Migl",
@@ -1538,31 +1599,36 @@
       "verhouding": 1.499
     },
     "Opel|Agila": {
-      "auteur": "Rudolf Stricker",
+      "auteur": "M 93",
       "bestand": "opel-agila.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Opel_Agila_front_20071204.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Opel_Agila_ecoFLEX_Edition_(B)_%E2%80%93_Frontansicht,_30._August_2012,_Velbert.jpg",
       "categorieen": [
-        "Category:Opel Agila (first generation)"
+        "Category:Information field template with formatting",
+        "Category:Opel Agila (second generation)",
+        "Category:Self-published work",
+        "Category:Silver Opel hatchbacks",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "Agila",
-      "licentie": "CC BY-SA 3.0",
-      "titel": "File:Opel Agila front 20071204.jpg",
-      "verhouding": 1.231
+      "gezocht_op": "Opel Agila (second generation)",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Opel Agila ecoFLEX Edition (B) – Frontansicht, 30. August 2012, Velbert.jpg",
+      "verhouding": 1.628
     },
     "Opel|Astra": {
-      "auteur": "Alexander-93",
+      "auteur": "M 93",
       "bestand": "opel-astra.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Opel_Astra_L_Electric_Auto_Zuerich_2023_1X7A1005.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Opel_Astra_1.7_CDTI_White_Edition_(J)_%E2%80%93_Frontansicht,_23._Mai_2013,_Heiligenhaus.jpg",
       "categorieen": [
-        "Category:Blue Opel hatchbacks",
-        "Category:Fotoprojekt Auto Zürich Car Show 2023 (supported by Wikimedia Deutschland)",
-        "Category:Opel Astra L Electric",
-        "Category:Opel at Auto Zürich 2023"
+        "Category:Information field template with formatting",
+        "Category:Opel Astra J",
+        "Category:Opel CDTI",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "Astra",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:Opel Astra L Electric Auto Zuerich 2023 1X7A1005.jpg",
-      "verhouding": 1.744
+      "gezocht_op": "Opel Astra J",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Opel Astra 1.7 CDTI White Edition (J) – Frontansicht, 23. Mai 2013, Heiligenhaus.jpg",
+      "verhouding": 1.573
     },
     "Opel|Astra 5 deurs": {
       "auteur": "TuRbO_J from Adelaide, Australia",
@@ -1577,34 +1643,34 @@
       "verhouding": 1.333
     },
     "Opel|Astra SW": {
-      "auteur": "Alexander-93",
+      "auteur": "© M 93",
       "bestand": "opel-astra-sw.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Opel_Astra_L_Electric_Auto_Zuerich_2023_1X7A1005.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Opel_Astra_Sports_Tourer_1.6_BiTurbo_CDTI_ecoFLEX_Innovation_(K)_%E2%80%93_Frontansicht_(1),_28._September_2016,_D%C3%BCsseldorf.jpg",
       "categorieen": [
-        "Category:Blue Opel hatchbacks",
-        "Category:Fotoprojekt Auto Zürich Car Show 2023 (supported by Wikimedia Deutschland)",
-        "Category:Opel Astra L Electric",
-        "Category:Opel at Auto Zürich 2023"
+        "Category:Information field template with formatting",
+        "Category:Opel Astra K Sports Tourer",
+        "Category:Opel CDTI",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "Astra",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:Opel Astra L Electric Auto Zuerich 2023 1X7A1005.jpg",
-      "verhouding": 1.744
+      "gezocht_op": "Opel Astra K Sports Tourer",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Opel Astra Sports Tourer 1.6 BiTurbo CDTI ecoFLEX Innovation (K) – Frontansicht (1), 28. September 2016, Düsseldorf.jpg",
+      "verhouding": 2.073
     },
     "Opel|Astra Sports Tourer": {
-      "auteur": "Retired electrician",
+      "auteur": "M 93",
       "bestand": "opel-astra-sports-tourer.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Moscow,_Opel_Astra_K_Sports_Tourer_red,_Aug_2026_01.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Opel_Astra_Sports_Tourer_1.6_Design_Edition_(J)_%E2%80%93_Frontansicht,_24._Juni_2011,_Velbert.jpg",
       "categorieen": [
-        "Category:Automobiles in Moscow photographed in 2026",
-        "Category:Opel Astra K Sports Tourer",
-        "Category:Opel automobiles in Moscow",
-        "Category:Red Opel station wagons"
+        "Category:Black Opel station wagons",
+        "Category:Opel Astra J Sports Tourer",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "Astra Sports Tourer",
-      "licentie": "CC0",
-      "titel": "File:Moscow, Opel Astra K Sports Tourer red, Aug 2026 01.jpg",
-      "verhouding": 1.661
+      "gezocht_op": "Opel Astra J Sports Tourer",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Opel Astra Sports Tourer 1.6 Design Edition (J) – Frontansicht, 24. Juni 2011, Velbert.jpg",
+      "verhouding": 1.598
     },
     "Opel|Combo": {
       "auteur": "Alexander-93",
@@ -1621,19 +1687,21 @@
       "verhouding": 1.503
     },
     "Opel|Corsa": {
-      "auteur": "Alexander-93",
+      "auteur": "M 93",
       "bestand": "opel-corsa.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:2023_Opel_Corsa_F_Auto_Zuerich_2023_1X7A1113.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Opel_Corsa_1.3_CDTI_ecoFLEX_Innovation_(E)_%E2%80%93_Frontansicht,_24._Dezember_2015,_Ratingen.jpg",
       "categorieen": [
-        "Category:Fotoprojekt Auto Zürich Car Show 2023 (supported by Wikimedia Deutschland)",
-        "Category:Opel Corsa F (2023–)",
-        "Category:Opel at Auto Zürich 2023",
-        "Category:Red Opel hatchbacks"
+        "Category:Images with extracted images",
+        "Category:Information field template with formatting",
+        "Category:Opel CDTI",
+        "Category:Opel Corsa E",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "Corsa",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:2023 Opel Corsa F Auto Zuerich 2023 1X7A1113.jpg",
-      "verhouding": 1.825
+      "gezocht_op": "Opel Corsa E",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Opel Corsa 1.3 CDTI ecoFLEX Innovation (E) – Frontansicht, 24. Dezember 2015, Ratingen.jpg",
+      "verhouding": 1.784
     },
     "Opel|Corsa-e": {
       "auteur": "Alexander-93",
@@ -1680,79 +1748,85 @@
       "verhouding": 1.667
     },
     "Opel|Insignia Grand Sport": {
-      "auteur": "LSDSL",
+      "auteur": "Matti Blume",
       "bestand": "opel-insignia-grand-sport.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Opel_Insignia_rear.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Opel_Insignia_GSi_(1X7A8481).jpg",
       "categorieen": [
-        "Category:Opel Insignia (concept car)",
-        "Category:Opel at IAA 2003"
+        "Category:License plates of Kreis Groß-Gerau",
+        "Category:Number 337 on vehicle registration plates",
+        "Category:Opel Insignia B GSi",
+        "Category:Parked automobiles in Hesse",
+        "Category:Rear views of Opel automobiles",
+        "Category:Taken with Canon EOS 5D Mark IV and Canon EF 24-70mm F2.8L II USM",
+        "Category:Uploaded with LrMediaWiki",
+        "Category:User MB-one supported by Wikimedia Deutschland/Lightroom",
+        "Category:White fastbacks"
       ],
-      "gezocht_op": "Insignia",
-      "licentie": "CC BY-SA 3.0",
-      "titel": "File:Opel Insignia rear.jpg",
-      "verhouding": 1.333
+      "gezocht_op": "Opel Insignia B",
+      "licentie": "CC BY-SA 4.0",
+      "titel": "File:Opel Insignia GSi (1X7A8481).jpg",
+      "verhouding": 1.5
     },
     "Opel|Meriva": {
-      "auteur": "Retired electrician",
+      "auteur": "M 93",
       "bestand": "opel-meriva.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Moscow,_Opel_Meriva_A,_Aug_2025_01.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Opel_Meriva_1.4_Design_Edition_(B)_%E2%80%93_Frontansicht,_11._M%C3%A4rz_2012,_Heiligenhaus.jpg",
       "categorieen": [
-        "Category:Automobiles in Moscow photographed in 2025",
-        "Category:Opel Meriva A",
-        "Category:Opel automobiles in Moscow"
+        "Category:Information field template with formatting",
+        "Category:Opel Meriva B",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "Meriva",
-      "licentie": "CC0",
-      "titel": "File:Moscow, Opel Meriva A, Aug 2025 01.jpg",
-      "verhouding": 1.5
+      "gezocht_op": "Opel Meriva B",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Opel Meriva 1.4 Design Edition (B) – Frontansicht, 11. März 2012, Heiligenhaus.jpg",
+      "verhouding": 1.639
     },
     "Opel|Meriva automatic diesel": {
-      "auteur": "Retired electrician",
+      "auteur": "M 93",
       "bestand": "opel-meriva-automatic-diesel.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Moscow,_Opel_Meriva_A,_Aug_2025_01.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Opel_Meriva_1.4_Style_(B,_Facelift)_%E2%80%93_Frontansicht,_24._Oktober_2015,_M%C3%BCnster.jpg",
       "categorieen": [
-        "Category:Automobiles in Moscow photographed in 2025",
-        "Category:Opel Meriva A",
-        "Category:Opel automobiles in Moscow"
+        "Category:Information field template with formatting",
+        "Category:Opel Meriva B",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "Meriva",
-      "licentie": "CC0",
-      "titel": "File:Moscow, Opel Meriva A, Aug 2025 01.jpg",
-      "verhouding": 1.5
+      "gezocht_op": "Opel Meriva B",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Opel Meriva 1.4 Style (B, Facelift) – Frontansicht, 24. Oktober 2015, Münster.jpg",
+      "verhouding": 1.7
     },
     "Opel|Mokka": {
-      "auteur": "Alexander-93",
+      "auteur": "M 93",
       "bestand": "opel-mokka.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:2025_Opel_Mokka-e_Auto_Zuerich_2024_DSC_6710.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Opel_Mokka_1.4_Turbo_ecoFLEX_Innovation_%E2%80%93_Frontansicht,_20._Oktober_2012,_Heiligenhaus.jpg",
       "categorieen": [
-        "Category:Blue Opel SUVs",
-        "Category:Fotoprojekt Auto Zürich Car Show 2024 (supported by Wikimedia Deutschland)",
-        "Category:Opel Mokka-e",
-        "Category:Opel at Auto Zürich 2024"
+        "Category:Information field template with formatting",
+        "Category:Opel Mokka A",
+        "Category:Self-published work",
+        "Category:Silver Opel SUVs",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "Mokka",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:2025 Opel Mokka-e Auto Zuerich 2024 DSC 6710.jpg",
-      "verhouding": 1.496
+      "gezocht_op": "Opel Mokka A",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Opel Mokka 1.4 Turbo ecoFLEX Innovation – Frontansicht, 20. Oktober 2012, Heiligenhaus.jpg",
+      "verhouding": 1.741
     },
     "Opel|Vivaro": {
-      "auteur": "Globetrotter19",
+      "auteur": "Alexander Migl",
       "bestand": "opel-vivaro.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Franziskanergymnasium_Szentendre_Opel_Vivaro,_2023_B%C3%A9k%C3%A1smegyer.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Opel_Vivaro_C_IMG_3460.jpg",
       "categorieen": [
-        "Category:April 2023 in Budapest",
-        "Category:Car parks in Budapest",
-        "Category:Franciscan High School, Szentendre",
-        "Category:Opel Vivaro B",
-        "Category:Pünkösdfürdő utca, Budapest",
-        "Category:Transport in Budapest District III",
-        "Category:Vans in Budapest",
-        "Category:White Opel vans"
+        "Category:Files uploaded by Wmigda's script",
+        "Category:Opel Vivaro C",
+        "Category:Self-published work",
+        "Category:User Alexander Migl - Stuttgart in October 2020"
       ],
-      "gezocht_op": "Vivaro",
-      "licentie": "CC BY-SA 3.0",
-      "titel": "File:Franziskanergymnasium Szentendre Opel Vivaro, 2023 Békásmegyer.jpg",
-      "verhouding": 1.333
+      "gezocht_op": "Opel Vivaro C",
+      "licentie": "CC BY-SA 4.0",
+      "titel": "File:Opel Vivaro C IMG 3460.jpg",
+      "verhouding": 1.505
     },
     "Opel|Zafira": {
       "auteur": "Rahul Krishnaswamy",
@@ -1835,102 +1909,116 @@
       "verhouding": 1.646
     },
     "Peugeot|2008": {
-      "auteur": "Alexander Migl",
+      "auteur": "M 93",
       "bestand": "peugeot-2008.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Peugeot_e-2008_Automesse_Ludwigsburg_2022_1X7A5883.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Peugeot_2008_82_VTi_Access_%E2%80%93_Frontansicht,_28._Mai_2014,_D%C3%BCsseldorf.jpg",
       "categorieen": [
-        "Category:Blue Peugeot SUVs",
-        "Category:Peugeot e-2008"
+        "Category:Information field template with formatting",
+        "Category:Peugeot 2008 A",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000",
+        "Category:White Peugeot SUVs"
       ],
-      "gezocht_op": "2008",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:Peugeot e-2008 Automesse Ludwigsburg 2022 1X7A5883.jpg",
-      "verhouding": 1.608
+      "gezocht_op": "Peugeot 2008 A",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Peugeot 2008 82 VTi Access – Frontansicht, 28. Mai 2014, Düsseldorf.jpg",
+      "verhouding": 1.681
     },
     "Peugeot|2008 active pack automatic": {
-      "auteur": "TuRbO_J from Adelaide, Australia",
+      "auteur": "Cutlass",
       "bestand": "peugeot-2008-active-pack-automatic.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:2013_Peugeot_2008_Active_(15427155577).jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2023_Peugeot_2008_in_Vertigo_Blue,_front_left,_06-08-2025.jpg",
       "categorieen": [
-        "Category:Peugeot 2008 A"
+        "Category:2023 Peugeot automobiles",
+        "Category:Automobiles in Bushmills",
+        "Category:Blue Peugeot SUVs",
+        "Category:CC-Zero",
+        "Category:June 2025 in County Antrim",
+        "Category:Northern Ireland photographs taken on 2025-06-08",
+        "Category:Peugeot 2008 B",
+        "Category:Photographs taken by Cutlass",
+        "Category:Self-published work"
       ],
-      "gezocht_op": "2008 active",
-      "licentie": "CC BY 2.0",
-      "titel": "File:2013 Peugeot 2008 Active (15427155577).jpg",
-      "verhouding": 1.333
+      "gezocht_op": "Peugeot 2008 B",
+      "licentie": "CC0",
+      "titel": "File:2023 Peugeot 2008 in Vertigo Blue, front left, 06-08-2025.jpg",
+      "verhouding": 1.747
     },
     "Peugeot|207": {
-      "auteur": "Alpha 350 from Hungary",
+      "auteur": "M 93",
       "bestand": "peugeot-207.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Peugeot_207_car_radio_(23729264850).jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Peugeot_207_75_Forever_(Facelift)_%E2%80%93_Frontansicht,_5._Mai_2012,_Ratingen.jpg",
       "categorieen": [
-        "Category:Automobile audio/video",
-        "Category:Peugeot 207"
+        "Category:Images with extracted images",
+        "Category:Information field template with formatting",
+        "Category:Peugeot 207",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "207",
-      "licentie": "CC BY 2.0",
-      "titel": "File:Peugeot 207 car radio (23729264850).jpg",
-      "verhouding": 1.778
+      "gezocht_op": "Peugeot 207",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Peugeot 207 75 Forever (Facelift) – Frontansicht, 5. Mai 2012, Ratingen.jpg",
+      "verhouding": 1.691
     },
     "Peugeot|208": {
-      "auteur": "Alexander-93",
+      "auteur": "M 93",
       "bestand": "peugeot-208.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Peugeot_e-208_facelift_Auto_Zuerich_2023_1X7A1209.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Peugeot_208_95_VTi_Allure_%E2%80%93_Frontansicht,_1._Mai_2012,_Ratingen.jpg",
       "categorieen": [
-        "Category:Fotoprojekt Auto Zürich Car Show 2023 (supported by Wikimedia Deutschland)",
-        "Category:Peugeot at Auto Zürich 2023",
-        "Category:Peugeot e-208 facelift",
-        "Category:Yellow Peugeot hatchbacks"
+        "Category:Information field template with formatting",
+        "Category:Peugeot 208 A",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "208",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:Peugeot e-208 facelift Auto Zuerich 2023 1X7A1209.jpg",
-      "verhouding": 1.499
+      "gezocht_op": "Peugeot 208 A",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Peugeot 208 95 VTi Allure – Frontansicht, 1. Mai 2012, Ratingen.jpg",
+      "verhouding": 1.645
     },
     "Peugeot|208 TDi": {
-      "auteur": "Alexander-93",
+      "auteur": "M 93",
       "bestand": "peugeot-208-tdi.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Peugeot_e-208_facelift_Auto_Zuerich_2023_1X7A1209.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Peugeot_208_95_VTi_Allure_%E2%80%93_Frontansicht,_1._Mai_2012,_Ratingen.jpg",
       "categorieen": [
-        "Category:Fotoprojekt Auto Zürich Car Show 2023 (supported by Wikimedia Deutschland)",
-        "Category:Peugeot at Auto Zürich 2023",
-        "Category:Peugeot e-208 facelift",
-        "Category:Yellow Peugeot hatchbacks"
+        "Category:Information field template with formatting",
+        "Category:Peugeot 208 A",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "208",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:Peugeot e-208 facelift Auto Zuerich 2023 1X7A1209.jpg",
-      "verhouding": 1.499
+      "gezocht_op": "Peugeot 208 A",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Peugeot 208 95 VTi Allure – Frontansicht, 1. Mai 2012, Ratingen.jpg",
+      "verhouding": 1.645
     },
     "Peugeot|208 hatchback 5 deurs": {
-      "auteur": "Alexander-93",
+      "auteur": "M 93",
       "bestand": "peugeot-208-hatchback-5-deurs.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Peugeot_e-208_facelift_Auto_Zuerich_2023_1X7A1209.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Peugeot_208_95_VTi_Allure_%E2%80%93_Frontansicht,_1._Mai_2012,_Ratingen.jpg",
       "categorieen": [
-        "Category:Fotoprojekt Auto Zürich Car Show 2023 (supported by Wikimedia Deutschland)",
-        "Category:Peugeot at Auto Zürich 2023",
-        "Category:Peugeot e-208 facelift",
-        "Category:Yellow Peugeot hatchbacks"
+        "Category:Information field template with formatting",
+        "Category:Peugeot 208 A",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "208",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:Peugeot e-208 facelift Auto Zuerich 2023 1X7A1209.jpg",
-      "verhouding": 1.499
+      "gezocht_op": "Peugeot 208 A",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Peugeot 208 95 VTi Allure – Frontansicht, 1. Mai 2012, Ratingen.jpg",
+      "verhouding": 1.645
     },
     "Peugeot|308": {
-      "auteur": "Alexander-93",
+      "auteur": "Vauxford",
       "bestand": "peugeot-308.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Peugeot_e-308_Auto_Zuerich_2023_1X7A1211.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2017_Peugeot_308_facelift_Front.jpg",
       "categorieen": [
-        "Category:Fotoprojekt Auto Zürich Car Show 2023 (supported by Wikimedia Deutschland)",
-        "Category:Peugeot at Auto Zürich 2023",
-        "Category:Peugeot e-308",
-        "Category:White Peugeot hatchbacks"
+        "Category:Peugeot 308 B",
+        "Category:Peugeot automobiles in the United Kingdom",
+        "Category:Photographs by Vauxford — 2017",
+        "Category:Self-published work"
       ],
-      "gezocht_op": "308",
+      "gezocht_op": "Peugeot 308 B",
       "licentie": "CC BY-SA 4.0",
-      "titel": "File:Peugeot e-308 Auto Zuerich 2023 1X7A1211.jpg",
-      "verhouding": 1.499
+      "titel": "File:2017 Peugeot 308 facelift Front.jpg",
+      "verhouding": 1.632
     },
     "Peugeot|308sw 1.5 hdi allure": {
       "auteur": "Ethan Llamas",
@@ -1948,32 +2036,36 @@
       "verhouding": 1.5
     },
     "Peugeot|5008": {
-      "auteur": "MoCars",
+      "auteur": "© M 93",
       "bestand": "peugeot-5008.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Peugeot_5008_I_(Bleu_Philae)_in_Yogyakarta,_Indonesia_01.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Peugeot_5008_PureTech_130_EAT6_Allure_GT-Line_(II)_%E2%80%93_Frontansicht,_24._Dezember_2017,_D%C3%BCsseldorf.jpg",
       "categorieen": [
-        "Category:Blue Peugeot automobiles",
-        "Category:Peugeot 5008 A"
+        "Category:Images with extracted images",
+        "Category:Information field template with formatting",
+        "Category:Peugeot 5008 B",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "5008",
-      "licentie": "CC0",
-      "titel": "File:Peugeot 5008 I (Bleu Philae) in Yogyakarta, Indonesia 01.jpg",
-      "verhouding": 1.333
+      "gezocht_op": "Peugeot 5008 B",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Peugeot 5008 PureTech 130 EAT6 Allure GT-Line (II) – Frontansicht, 24. Dezember 2017, Düsseldorf.jpg",
+      "verhouding": 1.949
     },
     "Peugeot|508": {
-      "auteur": "Alexander-93",
+      "auteur": "M 93",
       "bestand": "peugeot-508.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Peugeot_508_B_Peugeot_Sport_Engineered_SW_(2023)_Auto_Zuerich_2023_1X7A1459.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Peugeot_508_SW_HDi_FAP_160_Allure_%E2%80%93_Frontansicht,_28._April_2012,_D%C3%BCsseldorf.jpg",
       "categorieen": [
-        "Category:Fotoprojekt Auto Zürich Car Show 2023 (supported by Wikimedia Deutschland)",
-        "Category:Grey Peugeot station wagons",
-        "Category:Peugeot 508 B Peugeot Sport Engineered SW (2023)",
-        "Category:Peugeot at Auto Zürich 2023"
+        "Category:Black Peugeot station wagons",
+        "Category:Information field template with formatting",
+        "Category:Peugeot 508 A SW",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "508",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:Peugeot 508 B Peugeot Sport Engineered SW (2023) Auto Zuerich 2023 1X7A1459.jpg",
-      "verhouding": 1.499
+      "gezocht_op": "Peugeot 508 A",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Peugeot 508 SW HDi FAP 160 Allure – Frontansicht, 28. April 2012, Düsseldorf.jpg",
+      "verhouding": 1.858
     },
     "Peugeot|Bipper": {
       "auteur": "Nacho from Oviedo, España",
@@ -2031,32 +2123,34 @@
       "verhouding": 1.499
     },
     "Peugeot|Expert L2H1": {
-      "auteur": "Retired electrician",
+      "auteur": "M 93",
       "bestand": "peugeot-expert-l2h1.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Moscow_car_show_2026-07-31_Peugeot_Expert_04.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Peugeot_Expert_(II,_Facelift)_%E2%80%93_Frontansicht,_15._Juli_2012,_Ratingen.jpg",
       "categorieen": [
-        "Category:Peugeot Expert III",
-        "Category:Peugeot automobiles in Moscow",
-        "Category:Pro dvizheniye (2026 automobile show)"
+        "Category:Information field template with formatting",
+        "Category:Peugeot Expert II",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "Expert",
-      "licentie": "CC0",
-      "titel": "File:Moscow car show 2026-07-31 Peugeot Expert 04.jpg",
-      "verhouding": 1.499
+      "gezocht_op": "Peugeot Expert II",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Peugeot Expert (II, Facelift) – Frontansicht, 15. Juli 2012, Ratingen.jpg",
+      "verhouding": 1.751
     },
     "Peugeot|Partner": {
-      "auteur": "Alexander-93",
+      "auteur": "M 93",
       "bestand": "peugeot-partner.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Peugeot_e-Partner_Auto_Zuerich_2023_1X7A1428.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Peugeot_Partner_Kastenwagen_e-HDi_FAP_90_Avantage_%2B_(II,_Facelift)_%E2%80%93_Frontansicht,_11._Februar_2013,_D%C3%BCsseldorf.jpg",
       "categorieen": [
-        "Category:Fotoprojekt Auto Zürich Car Show 2023 (supported by Wikimedia Deutschland)",
-        "Category:Peugeot at Auto Zürich 2023",
-        "Category:Peugeot e-Partner"
+        "Category:Information field template with formatting",
+        "Category:Peugeot Partner Mk2",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "Partner",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:Peugeot e-Partner Auto Zuerich 2023 1X7A1428.jpg",
-      "verhouding": 1.499
+      "gezocht_op": "Peugeot Partner Mk2",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Peugeot Partner Kastenwagen e-HDi FAP 90 Avantage + (II, Facelift) – Frontansicht, 11. Februar 2013, Düsseldorf.jpg",
+      "verhouding": 1.678
     },
     "Peugeot|Partner Full Electric": {
       "auteur": "Alexander-93",
@@ -2147,64 +2241,67 @@
       "verhouding": 1.724
     },
     "Renault|Clio": {
-      "auteur": "Alexander-93",
+      "auteur": "M 93",
       "bestand": "renault-clio.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Renault_Clio_V_(2023)_Esprit_Alpine_Auto_Zuerich_2023_1X7A1075.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Renault_Clio_Dynamique_ENERGY_TCe_90_Start_%26_Stop_eco%C2%B2_(IV)_%E2%80%93_Frontansicht,_13._Juli_2014,_Ratingen.jpg",
       "categorieen": [
-        "Category:Fotoprojekt Auto Zürich Car Show 2023 (supported by Wikimedia Deutschland)",
-        "Category:Orange Renault hatchbacks",
-        "Category:Renault Clio V (2023)",
-        "Category:Renault at Auto Zürich 2023"
+        "Category:Information field template with formatting",
+        "Category:Renault Clio IV",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "Clio",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:Renault Clio V (2023) Esprit Alpine Auto Zuerich 2023 1X7A1075.jpg",
-      "verhouding": 1.499
+      "gezocht_op": "Renault Clio IV",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Renault Clio Dynamique ENERGY TCe 90 Start & Stop eco² (IV) – Frontansicht, 13. Juli 2014, Ratingen.jpg",
+      "verhouding": 1.553
     },
     "Renault|Clio 0.9 TCe 90 Limited": {
-      "auteur": "Alexander-93",
+      "auteur": "M 93",
       "bestand": "renault-clio-0-9-tce-90-limited.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Renault_Clio_V_(2023)_Esprit_Alpine_Auto_Zuerich_2023_1X7A1075.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Renault_Clio_Dynamique_ENERGY_TCe_90_Start_%26_Stop_eco%C2%B2_(IV)_%E2%80%93_Frontansicht,_13._Juli_2014,_Ratingen.jpg",
       "categorieen": [
-        "Category:Fotoprojekt Auto Zürich Car Show 2023 (supported by Wikimedia Deutschland)",
-        "Category:Orange Renault hatchbacks",
-        "Category:Renault Clio V (2023)",
-        "Category:Renault at Auto Zürich 2023"
+        "Category:Information field template with formatting",
+        "Category:Renault Clio IV",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "Clio",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:Renault Clio V (2023) Esprit Alpine Auto Zuerich 2023 1X7A1075.jpg",
-      "verhouding": 1.499
+      "gezocht_op": "Renault Clio IV",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Renault Clio Dynamique ENERGY TCe 90 Start & Stop eco² (IV) – Frontansicht, 13. Juli 2014, Ratingen.jpg",
+      "verhouding": 1.553
     },
     "Renault|Clio Bros": {
-      "auteur": "Alexander-93",
+      "auteur": "M 93",
       "bestand": "renault-clio-bros.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Renault_Clio_V_(2023)_Esprit_Alpine_Auto_Zuerich_2023_1X7A1075.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Renault_Clio_III_20090527_front.JPG",
       "categorieen": [
-        "Category:Fotoprojekt Auto Zürich Car Show 2023 (supported by Wikimedia Deutschland)",
-        "Category:Orange Renault hatchbacks",
-        "Category:Renault Clio V (2023)",
-        "Category:Renault at Auto Zürich 2023"
+        "Category:PD-self",
+        "Category:Renault Clio III",
+        "Category:Self-published work",
+        "Category:Silver Renault hatchbacks",
+        "Category:Taken with Casio Exilim EX-Z1080"
       ],
-      "gezocht_op": "Clio",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:Renault Clio V (2023) Esprit Alpine Auto Zuerich 2023 1X7A1075.jpg",
-      "verhouding": 1.499
+      "gezocht_op": "Renault Clio III",
+      "licentie": "Public domain",
+      "titel": "File:Renault Clio III 20090527 front.JPG",
+      "verhouding": 1.383
     },
     "Renault|Clio Grandtour IV": {
-      "auteur": "Alexander-93",
+      "auteur": "Overlaet",
       "bestand": "renault-clio-grandtour-iv.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Renault_Clio_V_(2023)_Esprit_Alpine_Auto_Zuerich_2023_1X7A1075.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Renault_Clio_IV_Estate_(front_side_quarter).JPG",
       "categorieen": [
-        "Category:Fotoprojekt Auto Zürich Car Show 2023 (supported by Wikimedia Deutschland)",
-        "Category:Orange Renault hatchbacks",
-        "Category:Renault Clio V (2023)",
-        "Category:Renault at Auto Zürich 2023"
+        "Category:GFDL",
+        "Category:License migration redundant",
+        "Category:Red Renault station wagons",
+        "Category:Renault Clio IV Estate",
+        "Category:Renault at Mondial de l'Automobile de Paris 2012",
+        "Category:Self-published work"
       ],
-      "gezocht_op": "Clio",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:Renault Clio V (2023) Esprit Alpine Auto Zuerich 2023 1X7A1075.jpg",
-      "verhouding": 1.499
+      "gezocht_op": "Renault Clio IV Estate",
+      "licentie": "CC BY-SA 3.0",
+      "titel": "File:Renault Clio IV Estate (front side quarter).JPG",
+      "verhouding": 1.709
     },
     "Renault|Clio IV": {
       "auteur": "Anthony Levrot",
@@ -2221,71 +2318,84 @@
       "verhouding": 1.333
     },
     "Renault|Grand Scénic": {
-      "auteur": "Retired electrician",
+      "auteur": "Vauxford",
       "bestand": "renault-grand-scenic.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Moscow,_Renault_Grand_Sc%C3%A9nic_III,_Aug_2026_02.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2017_Renault_Grand_Scenic_SIG_NAV_DCi_1.5_Front.jpg",
       "categorieen": [
-        "Category:Automobiles in Moscow photographed in 2026",
-        "Category:Renault Grand Scénic III",
-        "Category:Renault automobiles in Moscow",
-        "Category:Silver Renault automobiles"
+        "Category:2017 Renault automobiles",
+        "Category:Diesel-powered Renault automobiles",
+        "Category:Photographs by Vauxford — 2017",
+        "Category:Renault Grand Scénic IV",
+        "Category:Renault automobiles in the United Kingdom",
+        "Category:Self-published work"
       ],
-      "gezocht_op": "Grand Scénic",
-      "licentie": "CC0",
-      "titel": "File:Moscow, Renault Grand Scénic III, Aug 2026 02.jpg",
-      "verhouding": 1.499
+      "gezocht_op": "Renault Grand Scénic IV",
+      "licentie": "CC BY-SA 4.0",
+      "titel": "File:2017 Renault Grand Scenic SIG NAV DCi 1.5 Front.jpg",
+      "verhouding": 1.952
     },
     "Renault|Kangoo": {
-      "auteur": "AlexanderFPbusse",
+      "auteur": "M 93",
       "bestand": "renault-kangoo.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Renault_Kangoo_Compact_Concept.JPG",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Renault_Kangoo_Paris_105_(II,_Facelift)_%E2%80%93_Frontansicht,_10._August_2013,_Ratingen.jpg",
       "categorieen": [
-        "Category:Renault Kangoo Compact Concept",
-        "Category:Renault at IAA 2007"
+        "Category:Information field template with formatting",
+        "Category:Renault Kangoo II",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "Kangoo",
-      "licentie": "CC BY-SA 3.0",
-      "titel": "File:Renault Kangoo Compact Concept.JPG",
-      "verhouding": 1.333
+      "gezocht_op": "Renault Kangoo II",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Renault Kangoo Paris 105 (II, Facelift) – Frontansicht, 10. August 2013, Ratingen.jpg",
+      "verhouding": 1.681
     },
     "Renault|Kangoo 1.2 TCe Limited": {
-      "auteur": "AlexanderFPbusse",
+      "auteur": "M 93",
       "bestand": "renault-kangoo-1-2-tce-limited.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Renault_Kangoo_Compact_Concept.JPG",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Renault_Kangoo_Paris_105_(II,_Facelift)_%E2%80%93_Frontansicht,_10._August_2013,_Ratingen.jpg",
       "categorieen": [
-        "Category:Renault Kangoo Compact Concept",
-        "Category:Renault at IAA 2007"
+        "Category:Information field template with formatting",
+        "Category:Renault Kangoo II",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "Kangoo",
-      "licentie": "CC BY-SA 3.0",
-      "titel": "File:Renault Kangoo Compact Concept.JPG",
-      "verhouding": 1.333
+      "gezocht_op": "Renault Kangoo II",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Renault Kangoo Paris 105 (II, Facelift) – Frontansicht, 10. August 2013, Ratingen.jpg",
+      "verhouding": 1.681
     },
     "Renault|Kangoo TCe 115": {
-      "auteur": "AlexanderFPbusse",
+      "auteur": "M 93",
       "bestand": "renault-kangoo-tce-115.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Renault_Kangoo_Compact_Concept.JPG",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Renault_Kangoo_Paris_105_(II,_Facelift)_%E2%80%93_Frontansicht,_10._August_2013,_Ratingen.jpg",
       "categorieen": [
-        "Category:Renault Kangoo Compact Concept",
-        "Category:Renault at IAA 2007"
+        "Category:Information field template with formatting",
+        "Category:Renault Kangoo II",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "Kangoo",
-      "licentie": "CC BY-SA 3.0",
-      "titel": "File:Renault Kangoo Compact Concept.JPG",
-      "verhouding": 1.333
+      "gezocht_op": "Renault Kangoo II",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Renault Kangoo Paris 105 (II, Facelift) – Frontansicht, 10. August 2013, Ratingen.jpg",
+      "verhouding": 1.681
     },
     "Renault|Kangoo ZE": {
-      "auteur": "AlexanderFPbusse",
+      "auteur": "Corvettec6r",
       "bestand": "renault-kangoo-ze.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Renault_Kangoo_Compact_Concept.JPG",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2012_Renault_Kangoo_Z.E._front.JPG",
       "categorieen": [
-        "Category:Renault Kangoo Compact Concept",
-        "Category:Renault at IAA 2007"
+        "Category:2012 Renault vehicles",
+        "Category:CC-Zero",
+        "Category:Files with coordinates missing SDC location of creation",
+        "Category:Renault Kangoo Z.E.",
+        "Category:Self-published work",
+        "Category:Taken with iPhone 4S",
+        "Category:White minivans"
       ],
-      "gezocht_op": "Kangoo",
-      "licentie": "CC BY-SA 3.0",
-      "titel": "File:Renault Kangoo Compact Concept.JPG",
-      "verhouding": 1.333
+      "gezocht_op": "Renault Kangoo Z.E.",
+      "licentie": "CC0",
+      "titel": "File:2012 Renault Kangoo Z.E. front.JPG",
+      "verhouding": 1.467
     },
     "Renault|Master": {
       "auteur": "JoachimKohler-HB",
@@ -2318,31 +2428,39 @@
       "verhouding": 1.499
     },
     "Renault|Megane Grandtour": {
-      "auteur": "Retired electrician",
+      "auteur": "MichGe",
       "bestand": "renault-megane-grandtour.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Moscow,_Renault_M%C3%A9gane_IV_Grandtour,_Nov_2025_02.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Renault_M%C3%A9gane_III_Grandtour_front_-_GMS_2009.jpg",
       "categorieen": [
-        "Category:Automobiles in Moscow photographed in 2025",
-        "Category:Renault Mégane IV Grandtour",
-        "Category:Renault automobiles in Moscow",
-        "Category:Silver Renault station wagons"
+        "Category:2009 Renault automobiles",
+        "Category:Beige station wagons",
+        "Category:CC-BY-SA-4.0,3.0,2.5,2.0,1.0",
+        "Category:GFDL",
+        "Category:License migration redundant",
+        "Category:Renault Mégane III Wagon",
+        "Category:Self-published work",
+        "Category:TTM GMS MTG Gdańsk 2009",
+        "Category:Taken with Kodak EasyShare V1273"
       ],
-      "gezocht_op": "Megane Grandtour",
-      "licentie": "CC0",
-      "titel": "File:Moscow, Renault Mégane IV Grandtour, Nov 2025 02.jpg",
-      "verhouding": 1.58
+      "gezocht_op": "Renault Mégane III Wagon",
+      "licentie": "CC BY-SA 4.0",
+      "titel": "File:Renault Mégane III Grandtour front - GMS 2009.jpg",
+      "verhouding": 1.333
     },
     "Renault|Megane Scenic": {
-      "auteur": "Michael Gil from Calgary, AB, Canada",
+      "auteur": "M 93",
       "bestand": "renault-megane-scenic.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Renault_Megane_Grand_Scenic_(4559359090).jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Renault_Sc%C3%A9nic_Bose_Edition_ENERGY_TCe_130_Start_%26_Stop_(III,_2._Facelift)_%E2%80%93_Frontansicht,_9._Februar_2014,_Velbert.jpg",
       "categorieen": [
-        "Category:Renault Grand Scénic II"
+        "Category:Information field template with formatting",
+        "Category:Renault Scénic III",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "Megane Scenic",
-      "licentie": "CC BY 2.0",
-      "titel": "File:Renault Megane Grand Scenic (4559359090).jpg",
-      "verhouding": 1.336
+      "gezocht_op": "Renault Scénic III",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Renault Scénic Bose Edition ENERGY TCe 130 Start & Stop (III, 2. Facelift) – Frontansicht, 9. Februar 2014, Velbert.jpg",
+      "verhouding": 1.753
     },
     "Renault|Modus": {
       "auteur": "MoCars",
@@ -2358,51 +2476,50 @@
       "verhouding": 1.778
     },
     "Renault|Mégane E-tech": {
-      "auteur": "Retired electrician",
+      "auteur": "Harvey Bold",
       "bestand": "renault-megane-e-tech.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Renault_M%C3%A9gane_RS_(Moscow,_2024)_01_(DXO).jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2022_Renault_Megane_E-Tech_Launch_Edition_-_60kWh_(220PS)_Electric_-_Shadow_Grey_-_05-2024,_Front.jpg",
       "categorieen": [
-        "Category:July 2024 in Moscow",
-        "Category:Renault Mégane III RS",
-        "Category:Renault automobiles in Moscow",
-        "Category:Yellow Renault hatchbacks",
-        "Category:Yellow automobiles in Russia"
+        "Category:Renault Mégane E-Tech",
+        "Category:Renault Mégane E-Tech with Enos rims",
+        "Category:Self-published work"
       ],
-      "gezocht_op": "Mégane",
-      "licentie": "CC0",
-      "titel": "File:Renault Mégane RS (Moscow, 2024) 01 (DXO).jpg",
-      "verhouding": 1.499
+      "gezocht_op": "Renault Mégane E-Tech",
+      "licentie": "CC BY 4.0",
+      "titel": "File:2022 Renault Megane E-Tech Launch Edition - 60kWh (220PS) Electric - Shadow Grey - 05-2024, Front.jpg",
+      "verhouding": 1.77
     },
     "Renault|R5": {
-      "auteur": "Llann Wé²",
+      "auteur": "Alexander Migl",
       "bestand": "renault-r5.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:W3408_Renault_R5_GTTurbo_19974XA2.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Renault_5_E-Tech_Electric_Auto_Zuerich_2025_DSC_3351.jpg",
       "categorieen": [
-        "Category:Automobiles in Clisson",
-        "Category:Automobiles with license plates of France",
-        "Category:Images with blanked out license plates",
-        "Category:Nissan Murano (Z50)",
-        "Category:Renault 5 GT Turbo",
-        "Category:Renault Mégane II Phase II",
-        "Category:White license plates of France"
+        "Category:Auto Zürich 2025 (supported by WMDE)",
+        "Category:Automobiles at Auto Zürich 2025",
+        "Category:License plates of the canton of Zürich",
+        "Category:Renault 5 E-Tech Electric",
+        "Category:Renault at Auto Zürich 2025",
+        "Category:Uploaded with pattypan",
+        "Category:User Alexander Migl - Auto Zürich 2025 supported by Wikimedia Deutschland",
+        "Category:Yellow Renault hatchbacks"
       ],
-      "gezocht_op": "R5",
+      "gezocht_op": "Renault 5 E-Tech Electric",
       "licentie": "CC BY-SA 4.0",
-      "titel": "File:W3408 Renault R5 GTTurbo 19974XA2.jpg",
-      "verhouding": 1.773
+      "titel": "File:Renault 5 E-Tech Electric Auto Zuerich 2025 DSC 3351.jpg",
+      "verhouding": 1.471
     },
     "Renault|Scénic": {
-      "auteur": "Autosdeprimera",
+      "auteur": "Harvey Bold",
       "bestand": "renault-scenic.png",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Renault_Sc%C3%A9nic_Vision_02.png",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2017_Renault_Scenic_Dynamique_S_Nav_TCe_-_1197cc_1.2_(130PS)_Petrol_-_Dune_Metallic_-_03-2024,_Front.jpg",
       "categorieen": [
-        "Category:Renault Scénic Vision",
-        "Category:Renault at Mondial de l'Automobile de Paris 2022"
+        "Category:Renault Scénic IV",
+        "Category:Self-published work"
       ],
-      "gezocht_op": "Scénic",
-      "licentie": "CC BY 3.0",
-      "titel": "File:Renault Scénic Vision 02.png",
-      "verhouding": 1.836
+      "gezocht_op": "Renault Scénic IV",
+      "licentie": "CC BY 4.0",
+      "titel": "File:2017 Renault Scenic Dynamique S Nav TCe - 1197cc 1.2 (130PS) Petrol - Dune Metallic - 03-2024, Front.jpg",
+      "verhouding": 1.758
     },
     "Renault|TALISMAN BREAK": {
       "auteur": "Retired electrician",
@@ -2433,17 +2550,19 @@
       "verhouding": 1.779
     },
     "Renault|Twingo": {
-      "auteur": "Alexander Migl",
+      "auteur": "M 93",
       "bestand": "renault-twingo.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Renault_Twingo_Z.E._IMG_4003.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Renault_Twingo_(II,_Facelift)_%E2%80%93_Frontansicht,_3._M%C3%A4rz_2012,_Ratingen.jpg",
       "categorieen": [
-        "Category:Renault Twingo Z.E.",
-        "Category:White Renault hatchbacks"
+        "Category:Information field template with formatting",
+        "Category:Renault Twingo II Phase II",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "Twingo",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:Renault Twingo Z.E. IMG 4003.jpg",
-      "verhouding": 1.326
+      "gezocht_op": "Renault Twingo II",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Renault Twingo (II, Facelift) – Frontansicht, 3. März 2012, Ratingen.jpg",
+      "verhouding": 1.564
     },
     "Renault|Zoe": {
       "auteur": "Vauxford",
@@ -2501,19 +2620,19 @@
       "verhouding": 2.13
     },
     "Seat|Leon": {
-      "auteur": "JustAnotherCarDesigner",
+      "auteur": "M 93",
       "bestand": "seat-leon.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:SEAT_Leon_Cupra_002.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Seat_Leon_1.4_TSI_Start%26Stop_Style_(III)_%E2%80%93_Frontansicht,_10._August_2013,_Ratingen.jpg",
       "categorieen": [
-        "Category:Automobiles in Shanghai",
-        "Category:SEAT Leon Cupra Mk2",
-        "Category:SEAT automobiles in China",
-        "Category:White SEAT hatchbacks"
+        "Category:Information field template with formatting",
+        "Category:SEAT Leon Mk3",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000"
       ],
-      "gezocht_op": "Leon",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:SEAT Leon Cupra 002.jpg",
-      "verhouding": 1.333
+      "gezocht_op": "SEAT Leon Mk3",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Seat Leon 1.4 TSI Start&Stop Style (III) – Frontansicht, 10. August 2013, Ratingen.jpg",
+      "verhouding": 1.946
     },
     "Seat|Leon ST": {
       "auteur": "Jakub \"Flyz1\" Maciejewski",
@@ -2547,16 +2666,18 @@
       "verhouding": 1.333
     },
     "Seat|alhambra": {
-      "auteur": "Interesting.cars.insta",
+      "auteur": "Vauxford",
       "bestand": "seat-alhambra.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:1996%E2%80%932000_Seat_Alhambra_02_Rear.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2012_SEAT_Alhambra_SE_Ecomotive_CR_2.0_Front.jpg",
       "categorieen": [
-        "Category:SEAT Alhambra Mk1"
+        "Category:Photographs by Vauxford — 2012",
+        "Category:SEAT Alhambra Mk2",
+        "Category:Self-published work"
       ],
-      "gezocht_op": "alhambra",
-      "licentie": "CC BY 4.0",
-      "titel": "File:1996–2000 Seat Alhambra 02 Rear.jpg",
-      "verhouding": 1.451
+      "gezocht_op": "SEAT Alhambra Mk2",
+      "licentie": "CC BY-SA 4.0",
+      "titel": "File:2012 SEAT Alhambra SE Ecomotive CR 2.0 Front.jpg",
+      "verhouding": 1.84
     },
     "Skoda|Enyaq": {
       "auteur": "Alexander-93",
@@ -2577,32 +2698,34 @@
       "verhouding": 1.701
     },
     "Skoda|Fabia": {
-      "auteur": "Elekes Andor",
+      "auteur": "M 93",
       "bestand": "skoda-fabia.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Skoda_Fabia_R5_-.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Skoda_Fabia_Style_(III)_%E2%80%93_Frontansicht,_2._Mai_2015,_D%C3%BCsseldorf.jpg",
       "categorieen": [
-        "Category:Automobiles in Budapest",
-        "Category:Nagy Futam 2017",
-        "Category:Škoda Fabia R5"
+        "Category:Information field template with formatting",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000",
+        "Category:Škoda Fabia III"
       ],
-      "gezocht_op": "Fabia",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:Skoda Fabia R5 -.jpg",
-      "verhouding": 1.333
+      "gezocht_op": "Škoda Fabia III",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Skoda Fabia Style (III) – Frontansicht, 2. Mai 2015, Düsseldorf.jpg",
+      "verhouding": 1.88
     },
     "Skoda|Fabia Ambition": {
-      "auteur": "Elekes Andor",
+      "auteur": "M 93",
       "bestand": "skoda-fabia-ambition.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Skoda_Fabia_R5_-.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Skoda_Fabia_Style_(III)_%E2%80%93_Frontansicht,_2._Mai_2015,_D%C3%BCsseldorf.jpg",
       "categorieen": [
-        "Category:Automobiles in Budapest",
-        "Category:Nagy Futam 2017",
-        "Category:Škoda Fabia R5"
+        "Category:Information field template with formatting",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000",
+        "Category:Škoda Fabia III"
       ],
-      "gezocht_op": "Fabia",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:Skoda Fabia R5 -.jpg",
-      "verhouding": 1.333
+      "gezocht_op": "Škoda Fabia III",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Skoda Fabia Style (III) – Frontansicht, 2. Mai 2015, Düsseldorf.jpg",
+      "verhouding": 1.88
     },
     "Skoda|Fabia Combi": {
       "auteur": "Retired electrician",
@@ -2647,71 +2770,85 @@
       "verhouding": 1.5
     },
     "Skoda|Octavia": {
-      "auteur": "Andrew Bone from Weymouth, England",
+      "auteur": "Navigator84",
       "bestand": "skoda-octavia.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Skoda_Octavia_vRS_(5958302045).jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Skoda_Octavia_III_01_2013-06-15.jpg",
       "categorieen": [
-        "Category:2010 in road transport",
-        "Category:Blue liftbacks",
-        "Category:Škoda Octavia II RS"
+        "Category:2013 in road transport",
+        "Category:Advertisements on automobiles",
+        "Category:Self-published work",
+        "Category:Vehicles in Montélimar",
+        "Category:Škoda Octavia III",
+        "Category:Škoda advertisements",
+        "Category:Škoda automobiles in France"
       ],
-      "gezocht_op": "Octavia",
-      "licentie": "CC BY 2.0",
-      "titel": "File:Skoda Octavia vRS (5958302045).jpg",
-      "verhouding": 1.44
+      "gezocht_op": "Škoda Octavia III",
+      "licentie": "CC BY-SA 3.0",
+      "titel": "File:Skoda Octavia III 01 2013-06-15.jpg",
+      "verhouding": 1.639
     },
     "Skoda|Octavia Break": {
-      "auteur": "Andrew Bone from Weymouth, England",
+      "auteur": "M 93",
       "bestand": "skoda-octavia-break.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Skoda_Octavia_vRS_(5958302045).jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Skoda_Octavia_Combi_1.6_TDI_Ambition_(III)_%E2%80%93_Frontansicht,_11._August_2013,_Essen.jpg",
       "categorieen": [
-        "Category:2010 in road transport",
-        "Category:Blue liftbacks",
-        "Category:Škoda Octavia II RS"
+        "Category:Information field template with formatting",
+        "Category:Self-published work",
+        "Category:Silver Škoda station wagons",
+        "Category:Taken with Nikon Coolpix P7000",
+        "Category:Škoda Octavia III Combi"
       ],
-      "gezocht_op": "Octavia",
-      "licentie": "CC BY 2.0",
-      "titel": "File:Skoda Octavia vRS (5958302045).jpg",
-      "verhouding": 1.44
+      "gezocht_op": "Škoda Octavia III Combi",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Skoda Octavia Combi 1.6 TDI Ambition (III) – Frontansicht, 11. August 2013, Essen.jpg",
+      "verhouding": 1.951
     },
     "Skoda|Octavia Combi": {
-      "auteur": "Cars in Taiwan",
+      "auteur": "M 93",
       "bestand": "skoda-octavia-combi.png",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:%C5%A0koda_Octavia_IV_Combi.png",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Skoda_Octavia_Combi_1.6_TDI_Ambition_(III)_%E2%80%93_Frontansicht,_11._August_2013,_Essen.jpg",
       "categorieen": [
-        "Category:Škoda Octavia IV Combi"
+        "Category:Information field template with formatting",
+        "Category:Self-published work",
+        "Category:Silver Škoda station wagons",
+        "Category:Taken with Nikon Coolpix P7000",
+        "Category:Škoda Octavia III Combi"
       ],
-      "gezocht_op": "Octavia Combi",
-      "licentie": "CC0",
-      "titel": "File:Škoda Octavia IV Combi.png",
-      "verhouding": 2.545
+      "gezocht_op": "Škoda Octavia III Combi",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Skoda Octavia Combi 1.6 TDI Ambition (III) – Frontansicht, 11. August 2013, Essen.jpg",
+      "verhouding": 1.951
     },
     "Skoda|Octavia Kombi": {
-      "auteur": "Andrew Bone from Weymouth, England",
+      "auteur": "M 93",
       "bestand": "skoda-octavia-kombi.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Skoda_Octavia_Kombi_(7875229062).jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Skoda_Octavia_Combi_1.6_TDI_Ambition_(III)_%E2%80%93_Frontansicht,_11._August_2013,_Essen.jpg",
       "categorieen": [
-        "Category:Škoda Octavia Combi (1961-1971)"
+        "Category:Information field template with formatting",
+        "Category:Self-published work",
+        "Category:Silver Škoda station wagons",
+        "Category:Taken with Nikon Coolpix P7000",
+        "Category:Škoda Octavia III Combi"
       ],
-      "gezocht_op": "Octavia Kombi",
-      "licentie": "CC BY 2.0",
-      "titel": "File:Skoda Octavia Kombi (7875229062).jpg",
-      "verhouding": 1.333
+      "gezocht_op": "Škoda Octavia III Combi",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Skoda Octavia Combi 1.6 TDI Ambition (III) – Frontansicht, 11. August 2013, Essen.jpg",
+      "verhouding": 1.951
     },
     "Skoda|Rapid": {
-      "auteur": "Matti Blume",
+      "auteur": "M 93",
       "bestand": "skoda-rapid.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Skoda_Rapid_at_Pfingsttreffen_Puetnitz_2018,_Ribnitz-Damgarten_(1X7A2428).jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Skoda_Rapid_1.2_TSI_Ambition_%E2%80%93_Frontansicht,_31._Dezember_2012,_D%C3%BCsseldorf.jpg",
       "categorieen": [
-        "Category:Automobiles at the Technik-Museum Pütnitz",
-        "Category:Pfingsttreffen Pütnitz 2018",
-        "Category:Red Škoda hatchbacks",
-        "Category:Škoda Rapid (1984-1990)"
+        "Category:Information field template with formatting",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000",
+        "Category:Škoda Rapid (2012)"
       ],
-      "gezocht_op": "Rapid",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:Skoda Rapid at Pfingsttreffen Puetnitz 2018, Ribnitz-Damgarten (1X7A2428).jpg",
-      "verhouding": 1.5
+      "gezocht_op": "Škoda Rapid (2012)",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Skoda Rapid 1.2 TSI Ambition – Frontansicht, 31. Dezember 2012, Düsseldorf.jpg",
+      "verhouding": 2.079
     },
     "Skoda|Roomster": {
       "auteur": "TuRbO_J from Adelaide, Australia",
@@ -2739,17 +2876,19 @@
       "verhouding": 1.738
     },
     "Skoda|Superb": {
-      "auteur": "Peter Broster",
+      "auteur": "M 93",
       "bestand": "skoda-superb.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Skoda_Superb_2.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Skoda_Superb_II_20090329_front.jpg",
       "categorieen": [
-        "Category:2021 Tour of Britain",
-        "Category:Škoda Superb III"
+        "Category:PD-self",
+        "Category:Self-published work",
+        "Category:Taken with Casio Exilim EX-Z1080",
+        "Category:Škoda Superb II"
       ],
-      "gezocht_op": "Superb",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:Skoda Superb 2.jpg",
-      "verhouding": 1.502
+      "gezocht_op": "Škoda Superb II",
+      "licentie": "Public domain",
+      "titel": "File:Skoda Superb II 20090329 front.jpg",
+      "verhouding": 1.492
     },
     "Skoda|Superb Combi 1.4TSI Style - 150kw": {
       "auteur": "Peter Broster",
@@ -2765,17 +2904,23 @@
       "verhouding": 1.502
     },
     "Suzuki|Alto": {
-      "auteur": "Tokumeigakarinoaoshima",
+      "auteur": "Mr.choppers",
       "bestand": "suzuki-alto.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Suzuki_Alto_Van_VP_(HA36V)_front.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2013_Suzuki_Alto_VP_5-dr_in_Superior_White_(HA25V),_front_right2.jpg",
       "categorieen": [
-        "Category:Suzuki Alto Van (8th generation)",
+        "Category:2013 Suzuki automobiles",
+        "Category:Files with coordinates missing SDC location of creation",
+        "Category:GFDL",
+        "Category:License migration redundant",
+        "Category:Own work - files by User:Mr.choppers 2024",
+        "Category:Self-published work",
+        "Category:Suzuki Alto Van (7th generation)",
         "Category:White Suzuki vans"
       ],
-      "gezocht_op": "Alto",
-      "licentie": "CC0",
-      "titel": "File:Suzuki Alto Van VP (HA36V) front.jpg",
-      "verhouding": 1.381
+      "gezocht_op": "Suzuki Alto (7th generation)",
+      "licentie": "CC BY-SA 3.0",
+      "titel": "File:2013 Suzuki Alto VP 5-dr in Superior White (HA25V), front right2.jpg",
+      "verhouding": 1.494
     },
     "Suzuki|Ignis": {
       "auteur": "Globetrotter19",
@@ -2799,17 +2944,20 @@
       "verhouding": 1.333
     },
     "Suzuki|Swift": {
-      "auteur": "Calreyn88",
+      "auteur": "Vauxford",
       "bestand": "suzuki-swift.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Suzuki_Swift_Stunt_Car_(94254).jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2019_Suzuki_Swift_Attitude_Dualjet_1.2_Front.jpg",
       "categorieen": [
-        "Category:Automobiles at the Goodwood Festival of Speed 2024",
-        "Category:Suzuki Swift (2004)"
+        "Category:2019 Suzuki automobiles",
+        "Category:Photographs by Vauxford — 2019",
+        "Category:Red Suzuki hatchbacks",
+        "Category:Self-published work",
+        "Category:Suzuki Swift (2017)"
       ],
-      "gezocht_op": "Swift",
+      "gezocht_op": "Suzuki Swift (2017)",
       "licentie": "CC BY-SA 4.0",
-      "titel": "File:Suzuki Swift Stunt Car (94254).jpg",
-      "verhouding": 1.357
+      "titel": "File:2019 Suzuki Swift Attitude Dualjet 1.2 Front.jpg",
+      "verhouding": 1.555
     },
     "Tesla|Model 3": {
       "auteur": "Alexander-93",
@@ -2827,43 +2975,51 @@
       "verhouding": 1.69
     },
     "Tesla|Model 3 SR+": {
-      "auteur": "Alexander-93",
+      "auteur": "Kevauto",
       "bestand": "tesla-model-3-sr.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Tesla_Model_3_(2023)_Auto_Zuerich_2023_1X7A1313.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2021_Tesla_Model_3,_front_11.10.21.jpg",
       "categorieen": [
-        "Category:Fotoprojekt Auto Zürich Car Show 2023 (supported by Wikimedia Deutschland)",
-        "Category:Tesla Model 3 (2023–)",
-        "Category:Tesla at Auto Zürich 2023",
-        "Category:White Tesla sedans"
+        "Category:Self-published work",
+        "Category:Tesla Model 3 (2017–2023)"
       ],
-      "gezocht_op": "Model 3",
+      "gezocht_op": "Tesla Model 3 (2017–2023)",
       "licentie": "CC BY-SA 4.0",
-      "titel": "File:Tesla Model 3 (2023) Auto Zuerich 2023 1X7A1313.jpg",
-      "verhouding": 1.69
+      "titel": "File:2021 Tesla Model 3, front 11.10.21.jpg",
+      "verhouding": 1.726
     },
     "Tesla|Model Y": {
-      "auteur": "JustAnotherCarDesigner",
+      "auteur": "Ethan Llamas",
       "bestand": "tesla-model-y.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_L_002.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2024_Tesla_Model_Y_Long_Range,_front_left,_07-28-2024.jpg",
       "categorieen": [
-        "Category:Tesla Model Y L"
+        "Category:Files with coordinates missing SDC location of creation",
+        "Category:Self-published work",
+        "Category:Tesla Model Y",
+        "Category:Tesla vehicles in the Philippines",
+        "Category:United States specification automobiles in the Philippines",
+        "Category:White Tesla SUVs"
       ],
-      "gezocht_op": "Model Y",
-      "licentie": "CC0",
-      "titel": "File:Tesla Model Y L 002.jpg",
-      "verhouding": 1.333
+      "gezocht_op": "Tesla Model Y",
+      "licentie": "CC BY-SA 4.0",
+      "titel": "File:2024 Tesla Model Y Long Range, front left, 07-28-2024.jpg",
+      "verhouding": 1.556
     },
     "Tesla|Model Y (wit)": {
-      "auteur": "JustAnotherCarDesigner",
+      "auteur": "Ethan Llamas",
       "bestand": "tesla-model-y-wit.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_L_002.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2024_Tesla_Model_Y_Long_Range,_front_left,_07-28-2024.jpg",
       "categorieen": [
-        "Category:Tesla Model Y L"
+        "Category:Files with coordinates missing SDC location of creation",
+        "Category:Self-published work",
+        "Category:Tesla Model Y",
+        "Category:Tesla vehicles in the Philippines",
+        "Category:United States specification automobiles in the Philippines",
+        "Category:White Tesla SUVs"
       ],
-      "gezocht_op": "Model Y",
-      "licentie": "CC0",
-      "titel": "File:Tesla Model Y L 002.jpg",
-      "verhouding": 1.333
+      "gezocht_op": "Tesla Model Y",
+      "licentie": "CC BY-SA 4.0",
+      "titel": "File:2024 Tesla Model Y Long Range, front left, 07-28-2024.jpg",
+      "verhouding": 1.556
     },
     "Toyota|AURIS 5 d. 1.8 CVT HSD TC Comfort & Pack Dynamic LHD": {
       "auteur": "M 93",
@@ -2931,34 +3087,38 @@
       "verhouding": 1.937
     },
     "Toyota|Aygo": {
-      "auteur": "Alexander Migl",
+      "auteur": "M 93",
       "bestand": "toyota-aygo.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Toyota_Aygo_X_1X7A0063.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Toyota_Aygo_1.0_VVT-i_x-wave_(II)_%E2%80%93_Frontansicht,_18._Oktober_2015,_D%C3%BCsseldorf.jpg",
       "categorieen": [
-        "Category:2022 Toyota automobiles",
-        "Category:Automobiles with license plates of Stuttgart",
-        "Category:Silver Toyota SUVs",
-        "Category:Toyota Aygo X"
+        "Category:Information field template with formatting",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000",
+        "Category:Toyota Aygo (AB40, 2014)"
       ],
-      "gezocht_op": "Aygo",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:Toyota Aygo X 1X7A0063.jpg",
-      "verhouding": 1.617
+      "gezocht_op": "Toyota Aygo (AB40)",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Toyota Aygo 1.0 VVT-i x-wave (II) – Frontansicht, 18. Oktober 2015, Düsseldorf.jpg",
+      "verhouding": 1.774
     },
     "Toyota|Corolla": {
-      "auteur": "TTTNIS",
+      "auteur": "Mr.choppers",
       "bestand": "toyota-corolla.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:1969_Toyota_Corolla_1200.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2019_Toyota_Corolla_Hatchback_SE_in_silver,_front_left.jpg",
       "categorieen": [
-        "Category:1969 Toyota automobiles",
-        "Category:The 35th TOYOTA AUTOMOBILE MUSEUM CLASSIC CAR FESTIVAL",
-        "Category:Toyota Corolla (E10)",
-        "Category:Toyota automobiles in Japan"
+        "Category:2019 Toyota automobiles",
+        "Category:Files with coordinates missing SDC location of creation",
+        "Category:GFDL",
+        "Category:License migration redundant",
+        "Category:Own work - files by User:Mr.choppers 2019",
+        "Category:Self-published work",
+        "Category:Silver Toyota hatchbacks",
+        "Category:Toyota Corolla (E210, North America) hatchback"
       ],
-      "gezocht_op": "Corolla",
-      "licentie": "CC0",
-      "titel": "File:1969 Toyota Corolla 1200.jpg",
-      "verhouding": 1.922
+      "gezocht_op": "Toyota Corolla (E210) hatchback",
+      "licentie": "CC BY-SA 3.0",
+      "titel": "File:2019 Toyota Corolla Hatchback SE in silver, front left.jpg",
+      "verhouding": 1.531
     },
     "Toyota|IQ": {
       "auteur": "Rutger van der Maar",
@@ -3001,56 +3161,65 @@
       "verhouding": 1.906
     },
     "Toyota|Verso": {
-      "auteur": "Guillaume Vachey from Chalon sur Saone, France",
+      "auteur": "M 93",
       "bestand": "toyota-verso.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Toyota_Corolla_Verso,_France.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Toyota_Verso_(Facelift)_%E2%80%93_Frontansicht,_1._M%C3%A4rz_2014,_Wuppertal.jpg",
       "categorieen": [
-        "Category:Silver Toyota station wagons",
-        "Category:Toyota Corolla Verso (E120)"
+        "Category:Information field template with formatting",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000",
+        "Category:Toyota Verso"
       ],
-      "gezocht_op": "Verso",
-      "licentie": "CC0",
-      "titel": "File:Toyota Corolla Verso, France.jpg",
-      "verhouding": 1.839
+      "gezocht_op": "Toyota Verso",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Toyota Verso (Facelift) – Frontansicht, 1. März 2014, Wuppertal.jpg",
+      "verhouding": 1.785
     },
     "Toyota|Verso S": {
-      "auteur": "Guillaume Vachey from Chalon sur Saone, France",
+      "auteur": "M 93",
       "bestand": "toyota-verso-s.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Toyota_Corolla_Verso,_France.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Toyota_Verso-S_1.33_VVT-i_Life_%E2%80%93_Frontansicht,_11._M%C3%A4rz_2012,_Velbert.jpg",
       "categorieen": [
-        "Category:Silver Toyota station wagons",
-        "Category:Toyota Corolla Verso (E120)"
+        "Category:Information field template with formatting",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000",
+        "Category:Toyota Verso-S"
       ],
-      "gezocht_op": "Verso",
-      "licentie": "CC0",
-      "titel": "File:Toyota Corolla Verso, France.jpg",
-      "verhouding": 1.839
+      "gezocht_op": "Toyota Verso-S",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Toyota Verso-S 1.33 VVT-i Life – Frontansicht, 11. März 2012, Velbert.jpg",
+      "verhouding": 1.546
     },
     "Toyota|Verso-S": {
-      "auteur": "Guillaume Vachey from Chalon sur Saone, France",
+      "auteur": "M 93",
       "bestand": "toyota-verso-s.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Toyota_Corolla_Verso,_France.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Toyota_Verso-S_1.33_VVT-i_Life_%E2%80%93_Frontansicht,_11._M%C3%A4rz_2012,_Velbert.jpg",
       "categorieen": [
-        "Category:Silver Toyota station wagons",
-        "Category:Toyota Corolla Verso (E120)"
+        "Category:Information field template with formatting",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000",
+        "Category:Toyota Verso-S"
       ],
-      "gezocht_op": "Verso",
-      "licentie": "CC0",
-      "titel": "File:Toyota Corolla Verso, France.jpg",
-      "verhouding": 1.839
+      "gezocht_op": "Toyota Verso-S",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Toyota Verso-S 1.33 VVT-i Life – Frontansicht, 11. März 2012, Velbert.jpg",
+      "verhouding": 1.546
     },
     "Toyota|Yaris": {
-      "auteur": "JustAnotherCarDesigner",
+      "auteur": "MercurySable99",
       "bestand": "toyota-yaris.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Toyota_Yaris_Cross_002.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2017_Toyota_Yaris_L_5-door,_front_left,_08-05-2023_(cropped).jpg",
       "categorieen": [
-        "Category:Toyota Yaris (XP150, 2017) hatchback",
-        "Category:White Toyota hatchbacks"
+        "Category:2017 Toyota automobiles",
+        "Category:Extracted images",
+        "Category:Self-published work",
+        "Category:Silver Toyota hatchbacks",
+        "Category:Toyota Yaris (XP130, 2014 facelift)"
       ],
-      "gezocht_op": "Yaris",
+      "gezocht_op": "Toyota Yaris (XP130)",
       "licentie": "CC BY-SA 4.0",
-      "titel": "File:Toyota Yaris Cross 002.jpg",
-      "verhouding": 1.333
+      "titel": "File:2017 Toyota Yaris L 5-door, front left, 08-05-2023 (cropped).jpg",
+      "verhouding": 1.73
     },
     "Toyota|Yaris Cross": {
       "auteur": "Alexander Migl",
@@ -3069,100 +3238,110 @@
       "verhouding": 1.847
     },
     "Toyota|Yaris hybride": {
-      "auteur": "JustAnotherCarDesigner",
+      "auteur": "Tokumeigakarinoaoshima",
       "bestand": "toyota-yaris-hybride.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Toyota_Yaris_Cross_001.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Toyota_YARIS_1.0_G_(5BA-KSP210-AHXGK)_front.jpg",
       "categorieen": [
-        "Category:Toyota Yaris (XP150, 2017) hatchback",
+        "Category:Self-published work",
+        "Category:Toyota Yaris (XP210, Japan)",
         "Category:White Toyota hatchbacks"
       ],
-      "gezocht_op": "Yaris",
+      "gezocht_op": "Toyota Yaris (XP210)",
       "licentie": "CC BY-SA 4.0",
-      "titel": "File:Toyota Yaris Cross 001.jpg",
+      "titel": "File:Toyota YARIS 1.0 G (5BA-KSP210-AHXGK) front.jpg",
       "verhouding": 1.333
     },
     "Toyota|prius +": {
-      "auteur": "Shadman Samee from Dhaka, Bangladesh",
+      "auteur": "M 93",
       "bestand": "toyota-prius.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Toyota_Prius_XW20,_Bangladesh_(25348076051).jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Toyota_Prius%2B_Executive_%E2%80%93_Frontansicht,_5._April_2014,_D%C3%BCsseldorf.jpg",
       "categorieen": [
-        "Category:Toyota Prius (XW20)",
-        "Category:Toyota automobiles in Bangladesh"
+        "Category:Information field template with formatting",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000",
+        "Category:Toyota Prius+"
       ],
-      "gezocht_op": "prius +",
-      "licentie": "CC BY-SA 2.0",
-      "titel": "File:Toyota Prius XW20, Bangladesh (25348076051).jpg",
-      "verhouding": 1.5
+      "gezocht_op": "Toyota Prius+",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:Toyota Prius+ Executive – Frontansicht, 5. April 2014, Düsseldorf.jpg",
+      "verhouding": 1.792
     },
     "Volkswagen|Caddy": {
-      "auteur": "Matti Blume",
+      "auteur": "© M 93",
       "bestand": "volkswagen-caddy.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:VW_Caddy_California,_IAA_2024,_Hanover_(P1200089).jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:VW_Caddy_2.0_TDI_BlueMotion_Technology_Highline_(2K,_2._Facelift)_%E2%80%93_Frontansicht,_21._April_2017,_D%C3%BCsseldorf.jpg",
       "categorieen": [
-        "Category:IAA Transportation 2024 (supported by WMDE)",
-        "Category:Volkswagen Caddy California",
-        "Category:Volkswagen at IAA Transportation 2024"
+        "Category:Information field template with formatting",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000",
+        "Category:Volkswagen Caddy Typ 2K (2015)"
       ],
-      "gezocht_op": "Caddy",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:VW Caddy California, IAA 2024, Hanover (P1200089).jpg",
-      "verhouding": 1.333
+      "gezocht_op": "Volkswagen Caddy Typ 2K (2015)",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:VW Caddy 2.0 TDI BlueMotion Technology Highline (2K, 2. Facelift) – Frontansicht, 21. April 2017, Düsseldorf.jpg",
+      "verhouding": 1.741
     },
     "Volkswagen|Caddy Max (Tramper)": {
-      "auteur": "Matti Blume",
+      "auteur": "Vauxford",
       "bestand": "volkswagen-caddy-max-tramper.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:VW_Caddy_California,_IAA_2024,_Hanover_(P1200089).jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2013_Volkswagen_Caddy_Maxi_C20_TDi_1.6_Front.jpg",
       "categorieen": [
-        "Category:IAA Transportation 2024 (supported by WMDE)",
-        "Category:Volkswagen Caddy California",
-        "Category:Volkswagen at IAA Transportation 2024"
+        "Category:Photographs by Vauxford — 2013",
+        "Category:Self-published work",
+        "Category:Volkswagen Caddy Maxi (2010)",
+        "Category:Volkswagen vehicles in the United Kingdom"
       ],
-      "gezocht_op": "Caddy",
+      "gezocht_op": "Volkswagen Caddy Maxi (2010)",
       "licentie": "CC BY-SA 4.0",
-      "titel": "File:VW Caddy California, IAA 2024, Hanover (P1200089).jpg",
-      "verhouding": 1.333
+      "titel": "File:2013 Volkswagen Caddy Maxi C20 TDi 1.6 Front.jpg",
+      "verhouding": 1.637
     },
     "Volkswagen|Caddy Maxi": {
-      "auteur": "Retired electrician",
+      "auteur": "Vauxford",
       "bestand": "volkswagen-caddy-maxi.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Moscow,_Volkswagen_Caddy_Maxi_(type_SB)_grey,_Sept_2025_01.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2017_Volkswagen_Caddy_Maxi_C20_Life_TDi_S_2.0_Front.jpg",
       "categorieen": [
-        "Category:Automobiles in Moscow photographed in 2025",
-        "Category:Automobiles on Kosmodamianskaya Embankment",
-        "Category:Volkswagen Caddy Maxi (type SB)",
-        "Category:Volkswagen automobiles in Moscow"
-      ],
-      "gezocht_op": "Caddy Maxi",
-      "licentie": "CC0",
-      "titel": "File:Moscow, Volkswagen Caddy Maxi (type SB) grey, Sept 2025 01.jpg",
-      "verhouding": 1.512
-    },
-    "Volkswagen|Golf": {
-      "auteur": "Vauxford",
-      "bestand": "volkswagen-golf.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:2020_Volkswagen_Golf_Style_1.5_Front.jpg",
-      "categorieen": [
-        "Category:Volkswagen Golf VIII"
-      ],
-      "gezocht_op": "Golf",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:2020 Volkswagen Golf Style 1.5 Front.jpg",
-      "verhouding": 1.96
-    },
-    "Volkswagen|Golf 1.2 TSI Trendline": {
-      "auteur": "Vauxford",
-      "bestand": "volkswagen-golf-1-2-tsi-trendline.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:2011_Volkswagen_Golf_S_1.2_Rear.jpg",
-      "categorieen": [
-        "Category:Automobiles in Warwickshire",
-        "Category:Cars in Royal Leamington Spa",
-        "Category:Volkswagen Golf VI",
+        "Category:Photographs by Vauxford — 2017",
+        "Category:Self-published work",
+        "Category:Volkswagen Caddy Maxi (2015)",
         "Category:Volkswagen automobiles in the United Kingdom"
       ],
-      "gezocht_op": "Golf 1.2",
+      "gezocht_op": "Volkswagen Caddy Maxi (2015)",
       "licentie": "CC BY-SA 4.0",
-      "titel": "File:2011 Volkswagen Golf S 1.2 Rear.jpg",
-      "verhouding": 2.029
+      "titel": "File:2017 Volkswagen Caddy Maxi C20 Life TDi S 2.0 Front.jpg",
+      "verhouding": 1.748
+    },
+    "Volkswagen|Golf": {
+      "auteur": "Elise240SX",
+      "bestand": "volkswagen-golf.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2015_Volkswagen_Golf_Comfortline_5-Door_in_Deep_Black_Pearl,_front_left,_2025-09-06.jpg",
+      "categorieen": [
+        "Category:2015 Volkswagen automobiles",
+        "Category:Automobiles in Sault Ste. Marie, Ontario",
+        "Category:Black Volkswagen hatchbacks",
+        "Category:Self-published work",
+        "Category:Volkswagen Golf VII"
+      ],
+      "gezocht_op": "Volkswagen Golf VII",
+      "licentie": "CC BY-SA 4.0",
+      "titel": "File:2015 Volkswagen Golf Comfortline 5-Door in Deep Black Pearl, front left, 2025-09-06.jpg",
+      "verhouding": 1.704
+    },
+    "Volkswagen|Golf 1.2 TSI Trendline": {
+      "auteur": "Elise240SX",
+      "bestand": "volkswagen-golf-1-2-tsi-trendline.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2015_Volkswagen_Golf_Comfortline_5-Door_in_Deep_Black_Pearl,_front_left,_2025-09-06.jpg",
+      "categorieen": [
+        "Category:2015 Volkswagen automobiles",
+        "Category:Automobiles in Sault Ste. Marie, Ontario",
+        "Category:Black Volkswagen hatchbacks",
+        "Category:Self-published work",
+        "Category:Volkswagen Golf VII"
+      ],
+      "gezocht_op": "Volkswagen Golf VII",
+      "licentie": "CC BY-SA 4.0",
+      "titel": "File:2015 Volkswagen Golf Comfortline 5-Door in Deep Black Pearl, front left, 2025-09-06.jpg",
+      "verhouding": 1.704
     },
     "Volkswagen|Golf Sportsvan": {
       "auteur": "Rutger van der Maar",
@@ -3177,40 +3356,52 @@
       "verhouding": 1.444
     },
     "Volkswagen|Golf Variant": {
-      "auteur": "Vauxford",
+      "auteur": "M 93",
       "bestand": "volkswagen-golf-variant.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:2020_Volkswagen_Golf_Style_1.5_Front.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:VW_Golf_Variant_1.6_BlueTDI_Comfortline_(VII)_%E2%80%93_Frontansicht,_29._Juni_2014,_D%C3%BCsseldorf.jpg",
       "categorieen": [
-        "Category:Volkswagen Golf VIII"
+        "Category:Grey Volkswagen station wagons",
+        "Category:Information field template with formatting",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000",
+        "Category:Volkswagen Golf VII Variant"
       ],
-      "gezocht_op": "Golf",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:2020 Volkswagen Golf Style 1.5 Front.jpg",
-      "verhouding": 1.96
+      "gezocht_op": "Volkswagen Golf VII Variant",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:VW Golf Variant 1.6 BlueTDI Comfortline (VII) – Frontansicht, 29. Juni 2014, Düsseldorf.jpg",
+      "verhouding": 2.07
     },
     "Volkswagen|Golf Variant Break": {
-      "auteur": "Vauxford",
+      "auteur": "M 93",
       "bestand": "volkswagen-golf-variant-break.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:2020_Volkswagen_Golf_Style_1.5_Front.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:VW_Golf_Variant_1.6_BlueTDI_Comfortline_(VII)_%E2%80%93_Frontansicht,_29._Juni_2014,_D%C3%BCsseldorf.jpg",
       "categorieen": [
-        "Category:Volkswagen Golf VIII"
+        "Category:Grey Volkswagen station wagons",
+        "Category:Information field template with formatting",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000",
+        "Category:Volkswagen Golf VII Variant"
       ],
-      "gezocht_op": "Golf",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:2020 Volkswagen Golf Style 1.5 Front.jpg",
-      "verhouding": 1.96
+      "gezocht_op": "Volkswagen Golf VII Variant",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:VW Golf Variant 1.6 BlueTDI Comfortline (VII) – Frontansicht, 29. Juni 2014, Düsseldorf.jpg",
+      "verhouding": 2.07
     },
     "Volkswagen|Golf break": {
-      "auteur": "Vauxford",
+      "auteur": "M 93",
       "bestand": "volkswagen-golf-break.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:2020_Volkswagen_Golf_Style_1.5_Front.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:VW_Golf_Variant_1.6_BlueTDI_Comfortline_(VII)_%E2%80%93_Frontansicht,_29._Juni_2014,_D%C3%BCsseldorf.jpg",
       "categorieen": [
-        "Category:Volkswagen Golf VIII"
+        "Category:Grey Volkswagen station wagons",
+        "Category:Information field template with formatting",
+        "Category:Self-published work",
+        "Category:Taken with Nikon Coolpix P7000",
+        "Category:Volkswagen Golf VII Variant"
       ],
-      "gezocht_op": "Golf",
-      "licentie": "CC BY-SA 4.0",
-      "titel": "File:2020 Volkswagen Golf Style 1.5 Front.jpg",
-      "verhouding": 1.96
+      "gezocht_op": "Volkswagen Golf VII Variant",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:VW Golf Variant 1.6 BlueTDI Comfortline (VII) – Frontansicht, 29. Juni 2014, Düsseldorf.jpg",
+      "verhouding": 2.07
     },
     "Volkswagen|ID.3": {
       "auteur": "Vauxford",
@@ -3263,52 +3454,69 @@
       "verhouding": 1.74
     },
     "Volkswagen|Passat": {
-      "auteur": "Lothar Spurzem",
+      "auteur": "Acgskup",
       "bestand": "volkswagen-passat.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:VW_Passat_GL_1980-85_(2019-11-24_Sp_r).JPG",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Volkswagen_Passat_(B8)_%E2%80%93_front_view_(2017).jpg",
       "categorieen": [
-        "Category:Volkswagen Passat B2 (fastback)"
+        "Category:Files with coordinates missing SDC location of creation",
+        "Category:Self-published work",
+        "Category:Volkswagen Passat B8"
       ],
-      "gezocht_op": "Passat",
-      "licentie": "CC BY-SA 2.0 de",
-      "titel": "File:VW Passat GL 1980-85 (2019-11-24 Sp r).JPG",
-      "verhouding": 1.5
+      "gezocht_op": "Volkswagen Passat B8",
+      "licentie": "CC BY 4.0",
+      "titel": "File:Volkswagen Passat (B8) – front view (2017).jpg",
+      "verhouding": 1.333
     },
     "Volkswagen|Passat Stationwagen": {
-      "auteur": "Lothar Spurzem",
+      "auteur": "M 93",
       "bestand": "volkswagen-passat-stationwagen.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:VW_Passat_GL_1980-85_(2019-11-24_Sp_r).JPG",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:VW_Passat_Variant_2.0_TDI_BlueMotion_Technology_Comfortline_(B7)_%E2%80%93_Frontansicht,_2._Juli_2011,_D%C3%BCsseldorf.jpg",
       "categorieen": [
-        "Category:Volkswagen Passat B2 (fastback)"
+        "Category:Black Volkswagen station wagons",
+        "Category:BlueMotion",
+        "Category:Taken with Nikon Coolpix P7000",
+        "Category:Volkswagen Passat Variant B7"
       ],
-      "gezocht_op": "Passat",
-      "licentie": "CC BY-SA 2.0 de",
-      "titel": "File:VW Passat GL 1980-85 (2019-11-24 Sp r).JPG",
-      "verhouding": 1.5
+      "gezocht_op": "Volkswagen Passat Variant B7",
+      "licentie": "CC BY-SA 3.0 de",
+      "titel": "File:VW Passat Variant 2.0 TDI BlueMotion Technology Comfortline (B7) – Frontansicht, 2. Juli 2011, Düsseldorf.jpg",
+      "verhouding": 1.782
     },
     "Volkswagen|Polo": {
-      "auteur": "JustAnotherCarDesigner",
+      "auteur": "Cutlass",
       "bestand": "volkswagen-polo.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Volkswagen_Polo_MK4_sedan_001.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2014_Volkswagen_Polo_in_Flash_Red,_front_left,_06-05-2025.jpg",
       "categorieen": [
-        "Category:Volkswagen Polo IV Sedan"
+        "Category:2014 Volkswagen automobiles",
+        "Category:Automobiles in Galway",
+        "Category:CC-Zero",
+        "Category:Photographs taken by Cutlass",
+        "Category:Red Volkswagen hatchbacks",
+        "Category:Self-published work",
+        "Category:Volkswagen Polo V (2014)"
       ],
-      "gezocht_op": "Polo",
+      "gezocht_op": "Volkswagen Polo V",
       "licentie": "CC0",
-      "titel": "File:Volkswagen Polo MK4 sedan 001.jpg",
-      "verhouding": 1.333
+      "titel": "File:2014 Volkswagen Polo in Flash Red, front left, 06-05-2025.jpg",
+      "verhouding": 1.711
     },
     "Volkswagen|Polo Trendline 1.0": {
-      "auteur": "JustAnotherCarDesigner",
+      "auteur": "Cutlass",
       "bestand": "volkswagen-polo-trendline-1-0.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Volkswagen_Polo_MK4_sedan_001.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2014_Volkswagen_Polo_in_Flash_Red,_front_left,_06-05-2025.jpg",
       "categorieen": [
-        "Category:Volkswagen Polo IV Sedan"
+        "Category:2014 Volkswagen automobiles",
+        "Category:Automobiles in Galway",
+        "Category:CC-Zero",
+        "Category:Photographs taken by Cutlass",
+        "Category:Red Volkswagen hatchbacks",
+        "Category:Self-published work",
+        "Category:Volkswagen Polo V (2014)"
       ],
-      "gezocht_op": "Polo",
+      "gezocht_op": "Volkswagen Polo V",
       "licentie": "CC0",
-      "titel": "File:Volkswagen Polo MK4 sedan 001.jpg",
-      "verhouding": 1.333
+      "titel": "File:2014 Volkswagen Polo in Flash Red, front left, 06-05-2025.jpg",
+      "verhouding": 1.711
     },
     "Volkswagen|Sportsvan 1.2 TSi Trendline": {
       "auteur": "Rutger van der Maar",
@@ -3323,19 +3531,18 @@
       "verhouding": 1.444
     },
     "Volkswagen|Tiguan": {
-      "auteur": "Alexander-93",
+      "auteur": "Vauxford",
       "bestand": "volkswagen-tiguan.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:Volkswagen_Tiguan_III_eHybrid_Auto_Zuerich_2023_1X7A1001.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:2014_Volkswagen_Tiguan_Match_TDi_BMT_4motion_2.0_Front.jpg",
       "categorieen": [
-        "Category:Fotoprojekt Auto Zürich Car Show 2023 (supported by Wikimedia Deutschland)",
-        "Category:Orange Volkswagen SUVs",
-        "Category:Volkswagen Tiguan III",
-        "Category:Volkswagen at Auto Zürich 2023"
+        "Category:Photographs by Vauxford — 2014",
+        "Category:Self-published work",
+        "Category:Volkswagen Tiguan (2011)"
       ],
-      "gezocht_op": "Tiguan",
+      "gezocht_op": "Volkswagen Tiguan I",
       "licentie": "CC BY-SA 4.0",
-      "titel": "File:Volkswagen Tiguan III eHybrid Auto Zuerich 2023 1X7A1001.jpg",
-      "verhouding": 1.499
+      "titel": "File:2014 Volkswagen Tiguan Match TDi BMT 4motion 2.0 Front.jpg",
+      "verhouding": 1.835
     },
     "Volkswagen|Touran": {
       "auteur": "Kahvilokki",
@@ -3354,20 +3561,21 @@
       "verhouding": 1.778
     },
     "Volkswagen|Touran 1.6 TDi 115 Highline": {
-      "auteur": "Kahvilokki",
+      "auteur": "Tokumeigakarinoaoshima",
       "bestand": "volkswagen-touran-1-6-tdi-115-highline.jpg",
-      "bronpagina": "https://commons.wikimedia.org/wiki/File:20200529_Volkswagen_Touran_Bluemotion_01.jpg",
+      "bronpagina": "https://commons.wikimedia.org/wiki/File:Volkswagen_GOLF_TOURAN_TSI_Highline_(3BA-1TDPC)_front.jpg",
       "categorieen": [
-        "Category:Compressed natural gas-powered automobiles",
-        "Category:May 2020 in Helsinki",
-        "Category:Parked automobiles in Helsinki",
-        "Category:Volkswagen Touran I (2010)",
-        "Category:Volkswagen automobiles in Finland"
+        "Category:Grey Volkswagen minivans",
+        "Category:Grey Volkswagen station wagons",
+        "Category:Japan photographs taken on 2024-12-01",
+        "Category:Self-published work",
+        "Category:Volkswagen Golf Touran",
+        "Category:Volkswagen Touran II"
       ],
-      "gezocht_op": "Touran",
-      "licentie": "CC0",
-      "titel": "File:20200529 Volkswagen Touran Bluemotion 01.jpg",
-      "verhouding": 1.778
+      "gezocht_op": "Volkswagen Touran II",
+      "licentie": "CC BY-SA 4.0",
+      "titel": "File:Volkswagen GOLF TOURAN TSI Highline (3BA-1TDPC) front.jpg",
+      "verhouding": 1.333
     },
     "Volkswagen|Up": {
       "auteur": "Vauxford",
@@ -3519,6 +3727,7 @@
     }
   },
   "geweigerd": [
+    "File:MG Maestro 1986.jpg",
     "File:2007 Skoda Octavia VRS (11135996215).jpg",
     "File:2007 Skoda Octavia VRS (11136013575).jpg",
     "File:2007 Skoda Octavia VRS (11136043546).jpg",
@@ -3530,7 +3739,102 @@
     "File:2007 Skoda Octavia VRS (11136223733).jpg",
     "File:Skoda Octavia vRS (7963914636).jpg",
     "File:Skoda Octavia vRS (7963920510).jpg",
-    "File:Toyota Auris Touring Sports Hybrid.JPG"
+    "File:Toyota Auris Touring Sports Hybrid.JPG",
+    "File:Alfa Romeo Giulia 1300 Super Kulmbach 2018 6170124.jpg",
+    "File:BMW 116d entering Gore Lane from Maer Lane (geograph 5001595).jpg",
+    "File:Citroen e-Berlingo Auto Zuerich 2021 IMG 0097.jpg",
+    "File:Moscow, Citroen C3 blueish-silver, Sept 2025 01.jpg",
+    "File:2024 Citroën C3 Aircross 1.2 PureTech in TSM Bandung outside 01.jpg",
+    "File:2025 Citroën C4 Auto Zuerich 2024 DSC 6108.jpg",
+    "File:Moscow, Citroën Jumpy (2nd gen) white Sept 2025 01.jpg",
+    "File:Dacia Duster III IMG 8961.jpg",
+    "File:Dacia Logan III.jpg",
+    "File:Dacia Logan MCV Model 2009 06.jpg",
+    "File:Dacia Sandero III 1X7A6451.jpg",
+    "File:Fiat Nuova 500 20.JPG",
+    "File:1970 FIAT 500L - Flickr - The Car Spy.jpg",
+    "File:Fiat Doblò Mk3 1X7A7462.jpg",
+    "File:1994 Fiat Tipo 1.7 DS (11693417126).jpg",
+    "File:Ford C-Max Energi P4220631.jpg",
+    "File:Ford Fiesta sedan front.jpg",
+    "File:View of a Ford Galaxy in the Classic Car Boot Sale - geograph.org.uk - 4176342.jpg",
+    "File:Ford Falcon (EB) of Dick Johnson at the 2025 Adelaide Grand Final.jpg",
+    "File:Ford Mondeo V 002.jpg",
+    "File:Ford Tourneo Connect Active (3rd generation) Auto Zuerich 2021 IMG 0402.jpg",
+    "File:Ford Transit V362 002.jpg",
+    "File:Honda HR-V Hybrid Auto Zuerich 2021 IMG 0619.jpg",
+    "File:2023 Honda Jazz (4th generation) hybrid Advance Sport Auto Zuerich 2023 1X7A1443.jpg",
+    "File:Car by maker Hyundai, model i10.jpg",
+    "File:Hyundai Grand I10 Sedan.jpg",
+    "File:BMW i3 & Hyundai Ioniq CRI 05 2021 8960.jpg",
+    "File:Hyundai i20 (BC3) Facelift Auto Zuerich 2023 1X7A0968.jpg",
+    "File:Hyundai Kona Electric (SX2) Auto Zuerich 2023 1X7A1021.jpg",
+    "File:Kia cee'd xR.jpg",
+    "File:KIA Rio X-Line BelkaCar.jpg",
+    "File:Kia Sportage (NQ5; 2021).jpg",
+    "File:Kia-eNiro-front-right.jpg",
+    "File:Mazda2 (DY) – Frontansicht, 25. August 2013, Düsseldorf.jpg",
+    "File:1974 Mazda RX-3 (5942576514).jpg",
+    "File:Mercedes-Benz A 200, GIMS 2018, Le Grand-Saconnex (1X7A0529).jpg",
+    "File:Mitsubishi Colt (2023) Auto Zuerich 2023 1X7A1118.jpg",
+    "File:2017 Nissan LEAF (ZE0 MY17) hatchback (2018-11-02) 01.jpg",
+    "File:Nissan Micra UK specification.jpg",
+    "File:Nissan Note E13 facelift, HK Guardforce staff car.jpg",
+    "File:Nissan Primera GT (Series Champion of British Touring Car Championship in 1999) rear.jpg",
+    "File:Opel Agila front 20071204.jpg",
+    "File:Opel Astra L Electric Auto Zuerich 2023 1X7A1005.jpg",
+    "File:Moscow, Opel Astra K Sports Tourer red, Aug 2026 01.jpg",
+    "File:2023 Opel Corsa F Auto Zuerich 2023 1X7A1113.jpg",
+    "File:Opel Insignia rear.jpg",
+    "File:Moscow, Opel Meriva A, Aug 2025 01.jpg",
+    "File:2025 Opel Mokka-e Auto Zuerich 2024 DSC 6710.jpg",
+    "File:Franziskanergymnasium Szentendre Opel Vivaro, 2023 Békásmegyer.jpg",
+    "File:Peugeot e-2008 Automesse Ludwigsburg 2022 1X7A5883.jpg",
+    "File:2013 Peugeot 2008 Active (15427155577).jpg",
+    "File:Peugeot 207 car radio (23729264850).jpg",
+    "File:Peugeot e-208 facelift Auto Zuerich 2023 1X7A1209.jpg",
+    "File:Peugeot e-308 Auto Zuerich 2023 1X7A1211.jpg",
+    "File:Peugeot 5008 I (Bleu Philae) in Yogyakarta, Indonesia 01.jpg",
+    "File:Peugeot 508 B Peugeot Sport Engineered SW (2023) Auto Zuerich 2023 1X7A1459.jpg",
+    "File:Moscow car show 2026-07-31 Peugeot Expert 04.jpg",
+    "File:Peugeot e-Partner Auto Zuerich 2023 1X7A1428.jpg",
+    "File:Renault Clio V (2023) Esprit Alpine Auto Zuerich 2023 1X7A1075.jpg",
+    "File:Moscow, Renault Grand Scénic III, Aug 2026 02.jpg",
+    "File:Renault Kangoo Compact Concept.JPG",
+    "File:Moscow, Renault Mégane IV Grandtour, Nov 2025 02.jpg",
+    "File:Renault Megane Grand Scenic (4559359090).jpg",
+    "File:Renault Mégane RS (Moscow, 2024) 01 (DXO).jpg",
+    "File:W3408 Renault R5 GTTurbo 19974XA2.jpg",
+    "File:Renault Scénic Vision 02.png",
+    "File:Renault Twingo Z.E. IMG 4003.jpg",
+    "File:SEAT Leon Cupra 002.jpg",
+    "File:1996–2000 Seat Alhambra 02 Rear.jpg",
+    "File:Skoda Fabia R5 -.jpg",
+    "File:Skoda Octavia vRS (5958302045).jpg",
+    "File:Škoda Octavia IV Combi.png",
+    "File:Skoda Octavia Kombi (7875229062).jpg",
+    "File:Skoda Rapid at Pfingsttreffen Puetnitz 2018, Ribnitz-Damgarten (1X7A2428).jpg",
+    "File:Skoda Superb 2.jpg",
+    "File:Suzuki Alto Van VP (HA36V) front.jpg",
+    "File:Suzuki Swift Stunt Car (94254).jpg",
+    "File:Tesla Model 3 (2023) Auto Zuerich 2023 1X7A1313.jpg",
+    "File:Tesla Model Y L 002.jpg",
+    "File:Toyota Aygo X 1X7A0063.jpg",
+    "File:1969 Toyota Corolla 1200.jpg",
+    "File:Toyota Corolla Verso, France.jpg",
+    "File:Toyota Yaris Cross 002.jpg",
+    "File:Toyota Yaris Cross 001.jpg",
+    "File:Toyota Prius XW20, Bangladesh (25348076051).jpg",
+    "File:VW Caddy California, IAA 2024, Hanover (P1200089).jpg",
+    "File:Moscow, Volkswagen Caddy Maxi (type SB) grey, Sept 2025 01.jpg",
+    "File:2020 Volkswagen Golf Style 1.5 Front.jpg",
+    "File:2011 Volkswagen Golf S 1.2 Rear.jpg",
+    "File:VW Passat GL 1980-85 (2019-11-24 Sp r).JPG",
+    "File:Volkswagen Polo MK4 sedan 001.jpg",
+    "File:Volkswagen Tiguan III eHybrid Auto Zuerich 2023 1X7A1001.jpg",
+    "File:20200529 Volkswagen Touran Bluemotion 01.jpg",
+    "File:Citroen C1 BRSCC City Car Cup.jpg",
+    "File:Mercedes A 160 (6558284067).jpg"
   ],
   "niet_gevonden": [
     "Citroën|New C3 MAX",
@@ -3551,6 +3855,7 @@
   ],
   "regels_versie": 11,
   "zoek_als": {
+    "MG|MG MG RX6 PLUGIN Hybride": "MG|EHS",
     "Mercedes-Benz|A-170": "Mercedes-Benz|W169",
     "Mercedes|A-150": "Mercedes-Benz|W169"
   }

@@ -192,7 +192,7 @@ Je hebt ze zelden nodig; zonder vlaggen doet het script wat nodig is.
 | `--replica <pad>` | een replica die ergens anders staat |
 | `--dump-datum <datum>` | een replica zonder `_meta`-tabel |
 | `--basis-url <url>` | een ander adres dan `CNAME` of de git-remote |
-| `--opnieuw-fotos` | zoek élke modelfoto opnieuw, ook die er al zijn |
+| `--opnieuw-fotos` | ⚠ **af te raden**: gooit alle met de hand gekozen modelfoto's weg en zoekt ze opnieuw zonder bouwjaar — zie [De juiste generatie](#de-juiste-generatie). Vraagt eerst bevestiging |
 | `--vernieuw-ov` | haal de dienstregelingen opnieuw op in plaats van uit de cache |
 | `--publiceer` | publiceer na afloop zonder het te vragen |
 | `--niet-publiceren` | vraag achteraf niets over publiceren |
@@ -324,6 +324,27 @@ De volgende run gooit die foto weg en kiest de eerstvolgende kandidaat. Die lijs
 Wil je zelf een foto aanleveren, zet het bestand dan in `map/fotos/` en pas de regel in
 `fotos.json` aan (met auteur en licentie erbij). Het script laat bestaande sleutels met
 rust, dus die keuze blijft staan.
+
+### De juiste generatie
+
+Het script zoekt op merk en model, niet op bouwjaar. Het vond dus vaak het goede model in
+de verkeerde generatie: een Corolla uit 1969 bij wagens van 2020, een Tiguan III bij wagens
+van 2014. Op 28-09-2026 zijn alle foto's daarom met de hand nagekeken tegen het bouwjaar
+van de wagens die ze gebruiken, en 133 foto's vervangen door een foto uit de Commons-
+categorie van de juiste generatie. Die categorie staat per foto in `gezocht_op`
+(bijvoorbeeld `Toyota Corolla (E210) hatchback`). Draagt een sleutel wagens van
+verschillende generaties ("Volkswagen|Polo" van 2007 tot 2023), dan kreeg hij de generatie
+van de meerderheid.
+
+De 108 foto's die eruit gingen, staan in `geweigerd`. **Gebruik `--opnieuw-fotos` dus
+liever niet:** het zoekt élke foto opnieuw op merk en model, en dan kan een verkeerde
+generatie terugkomen, alleen niet meer dezelfde foto. Het script zegt dat ook en vraagt
+eerst of je het zeker weet (typ `ja`); antwoord je iets anders, dan draait het gewoon
+zonder `--opnieuw` verder. Zonder terminal weigert het, tenzij je er `--ja` bij zet.
+
+Eén foto vervangen kan zonder `--opnieuw`: zet hem in `geweigerd` (zie hierboven), en
+alleen die ene wordt opnieuw gezocht. Komt er een nieuw model bij, kijk zijn foto dan
+even na tegen het bouwjaar.
 
 ### Een model dat Commons anders noemt
 

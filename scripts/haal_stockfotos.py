@@ -46,7 +46,8 @@ in een oogwenk klaar. Met `--opnieuw` gooi je die geheugensteun weg.
 Draaien
 -------
     py scripts/haal_stockfotos.py
-    py scripts/haal_stockfotos.py --opnieuw          alles opnieuw ophalen
+    py scripts/haal_stockfotos.py --opnieuw          ALLES weggooien en opnieuw (vraagt
+                                                     bevestiging; zie README.md)
     py scripts/haal_stockfotos.py --max 20           eerst een handvol proberen
 """
 
@@ -451,7 +452,11 @@ def main() -> int:
     ap.add_argument("--uit", type=Path, default=None,
                     help="fotomap (standaard: ../map/fotos)")
     ap.add_argument("--opnieuw", action="store_true",
-                    help="negeer wat er al opgehaald is en zoek alles opnieuw")
+                    help="GOOIT ALLE FOTO'S WEG en zoekt ze opnieuw, op merk en model "
+                         "zonder bouwjaar. Vraagt eerst bevestiging; zie README.md, "
+                         "'De juiste generatie'.")
+    ap.add_argument("--ja", action="store_true",
+                    help="bevestig --opnieuw zonder te vragen (voor wie het echt wil)")
     ap.add_argument("--max", type=int, default=0,
                     help="stop na dit aantal NIEUWE ophalingen (0 = geen grens)")
     args = ap.parse_args()
@@ -476,6 +481,32 @@ def main() -> int:
     if not feed.exists():
         zeg(f"FOUT: feed niet gevonden: {feed}")
         return 2
+
+    # --opnieuw maakt handwerk ongedaan. De foto's in het manifest zijn op 28-09-2026 met
+    # de hand gekozen in de juiste GENERATIE (zie `gezocht_op`); dit script zoekt alleen
+    # op merk en model en kent het bouwjaar niet. Een volledige herophaling brengt dus
+    # verkeerde generaties terug — een Corolla uit 1969 bij een wagen van 2020. Daarom
+    # nooit stilzwijgend: eerst zeggen wat er verloren gaat, en dan uitdrukkelijk "ja".
+    if args.opnieuw and manifest_pad.exists():
+        huidig = json.loads(manifest_pad.read_text(encoding="utf-8")).get("fotos", {})
+        zeg("LET OP: --opnieuw gooit alle " + str(len(huidig)) + " gekozen foto's weg.")
+        zeg("  Ze zijn met de hand gekozen in de juiste generatie van elk model. Dit script")
+        zeg("  zoekt alleen op merk en model, niet op bouwjaar, en kiest dus opnieuw vaak een")
+        zeg("  foto van een andere generatie. Wat in 'geweigerd' en 'zoek_als' staat, blijft.")
+        zeg("  Wil je één lelijke foto vervangen? Zet hem in 'geweigerd' en draai zonder")
+        zeg("  --opnieuw: dan wordt alleen die ene opnieuw gezocht. Zie README.md,")
+        zeg("  'De juiste generatie'.")
+        if not args.ja:
+            if not sys.stdin.isatty():
+                zeg("FOUT: --opnieuw zonder terminal vraagt --ja. Er is niets veranderd.")
+                return 2
+            antwoord = input("  Alle foto's weggooien en opnieuw zoeken? Typ 'ja': ")
+            if antwoord.strip().lower() != "ja":
+                # Geen fout: gewoon verder zonder --opnieuw, zodat bijwerken.py niet
+                # halverwege stopt. Alleen nieuwe modellen worden dan gezocht.
+                zeg("  Goed: de bestaande foto's blijven. Alleen nieuwe modellen worden gezocht.")
+                args.opnieuw = False
+        zeg()
     uit.mkdir(parents=True, exist_ok=True)
 
     wagens = json.loads(feed.read_text(encoding="utf-8"))["data"]["vehicles"]
