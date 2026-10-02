@@ -1550,7 +1550,7 @@ function lidWordenHtml() {
     '<a href="' + url + '" target="_blank" rel="noopener">' + ontsnap(t(sleutel)) + "</a>";
   const links = {
     tarieven: link("https://www.degage.be/de-prijzen/", "popup.tarieven"),
-    faq: link("https://www.degage.be/faq/", "popup.faq"),
+    faq: link("https://app.deeljeauto.be/app/faq", "popup.faq"),
   };
   return '<p class="popup__voet popup__voet--lid">' +
            ontsnap(t("popup.lidWorden")).replace(/\{(tarieven|faq)\}/g, (_, naam) => links[naam]) +
