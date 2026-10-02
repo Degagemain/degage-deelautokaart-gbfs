@@ -472,3 +472,15 @@ de knop "Auto's in mijn buurt", ook als de bezoeker toestemming geeft:
 **De databankreplica hoort hier nooit in.** Zie `.gitignore` — die sluit `*.duckdb`,
 dumps en archieven uit. Eenmaal gecommit blijft zo'n bestand in de git-historie staan,
 ook na verwijderen.
+
+---
+
+# Licentie
+
+De **code** in deze repo — de kaart, de scripts en de instappagina — valt onder de
+[GNU General Public License, versie 3](LICENSE) (GPL-3.0).
+
+De **feed** in `gbfs/` is data, geen code, en valt onder
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), zoals `license_url` in
+`system_information.json` zegt. De modelfoto's in `map/fotos/` houden elk hun eigen vrije
+licentie; auteur en licentie staan per foto in `fotos.json`.
