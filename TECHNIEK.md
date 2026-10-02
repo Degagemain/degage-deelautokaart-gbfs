@@ -80,7 +80,7 @@ De kaart haalt **twee** bestanden op uit `../gbfs` (`GBFS_BASIS`, bovenaan `inde
 - `degage_vehicles.json` — de Dégage-uitbreiding op GBFS, met per auto: `station_id`,
   `naam`, `merk`, `model`, `carrosserie`, `brandstof`, `zitplaatsen`, `bouwjaar`,
   `versnellingsbak`, `euronorm`, `toebehoren`, `plaats`, `postcode`, `district`, `contact`.
-  `plaats` komt uit `[intern]` met rechtgezette hoofdletters ("GENTBRUGGE" en "gent"
+  `plaats` is de gemeente met rechtgezette hoofdletters ("GENTBRUGGE" en "gent"
   worden "Gentbrugge" en "Gent"); dat gebeurt in `plaatsnaam()` in de generator, die
   alleen hoofdletters verandert en nooit letters. De kaart toont wat de feed draagt.
 
@@ -113,30 +113,26 @@ OV-blok in de popup.
 
 De feed is een kwartaaldump; de vloot verandert elke week. Daarom haalt `laden()` ook
 **`VLOOT_API`** op (`https://degapp.be/api/v1/car/stands`, publiek, CORS `*`). Die geeft
-per auto alleen dit:
+per auto alleen dit (verzonnen voorbeeld):
 
 ```json
-{ "id": 3, "displayName": "BlackBird",
+{ "displayName": "Voorbeeld Korenmarkt",
   "geoPosition": { "latitude": 51.0545, "longitude": 3.7213 },
   "vehicleInformation": { "fuelType": "diesel", "type": "manual" },
   "stationType": "fixed" }
 ```
+
+Daar staat ook een nummer per auto bij. De kaart gebruikt dat bewust nergens voor.
 
 **De regel: die lijst beslist wélke auto's er zijn en wáár ze staan. De feed levert alleen
 nog de details.** `metLiveVloot()` herschikt de feed daarnaar en geeft stations, wagens en
 een OV-bestand terug in precies de vorm van de feed, zodat de rest van `laden()` en de hele
 kaart niet hoeft te weten waar ze vandaan komen.
 
-**1. Koppelen.** De feed draagt geen `[intern]`, maar het `station_id` ís `"st-"` + het
-laagste `[intern]` op die plek (zie de generator). Dus, in twee rondes:
-
-- **op id** — staat er op `st-<id>` één feedwagen, dan is hij het, ook als hij
-  intussen een andere naam draagt; staan er meer, dan die met dezelfde naam;
-- **op naam** — voor wat overblijft; namen zijn uniek in de vloot (nagekeken op
-  28-09-2026, aan beide kanten).
-
-Twee rondes, en niet per auto beide na elkaar: anders kan een naamtreffer een feedwagen
-inpikken die in de volgende stap op id aan een andere auto zou hangen.
+**1. Koppelen.** Op naam, en alleen op naam: namen zijn uniek in de vloot (nagekeken op
+28-09-2026, aan beide kanten). De feed draagt bewust geen nummer van een auto. Gevolg: een
+auto die sinds de dump een andere naam kreeg, staat als nieuw op de kaart tot de volgende
+feed, en de oude naam verdwijnt.
 
 **2. Wat met elke auto gebeurt.**
 
@@ -175,7 +171,9 @@ de generator). Dan per punt:
   `"lat,lon"` op 6 decimalen, de eerste 8 bytes big-endian als hoek, en
   `locatie_nauwkeurigheid_m` meter in die richting. Zo'n plek heeft geen OV-gegevens.
 
-Het `station_id` volgt de regel van de generator: `"st-"` + het laagste `id`.
+Het `station_id` van een nieuwe plek volgt de regel van de generator: `stationId()`, de
+kopie van `station_id()` in `scripts/genereer_gbfs.py` — `"st-"` + twaalf letters uit een
+SHA-256 van het **vervaagde** punt. Een plek op een feedstip houdt het id van die stip.
 
 *Waarom niet gewoon elk API-punt opnieuw vervagen?* De coördinaten in de API en in de dump
 zijn niet bit voor bit gelijk, en de hash ziet elk verschil: opnieuw vervagen gaf bijna
@@ -253,8 +251,8 @@ adres zou die twee uit elkaar trekken. De feed lost dat op, de kaart erft het re
 **568 auto's op 565 stations**, drie stations dragen er twee.
 
 In de code zie je dat terug in `popupHtml()`: elke auto draagt zijn **eigen plaatsnaam**
-tussen haakjes achter zijn naam (op st-… dus "Ledeberg" bij de ene en "Gent" bij de
-andere), en het merkteken op de pin volgt `passende` en niet `station.wagens`. De postcode
+tussen haakjes achter zijn naam (op hetzelfde punt dus "Ledeberg" bij de ene en "Gent"
+bij de andere), en het merkteken op de pin volgt `passende` en niet `station.wagens`. De postcode
 wordt niet meer getoond.
 
 ## 6. Filters

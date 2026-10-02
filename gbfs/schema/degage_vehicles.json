@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
   "$id": "https://degagemain.github.io/degage-deelautokaart-gbfs/gbfs/schema/degage_vehicles.json",
-  "$comment": "DIT IS GEEN GBFS-SCHEMA en komt niet van MobilityData. Het is het eigen schema van Dégage voor degage_vehicles.json, het detailbestand dat enkel onze eigen kaart leest. Het staat hier om twee redenen: de generator kan er tegen valideren zoals tegen de officiële schema's, en `additionalProperties: false` maakt van dit bestand een tweede privacypoort — een veld dat niet in deze lijst staat, komt er ook niet in. Verboden velden staan in SCOPE.md.",
+  "$comment": "DIT IS GEEN GBFS-SCHEMA en komt niet van MobilityData. Het is het eigen schema van Dégage voor degage_vehicles.json, het detailbestand dat enkel onze eigen kaart leest. Het staat hier om twee redenen: de generator kan er tegen valideren zoals tegen de officiële schema's, en `additionalProperties: false` maakt van dit bestand een tweede privacypoort — een veld dat niet in deze lijst staat, komt er ook niet in.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -58,13 +58,13 @@
       ],
       "properties": {
         "vehicles": {
-          "description": "Eén object per wagen, gesorteerd op station_id en dan [intern].",
+          "description": "Eén object per wagen, gesorteerd op station_id en dan naam.",
           "type": "array",
           "minItems": 1,
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "$comment": "Geschrapt op 17-08-2026, na afstemming met Pieter (FEEDSPEC.md): `deuren`, het volledige kofferblok (`koffer` met liter/breedte_cm/hoogte_cm/diepte_cm) en `[intern]`. Ze staan bewust niet meer in `properties`, zodat `additionalProperties: false` hierboven ze ook actief tegenhoudt in plaats van ze alleen niet te eisen. Op 12-09-2026 ging `inschrijving` er op dezelfde manier uit: de fiscale categorie ([intern]) leest als een vorm terwijl ze een belastingregime is, en de kaart deed er niets mee. `carrosserie` blijft het veld dat zegt hoe een wagen eruitziet; [intern] zit nog in `vehicle_type_id`.",
+            "$comment": "Geschrapt op 17-08-2026: `deuren` en het volledige kofferblok (`koffer` met liter/breedte_cm/hoogte_cm/diepte_cm). Ze staan bewust niet meer in `properties`, zodat `additionalProperties: false` hierboven ze ook actief tegenhoudt in plaats van ze alleen niet te eisen. Op 12-09-2026 ging `inschrijving` er op dezelfde manier uit: de fiscale categorie leest als een vorm terwijl ze een belastingregime is, en de kaart deed er niets mee. `carrosserie` blijft het veld dat zegt hoe een wagen eruitziet; de inschrijving zit nog in `vehicle_type_id`.",
             "required": [
               "station_id",
               "vehicle_type_id",
@@ -82,9 +82,9 @@
             ],
             "properties": {
               "station_id": {
-                "description": "Verwijst naar station_information.json. Afgeleid van het laagste [intern] op dat punt.",
+                "description": "Verwijst naar station_information.json. Een korte hash van het vervaagde punt, dus uit niets wat niet al in de feed staat.",
                 "type": "string",
-                "pattern": "^st-[0-9]+$"
+                "pattern": "^st-[a-z]{12}$"
               },
               "vehicle_type_id": {
                 "description": "Verwijst naar vehicle_types.json.",
@@ -135,7 +135,7 @@
                 "maximum": 2100
               },
               "versnellingsbak": {
-                "description": "Verplicht en altijd ingevuld, anders dan de toebehoren. Een wagen heeft altijd een versnellingsbak, dus 'afwezig' bestaat hier niet: [intern] = 0 betekent 'niet manueel' = automatisch, en niet 'nooit ingevuld'. Dat is de enige plek in dit bestand waar een nul uit de bron gepubliceerd wordt; de generator laat luid vallen als de kolom ooit iets anders dan 0 of 1 draagt.",
+                "description": "Verplicht en altijd ingevuld, anders dan de toebehoren. Een wagen heeft altijd een versnellingsbak, dus 'afwezig' bestaat hier niet en het veld is altijd 'manueel' of 'automatisch'.",
                 "type": "string",
                 "enum": [
                   "manueel",
@@ -143,7 +143,7 @@
                 ]
               },
               "euronorm": {
-                "description": "Herleid uit het vrije tekstveld [intern].euro_norm tot één generatie: de subletters (6b, 6c, 6d) zijn verfijningen binnen Euro 6 en worden op de generatie afgebeeld. NIET verplicht en bewust weglaatbaar: staat het veld er niet, dan is de norm onbekend — dat is iets anders dan 'geen norm'. Dubbelzinnige bronwaarden ('5 of 6') en niet-normen ('nvt', '*', '0') leveren geen veld op in plaats van een gok.",
+                "description": "Herleid uit vrije tekst tot één generatie: de subletters (6b, 6c, 6d) zijn verfijningen binnen Euro 6 en worden op de generatie afgebeeld. NIET verplicht en bewust weglaatbaar: staat het veld er niet, dan is de norm onbekend — dat is iets anders dan 'geen norm'. Dubbelzinnige bronwaarden ('5 of 6') en niet-normen ('nvt', '*', '0') leveren geen veld op in plaats van een gok.",
                 "type": "string",
                 "enum": [
                   "Euro 1",
@@ -155,7 +155,7 @@
                 ]
               },
               "toebehoren": {
-                "description": "Enkel de toebehoren die op true staan. Een veld dat ontbreekt betekent 'afwezig OF nooit ingevuld' — die twee zijn in de brondata niet te scheiden (176 van de 568 wagens hebben alle vlaggen op nul). Daarom is `false` hier geen geldige waarde: elke sleutel die aanwezig is, staat via `const: true` vast op true. Zo kan noch het bestand noch de kaart ooit 'trekhaak: nee' beweren. Een leeg object is geldig en gewoon: het zegt dat we van geen enkel toebehoren weten.",
+                "description": "Enkel de toebehoren die op true staan. Een veld dat ontbreekt betekent 'afwezig OF nooit ingevuld' — die twee zijn in de brondata niet te scheiden. Daarom is `false` hier geen geldige waarde: elke sleutel die aanwezig is, staat via `const: true` vast op true. Zo kan noch het bestand noch de kaart ooit 'trekhaak: nee' beweren. Een leeg object is geldig en gewoon: het zegt dat we van geen enkel toebehoren weten.",
                 "type": "object",
                 "additionalProperties": false,
                 "properties": {
@@ -194,12 +194,12 @@
                 "pattern": "^[0-9]{4}$"
               },
               "district": {
-                "description": "De lokale Degage-groep waar deze wagen bij hoort ('Gent - Brugse Poort', 'Beveren'). Een organisatiegegeven, geen persoonsgegeven. Het [intern] uit de databank wijst naar een persoon en komt hier nooit in.",
+                "description": "De lokale Degage-groep waar deze wagen bij hoort ('Gent - Brugse Poort', 'Beveren'). Een organisatiegegeven, geen persoonsgegeven. Er komt nooit een persoon in.",
                 "type": "string",
                 "minLength": 1
               },
               "contact": {
-                "description": "Groepsadres van dat district, uit de handmatige lijst scripts/districten.json. Staat NIET in de databank ([intern] is leeggeschrobd) en wordt nergens uit afgeleid. Alleen adressen op @degage.be zijn toegelaten; ontbreekt het adres, dan ontbreekt dit veld. Nooit een persoonlijk adres.",
+                "description": "Groepsadres van dat district, uit de handmatige lijst scripts/districten.json. Wordt nergens uit afgeleid. Alleen adressen op @degage.be zijn toegelaten; ontbreekt het adres, dan ontbreekt dit veld. Nooit een persoonlijk adres.",
                 "type": "string",
                 "pattern": "^[A-Za-z0-9._%+-]+@degage\\.be$"
               }

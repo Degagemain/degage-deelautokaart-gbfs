@@ -49,7 +49,8 @@ ziet, [`TECHNIEK.md`](TECHNIEK.md#de-live-vloot) voor de koppeling en het vervag
 | `favicon.png`, `favicon-32.png` | het pictogram in het tabblad, op alle drie de pagina's (512 px en 32 px) |
 | `BIJWERKEN.bat` | **dubbelklik hierop om alles bij te werken** (Windows) |
 | `scripts/bijwerken.py` | hetzelfde, vanaf de opdrachtregel: roept de vier scripts hieronder in de juiste volgorde aan |
-| `scripts/genereer_gbfs.py` | de generator: databank → feed |
+| `scripts/genereer_gbfs.py` | de bouwer: lijst wagens → feed (het inlezen van de databank gebeurt in de interne repo) |
+| `scripts/voorbeeld_vloot.json` | een verzonnen vloot om de bouwer zonder databank te proberen |
 | `scripts/carrosserie.json` | handmatige lijst: personenwagen of bestelwagen, per model |
 | `scripts/districten.json` | handmatige lijst: contactadres per lokale groep |
 | `scripts/haal_stockfotos.py` | haalt één vrij gelicentieerde modelfoto per merk+model |
@@ -110,7 +111,14 @@ wat er gebeurd is.
    Staat ze ergens anders, geef het pad dan mee:
    `py scripts/bijwerken.py --replica <pad naar degage.duckdb>`
 
-Het script kijkt dit alle drie na **vóór** het begint, en zegt in gewone taal wat er
+4. **De interne repo** `degage-deelautokaart-gbfs-private`, **naast** deze map. Daarin staat
+   het script dat de replica leest; zie [De feed](#de-feed--genereer_gbfspy).
+
+   ```
+   ...\Degage\degage-deelautokaart-gbfs-private\  <- de interne repo
+   ```
+
+Het script kijkt dit allemaal na **vóór** het begint, en zegt in gewone taal wat er
 ontbreekt en hoe je het oplost. Klopt er iets niet, dan draait er niets en verandert er
 niets.
 
@@ -228,7 +236,7 @@ Komt er later een eigen domein, zet dat dan in een `CNAME` in de root — dat wi
 github.io-adres. Voor een eenmalige afwijking:
 
 ```bash
-python scripts/genereer_gbfs.py --basis-url https://<ander-adres>/gbfs
+py scripts/bijwerken.py --alleen feed --basis-url https://<ander-adres>/gbfs
 ```
 
 De generator print bij elke run welk adres hij gebruikt en waar het vandaan komt.
@@ -253,35 +261,43 @@ iets gaat zoals het gaat.
 
 ## De feed — `genereer_gbfs.py`
 
+De feed wordt in twee helften gebouwd:
+
+- **`scripts/genereer_gbfs.py`** (deze repo) is de **bouwer**. Hij kent de databank niet:
+  hij neemt een lijst wagens in een vast, neutraal formaat (zie `INVOERVELDEN` bovenaan het
+  script) en maakt daar de zes bestanden van. Normaliseren, vervagen, stations vormen,
+  valideren en de privacyscan gebeuren hier.
+- **`scripts/lees_replica.py`** in de interne repo leest de wagens uit de databankreplica,
+  zet ze om naar dat formaat en roept de bouwer aan. `bijwerken.py` start dat script
+  vanzelf als de interne repo naast deze map staat.
+
+De gewone manier is dus gewoon:
+
 ```bash
-py scripts/genereer_gbfs.py
+py scripts/bijwerken.py --alleen feed
 ```
 
-Vereist de databankreplica; die zit **niet** in deze repo. De generator zoekt zelf uit waar de replica staat, welke dumpdatum
-erbij hoort en wat de publieke basis-URL is, en **print bij elke waarde waar ze vandaan
-komt** — zodat in het logboek staat waarop een feed gebouwd is:
+Wie de interne repo niet heeft, kan de bouwer proberen op het verzonnen voorbeeld:
 
-```
-waar deze run op gebouwd is
-  replica        ...\degage-replica\degage.duckdb
-                 <- gevonden naast de repo
-  dumpdatum      2026-07-31   ->   last_updated 2026-07-31T00:00:00+02:00
-                 <- uit `_meta` in de replica (dump)
+```bash
+py scripts/genereer_gbfs.py --invoer scripts/voorbeeld_vloot.json --uit voorbeeld-uit
 ```
 
-Wat hij niet kan vinden, vult hij niet in: dan faalt hij en zegt hij wat je mee moet
-geven. De dumpdatum komt uit de tabel `_meta` in de replica en nooit van de klok —
-zelfde dump in betekent byte-voor-byte dezelfde bestanden uit.
+`--uit` is daar verplicht, zodat een proefrun de echte feed in `gbfs/` nooit overschrijft.
 
-Overrulen kan, maar hoeft niet. Op `--uit` na kun je al deze vlaggen ook aan
-`bijwerken.py` meegeven:
+De generator zoekt zelf uit welke datum erbij hoort en wat de publieke basis-URL is, en
+**print bij elke waarde waar ze vandaan komt** — zodat in het logboek staat waarop een feed
+gebouwd is. Wat hij niet kan vinden, vult hij niet in: dan faalt hij en zegt hij wat je mee
+moet geven. De datum komt uit de gegevens en nooit van de klok — zelfde invoer betekent
+byte-voor-byte dezelfde bestanden.
+
+Overrulen kan, maar hoeft niet. Al deze vlaggen kun je ook aan `bijwerken.py` meegeven:
 
 | vlag | in plaats van |
 |---|---|
 | `--replica <pad>` | `DEGAGE_REPLICA`, anders naast de repo gezocht |
-| `--dump-datum <datum>` | de tabel `_meta` in de replica |
+| `--dump-datum <datum>` | de datum die in de replica staat |
 | `--basis-url <url>` | `DEGAGE_BASIS_URL`, anders `CNAME` of de git-remote |
-| `--uit <map>` | de map `gbfs/` naast het script |
 | `--no-interactive` | gebeurt vanzelf zonder terminal |
 
 De generator valideert tegen de officiële GBFS-schema's en draait een privacyscan over
@@ -290,6 +306,10 @@ zijn eigen output. **Faalt er iets, dan schrijft hij niets weg** — dat is opze
 Zijn er nieuwe merk/model-combinaties bij gekomen, dan vraagt hij per nieuw model of het
 een personenwagen of een bestelwagen is. Zonder terminal — in een geplande run — vraagt
 hij niets en faalt hij luid met de ontbrekende modellen erbij.
+
+**Het `station_id`** is een korte hash van het vervaagde punt (`station_id()` in de bouwer),
+twaalf letters na `st-`. Het zegt dus niets wat niet al in de feed staat; een nummer van
+een auto staat nergens in de feed.
 
 ## Modelfoto's — `haal_stockfotos.py`
 

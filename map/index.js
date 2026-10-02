@@ -671,8 +671,10 @@ async function laadOv() {
    ververst. Wat de kaart toont, moet echter kloppen met de vloot van VANDAAG. Daarom
    leest ze bij het openen ook VLOOT_API, die per auto alleen dit draagt:
 
-     id, displayName, geoPosition {latitude, longitude},
+     displayName, geoPosition {latitude, longitude},
      vehicleInformation {fuelType, type}, stationType
+
+   (en een nummer per auto, dat de kaart bewust nergens voor gebruikt)
 
    Die bron is de baas over twee dingen, en over niets anders:
 
@@ -687,12 +689,9 @@ async function laadOv() {
    toebehoren, gemeente, contact) laten we weg; er wordt niets bijgeraden. Filteren op
    zo'n onbekend gegeven laat hem vallen, net als een wagen zonder gekende euronorm.
 
-   Hoe een API-auto aan een feedwagen gekoppeld wordt: de feed draagt geen [intern], maar
-   het station_id IS "st-" + het laagste [intern] op die plek. Eerst dus op id: staat er
-   in de feed één wagen op "st-<id>", dan is hij het (ook als hij intussen van
-   naam veranderd is); staan er meer, dan die met dezelfde naam. Daarna, voor wat
-   overblijft, op naam — de namen zijn uniek in de vloot. Wie op geen van beide past,
-   is nieuw.
+   Hoe een API-auto aan een feedwagen gekoppeld wordt: op naam, en alleen op naam — de
+   namen zijn uniek in de vloot. De feed draagt bewust geen nummer van de auto, en de
+   kaart gebruikt het nummer uit de API nergens voor. Wie op geen naam past, is nieuw.
 
    Waar de stip komt
    -----------------
@@ -713,7 +712,8 @@ async function laadOv() {
      van het afgeronde punt. Wijzigt de ene, wijzig dan de andere mee. Zo'n plek heeft
      (nog) geen OV-gegevens.
 
-   Het station_id volgt de regel van de generator: "st-" + het laagste id op die plek.
+   Het station_id van een nieuwe plek volgt de regel van de generator: een hash van het
+   vervaagde punt (stationId()).
 
    Terugvallen op de feed (met een waarschuwing in de console) doen we als de API niet
    antwoordt, een lege lijst geeft, de feed geen `locatie_nauwkeurigheid_m` draagt, of de
@@ -768,6 +768,16 @@ async function verschuif(lat, lon, meter) {
   return [Number(nieuweLat.toFixed(6)), Number(nieuweLon.toFixed(6))];
 }
 
+/* De tegenhanger van `station_id()` in scripts/genereer_gbfs.py: een hash van het
+   VERVAAGDE punt, twaalf letters a–z. Alleen voor een plek die niet in de feed staat. */
+async function stationId(lat, lon) {
+  const sleutel = new TextEncoder().encode(lat.toFixed(6) + "," + lon.toFixed(6));
+  const hash = new Uint8Array(await crypto.subtle.digest("SHA-256", sleutel));
+  let id = "st-";
+  for (let i = 0; i < 12; i++) id += String.fromCharCode(97 + (hash[i] % 26));
+  return id;
+}
+
 const puntSleutel = (lat, lon) => lat.toFixed(6) + "," + lon.toFixed(6);
 
 /* De feed herschikken volgens de live vloot. Geeft stations en wagens terug in dezelfde
@@ -776,28 +786,17 @@ const puntSleutel = (lat, lon) => lat.toFixed(6) + "," + lon.toFixed(6);
    bruikbaars in de API staat. */
 async function metLiveVloot(api, feedStations, feedWagens, ov, meter) {
   const auto = api.filter((v) =>
-    v && Number.isInteger(v.id) && v.geoPosition &&
+    v && v.geoPosition &&
     Number.isFinite(v.geoPosition.latitude) && Number.isFinite(v.geoPosition.longitude) &&
     v.geoPosition.latitude !== 0 && v.geoPosition.longitude !== 0);
   if (!auto.length) return null;
 
-  // --- koppelen: eerst op id, dan op naam --------------------------------------------
-  const feedPerStation = new Map();
-  for (const w of feedWagens) {
-    if (!feedPerStation.has(w.station_id)) feedPerStation.set(w.station_id, []);
-    feedPerStation.get(w.station_id).push(w);
-  }
+  // --- koppelen, op naam -------------------------------------------------------------
   const feedOpNaam = new Map(feedWagens.map((w) => [w.naam, w]));
   const naamVan = (v) => String(v.displayName || "").trim();
   const koppeling = new Map();   // API-auto -> feedwagen
   const gebruikt = new Set();
   for (const v of auto) {
-    const daar = feedPerStation.get("st-" + v.id) || [];
-    const w = daar.length === 1 ? daar[0] : daar.find((x) => x.naam === naamVan(v));
-    if (w && !gebruikt.has(w)) { koppeling.set(v, w); gebruikt.add(w); }
-  }
-  for (const v of auto) {
-    if (koppeling.has(v)) continue;
     const w = feedOpNaam.get(naamVan(v));
     if (w && !gebruikt.has(w)) { koppeling.set(v, w); gebruikt.add(w); }
   }
@@ -831,7 +830,8 @@ async function metLiveVloot(api, feedStations, feedWagens, ov, meter) {
     if (!plekken.has(sleutel)) {
       const [lat, lon] = anker ? [anker.lat, anker.lon]
                                : await verschuif(punt.lat, punt.lon, meter);
-      plekken.set(sleutel, { lat, lon, feed_id: anker && anker.station_id, autos: [] });
+      const station_id = anker ? anker.station_id : await stationId(lat, lon);
+      plekken.set(sleutel, { lat, lon, station_id, feed_id: anker && anker.station_id, autos: [] });
     }
     plekken.get(sleutel).autos.push(...punt.autos);
   }
@@ -841,8 +841,8 @@ async function metLiveVloot(api, feedStations, feedWagens, ov, meter) {
   const ovStations = {};
   let nieuw = 0, verhuisd = 0;
   for (const plek of plekken.values()) {
-    plek.autos.sort((a, b) => a.id - b.id);
-    const station_id = "st-" + plek.autos[0].id;
+    plek.autos.sort((a, b) => naamVan(a).localeCompare(naamVan(b)));
+    const station_id = plek.station_id;
     stations.push({ station_id, lat: plek.lat, lon: plek.lon });
     // De OV-gegevens hangen aan de feedstip; een nieuwe stip heeft er (nog) geen.
     if (ov && plek.feed_id && ov.stations[plek.feed_id]) {
@@ -858,7 +858,7 @@ async function metLiveVloot(api, feedStations, feedWagens, ov, meter) {
         continue;
       }
       nieuw++;
-      const w = { station_id, naam: naamVan(v) || "#" + v.id, nieuw: true, toebehoren: {} };
+      const w = { station_id, naam: naamVan(v) || t("popup.nieuw"), nieuw: true, toebehoren: {} };
       const info = v.vehicleInformation || {};
       if (API_BRANDSTOF[info.fuelType]) w.brandstof = API_BRANDSTOF[info.fuelType];
       if (API_BAK[info.type]) w.versnellingsbak = API_BAK[info.type];
@@ -1422,8 +1422,8 @@ function popupHtml(station) {
      komt: elke wagen draagt zijn eigen brandstof en toebehoren, dus verwarring is niet
      mogelijk, en de bezoeker ziet wat er écht staat. */
   /* De plaatsnaam komt per wagen uit zijn eigen adresrij, en op een gedeelde standplaats
-     kunnen die verschillen terwijl het fysiek hetzelfde punt is: st-… draagt "Ledeberg"
-     naast "Gent", st-… "Vinderhoute" naast "Lievegem" (de fusiegemeente). Beide zijn
+     kunnen die verschillen terwijl het fysiek hetzelfde punt is: "Ledeberg" naast "Gent",
+     "Vinderhoute" naast "Lievegem" (de fusiegemeente). Beide zijn
      juist. We tonen dus de verschillende schrijfwijzen naast elkaar in plaats van er
      stilzwijgend één te kiezen. */
   /* Sinds de gemeente per wagen tussen haakjes achter de naam staat, draagt elke wagen

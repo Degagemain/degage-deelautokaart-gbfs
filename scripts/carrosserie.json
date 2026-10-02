@@ -1,5 +1,5 @@
 {
-  "toelichting": "Handmatig onderhouden lijst: welk soort voertuig is dit model? De databank kent dit niet — [intern] beschrijft de INSCHRIJVING (lichte vracht), niet de carrosserie, en dezelfde Berlingo staat daar nu eens als lichte vracht en dan weer als personenwagen. Deze lijst wordt daarom met de hand bijgehouden. Sleutel is 'merk|model' exact zoals in degage_vehicles.json. Duikt er een nieuw model op, dan vraagt genereer_gbfs.py ernaar; met --no-interactive faalt hij luid in plaats van te raden.",
+  "toelichting": "Handmatig onderhouden lijst: welk soort voertuig is dit model? De gegevens kennen dit niet — de inschrijving (lichte vracht) zegt niets over de carrosserie, en dezelfde Berlingo staat daar nu eens als lichte vracht en dan weer als personenwagen. Deze lijst wordt daarom met de hand bijgehouden. Sleutel is 'merk|model' exact zoals in degage_vehicles.json. Duikt er een nieuw model op, dan vraagt genereer_gbfs.py ernaar; met --no-interactive faalt hij luid in plaats van te raden.",
   "waarden": [
     "Personenwagen",
     "Bestelwagen"

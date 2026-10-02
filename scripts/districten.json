@@ -1,5 +1,5 @@
 {
-  "toelichting": "Handmatig onderhouden: het contactadres van de lokale Dégage-groep, per district. Komt NIET uit de databank en wordt nergens uit afgeleid. Laat een adres leeg als je het niet zeker weet: dan toont de kaart er gewoon geen. Alleen adressen op @degage.be worden aanvaard; een persoonlijk adres hoort hier nooit in.",
+  "toelichting": "Handmatig onderhouden: het contactadres van de lokale Dégage-groep, per district. Wordt nergens uit afgeleid. Laat een adres leeg als je het niet zeker weet: dan draagt de feed er gewoon geen. Alleen adressen op @degage.be worden aanvaard; een persoonlijk adres hoort hier nooit in.",
   "adressen": {
     "Beveren": "melsele@degage.be",
     "Brugge-Oostkamp": "brugge@degage.be",

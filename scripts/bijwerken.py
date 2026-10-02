@@ -21,8 +21,10 @@ niemand die volgorde en die voorwaarden te onthouden.
 
 Wat het NIET doet
 -----------------
-De databankreplica inladen — dat gebeurt in de data-analytics-repo, vóór dit script. En
-publiceren doet het niet vanzelf: dat biedt het aan het eind aan, en het gebeurt pas als je
+De databankreplica inladen — dat gebeurt in de data-analytics-repo, vóór dit script. De
+replica lezen doet het ook niet zelf: dat doet `scripts/lees_replica.py` in de interne repo
+(`degage-deelautokaart-gbfs-private`, naast deze map), die daarna de bouwer in deze repo
+aanroept. En publiceren doet het niet vanzelf: dat biedt het aan het eind aan, en het gebeurt pas als je
 met zoveel woorden ja zegt.
 """
 
@@ -38,6 +40,8 @@ from pathlib import Path
 
 HIER = Path(__file__).resolve().parent
 REPO = HIER.parent
+# De interne repo, met het script dat de replica leest. Zie de docstring.
+PRIVAAT = REPO.parent / "degage-deelautokaart-gbfs-private"
 
 BREED = 100
 
@@ -48,18 +52,20 @@ BREED = 100
 
 class Stap:
     def __init__(self, sleutel: str, titel: str, script: str, waarom: str,
-                 netwerk: bool, duur: str) -> None:
+                 netwerk: bool, duur: str, map: Path = HIER) -> None:
         self.sleutel = sleutel      # de naam voor --alleen
         self.titel = titel          # wat er in de banner staat
-        self.script = script        # bestandsnaam in scripts/
+        self.script = script        # bestandsnaam in `map`
+        self.pad = map / script
         self.waarom = waarom        # één regel in het overzicht vooraf
         self.netwerk = netwerk      # heeft dit internet nodig?
         self.duur = duur            # ruwe verwachting, zodat niemand denkt dat het hangt
 
 
 STAPPEN = [
-    Stap("feed", "de feed genereren", "genereer_gbfs.py",
-         "uit de databankreplica       -> gbfs/", False, "een halve minuut"),
+    Stap("feed", "de feed genereren", "lees_replica.py",
+         "uit de databankreplica       -> gbfs/", False, "een halve minuut",
+         map=PRIVAAT / "scripts"),
     Stap("fotos", "de modelfoto's ophalen", "haal_stockfotos.py",
          "van Wikimedia Commons        -> map/fotos/", True,
          "meteen klaar als de vloot niet veranderde"),
@@ -148,14 +154,27 @@ def controleer_vooraf(stappen: list[Stap]) -> list[str]:
             else:
                 zeg(f"  {module:<14} aanwezig")
 
-        # De generator weet zelf het beste waar de replica staat; we vragen het hém, zodat
+        # De feed bouwen kan alleen met de interne repo erbij: daar staat het script dat
+        # de replica leest.
+        if not (PRIVAAT / "scripts" / "lees_replica.py").is_file():
+            zeg(f"  {'interne repo':<14} NIET GEVONDEN")
+            zeg(f"  {'':<14}    gezocht op {PRIVAAT}")
+            klachten.append(
+                "De interne repo `degage-deelautokaart-gbfs-private` staat niet naast deze "
+                "map. Daarin staat het script dat de databankreplica leest. Clone ze naast "
+                "deze map, of werk alleen de rest bij:\n"
+                "      py scripts/bijwerken.py --alleen fotos,bereik,ov")
+            return klachten
+        zeg(f"  {'interne repo':<14} {PRIVAAT}")
+
+        # Dat script weet zelf het beste waar de replica staat; we vragen het hém, zodat
         # hier nooit een tweede, afwijkende zoekregel ontstaat.
         replica, bron, bekeken = None, "niet kunnen nakijken", []
         try:
-            sys.path.insert(0, str(HIER))
-            import genereer_gbfs
+            sys.path.insert(0, str(PRIVAAT / "scripts"))
+            import lees_replica
 
-            replica, bron, bekeken = genereer_gbfs.zoek_replica(REPO, None)
+            replica, bron, bekeken = lees_replica.zoek_replica(None)
         except Exception:                                   # noqa: BLE001
             pass
         if replica is not None and replica.is_file():
@@ -176,8 +195,8 @@ def controleer_vooraf(stappen: list[Stap]) -> list[str]:
         zeg(f"  {'replica':<14} niet nodig (de feedstap wordt overgeslagen)")
 
     for stap in stappen:
-        if not (HIER / stap.script).is_file():
-            klachten.append(f"Het script `scripts/{stap.script}` ontbreekt in deze map.")
+        if not stap.pad.is_file():
+            klachten.append(f"Het script `{stap.pad}` ontbreekt.")
     return klachten
 
 
@@ -196,11 +215,11 @@ def draai(stap: Stap, nummer: int, totaal: int, extra: list[str]) -> int:
     lijn("=")
     zeg(f"STAP {nummer} VAN {totaal} — {stap.titel}")
     lijn("=")
-    zeg(f"  {' '.join(['py', 'scripts/' + stap.script, *extra])}")
+    zeg(f"  {' '.join(['py', str(stap.pad.relative_to(REPO.parent)), *extra])}")
     zeg(f"  duurt normaal: {stap.duur}")
     zeg()
     begin = time.monotonic()
-    code = subprocess.call([sys.executable, str(HIER / stap.script), *extra], cwd=str(REPO))
+    code = subprocess.call([sys.executable, str(stap.pad), *extra], cwd=str(REPO))
     zeg()
     zeg(f"[stap {nummer} {'klaar' if code == 0 else 'GEFAALD'} — "
         f"{duurtekst(time.monotonic() - begin)}]")
