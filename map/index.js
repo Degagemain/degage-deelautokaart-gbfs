@@ -1507,16 +1507,15 @@ function popupHtml(station) {
   }).join("");
 
   /* De titel is van de autonaam, want daar zoekt de bezoeker op; de gemeente staat er
-     tussen haakjes achter. Onderaan staan alleen nog het district en het contactadres. */
-  /* District en contactadres horen bij de standplaats, niet bij één wagen: op een
-     gedeeld punt zijn ze hetzelfde. Het adres staat er alleen als iemand het bij Dégage
-     met de hand heeft ingevuld — zie scripts/districten.json. */
+     tussen haakjes achter. Onderaan staan alleen nog het district en de weg naar het
+     lidmaatschap. */
+  /* Het district hoort bij de standplaats, niet bij één wagen: op een gedeeld punt is het
+     hetzelfde. */
   /* Het district alleen tonen als het iets toevoegt: bij "Sint-Niklaas" in "9100
      Sint-Niklaas" is het dubbelop, bij "Gent - Brugse Poort" niet. Het krijgt een eigen
      regel onder de gemeente; naast het adres gezet leest het als een tweede plaatsnaam. */
   const districten = [...new Set(station.wagens.map((w) => w.district).filter(Boolean))]
     .filter((d) => !plaats.toLowerCase().includes(d.toLowerCase()));
-  const adressen = [...new Set(station.wagens.map((w) => w.contact).filter(Boolean))];
 
   return '<div class="popup">' +
            blokken +
@@ -1528,12 +1527,10 @@ function popupHtml(station) {
                  ontsnap(districten.join(" / ")) +
                "</p>"
              : "") +
-           (adressen.length
-             ? '<p class="popup__voet">' + pictogram("i-mail") +
-                 adressen.map((a) =>
-                   '<a href="mailto:' + ontsnap(a) + '">' + ontsnap(a) + "</a>").join(" / ") +
-               "</p>"
-             : "") +
+           /* Wie een wagen ziet staan die hem bevalt, wil weten wat het kost en hoe het
+              werkt. Het contactadres van de lokale groep stond hier vroeger; de tarieven en
+              de FAQ brengen een bezoeker sneller tot lid worden. */
+           lidWordenHtml() +
            /* De stip staat met opzet niet precies op de standplaats: dat zou de voordeur
               van de eigenaar aanwijzen. Dat hoort de bezoeker te weten op de plek waar
               hij naar de locatie kijkt, en niet alleen in een document dat hij nooit
@@ -1544,6 +1541,20 @@ function popupHtml(station) {
                "</p>"
              : "") +
          "</div>";
+}
+
+/* De zin met twee links. De vertaling draagt {tarieven} en {faq} als plaatshouders, zodat
+   elke taal de links zelf in de zin kan zetten; de linkteksten worden apart vertaald. */
+function lidWordenHtml() {
+  const link = (url, sleutel) =>
+    '<a href="' + url + '" target="_blank" rel="noopener">' + ontsnap(t(sleutel)) + "</a>";
+  const links = {
+    tarieven: link("https://www.degage.be/de-prijzen/", "popup.tarieven"),
+    faq: link("https://www.degage.be/faq/", "popup.faq"),
+  };
+  return '<p class="popup__voet popup__voet--lid">' +
+           ontsnap(t("popup.lidWorden")).replace(/\{(tarieven|faq)\}/g, (_, naam) => links[naam]) +
+         "</p>";
 }
 
 /* Het bereik van één wagen: eerst per merk+model+bouwjaar (zo rekent haal_bereik.py), dan

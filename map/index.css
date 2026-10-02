@@ -875,6 +875,9 @@ body {
 .popup__voet + .popup__voet { margin-top: 3px; padding-top: 0; border-top: 0; }
 /* De vervaagde locatie. Kleiner en grijzer dan de rest van de voet: het is een
    voorbehoud bij wat erboven staat, geen extra gegeven. */
+/* De weg naar het lidmaatschap is een zin met links erin: als flex zou elk stuk tekst
+   en elke link een eigen vak worden, met een gat ertussen. */
+.popup__voet--lid { display: block; line-height: 1.45; }
 .popup__voet--vaag {
   padding-left: 19px;
   font-size: 11.5px; font-style: italic;
