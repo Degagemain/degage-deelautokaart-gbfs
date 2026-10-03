@@ -395,6 +395,12 @@ py scripts/haal_ov.py
 Allebei **ná** `genereer_gbfs.py`, want ze lezen uit de feed — `bijwerken.py` regelt dat. Net als het fotoscript staan
 ze buiten de generator: ze hebben netwerk nodig.
 
+**`haal_ov.py` vraagt ook de live vloot op** (degapp.be, dezelfde lijst als de kaart) en
+rekent de bereikbaarheid uit voor elke plek waar een nieuwe of verhuisde auto staat. Zo
+heeft ook een auto die nog niet in de feed staat een OV-blok en een afstand tot bus en
+trein. Een auto die na de run bijkomt, heeft dat pas na de volgende run — wie dat wil
+bijwerken zonder nieuwe feed, draait gewoon `py scripts/bijwerken.py --alleen ov`.
+
 **`haal_ov.py` moet na elke nieuwe feed opnieuw draaien.** `map/ov.json` draagt de datum
 van de feed waarvoor het berekend is, en de kaart toont het alleen als die klopt — anders
 zou een verhuisde standplaats de bereikbaarheid van haar oude adres dragen. De eerste run

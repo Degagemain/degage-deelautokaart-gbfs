@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Hoe bereikbaar is elke standplaats? De Mobiscore, en wat er aan openbaar vervoer rijdt.
 
-Leest de standplaatsen uit `gbfs/station_information.json` en schrijft per standplaats naar
-`map/ov.json`:
+Leest de standplaatsen uit `gbfs/station_information.json` — plus de plekken die de kaart
+maakt voor nieuwe en verhuisde auto's uit de live vloot (VLOOT_API, onder `live_plekken`) —
+en schrijft per standplaats naar `map/ov.json`:
 
 · de MOBISCORE — de officiële score van de Vlaamse overheid (Departement Omgeving), dezelfde
   die Immoweb bij een woning toont: van 0 tot 10, hoger is beter;
@@ -116,6 +117,10 @@ from collections import defaultdict
 from datetime import date, datetime, timedelta
 from pathlib import Path
 
+# De vervaging van de generator, om een nieuwe plek exact zo te vervagen en te benoemen als
+# de kaart het doet (die heeft er zelf een kopie van).
+from genereer_gbfs import LOCATIE_FUZZ_M, station_id, verschuif
+
 # ============================================================================
 # DE KEUZES — zie de uitleg bovenaan
 # ============================================================================
@@ -164,6 +169,14 @@ BRONNEN = {
         "soorten": {"2": "trein"},
     },
 }
+
+# De live vloot, dezelfde bron als VLOOT_API in map/index.js. De kaart zet een auto die niet
+# in de feed staat, of verhuisd is, op een NIEUWE plek met een eigen station_id; zonder
+# deze bron staat bij zo'n plek geen OV-blok en valt ze uit elk afstandsfilter. Zie
+# `nieuwe_plekken()`.
+VLOOT_API = "https://degapp.be/api/v1/car/stands"
+# Moet gelijk zijn aan VERHUIS_MARGE_M in map/index.js.
+VERHUIS_MARGE_M = 10
 
 UA = "DegageDeelautokaart/1.0 (https://www.degage.be/; info@degage.be)"
 CACHE_DAGEN = 7
@@ -545,6 +558,89 @@ def trein(z: zipfile.ZipFile, dag: date, standplaatsen: list) -> dict:
 
 
 # ============================================================================
+# de nieuwe plekken uit de live vloot
+# ============================================================================
+def haal_vloot() -> list | None:
+    """De live vloot, zoals de kaart ze bij het openen ophaalt; None als dat niet lukt."""
+    try:
+        verzoek = urllib.request.Request(VLOOT_API, headers={"User-Agent": UA})
+        with urllib.request.urlopen(verzoek, timeout=60) as antwoord:
+            lijst = json.load(antwoord)
+        if not isinstance(lijst, list):
+            raise ValueError("geen lijst")
+        return lijst
+    except Exception as e:
+        zeg(f"  WAARSCHUWING: live vloot niet geladen ({VLOOT_API}): {e}")
+        return None
+
+
+def nieuwe_plekken(api: list, feed_stations: list, feed_wagens: list,
+                   meter_vaag: float) -> tuple[list, int]:
+    """De plekken die de kaart NIET op een feedstip zet, met het station_id dat ze krijgen.
+
+    De tegenhanger van `metLiveVloot()` in map/index.js, voor zover het de plaats betreft:
+    koppelen op naam, groeperen op het API-punt (6 decimalen), een punt blijft op zijn
+    feedstip als een gekoppelde auto daar binnen de vervaging + VERHUIS_MARGE_M ligt, en
+    anders wordt het vervaagd met `verschuif()` uit de generator. Wijzigt die regel in de
+    kaart, wijzig hem dan hier mee — anders zoekt de kaart een station_id dat hier niet
+    berekend is, en staat er bij een nieuwe auto gewoon geen OV-blok.
+
+    Geeft de plekken als (station_id, lat, lon) en het aantal nieuwe auto's erop.
+    """
+    def bruikbaar(x) -> bool:
+        return (isinstance(x, (int, float)) and not isinstance(x, bool)
+                and math.isfinite(x) and x != 0)
+
+    def naam_van(v) -> str:
+        return str(v.get("displayName") or "").strip()
+
+    auto = [v for v in api if isinstance(v, dict) and isinstance(v.get("geoPosition"), dict)
+            and bruikbaar(v["geoPosition"].get("latitude"))
+            and bruikbaar(v["geoPosition"].get("longitude"))]
+
+    feed_op_naam = {w["naam"]: w for w in feed_wagens}
+    koppeling, gebruikt = {}, set()
+    for i, v in enumerate(auto):
+        w = feed_op_naam.get(naam_van(v))
+        if w is not None and id(w) not in gebruikt:
+            koppeling[i] = w
+            gebruikt.add(id(w))
+
+    per_punt: dict[str, list[int]] = defaultdict(list)
+    punt_van = {}
+    for i, v in enumerate(auto):
+        lat = round(v["geoPosition"]["latitude"], 6)
+        lon = round(v["geoPosition"]["longitude"], 6)
+        k = f"{lat:.6f},{lon:.6f}"
+        per_punt[k].append(i)
+        punt_van[k] = (lat, lon)
+
+    feed_station = {s["station_id"]: s for s in feed_stations}
+
+    def meter_tussen(lat1, lon1, lat2, lon2) -> float:
+        # Zoals `meterTussen()` in de kaart: de cosinus van het API-punt, niet van het midden.
+        return math.hypot((lat1 - lat2) * METER_PER_GRAAD,
+                          (lon1 - lon2) * METER_PER_GRAAD * math.cos(math.radians(lat1)))
+
+    plekken, nieuw = {}, 0
+    for k, wie in per_punt.items():
+        lat, lon = punt_van[k]
+        anker = False
+        for i in wie:
+            f = koppeling.get(i)
+            s = f and feed_station.get(f["station_id"])
+            if s and meter_tussen(lat, lon, s["lat"], s["lon"]) <= meter_vaag + VERHUIS_MARGE_M:
+                anker = True
+                break
+        if anker:
+            continue
+        vlat, vlon = verschuif(lat, lon)
+        plekken.setdefault(station_id(vlat, vlon), (vlat, vlon))
+        nieuw += sum(1 for i in wie if i not in koppeling)
+    return [(sid, lat, lon) for sid, (lat, lon) in plekken.items()], nieuw
+
+
+# ============================================================================
 def main() -> int:
     ap = argparse.ArgumentParser(description="Mobiscore en openbaar vervoer per standplaats.")
     ap.add_argument("--vernieuw", action="store_true",
@@ -564,7 +660,27 @@ def main() -> int:
     info = json.loads(feed.read_text(encoding="utf-8"))
     standplaatsen = [(s["station_id"], s["lat"], s["lon"]) for s in info["data"]["stations"]]
     zeg(f"standplaatsen      {len(standplaatsen)} (uit {feed.name}, feed van {info['last_updated']})")
-    zeg(f"keuzes             dichtste halte tot {HALTE_VER_M} m · haltes geteld binnen {HALTE_M} m · "
+
+    # De plekken die de kaart uit de live vloot maakt, komen erbij: zo staat er ook bij een
+    # nieuwe of verhuisde auto een OV-blok. Mislukt dat, dan gaat de rest gewoon door.
+    wagens = json.loads((repo / "gbfs" / "degage_vehicles.json").read_text(encoding="utf-8"))
+    meter_vaag = wagens.get("locatie_nauwkeurigheid_m")
+    nieuw: list = []
+    if meter_vaag != LOCATIE_FUZZ_M:
+        zeg(f"live vloot         overgeslagen: de feed vervaagt {meter_vaag} m, de generator "
+            f"{LOCATIE_FUZZ_M} m")
+    else:
+        api = haal_vloot()
+        if api:
+            nieuw, n_autos = nieuwe_plekken(api, info["data"]["stations"],
+                                            wagens["data"]["vehicles"], meter_vaag)
+            bekend = {s[0] for s in standplaatsen}
+            nieuw = [p for p in nieuw if p[0] not in bekend]
+            zeg(f"live vloot         {len(api)} auto's; {len(nieuw)} plekken niet op een feedstip "
+                f"(nieuwe of verhuisde auto's, waarvan {n_autos} nieuw)")
+    nieuwe_ids = {p[0] for p in nieuw}
+    standplaatsen += nieuw
+    zeg(f"keuzes            dichtste halte tot {HALTE_VER_M} m · haltes geteld binnen {HALTE_M} m · "
         f"station tot {TREIN_M} m · {VENSTER_VAN // 3600:02d}:00–{VENSTER_TOT // 3600:02d}:00")
     zeg()
 
@@ -670,7 +786,11 @@ def main() -> int:
         "mobiscore_bron": MOBISCORE,
         "bronnen": {k: {"naam": b["naam"], "url": b["url"], "via": b["via"],
                         "versie": versies[k]} for k, b in BRONNEN.items()},
-        "stations": dict(sorted(resultaat.items())),
+        "stations": dict(sorted((k, v) for k, v in resultaat.items() if k not in nieuwe_ids)),
+        # De plekken die de kaart maakt voor een auto uit de live vloot die niet op een
+        # feedstip staat. Hun station_id is een hash van het vervaagde punt, dus het punt
+        # zelf: ze kunnen niet verhuizen met hetzelfde id, en hangen niet af van voor_feed.
+        "live_plekken": dict(sorted((k, v) for k, v in resultaat.items() if k in nieuwe_ids)),
     }
     uit.write_text(json.dumps(bestand, ensure_ascii=False, indent=1) + "\n",
                    encoding="utf-8", newline="\n")

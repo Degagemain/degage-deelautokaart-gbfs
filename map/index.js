@@ -709,8 +709,10 @@ async function laadOv() {
    · Anders (een nieuwe auto op een nieuwe plek, of een verhuisde auto) wordt het
      API-punt EXACT ZO vervaagd als de generator het doet (`verschuif()` in
      scripts/genereer_gbfs.py): een vaste afstand opzij in een richting uit een SHA-256
-     van het afgeronde punt. Wijzigt de ene, wijzig dan de andere mee. Zo'n plek heeft
-     (nog) geen OV-gegevens.
+     van het afgeronde punt. Wijzigt de ene, wijzig dan de andere mee. Zo'n plek haalt
+     haar OV-gegevens uit `live_plekken` in map/ov.json: scripts/haal_ov.py vraagt de
+     live vloot ook op en rekent die plekken op dezelfde manier uit. Is de auto pas
+     na die run verschenen of verhuisd, dan staat ze daar (nog) niet in.
 
    Het station_id van een nieuwe plek volgt de regel van de generator: een hash van het
    vervaagde punt (stationId()).
@@ -782,9 +784,11 @@ const puntSleutel = (lat, lon) => lat.toFixed(6) + "," + lon.toFixed(6);
 
 /* De feed herschikken volgens de live vloot. Geeft stations en wagens terug in dezelfde
    vorm als de feed, zodat laden() daarna niet hoeft te weten waar ze vandaan komen, en
-   een OV-bestand dat op de NIEUWE station_id's gesleuteld is. Geeft null als er niets
-   bruikbaars in de API staat. */
-async function metLiveVloot(api, feedStations, feedWagens, ov, meter) {
+   een OV-bestand dat op de NIEUWE station_id's gesleuteld is. `ov` is het OV-bestand als
+   het bij de feed hoort (anders null), `ovBestand` het bestand hoe dan ook: zijn
+   `live_plekken` hangen niet aan de feed, want hun id is het punt zelf. Geeft null als
+   er niets bruikbaars in de API staat. */
+async function metLiveVloot(api, feedStations, feedWagens, ov, ovBestand, meter) {
   const auto = api.filter((v) =>
     v && v.geoPosition &&
     Number.isFinite(v.geoPosition.latitude) && Number.isFinite(v.geoPosition.longitude) &&
@@ -839,14 +843,17 @@ async function metLiveVloot(api, feedStations, feedWagens, ov, meter) {
   const stations = [];
   const wagens = [];
   const ovStations = {};
+  const livePlekken = (ovBestand && ovBestand.live_plekken) || {};
   let nieuw = 0, verhuisd = 0;
   for (const plek of plekken.values()) {
     plek.autos.sort((a, b) => naamVan(a).localeCompare(naamVan(b)));
     const station_id = plek.station_id;
     stations.push({ station_id, lat: plek.lat, lon: plek.lon });
-    // De OV-gegevens hangen aan de feedstip; een nieuwe stip heeft er (nog) geen.
+    // De OV-gegevens hangen aan de feedstip; een nieuwe stip haalt ze uit live_plekken.
     if (ov && plek.feed_id && ov.stations[plek.feed_id]) {
       ovStations[station_id] = ov.stations[plek.feed_id];
+    } else if (!plek.feed_id && livePlekken[station_id]) {
+      ovStations[station_id] = livePlekken[station_id];
     }
     if (!plek.feed_id) verhuisd += plek.autos.filter((v) => koppeling.has(v)).length;
 
@@ -871,10 +878,13 @@ async function metLiveVloot(api, feedStations, feedWagens, ov, meter) {
                " nieuw en " + verhuisd + " verhuisd; " + weg.length + " uit de feed bestaan niet meer" +
                (weg.length ? " (" + weg.map((w) => w.naam).join(", ") + ")" : "") + ".");
 
+  /* De bronvermelding en de stralen komen uit het bestand, ook als enkel live_plekken
+     bruikbaar is (een OV-bestand van een andere feed). */
+  const basis = ov || (Object.keys(ovStations).length ? ovBestand : null);
   return {
     stations,
     wagens,
-    ov: ov ? Object.assign({}, ov, { stations: ovStations }) : null
+    ov: basis ? Object.assign({}, basis, { stations: ovStations }) : null
   };
 }
 
@@ -914,7 +924,7 @@ async function laden() {
                  "worden en wordt niet gebruikt.");
   } else if (vloot) {
     try {
-      live = await metLiveVloot(vloot, feedStations, feedWagens, ov, locatieVaagheid);
+      live = await metLiveVloot(vloot, feedStations, feedWagens, ov, ovBestand, locatieVaagheid);
       if (!live) console.warn("de live vloot is leeg — de kaart toont de feed.");
     } catch (e) {
       console.warn("live vloot niet verwerkt: " + e.message + " — de kaart toont de feed.");
@@ -1529,17 +1539,10 @@ function popupHtml(station) {
              : "") +
            /* Wie een wagen ziet staan die hem bevalt, wil weten wat het kost en hoe het
               werkt. Het contactadres van de lokale groep stond hier vroeger; de tarieven en
-              de FAQ brengen een bezoeker sneller tot lid worden. */
+              de FAQ brengen een bezoeker sneller tot lid worden. Helemaal onderaan, in een
+              eigen groen vak: als grijze voetregel tussen de andere voetregels las
+              niemand het. */
            lidWordenHtml() +
-           /* De stip staat met opzet niet precies op de standplaats: dat zou de voordeur
-              van de eigenaar aanwijzen. Dat hoort de bezoeker te weten op de plek waar
-              hij naar de locatie kijkt, en niet alleen in een document dat hij nooit
-              leest. */
-           (locatieVaagheid
-             ? '<p class="popup__voet popup__voet--vaag">' +
-                 ontsnap(t("popup.locatieVaag")) +
-               "</p>"
-             : "") +
          "</div>";
 }
 
@@ -1552,7 +1555,7 @@ function lidWordenHtml() {
     tarieven: link("https://www.degage.be/de-prijzen/", "popup.tarieven"),
     faq: link("https://app.deeljeauto.be/app/faq", "popup.faq"),
   };
-  return '<p class="popup__voet popup__voet--lid">' +
+  return '<p class="popup__lid">' +
            ontsnap(t("popup.lidWorden")).replace(/\{(tarieven|faq)\}/g, (_, naam) => links[naam]) +
          "</p>";
 }

@@ -34,15 +34,10 @@
 
     "voorbehoud.titel": "Bon à savoir",
     "voorbehoud.sluiten": "Fermer",
-    "voorbehoud.live": "<strong>Ceci n'est pas la disponibilité en temps réel.</strong> La " +
-                       "carte indique uniquement où se trouvent les voitures, pas lesquelles " +
-                       "sont libres en ce moment.",
-    "voorbehoud.aanbod": "<strong>Notre offre peut changer</strong> après la souscription de " +
-                         "votre abonnement. Nous ne pouvons pas garantir que l'offre et les " +
-                         "possibilités qui y sont liées resteront les mêmes pendant votre " +
-                         "abonnement.",
-    "voorbehoud.fotos": "<strong>Les photos sont des photos d'exemple</strong> du modèle, " +
-                        "pas de la voiture elle-même.",
+    "voorbehoud.live": "<strong>Pas de disponibilité en temps réel :</strong> vous voyez où sont les voitures, pas si elles sont libres.",
+    "voorbehoud.aanbod": "<strong>L'offre peut changer</strong>, même pendant votre abonnement.",
+    "voorbehoud.fotos": "<strong>Photos d'exemple</strong> du modèle, pas de la voiture elle-même.",
+    "voorbehoud.locatie": "<strong>Les emplacements sont approximatifs.</strong>",
 
     "zoek.plaatshouder": "Nom de voiture, adresse ou commune…",
     "zoek.aria": "Rechercher un nom de voiture, une adresse ou une commune ; cliquer " +
@@ -166,7 +161,6 @@
     "popup.plaatsen": "{n} places",
     "popup.geenFoto": "Aucune photo d'exemple disponible pour ce modèle",
     "popup.fotoAlt": "Photo d'exemple d'une {model}",
-    "popup.locatieVaag": "Position approximative pour des raisons de confidentialité.",
     "popup.nieuw": "Nouvelle voiture",
     "popup.nieuwUitleg": "Pas encore dans les données de la carte. La marque, le modèle et les autres détails suivront lors de la prochaine mise à jour de la carte.",
     "popup.lidWorden": "Envie de partager vous aussi ? Découvrez {tarieven} et la {faq}, et devenez membre de Dégage ! 🚗",

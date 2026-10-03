@@ -96,7 +96,7 @@ stuk gewoon niet in de popup:
 |---|---|---|---|
 | `map/fotos/fotos.json` | `scripts/haal_stockfotos.py` | merk\|model | modelfoto met auteur en licentie |
 | `map/bereik.json` | `scripts/haal_bereik.py` | merk\|model\|bouwjaar | rijbereik `km: [van, tot]` |
-| `map/ov.json` | `scripts/haal_ov.py` | station_id | Mobiscore, dichtste halte, station |
+| `map/ov.json` | `scripts/haal_ov.py` | station_id | Mobiscore, dichtste halte, station — ook voor de plekken uit de live vloot |
 
 Alle drie komen uit een script dat **buiten de generator** draait, want ze hebben netwerk
 nodig en een externe bron kan morgen iets anders zeggen; de generator blijft zo zonder
@@ -108,6 +108,14 @@ de feed waarvoor het berekend is. De kaart gebruikt het **alleen** als dat overe
 en toch hetzelfde `station_id` houden; zonder die test zou ze de bereikbaarheid van haar
 oude adres dragen. Past het niet, dan staat er een waarschuwing in de console en geen
 OV-blok in de popup.
+
+Naast `stations` draagt `ov.json` **`live_plekken`**: de plekken die de kaart maakt voor
+een auto uit de live vloot die niet op een feedstip staat (zie "Waar de stip komt"
+hieronder). `haal_ov.py` vraagt daarvoor zelf `VLOOT_API` op en rekent die plekken uit met
+`nieuwe_plekken()`, de Python-tegenhanger van het plaatsdeel van `metLiveVloot()`. Hun
+`station_id` is een hash van het vervaagde punt, dus van de plek zelf: die kan niet
+verhuizen met hetzelfde id, en daarom geldt `voor_feed` er niet voor. Lukt het opvragen
+niet, dan schrijft het script `stations` gewoon, met een waarschuwing.
 
 ### De live vloot
 
@@ -169,7 +177,14 @@ de generator). Dan per punt:
 - anders (**nieuwe plek of verhuisd**) wordt het API-punt vervaagd met **`verschuif()`**,
   de regel-voor-regel-kopie van `verschuif()` in `scripts/genereer_gbfs.py`: SHA-256 van
   `"lat,lon"` op 6 decimalen, de eerste 8 bytes big-endian als hoek, en
-  `locatie_nauwkeurigheid_m` meter in die richting. Zo'n plek heeft geen OV-gegevens.
+  `locatie_nauwkeurigheid_m` meter in die richting. Zo'n plek haalt haar OV-gegevens uit
+  `live_plekken` in `ov.json`, als `haal_ov.py` ze toen al zag.
+
+`haal_ov.py` doet deze stap na in Python, met `verschuif()` en `station_id()` uit de
+generator en zijn eigen `VERHUIS_MARGE_M`. Wijzig je de koppeling, de groepering of de
+marge hier, wijzig ze daar mee — anders zoekt de kaart een id dat er niet in staat. Dat
+beide hetzelfde uitkomen, is op 03-10-2026 nagekeken: 583 plekken, 43 uit de live vloot,
+alle 583 met OV-gegevens.
 
 Het `station_id` van een nieuwe plek volgt de regel van de generator: `stationId()`, de
 kopie van `station_id()` in `scripts/genereer_gbfs.py` — `"st-"` + twaalf letters uit een

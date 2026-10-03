@@ -34,13 +34,10 @@
 
     "voorbehoud.titel": "Goed om te weten",
     "voorbehoud.sluiten": "Sluiten",
-    "voorbehoud.live": "<strong>Dit is géén live beschikbaarheid.</strong> De kaart toont " +
-                       "enkel de locatie van de auto's, niet welke er op dit moment vrij zijn.",
-    "voorbehoud.aanbod": "<strong>Ons aanbod kan wijzigen</strong> nadat je je lidmaatschap " +
-                         "hebt afgesloten. We kunnen niet garanderen dat het aanbod en de " +
-                         "bijbehorende mogelijkheden tijdens je lidmaatschap hetzelfde blijven.",
-    "voorbehoud.fotos": "<strong>De foto's zijn voorbeeldfoto's</strong> van het model, " +
-                        "niet van de auto zelf.",
+    "voorbehoud.live": "<strong>Geen live beschikbaarheid:</strong> je ziet waar de auto's staan, niet of ze vrij zijn.",
+    "voorbehoud.aanbod": "<strong>Het aanbod kan wijzigen</strong>, ook tijdens je lidmaatschap.",
+    "voorbehoud.fotos": "<strong>Voorbeeldfoto's</strong> van het model, niet van de auto zelf.",
+    "voorbehoud.locatie": "<strong>Locaties zijn bij benadering.</strong>",
 
     "zoek.plaatshouder": "Autonaam, adres of gemeente…",
     "zoek.aria": "Zoek een autonaam, adres of gemeente; klikken toont ook de filters",
@@ -158,7 +155,6 @@
     "popup.plaatsen": "{n} plaatsen",
     "popup.geenFoto": "Geen voorbeeldfoto van dit model beschikbaar",
     "popup.fotoAlt": "Voorbeeldfoto van een {model}",
-    "popup.locatieVaag": "Locatie bij benadering vanwege privacy.",
     "popup.nieuw": "Nieuwe auto",
     "popup.nieuwUitleg": "Nog niet in de gegevens van de kaart. Merk, model en de andere details volgen bij de volgende bijwerking van de kaart.",
     "popup.lidWorden": "Zin gekregen om mee te delen? Bekijk {tarieven} en de {faq}, en word lid van Dégage! 🚗",

@@ -873,15 +873,6 @@ body {
 .popup__voet .ico { color: var(--inkt-zacht); }
 /* Een tweede voetregel sluit aan bij de eerste in plaats van er een streep bij te zetten. */
 .popup__voet + .popup__voet { margin-top: 3px; padding-top: 0; border-top: 0; }
-/* De vervaagde locatie. Kleiner en grijzer dan de rest van de voet: het is een
-   voorbehoud bij wat erboven staat, geen extra gegeven. */
-/* De weg naar het lidmaatschap is een zin met links erin: als flex zou elk stuk tekst
-   en elke link een eigen vak worden, met een gat ertussen. */
-.popup__voet--lid { display: block; line-height: 1.45; }
-.popup__voet--vaag {
-  padding-left: 19px;
-  font-size: 11.5px; font-style: italic;
-}
 
 /* Bereikbaarheid met openbaar vervoer. Een eigen blokje onder de wagens, want het hoort
    bij de standplaats en niet bij één wagen. Per halte of station één regel: pictogram,
@@ -935,6 +926,16 @@ body {
 }
 .uitleg[hidden] { display: none; }
 .popup__voet a { color: var(--groen-diep); }
+
+/* De weg naar het lidmaatschap: het laatste in de popup, in een eigen groen vak met een
+   streep links, zodat het opvalt als oproep en niet wegvalt tussen de voetregels. Een
+   zin met links erin, dus een gewone alinea en geen flex. */
+.popup__lid {
+  margin: 10px 0 0; padding: 8px 10px;
+  background: #eaf1ee; border-left: 3px solid var(--groen); border-radius: 8px;
+  font-size: 13px; line-height: 1.45; color: var(--inkt);
+}
+.popup__lid a { color: var(--groen-diep); font-weight: 600; }
 
 /* ---------- de popup op een breed scherm -------------------------------------------
    Smal stond alles onder elkaar: naam, foto, feiten, labels, openbaar vervoer — een lange

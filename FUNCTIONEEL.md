@@ -17,8 +17,7 @@ gegevens waarop deze kaart draait.
 
 Daarom staat er standaard een regel in beeld:
 
-> **Dit is géén live beschikbaarheid.** De kaart toont enkel de locatie van de auto's,
-> niet welke er op dit moment vrij zijn.
+> **Geen live beschikbaarheid:** je ziet waar de auto's staan, niet of ze vrij zijn.
 
 Wie ze gelezen heeft, kan ze wegklikken met het kruisje. De kaart vraagt eerst een
 bevestiging, en in de instellingen zet je ze terug. Je browser onthoudt die keuze.
@@ -52,15 +51,21 @@ waarheid** over welke auto's er zijn en waar ze staan. Daaruit volgen drie regel
 
 **Een nieuwe auto toont alleen wat de live lijst over hem weet:** zijn naam, zijn
 brandstof en zijn versnellingsbak. Al de rest — merk, model, bouwjaar, zitplaatsen,
-euronorm, toebehoren, gemeente, district, contactadres, modelfoto, rijbereik, openbaar
-vervoer — kent de live lijst niet, en **dat laten we gewoon weg**. Er wordt niets
+euronorm, toebehoren, gemeente, district, contactadres, modelfoto, rijbereik — kent de
+live lijst niet, en **dat laten we gewoon weg**. Er wordt niets
 bijgeraden. De popup zegt: *"Nog niet in de gegevens van de kaart. Merk, model en de
 andere details volgen bij de volgende bijwerking van de kaart."* Bij de volgende
 kwartaalverversing staat hij in het bestand en verdwijnt het label vanzelf.
 
+**Het openbaar vervoer is de uitzondering**, want dat hangt aan de plek en niet aan de
+auto. Bij het bijwerken van de kaart wordt de live lijst ook opgevraagd, en voor elke plek
+waar een nieuwe of verhuisde auto staat, worden de Mobiscore en de afstand tot de dichtste
+halte en het dichtste station berekend. Een nieuwe auto heeft dus gewoon een OV-blok en doet
+mee in de schuiven voor bus en trein. Alleen een auto die pas ná de laatste bijwerking
+verscheen of verhuisde, heeft dat nog niet.
+
 Wat dat betekent voor de filters: zet je een filter op iets wat we van een nieuwe auto
-niet weten (zitplaatsen, bouwjaar, soort auto, euronorm, een toebehoren, afstand tot het
-openbaar vervoer), dan valt hij af — net als een auto waarvan de euronorm onbekend is. Van
+niet weten (zitplaatsen, bouwjaar, soort auto, euronorm, een toebehoren), dan valt hij af — net als een auto waarvan de euronorm onbekend is. Van
 een auto waarvan we het niet weten, kunnen we niet volhouden dat hij voldoet. Op brandstof
 en versnellingsbak filter je hem wel gewoon.
 
@@ -91,7 +96,7 @@ hetzelfde punt, dan is dat één stip die er twee draagt.
 gezet, in een richting die je niet kunt terugrekenen. Bij de meeste auto's is de
 standplaats namelijk het huis van de eigenaar, en een coördinaat op de meter nauwkeurig
 wijst dan één voordeur aan. Je vindt de auto er nog steeds mee — je vindt er niet mee in
-welk huis de eigenaar woont. Dat staat ook in elke popup.
+welk huis de eigenaar woont. Dat staat ook in het blok "Goed om te weten".
 
 | | |
 |---|---|

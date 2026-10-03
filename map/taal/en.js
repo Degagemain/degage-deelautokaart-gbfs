@@ -34,13 +34,10 @@
 
     "voorbehoud.titel": "Good to know",
     "voorbehoud.sluiten": "Close",
-    "voorbehoud.live": "<strong>This is not live availability.</strong> The map only shows " +
-                       "where the cars are parked, not which ones are free right now.",
-    "voorbehoud.aanbod": "<strong>Our offer may change</strong> after you have taken out your " +
-                         "membership. We cannot guarantee that the offer and the options that " +
-                         "come with it will stay the same during your membership.",
-    "voorbehoud.fotos": "<strong>The photos are example photos</strong> of the model, " +
-                        "not of the car itself.",
+    "voorbehoud.live": "<strong>No live availability:</strong> you see where the cars are, not whether they are free.",
+    "voorbehoud.aanbod": "<strong>The offer may change</strong>, also during your membership.",
+    "voorbehoud.fotos": "<strong>Example photos</strong> of the model, not of the car itself.",
+    "voorbehoud.locatie": "<strong>Locations are approximate.</strong>",
 
     "zoek.plaatshouder": "Car name, address or town…",
     "zoek.aria": "Search for a car name, address or town; clicking also shows the filters",
@@ -158,7 +155,6 @@
     "popup.plaatsen": "{n} seats",
     "popup.geenFoto": "No example photo available for this model",
     "popup.fotoAlt": "Example photo of a {model}",
-    "popup.locatieVaag": "Approximate location for privacy reasons.",
     "popup.nieuw": "New car",
     "popup.nieuwUitleg": "Not yet in the map data. Make, model and other details will follow with the next map update.",
     "popup.lidWorden": "Feel like sharing too? Check out {tarieven} and the {faq}, and join Dégage! 🚗",
