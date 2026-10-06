@@ -143,7 +143,35 @@
     "instellingen.bronDump": "Gegevens van {datum}.",
     "instellingen.pictogram": "Tabbladpictogram:",
     "melden.knop": "Probleem melden",
-    "melden.titel": "Probleem melden of feedback geven — opent github.com in een nieuw tabblad",
+    "melden.titel": "Probleem melden of feedback geven — opent github.com in een nieuw tabblad; je feedback is publiek zichtbaar",
+    "melden.titelFormulier": "Probleem melden of feedback geven — je melding is publiek zichtbaar",
+    "meldformulier.titel": "Probleem melden",
+    "meldformulier.publiek": "<strong>Je melding is publiek.</strong> Ze verschijnt als openbaar " +
+                             "issue op GitHub, voor iedereen zichtbaar. Zet er dus geen persoonlijke " +
+                             "gegevens in, zoals je naam, adres, telefoonnummer, e-mailadres, " +
+                             "lidnummer of een nummerplaat. Moet je iets melden dat niet openbaar " +
+                             "mag komen? Mail dan naar " +
+                             "<a href=\"mailto:info@degage.be\">info@degage.be</a>.",
+    "meldformulier.soort": "Waarover gaat het?",
+    "meldformulier.soortKaart": "Er klopt iets niet op de kaart",
+    "meldformulier.soortWerking": "De kaart werkt niet goed",
+    "meldformulier.soortIdee": "Idee of suggestie",
+    "meldformulier.soortAnders": "Iets anders",
+    "meldformulier.beschrijving": "Beschrijving",
+    "meldformulier.beschrijvingPlh": "Wat zag je, en wat had je verwacht? Over welke auto of welke plaats gaat het?",
+    "meldformulier.akkoord": "Ik begrijp dat mijn melding publiek is, en er staan geen persoonlijke gegevens in.",
+    "meldformulier.annuleren": "Annuleren",
+    "meldformulier.versturen": "Versturen",
+    "meldformulier.bezig": "Bezig met versturen…",
+    "meldformulier.bedankt": "Bedankt! Je melding staat nu op GitHub.",
+    "meldformulier.bekijk": "Bekijk je melding",
+    "meldformulier.veldSoort": "Kies waarover je melding gaat.",
+    "meldformulier.veldBeschrijving": "Vul een beschrijving in.",
+    "meldformulier.veldTeKort": "Schrijf iets meer: minstens {min} tekens.",
+    "meldformulier.veldAkkoord": "Vink aan dat je begrijpt dat je melding publiek is.",
+    "meldformulier.foutControle": "De spamcontrole is nog niet klaar. Wacht even tot het vakje een vinkje toont, en probeer opnieuw.",
+    "meldformulier.fout": "Versturen lukte niet. Probeer het later opnieuw, of meld het " +
+                          "rechtstreeks op {link} (daar heb je wel een account nodig).",
 
     "knop.alles": "Alles in beeld — uitzoomen tot de volledige kaart",
     "knop.allesKort": "Alles in beeld",

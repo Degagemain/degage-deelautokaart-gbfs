@@ -2371,8 +2371,239 @@ function sluitVoorbehoud() {
 $("voorbehoud-sluit").addEventListener("click", sluitVoorbehoud);
 $("voorbehoud-tijd").addEventListener("animationend", sluitVoorbehoud);
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && !$("voorbehoud").hidden && $("taalvraag").hidden) sluitVoorbehoud();
+  if (e.key === "Escape" && !$("voorbehoud").hidden && $("taalvraag").hidden &&
+      $("meldvenster").hidden) sluitVoorbehoud();
 });
+
+/* ==========================================================================
+   melden
+   ==========================================================================
+   De meldknop rechtsboven is een gewone link naar het issueformulier op GitHub. Staat
+   in config.js een `melden.url`, dan opent hij in de plaats daarvan een formulier op de
+   kaart zelf: zo kan ook wie geen GitHub-account heeft iets melden. Het formulier stuurt
+   naar een Cloudflare Worker, die het issue aanmaakt — zie feedback-worker/README.md.
+
+   Lukt het versturen niet, dan staat de link naar GitHub in de foutmelding: dat is de
+   uitweg die altijd werkt, ook als de Worker plat ligt.
+
+   Turnstile, de spamcontrole van Cloudflare, wordt pas geladen als iemand het formulier
+   opent: wie niets meldt, praat ook niet met Cloudflare. Een token is maar één keer
+   geldig, dus na elke poging tekent het een nieuwe. */
+const MELDEN = (window.DEGAGE_CONFIG || {}).melden || {};
+const TURNSTILE_SCRIPT = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+let turnstileGeladen = null;   // de belofte van het script, zodra het gevraagd is
+let turnstileWidget = null;    // het id van het getekende vakje
+
+function laadTurnstile() {
+  if (!turnstileGeladen) {
+    turnstileGeladen = new Promise((klaar, mislukt) => {
+      const script = document.createElement("script");
+      script.src = TURNSTILE_SCRIPT;
+      script.async = true;
+      script.onload = () => klaar(window.turnstile);
+      script.onerror = () => {
+        turnstileGeladen = null;   // volgende keer opnieuw proberen
+        script.remove();
+        mislukt(new Error("Turnstile kon niet geladen worden"));
+      };
+      document.head.appendChild(script);
+    });
+  }
+  return turnstileGeladen;
+}
+
+function tekenControle() {
+  if (!MELDEN.turnstileSitekey) return;
+  laadTurnstile().then((turnstile) => {
+    if (turnstileWidget === null) {
+      turnstileWidget = turnstile.render("#meldcontrole", {
+        sitekey: MELDEN.turnstileSitekey,
+        language: taal
+      });
+    } else {
+      turnstile.reset(turnstileWidget);
+    }
+  }).catch((fout) => console.error(fout));
+}
+
+
+/* De afkeurmeldingen van de browser zelf ("Vul dit veld in") staan in de taal van de
+   browser, niet in die van de kaart: wie de kaart op Frans zet met een Nederlandse
+   browser, krijgt een Frans formulier met Nederlandse foutjes. Daarom schrijven we ze
+   zelf, met setCustomValidity().
+
+   Het gebeurt op het moment dat de browser een veld afkeurt en niet één keer vooraf: zo
+   staat er altijd de taal die nu gekozen is, en hoeft een taalwissel hier niets bij te
+   werken. Welke sleutel, hangt af van wat er mis is — leeg gelaten of te kort. */
+const MELDVALIDATIE = {
+  soort:        { valueMissing: "meldformulier.veldSoort" },
+  beschrijving: { valueMissing: "meldformulier.veldBeschrijving",
+                  tooShort:     "meldformulier.veldTeKort" },
+  akkoord:      { valueMissing: "meldformulier.veldAkkoord" }
+};
+
+/* Een eigen boodschap houdt een veld ongeldig tot ze weer gewist wordt, ook als de
+   gebruiker het ondertussen goed invulde. Daarom wist elke aanraking van een veld ze, en
+   wist zetVeldfout() ze eerst voordat hij kijkt wat er nú nog aan scheelt. */
+function wisVeldfout(veld) {
+  if (veld && MELDVALIDATIE[veld.name]) veld.setCustomValidity("");
+}
+
+function zetVeldfout(veld) {
+  const sleutels = MELDVALIDATIE[veld.name];
+  if (!sleutels) return;
+  veld.setCustomValidity("");
+  const staat = veld.validity;
+  const sleutel = (staat.valueMissing && sleutels.valueMissing) ||
+                  (staat.tooShort && sleutels.tooShort) || "";
+  if (sleutel) veld.setCustomValidity(t(sleutel, { min: veld.minLength }));
+}
+
+
+/* Het overzicht onder "Bedankt!": wat er zonet de deur uit ging. De tekst gaat er met
+   textContent in — nooit als HTML — want ze komt rechtstreeks van de bezoeker. Lange
+   meldingen krijgen een schuifbalk in plaats van een afgekapte zin: wie wil nalezen wat
+   er nu publiek staat, moet het volledig kunnen zien. */
+function toonMeldoverzicht(soortLabel, beschrijving) {
+  $("meldoverzicht-soort").textContent = soortLabel;
+  $("meldoverzicht-soort").hidden = !soortLabel;
+  $("meldoverzicht-tekst").textContent = beschrijving;
+  $("meldoverzicht").hidden = !(soortLabel || beschrijving);
+}
+
+function toonMeldfout(html) {
+  const vak = $("meldfout");
+  vak.innerHTML = html;
+  vak.hidden = false;
+}
+
+function openMeldvenster() {
+  // Na een geslaagde melding begint de volgende met een leeg formulier.
+  if (!$("meldbedankt").hidden) $("meldformulier").reset();
+  /* reset() laat een eigen afkeurmelding staan; dan zou een veld bij het volgende
+     bezoek nog ongeldig zijn zonder dat er iets aan scheelt. */
+  for (const veld of $("meldformulier").elements) wisVeldfout(veld);
+  $("meldformulier").hidden = false;
+  $("meldbedankt").hidden = true;
+  $("meldfout").hidden = true;
+  sluitVoorbehoud();
+  $("meldvenster").hidden = false;
+  /* De focus op het venster zelf en niet op het eerste veld: zo leest een schermlezer
+     eerst de titel en de waarschuwing dat de melding publiek is. Wie met Tab verder
+     gaat, komt vanzelf bij de keuzelijst. */
+  $("meldvenster").querySelector(".meldvenster__kader").focus();
+  tekenControle();
+}
+
+function sluitMeldvenster() {
+  $("meldvenster").hidden = true;
+  $("knop-melden").focus();
+}
+
+async function verstuurMelding(e) {
+  e.preventDefault();
+  const velden = e.target.elements;
+  $("meldfout").hidden = true;
+
+  const token = MELDEN.turnstileSitekey && window.turnstile && turnstileWidget !== null
+    ? window.turnstile.getResponse(turnstileWidget) : "";
+  if (MELDEN.turnstileSitekey && !token) {
+    toonMeldfout(ontsnap(t("meldformulier.foutControle")));
+    return;
+  }
+
+  /* De keuzelijst en het tekstvak worden straks leeggemaakt, en de labels van de soorten
+     staan alleen in de keuzelijst zelf. Dus hier onthouden, voor het overzicht achteraf. */
+  const soortLabel = velden.soort.selectedOptions[0]
+    ? velden.soort.selectedOptions[0].textContent.trim() : "";
+  const beschrijving = velden.beschrijving.value;
+
+  const knop = $("meldverstuur");
+  knop.disabled = true;
+  knop.textContent = t("meldformulier.bezig");
+  try {
+    const antwoord = await fetch(MELDEN.url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        soort: velden.soort.value,
+        beschrijving,
+        website: velden.website.value,
+        taal,
+        token
+      })
+    });
+    const uitslag = await antwoord.json().catch(() => ({}));
+    if (!antwoord.ok) throw new Error(uitslag.fout || "status " + antwoord.status);
+    toonMeldoverzicht(soortLabel, beschrijving);
+    /* Het lokveld geeft een geslaagd antwoord zonder adres terug: dan valt er niets te
+       bekijken, en blijft de link weg. */
+    $("meldlinkregel").hidden = !uitslag.url;
+    if (uitslag.url) $("meldlink").href = uitslag.url;
+    $("meldformulier").hidden = true;
+    $("meldbedankt").hidden = false;
+    $("meldklaar").focus();
+  } catch (fout) {
+    console.error("Melding niet verstuurd:", fout);
+    toonMeldfout(t("meldformulier.fout", {
+      link: '<a href="' + ontsnap($("knop-melden").href) + '" target="_blank" rel="noopener">' +
+            "GitHub</a>"
+    }));
+  } finally {
+    knop.disabled = false;
+    knop.textContent = t("meldformulier.versturen");
+    if (window.turnstile && turnstileWidget !== null) window.turnstile.reset(turnstileWidget);
+  }
+}
+
+if (MELDEN.url) {
+  const meldknop = $("knop-melden");
+  // Opent nu geen github.com meer, dus de tekstballon zegt dat ook niet meer.
+  meldknop.setAttribute("data-i18n-title", "melden.titelFormulier");
+  meldknop.setAttribute("aria-haspopup", "dialog");
+  meldknop.addEventListener("click", (e) => {
+    e.preventDefault();
+    openMeldvenster();
+  });
+  $("meldformulier").addEventListener("submit", verstuurMelding);
+  /* `invalid` borrelt niet op, vandaar de capture-stand: één luisteraar op het
+     formulier in plaats van één per veld. */
+  $("meldformulier").addEventListener("invalid", (e) => zetVeldfout(e.target), true);
+  for (const gebeurtenis of ["input", "change"]) {
+    $("meldformulier").addEventListener(gebeurtenis, (e) => wisVeldfout(e.target));
+  }
+  $("meldvenster-sluit").addEventListener("click", sluitMeldvenster);
+  $("meldannuleer").addEventListener("click", sluitMeldvenster);
+  $("meldklaar").addEventListener("click", sluitMeldvenster);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !$("meldvenster").hidden) sluitMeldvenster();
+    /* Tab houdt de focus in het venster. Zonder dit stap je na "Versturen" de kaart
+       erachter in: honderden pins, geen zichtbare focus, en geen weg terug. Het venster
+       is `aria-modal`, dus voor een schermlezer bestaat de rest al niet meer — de
+       toetsenbordfocus hoort dat te volgen. */
+    if (e.key !== "Tab" || $("meldvenster").hidden) return;
+    const bereikbaar = [...$("meldvenster").querySelectorAll(
+      'button, [href], select, textarea, input:not(.meldvenster__lok), iframe')]
+      .filter((el) => !el.disabled && el.offsetParent !== null);
+    if (!bereikbaar.length) return;
+    const eerste = bereikbaar[0];
+    const laatste = bereikbaar[bereikbaar.length - 1];
+    /* Staat de focus nog op het kader zelf — net geopend, er is nog niet getabd — dan
+       telt dat als "voor het eerste element": Tab gaat naar het eerste, Shift+Tab naar
+       het laatste. */
+    const hier = document.activeElement;
+    const opKader = !hier || hier === $("meldvenster") ||
+                    hier.classList.contains("meldvenster__kader") ||
+                    !$("meldvenster").contains(hier);
+    if (e.shiftKey && (opKader || hier === eerste)) {
+      e.preventDefault();
+      laatste.focus();
+    } else if (!e.shiftKey && (opKader || hier === laatste)) {
+      e.preventDefault();
+      eerste.focus();
+    }
+  });
+}
 
 /* ==========================================================================
    adres zoeken

@@ -1,0 +1,16 @@
+# De Cloudflare Worker achter het meldformulier van de kaart. Zie README.md.
+name = "degage-kaart-feedback"
+main = "feedback.js"
+compatibility_date = "2026-10-01"
+
+[vars]
+# Waar de issues terechtkomen: eigenaar/repo.
+GITHUB_REPO = "Degagemain/degage-deelautokaart-gbfs"
+# Van welke sites het formulier mag versturen, gescheiden door komma's. Zonder pad of
+# slash op het einde. localhost staat erbij om lokaal te kunnen testen; gebruik je een
+# andere poort dan 8000, pas die dan aan.
+TOEGESTANE_HERKOMST = "https://degagemain.github.io,http://localhost:8000"
+
+# Geheimen staan NIET hier, maar worden ingesteld met:
+#   npx wrangler secret put GITHUB_TOKEN
+#   npx wrangler secret put TURNSTILE_SECRET

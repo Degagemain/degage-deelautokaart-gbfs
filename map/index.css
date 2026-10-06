@@ -1037,6 +1037,101 @@ body {
 .taalvraag__knoppen .taalvraag__huidig:hover { background: var(--groen-diep); }
 .taalvraag__knoppen button:focus-visible { outline: 2px solid var(--groen); outline-offset: 2px; }
 
+/* Het meldformulier. Zoals de taalvraag een venster midden op een verduisterde kaart,
+   maar onder de taalvraag (1300) en boven het voorbehoud (1100). Een klik naast het
+   venster sluit het niet: wie al een halve tekst getypt heeft, mag die niet verliezen
+   door mis te tikken. Het kruisje is dat van het voorbehoud. */
+.meldvenster {
+  position: fixed; inset: 0; z-index: 1250;
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px;
+  padding-top: calc(16px + env(safe-area-inset-top, 0px));
+  padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  background: rgba(29,42,40,.35);
+}
+.meldvenster[hidden] { display: none; }
+.meldvenster__kader {
+  position: relative;
+  max-width: 440px; width: 100%; max-height: 100%; overflow-y: auto;
+  padding: 14px 18px 16px;
+  font-size: 13.5px;
+  background: var(--vlak); border: 1px solid var(--lijn); border-radius: var(--radius);
+  box-shadow: 0 2px 4px rgba(29,42,40,.08), 0 12px 32px rgba(29,42,40,.18);
+}
+.meldvenster h2 { margin: 2px 36px 10px 0; font-size: 15px; }
+.meldvenster p { margin: 0 0 12px; }
+/* De waarschuwing dat alles publiek is: het eerste wat je leest, en niet te missen. */
+.meldvenster__publiek {
+  padding: 9px 11px;
+  color: var(--inkt-zacht);
+  background: #fff7e0; border: 1px solid #ecd9a0; border-left: 4px solid #c99a1e;
+  border-radius: 8px;
+}
+.meldvenster__publiek strong { color: var(--inkt); }
+.meldvenster__veld { display: block; margin-bottom: 12px; }
+.meldvenster__veld > span { display: block; margin-bottom: 4px; font-weight: 600; }
+.meldvenster select,
+.meldvenster textarea {
+  display: block; width: 100%;
+  padding: 7px 9px;
+  font: inherit; font-size: 14px; color: var(--inkt);
+  background: var(--vlak);
+  border: 1px solid var(--lijn); border-radius: 8px;
+}
+.meldvenster textarea { resize: vertical; min-height: 96px; }
+.meldvenster select:focus-visible,
+.meldvenster textarea:focus-visible,
+.meldvenster input:focus-visible { outline: 2px solid var(--groen); outline-offset: 1px; }
+/* Weg voor mensen, maar niet `display: none` — sommige robots slaan zulke velden over. */
+.meldvenster__lok {
+  position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0;
+}
+.meldvenster__akkoord {
+  display: flex; align-items: flex-start; gap: 8px;
+  margin-bottom: 12px; cursor: pointer;
+}
+.meldvenster__akkoord input { flex: 0 0 auto; margin: 3px 0 0; accent-color: var(--groen); }
+.meldvenster__controle:not(:empty) { margin-bottom: 12px; }
+.meldvenster__fout {
+  padding: 8px 10px;
+  color: #8a1f1f; background: #fdecec; border: 1px solid #f0c4c4; border-radius: 8px;
+}
+.meldvenster__fout a { color: inherit; }
+.meldvenster a { color: var(--groen-diep); }
+
+/* Het overzicht na een geslaagde melding: wat er verstuurd is, in een rustig kader dat
+   duidelijk geen invulveld meer is. De soort erboven, de tekst eronder zoals ze getikt
+   werd — `pre-wrap` houdt de regelafbrekingen van de bezoeker, en een schuifbalk vangt
+   een lange melding op zonder het venster uit te rekken. */
+.meldbedankt__kop { font-weight: 600; }
+.meldoverzicht {
+  margin: 10px 0;
+  padding: 8px 11px;
+  color: var(--inkt-zacht);
+  background: var(--vlak-zacht);
+  border-left: 3px solid var(--lijn);
+  border-radius: 6px;
+}
+.meldoverzicht__soort { margin: 0 0 4px; font-size: 13px; font-weight: 600; }
+.meldoverzicht__tekst {
+  margin: 0;
+  max-height: 160px; overflow-y: auto;
+  white-space: pre-wrap; overflow-wrap: anywhere;
+}
+
+.meldvenster__knoppen { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+.meldvenster__knoppen button {
+  min-height: 36px; padding: 6px 14px;
+  font: inherit; font-size: 13.5px; color: var(--inkt);
+  background: var(--vlak);
+  border: 1px solid var(--lijn); border-radius: 8px; cursor: pointer;
+}
+.meldvenster__knoppen button:hover { background: var(--vlak-zacht); }
+.meldvenster__knoppen .is-hoofd { background: var(--groen); border-color: var(--groen); color: #fff; font-weight: 600; }
+.meldvenster__knoppen .is-hoofd:hover { background: var(--groen-diep); }
+.meldvenster__knoppen .is-hoofd:disabled { opacity: .6; cursor: progress; }
+.meldvenster__knoppen button:focus-visible { outline: 2px solid var(--groen); outline-offset: 2px; }
+
 /* ---------- telefoon -------------------------------------------------------------- */
 @media (max-width: 640px) {
   .paneel {
@@ -1171,6 +1266,10 @@ body {
     font-size: 12.5px;
   }
   .voorbehoud h2 { margin-bottom: 6px; font-size: 13.5px; }
+  /* Onder 16 px zoomt Safari op een iPhone in zodra je in een veld tikt. */
+  .meldvenster select,
+  .meldvenster textarea { font-size: 16px; }
+  .meldvenster { padding-left: 8px; padding-right: 8px; }
   /* Op een telefoon beslaat het paneel de volle breedte: de zoomknoppen naar onderaan,
      en weer naar links, want daar zit de duim.
 

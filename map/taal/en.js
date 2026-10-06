@@ -143,7 +143,35 @@
     "instellingen.bronDump": "Data as of {datum}.",
     "instellingen.pictogram": "Tab icon:",
     "melden.knop": "Report a problem",
-    "melden.titel": "Report a problem or give feedback — opens github.com in a new tab",
+    "melden.titel": "Report a problem or give feedback — opens github.com in a new tab; your feedback will be public",
+    "melden.titelFormulier": "Report a problem or give feedback — your report will be public",
+    "meldformulier.titel": "Report a problem",
+    "meldformulier.publiek": "<strong>Your report is public.</strong> It is posted as a public " +
+                             "issue on GitHub, visible to everyone. So please don't include any " +
+                             "personal details, such as your name, address, phone number, email " +
+                             "address, membership number or a number plate. Do you need to report " +
+                             "something that cannot be public? Then email " +
+                             "<a href=\"mailto:info@degage.be\">info@degage.be</a>.",
+    "meldformulier.soort": "What is it about?",
+    "meldformulier.soortKaart": "Something on the map is wrong",
+    "meldformulier.soortWerking": "The map doesn't work properly",
+    "meldformulier.soortIdee": "Idea or suggestion",
+    "meldformulier.soortAnders": "Something else",
+    "meldformulier.beschrijving": "Description",
+    "meldformulier.beschrijvingPlh": "What did you see, and what did you expect? Which car or place is it about?",
+    "meldformulier.akkoord": "I understand that my report is public, and it contains no personal details.",
+    "meldformulier.annuleren": "Cancel",
+    "meldformulier.versturen": "Send",
+    "meldformulier.bezig": "Sending…",
+    "meldformulier.bedankt": "Thank you! Your report is now on GitHub.",
+    "meldformulier.bekijk": "View your report",
+    "meldformulier.veldSoort": "Choose what your report is about.",
+    "meldformulier.veldBeschrijving": "Please enter a description.",
+    "meldformulier.veldTeKort": "Write a little more: at least {min} characters.",
+    "meldformulier.veldAkkoord": "Tick the box to confirm you understand your report is public.",
+    "meldformulier.foutControle": "The spam check isn't ready yet. Wait until the box shows a tick, then try again.",
+    "meldformulier.fout": "Your report could not be sent. Please try again later, or report it " +
+                          "directly on {link} (you will need an account there).",
 
     "knop.alles": "Show everything — zoom out to the whole map",
     "knop.allesKort": "Show everything",

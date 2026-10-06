@@ -1,0 +1,48 @@
+name: Feedback over de deelautokaart
+description: Meld een probleem of geef een idee voor de kaart met de auto's van Dégage.
+title: "[Feedback] "
+labels: ["feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        > [!WARNING]
+        > **Je feedback is publiek.** Alles wat je hier invult, komt in een openbaar issue op GitHub
+        > en is voor iedereen zichtbaar, samen met je GitHub-gebruikersnaam. Zet er dus geen
+        > persoonlijke gegevens in, zoals je adres, telefoonnummer, e-mailadres of lidnummer.
+        >
+        > *EN: Your feedback will be publicly visible. FR : Votre avis sera visible publiquement.*
+
+  - type: dropdown
+    id: soort
+    attributes:
+      label: Waarover gaat het?
+      options:
+        - Er klopt iets niet op de kaart (auto, locatie, foto …)
+        - De kaart werkt niet goed (fout, traag, weergave)
+        - Idee of suggestie
+        - Iets anders
+    validations:
+      required: true
+
+  - type: textarea
+    id: beschrijving
+    attributes:
+      label: Beschrijving
+      description: Wat zag je, en wat had je verwacht? Over welke auto of plaats gaat het?
+    validations:
+      required: true
+
+  - type: input
+    id: toestel
+    attributes:
+      label: Toestel en browser (optioneel)
+      placeholder: bv. iPhone met Safari, laptop met Firefox
+
+  - type: checkboxes
+    id: publiek
+    attributes:
+      label: Bevestiging
+      options:
+        - label: Ik begrijp dat mijn feedback publiek zichtbaar is en ik heb er geen persoonlijke gegevens in gezet.
+          required: true

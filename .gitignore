@@ -52,3 +52,11 @@ desktop.ini
 *.swp
 *~
 voorbeeld-uit/
+
+# ============================================================================
+# Cloudflare Wrangler
+# ============================================================================
+# Lokale staat van `wrangler`: het account-id van wie ingelogd is, en tijdelijke
+# bestanden van een deploy. Niets geheims, maar het hoort bij de computer waarop
+# je werkt en niet bij de repo.
+.wrangler/

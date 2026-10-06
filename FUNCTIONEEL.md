@@ -437,6 +437,28 @@ paneel en de lijst, dan neemt hij de plaats van de lijst in en stapt die zolang 
 Allebei komen ze terug zodra je de popup sluit. Blijft er nog te weinig plaats, dan schuift
 de inhoud binnen de popup zelf.
 
+## Iets melden
+
+Rechtsboven staat **"Probleem melden"**. Dat is er voor wie ziet dat een auto op de
+verkeerde plaats staat, dat er iets niet werkt, of wie gewoon een idee heeft.
+
+De knop opent een formulier op de kaart zelf: waarover het gaat, een beschrijving, en
+versturen. **Je hebt er geen GitHub-account voor nodig** — dat was de hele reden om het zo
+te bouwen. Het formulier staat in dezelfde drie talen als de rest van de kaart.
+
+**Wat je invult, wordt publiek.** Het komt als een openbaar issue op GitHub terecht, waar
+iedereen het kan lezen. Dat staat bovenaan het formulier in een gele kader, en je moet
+onderaan aanvinken dat je het begrepen hebt voor je kunt versturen. Vandaar ook de vraag om
+er geen persoonlijke gegevens in te zetten: geen naam, adres, telefoonnummer, e-mailadres
+of lidnummer. Wil je iets melden dat niet publiek kan, neem dan contact op met je lokale
+groep — dat adres staat in de popup van de auto.
+
+Er gaat verder niets mee: geen IP-adres, geen browsergegevens, geen locatie. Na het
+versturen krijg je de link naar je eigen melding, zodat je kunt volgen wat ermee gebeurt.
+
+Lukt het versturen niet, dan staat in de foutmelding de link naar GitHub, waar je het
+rechtstreeks kwijt kunt — daar heb je wél een account voor nodig.
+
 ## Wat de kaart bewust niet doet
 
 - **Geen beschikbaarheid.** Zie bovenaan. Dit is de belangrijkste grens.

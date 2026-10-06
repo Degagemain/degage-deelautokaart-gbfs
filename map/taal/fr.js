@@ -151,7 +151,35 @@
     "instellingen.bronDump": "Données du {datum}.",
     "instellingen.pictogram": "Icône de l'onglet :",
     "melden.knop": "Signaler un problème",
-    "melden.titel": "Signaler un problème ou donner un avis — ouvre github.com dans un nouvel onglet",
+    "melden.titel": "Signaler un problème ou donner un avis — ouvre github.com dans un nouvel onglet ; votre avis sera public",
+    "melden.titelFormulier": "Signaler un problème ou donner un avis — votre signalement sera public",
+    "meldformulier.titel": "Signaler un problème",
+    "meldformulier.publiek": "<strong>Votre signalement est public.</strong> Il est publié comme " +
+                             "ticket public sur GitHub, visible par tout le monde. N'y mettez donc " +
+                             "aucune donnée personnelle : nom, adresse, numéro de téléphone, adresse " +
+                             "e-mail, numéro de membre ou plaque d'immatriculation. Vous devez " +
+                             "signaler quelque chose qui ne peut pas être public ? Écrivez alors à " +
+                             "<a href=\"mailto:info@degage.be\">info@degage.be</a>.",
+    "meldformulier.soort": "De quoi s'agit-il ?",
+    "meldformulier.soortKaart": "Quelque chose est incorrect sur la carte",
+    "meldformulier.soortWerking": "La carte ne fonctionne pas bien",
+    "meldformulier.soortIdee": "Idée ou suggestion",
+    "meldformulier.soortAnders": "Autre chose",
+    "meldformulier.beschrijving": "Description",
+    "meldformulier.beschrijvingPlh": "Qu'avez-vous vu, et à quoi vous attendiez-vous ? De quelle voiture ou de quel endroit s'agit-il ?",
+    "meldformulier.akkoord": "Je comprends que mon signalement est public, et il ne contient aucune donnée personnelle.",
+    "meldformulier.annuleren": "Annuler",
+    "meldformulier.versturen": "Envoyer",
+    "meldformulier.bezig": "Envoi en cours…",
+    "meldformulier.bedankt": "Merci ! Votre signalement est maintenant sur GitHub.",
+    "meldformulier.bekijk": "Voir votre signalement",
+    "meldformulier.veldSoort": "Choisissez le sujet de votre signalement.",
+    "meldformulier.veldBeschrijving": "Veuillez saisir une description.",
+    "meldformulier.veldTeKort": "Écrivez un peu plus : au moins {min} caractères.",
+    "meldformulier.veldAkkoord": "Cochez la case pour confirmer que vous comprenez que votre signalement est public.",
+    "meldformulier.foutControle": "Le contrôle anti-spam n'est pas encore prêt. Attendez que la case affiche une coche, puis réessayez.",
+    "meldformulier.fout": "L'envoi a échoué. Réessayez plus tard, ou signalez-le directement " +
+                          "sur {link} (un compte y est nécessaire).",
 
     "knop.alles": "Tout afficher — dézoomer sur la carte entière",
     "knop.allesKort": "Tout afficher",

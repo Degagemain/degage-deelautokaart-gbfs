@@ -144,14 +144,16 @@
 <div id="kaart" role="application" data-i18n-aria="app.kaartLabel"
      aria-label="Kaart met de auto's van Dégage"></div>
 
-<!-- Probleem melden of feedback geven. Gaat naar het formulier voor een nieuw issue op
-     GitHub, in een nieuw tabblad: de kaart met al je filters blijft staan. Hij hangt aan
+<!-- Probleem melden of feedback geven. Staat er in config.js een `melden.url`, dan opent
+     het script hier het meldformulier op de kaart (zie #meldvenster hieronder), zodat je
+     geen GitHub-account nodig hebt. Anders, en zonder JavaScript, gaat de link naar het
+     feedbackformulier (.github/ISSUE_TEMPLATE/feedback.yml) op GitHub, in een nieuw tabblad: de kaart met al je filters blijft staan. Hij hangt aan
      de pagina en niet aan de kaart, net als het paneel — Leaflet hoeft er niets van te
      weten, want er valt niets te pannen of te zoomen aan een link. -->
 <a class="melden" id="knop-melden"
-   href="https://github.com/Degagemain/degage-deelautokaart-gbfs/issues/new"
+   href="https://github.com/Degagemain/degage-deelautokaart-gbfs/issues/new?template=feedback.yml"
    target="_blank" rel="noopener"
-   title="Probleem melden of feedback geven — opent github.com in een nieuw tabblad"
+   title="Probleem melden of feedback geven — opent github.com in een nieuw tabblad; je feedback is publiek zichtbaar"
    data-i18n-title="melden.titel">
   <!-- Een tekstballon met een uitroepteken: je zegt iets, en het gaat over iets dat
        misloopt. -->
@@ -470,6 +472,95 @@
   </ul>
   <div class="voorbehoud__tijd" id="voorbehoud-tijd" aria-hidden="true"></div>
 </aside>
+
+<!-- Het meldformulier, voor wie geen GitHub-account heeft. Alleen in gebruik als
+     `melden.url` in config.js ingevuld is; anders blijft de meldknop gewoon naar GitHub
+     linken. Wat hier verstuurd wordt, wordt een openbaar issue — dat staat bovenaan, en
+     het vinkje onderaan is verplicht. Zie openMeldvenster() in het script en
+     feedback-worker/README.md voor de kant van de server. -->
+<div class="meldvenster" id="meldvenster" hidden>
+  <!-- `tabindex="-1"` zodat het script de focus hierheen kan zetten bij het openen: dan
+       begint een schermlezer bovenaan, bij de titel en de waarschuwing dat de melding
+       publiek is, en niet halverwege bij de eerste keuzelijst. -->
+  <div class="meldvenster__kader" role="dialog" aria-modal="true" tabindex="-1"
+       aria-labelledby="meldvenster-titel">
+    <h2 id="meldvenster-titel" data-i18n="meldformulier.titel">Probleem melden</h2>
+    <!-- Hetzelfde kruisje als bij het voorbehoud, dus ook dezelfde klasse. -->
+    <button type="button" class="voorbehoud__sluit" id="meldvenster-sluit"
+            title="Sluiten" data-i18n-title="voorbehoud.sluiten">
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor"
+           stroke-width="2.2" stroke-linecap="round">
+        <path d="M6 6l12 12M18 6L6 18"/>
+      </svg>
+      <span class="enkel-schermlezer" data-i18n="voorbehoud.sluiten">Sluiten</span>
+    </button>
+
+    <form id="meldformulier">
+      <p class="meldvenster__publiek" data-i18n-html="meldformulier.publiek"><strong>Je
+        melding is publiek.</strong> Ze verschijnt als openbaar issue op GitHub, voor
+        iedereen zichtbaar. Zet er dus geen persoonlijke gegevens in, zoals je naam, adres,
+        telefoonnummer, e-mailadres, lidnummer of een nummerplaat. Moet je iets melden dat
+        niet openbaar mag komen? Mail dan naar
+        <a href="mailto:info@degage.be">info@degage.be</a>.</p>
+
+      <label class="meldvenster__veld">
+        <span data-i18n="meldformulier.soort">Waarover gaat het?</span>
+        <select name="soort" required>
+          <option value="kaart" data-i18n="meldformulier.soortKaart">Er klopt iets niet op de kaart</option>
+          <option value="werking" data-i18n="meldformulier.soortWerking">De kaart werkt niet goed</option>
+          <option value="idee" data-i18n="meldformulier.soortIdee">Idee of suggestie</option>
+          <option value="anders" data-i18n="meldformulier.soortAnders">Iets anders</option>
+        </select>
+      </label>
+
+      <label class="meldvenster__veld">
+        <span data-i18n="meldformulier.beschrijving">Beschrijving</span>
+        <textarea name="beschrijving" rows="5" minlength="5" maxlength="3000" required
+                  data-i18n-plh="meldformulier.beschrijvingPlh"
+                  placeholder="Wat zag je, en wat had je verwacht? Over welke auto of welke plaats gaat het?"></textarea>
+      </label>
+
+      <!-- Een lokveld voor robots: een mens ziet het niet en vult het dus niet in. -->
+      <input type="text" name="website" class="meldvenster__lok" tabindex="-1"
+             autocomplete="off" aria-hidden="true">
+
+      <label class="meldvenster__akkoord">
+        <input type="checkbox" name="akkoord" required>
+        <span data-i18n="meldformulier.akkoord">Ik begrijp dat mijn melding publiek is, en er staan geen persoonlijke gegevens in.</span>
+      </label>
+
+      <div class="meldvenster__controle" id="meldcontrole"></div>
+      <p class="meldvenster__fout" id="meldfout" role="alert" hidden></p>
+
+      <div class="meldvenster__knoppen">
+        <button type="button" id="meldannuleer" data-i18n="meldformulier.annuleren">Annuleren</button>
+        <button type="submit" class="is-hoofd" id="meldverstuur"
+                data-i18n="meldformulier.versturen">Versturen</button>
+      </div>
+    </form>
+
+    <div id="meldbedankt" role="status" hidden>
+      <p class="meldbedankt__kop" data-i18n="meldformulier.bedankt">Bedankt! Je melding staat nu op GitHub.</p>
+      <!-- Wat er zonet verstuurd is, zoals de bezoeker het schreef. Twee redenen: het
+           bewijst dat het echt weg is, en het is de laatste kans om te zien wat er nu
+           publiek staat — belangrijk bij een formulier dat uitdrukkelijk waarschuwt voor
+           persoonlijke gegevens. Het script vult dit met textContent, dus wat iemand
+           intikte wordt nooit als opmaak gelezen. -->
+      <div class="meldoverzicht" id="meldoverzicht" hidden>
+        <p class="meldoverzicht__soort" id="meldoverzicht-soort"></p>
+        <p class="meldoverzicht__tekst" id="meldoverzicht-tekst"></p>
+      </div>
+      <!-- Verborgen zolang de Worker geen adres teruggaf: een link die naar het lege
+           formulier op GitHub wijst, belooft iets wat hij niet toont. -->
+      <p id="meldlinkregel" hidden><a id="meldlink" target="_blank" rel="noopener"
+            data-i18n="meldformulier.bekijk">Bekijk je melding</a></p>
+      <div class="meldvenster__knoppen">
+        <button type="button" class="is-hoofd" id="meldklaar"
+                data-i18n="voorbehoud.sluiten">Sluiten</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Het wolkje naast het tandwiel na de taalvraag hieronder. Net als het
      instellingendoosje hangt JavaScript het in de kaartbediening; zie toonTandwielhint(). -->

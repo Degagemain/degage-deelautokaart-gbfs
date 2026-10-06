@@ -64,6 +64,8 @@ laden vaststelt. Alles wat met afmetingen te maken heeft, houdt daar rekening me
 | tile.openstreetmap.fr | de kaarttegels in het Frans (Franse plaatsnamen) | eigen naamsvermelding; bij storing terug naar de standaardtegels (`TEGELS_PER_TAAL`) |
 | nominatim.openstreetmap.org | adres → coördinaat | alleen bij verzenden, zie "Zoeken" |
 | degapp.be/api/v1/car/stands | de live vloot: welke auto's er zijn en waar | `VLOOT_API`; bij fout of na `VLOOT_WACHTTIJD_MS` terug naar de feed, zie "De live vloot" |
+| de Cloudflare Worker | het meldformulier → een issue op GitHub | `melden.url` in `config.js`; leeg = de knop linkt gewoon naar GitHub, zie "Melden" |
+| challenges.cloudflare.com | Turnstile, de spamcontrole in het meldformulier | pas geladen als iemand het formulier opent; `melden.turnstileSitekey` |
 
 De SRI-hashes (`integrity=`) zijn geen sier: verandert het bestand op de CDN, dan weigert
 de browser het uit te voeren. Wie een versie opwaardeert, moet dus **ook de hash
@@ -512,7 +514,49 @@ zolang de balk er niet staat. Meten gebeurt via `balkInBeeld()` en niet via `hid
 alleen — een doos die `display: none` is, geeft een rechthoek van nul terug op positie
 nul, en `--dichtbij-ruimte` zou daar het hele venster van maken.
 
-## 12. Iets wijzigen
+## 12. Melden
+
+De knop **"Probleem melden"** rechtsboven is in de opmaak een gewone link naar het
+issueformulier op GitHub (`.github/ISSUE_TEMPLATE/feedback.yml`). Dat werkt zonder
+JavaScript, maar het vraagt wel een GitHub-account — en dat hebben de meeste leden niet.
+
+Staat er in `config.js` een `melden.url`, dan hangt `index.js` zich aan die link en opent
+hij in de plaats daarvan het venster `#meldvenster` op de kaart zelf. Wat daar verstuurd
+wordt, gaat naar een Cloudflare Worker, en die maakt het issue aan:
+
+```
+formulier op de kaart  ──POST──▶  Worker  ──GitHub API──▶  issue met label "feedback"
+                                  (houdt de token geheim,
+                                   controleert Turnstile)
+```
+
+Het tussenstuk is nodig omdat een statische site geen GitHub-token kan bewaren zonder hem
+aan iedereen te geven. Opzetten doe je één keer; dat staat in
+[`feedback-worker/README.md`](feedback-worker/README.md). Zonder `melden.url` verandert er
+niets en blijft de knop een link — dat is ook de toestand waarin de repo staat.
+
+**Wat de bezoeker te zien krijgt**, in alle drie de talen: bovenaan in een gele kader dat
+de melding publiek wordt, en onderaan een verplicht vinkje dat hij dat begrepen heeft en er
+geen persoonlijke gegevens in gezet heeft. Het `required`-attribuut doet dat werk; er is
+geen scriptcontrole die ernaast kan gaan staan.
+
+**Wat de Worker tegenhoudt:** een `Origin` die niet in `TOEGESTANE_HERKOMST` staat, een
+onbekende soort, een beschrijving die te kort of te lang is, een ingevuld lokveld (dat
+alleen een robot ziet), en een Turnstile-token dat niet klopt. De tekst van de bezoeker
+komt in een **codeblok** in het issue terecht, met een omheining die langer is dan de
+langste reeks backticks in die tekst zelf: zo kan er geen @vermelding, afbeelding of link
+uit een melding ontsnappen. Er gaat geen IP-adres en geen browsergegeven mee.
+
+**Als het misloopt** — Worker plat, netwerk weg, Turnstile stuk — dan staat in de
+foutmelding de link naar GitHub. Dat is de uitweg die altijd blijft werken.
+
+Het venster is `aria-modal`: bij het openen krijgt het kader zelf de focus, zodat een
+schermlezer bij de titel en de waarschuwing begint en niet halverwege bij een keuzelijst,
+en Tab loopt rond binnen het venster in plaats van de kaart erachter in te stappen. Een
+klik naast het venster sluit het **niet**, alleen het kruisje, "Annuleren" en Escape: wie
+al een halve tekst getypt heeft, mag die niet kwijtspelen door mis te tikken.
+
+## 13. Iets wijzigen
 
 **Een tekst.** Nooit in de opmaak: zoek de sleutel in `map/taal/nl.js` en pas hem in alle
 drie de bestanden aan. Staat er een `{haakje}` in, laat dat staan — de kaart vult het in.
@@ -550,7 +594,7 @@ Vergeet je de hash, dan laadt de kaart niet meer en staat de reden alleen in de 
 op een rij wat waar staat. `index.html` draagt alleen nog structuur en pictogrammen, en
 `index.css` alleen nog opmaak.
 
-## 13. Bekende beperkingen
+## 14. Bekende beperkingen
 
 - **`alt` op de markers bereikt de DOM niet.** De markers gebruiken `divIcon`, en Leaflet zet
   `alt` alleen op een `<img>`-pictogram. De beschrijving wordt dus wel opgebouwd en vertaald,
@@ -569,7 +613,7 @@ op een rij wat waar staat. `index.html` draagt alleen nog structuur en pictogram
   benadering is. Afstanden in de balk zijn dus tot op tientallen meters juist, niet preciezer.
   Het getal hoort nergens hardgecodeerd te staan — één bron, in de feed.
 
-## 14. Lokaal draaien
+## 15. Lokaal draaien
 
 De pagina leest de feed, `index.js` en de taalbestanden via relatieve paden, dus
 `file://` werkt niet — de browser blokkeert dan het inlezen. Start een webserver in de

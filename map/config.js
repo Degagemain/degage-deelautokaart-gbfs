@@ -14,5 +14,18 @@ window.DEGAGE_CONFIG = {
        huisdieren, leren_autorijden
 
      Leeg maken (`[]`) toont ze weer allemaal. */
-  verborgenVlaggen: ["bed"],
+  verborgenVlaggen: ["bed", "aanhanger"],
+
+  /* Het meldformulier achter de knop "Probleem melden": zo kan ook wie geen
+     GitHub-account heeft iets melden. Het gaat via een Cloudflare Worker naar GitHub;
+     hoe je die opzet, staat in `feedback-worker/README.md`.
+
+       url               het adres van de Worker. Leeg: de knop opent dan het formulier
+                         op github.com zelf, waarvoor je wél een account nodig hebt.
+       turnstileSitekey  de publieke sleutel van Turnstile, de spamcontrole. Leeg: geen
+                         controle in het formulier (dan moet de Worker ook zonder). */
+  melden: {
+    url: "https://degage-kaart-feedback.degage.workers.dev",
+    turnstileSitekey: "0x4AAAAAAFOUUs1zrXUf92iY",
+  },
 };
