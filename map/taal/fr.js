@@ -153,6 +153,8 @@
     "melden.knop": "Signaler un problème",
     "melden.titel": "Signaler un problème ou donner un avis — ouvre github.com dans un nouvel onglet ; votre avis sera public",
     "melden.titelFormulier": "Signaler un problème ou donner un avis — votre signalement sera public",
+    /* Het issueformulier op GitHub in deze taal; zie .github/ISSUE_TEMPLATE/. */
+    "melden.sjabloon": "feedback-fr.yml",
     "meldformulier.titel": "Signaler un problème",
     "meldformulier.publiek": "<strong>Votre signalement est public.</strong> Il est publié comme " +
                              "ticket public sur GitHub, visible par tout le monde. N'y mettez donc " +

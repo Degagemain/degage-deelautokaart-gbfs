@@ -41,7 +41,7 @@ ziet, [`TECHNIEK.md`](TECHNIEK.md#de-live-vloot) voor de koppeling en het vervag
 | `map/taal/` | de teksten, één bestand per taal (`nl.js`, `fr.js`, `en.js`) |
 | `map/config.js` | instellingen zonder code: welke toebehoren de kaart verbergt, en waar het meldformulier naartoe stuurt |
 | `feedback-worker/` | het tussenstuk dat een melding van de kaart als issue op GitHub zet, zodat je er geen GitHub-account voor nodig hebt |
-| `.github/ISSUE_TEMPLATE/feedback.yml` | hetzelfde formulier op GitHub zelf, voor wie er wél een account heeft |
+| `.github/ISSUE_TEMPLATE/feedback-{nl,fr,en}.yml` | hetzelfde formulier op GitHub zelf, één per taal, voor wie er wél een account heeft |
 | `FUNCTIONEEL.md` | wat de kaart doet: wat een bezoeker ziet en kan, en waarom |
 | `TECHNIEK.md` | hoe ze gebouwd is: architectuur, uitbreidpunten, beperkingen |
 | `gbfs/index.html` | instappagina voor aggregatoren: instapadres, bestanden, wat de feed niet belooft |

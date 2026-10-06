@@ -517,8 +517,12 @@ nul, en `--dichtbij-ruimte` zou daar het hele venster van maken.
 ## 12. Melden
 
 De knop **"Probleem melden"** rechtsboven is in de opmaak een gewone link naar het
-issueformulier op GitHub (`.github/ISSUE_TEMPLATE/feedback.yml`). Dat werkt zonder
-JavaScript, maar het vraagt wel een GitHub-account — en dat hebben de meeste leden niet.
+issueformulier op GitHub. Dat staat er in drie talen — `feedback-nl.yml`, `-fr` en `-en`
+in `.github/ISSUE_TEMPLATE/` — en `zetMeldlink()` zet bij het opstarten en bij elke
+taalwissel het juiste sjabloon achter `?template=`. De `href` in `index.html` wijst naar
+de Nederlandse, als vangnet voor wie geen JavaScript heeft; daar staat ook als enige het
+adres van de repo. Dat werkt zonder JavaScript, maar het vraagt wel een GitHub-account —
+en dat hebben de meeste leden niet.
 
 Staat er in `config.js` een `melden.url`, dan hangt `index.js` zich aan die link en opent
 hij in de plaats daarvan het venster `#meldvenster` op de kaart zelf. Wat daar verstuurd

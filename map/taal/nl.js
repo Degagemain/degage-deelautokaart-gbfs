@@ -145,6 +145,8 @@
     "melden.knop": "Probleem melden",
     "melden.titel": "Probleem melden of feedback geven — opent github.com in een nieuw tabblad; je feedback is publiek zichtbaar",
     "melden.titelFormulier": "Probleem melden of feedback geven — je melding is publiek zichtbaar",
+    /* Het issueformulier op GitHub in deze taal; zie .github/ISSUE_TEMPLATE/. */
+    "melden.sjabloon": "feedback-nl.yml",
     "meldformulier.titel": "Probleem melden",
     "meldformulier.publiek": "<strong>Je melding is publiek.</strong> Ze verschijnt als openbaar " +
                              "issue op GitHub, voor iedereen zichtbaar. Zet er dus geen persoonlijke " +

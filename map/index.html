@@ -143,15 +143,20 @@
 
 <div id="kaart" role="application" data-i18n-aria="app.kaartLabel"
      aria-label="Kaart met de auto's van Dégage"></div>
-
 <!-- Probleem melden of feedback geven. Staat er in config.js een `melden.url`, dan opent
      het script hier het meldformulier op de kaart (zie #meldvenster hieronder), zodat je
      geen GitHub-account nodig hebt. Anders, en zonder JavaScript, gaat de link naar het
-     feedbackformulier (.github/ISSUE_TEMPLATE/feedback.yml) op GitHub, in een nieuw tabblad: de kaart met al je filters blijft staan. Hij hangt aan
-     de pagina en niet aan de kaart, net als het paneel — Leaflet hoeft er niets van te
-     weten, want er valt niets te pannen of te zoomen aan een link. -->
+     issueformulier op GitHub, in een nieuw tabblad: de kaart met al je filters blijft
+     staan. Hij hangt aan de pagina en niet aan de kaart, net als het paneel — Leaflet
+     hoeft er niets van te weten, want er valt niets te pannen of te zoomen aan een link.
+
+     Dat issueformulier staat er in drie talen (.github/ISSUE_TEMPLATE/feedback-nl.yml en
+     zijn broers). De `href` hieronder is de Nederlandse, als vangnet voor wie geen
+     JavaScript heeft; zetMeldlink() in het script zet er meteen de taal van de kaart
+     voor in de plaats. Wijzig je de repo, wijzig dan alleen deze href: het script leest
+     het deel vóór het vraagteken hiervandaan. -->
 <a class="melden" id="knop-melden"
-   href="https://github.com/Degagemain/degage-deelautokaart-gbfs/issues/new?template=feedback.yml"
+   href="https://github.com/Degagemain/degage-deelautokaart-gbfs/issues/new?template=feedback-nl.yml"
    target="_blank" rel="noopener"
    title="Probleem melden of feedback geven — opent github.com in een nieuw tabblad; je feedback is publiek zichtbaar"
    data-i18n-title="melden.titel">

@@ -2391,6 +2391,20 @@ document.addEventListener("keydown", (e) => {
    geldig, dus na elke poging tekent het een nieuwe. */
 const MELDEN = (window.DEGAGE_CONFIG || {}).melden || {};
 const TURNSTILE_SCRIPT = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+
+/* Het issueformulier op GitHub bestaat in drie talen, één bestand per taal. Welke de
+   knop opent, hangt af van de taal waarin de kaart nu staat: wie de kaart in het Frans
+   leest, hoort geen Nederlands formulier te krijgen.
+
+   Het adres van de repo staat maar op één plaats — in de `href` in index.html, zodat de
+   link ook zonder JavaScript werkt. Hier wordt alleen de `?template=` erachter gezet.
+   Vandaar dat het deel vóór het vraagteken meteen bij het laden onthouden wordt: daarna
+   schrijft deze functie de href telkens opnieuw. */
+const MELD_ISSUE_BASIS = $("knop-melden").href.split("?")[0];
+
+function zetMeldlink() {
+  $("knop-melden").href = MELD_ISSUE_BASIS + "?template=" + t("melden.sjabloon");
+}
 let turnstileGeladen = null;   // de belofte van het script, zodra het gevraagd is
 let turnstileWidget = null;    // het id van het getekende vakje
 
@@ -3509,6 +3523,9 @@ function pasTaalToe(nieuw) {
 
   vertaalKaart();
 
+  // De meldknop wijst naar het issueformulier in de nieuwe taal.
+  zetMeldlink();
+
   /* Een openstaande popup draagt afgewerkte tekst en zou in de oude taal blijven staan.
      Sluiten is eerlijker dan hem half vertaald laten staan; markerpopups bouwen zich bij
      de volgende klik vanzelf opnieuw op. */
@@ -3648,6 +3665,7 @@ if (TAALBESTANDEN_ONTBREKEN) {
    juiste taal neer — ook als dat gewoon Nederlands is, want dan verandert er niets. */
 vertaalPagina();
 vertaalKaart();
+zetMeldlink();
 
 /* De filters beginnen dicht. Het paneel toont dan alleen de zoekbalk en de teller
    — genoeg om te weten waar je naar kijkt, en de kaart blijft vrij. Eén klik in

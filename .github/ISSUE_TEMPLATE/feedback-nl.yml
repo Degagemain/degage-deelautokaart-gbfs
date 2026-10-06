@@ -1,0 +1,55 @@
+# De Nederlandse versie van het meldformulier op GitHub. Er is er één per taal
+# (feedback-nl / feedback-fr / feedback-en); de kaart linkt naar de versie in de taal
+# waarin ze op dat moment staat — zie zetMeldlink() in map/index.js.
+#
+# De teksten komen uit map/taal/nl.js, zodat dit formulier hetzelfde zegt als het
+# formulier op de kaart. Verandert daar een zin, verander ze hier mee. Eén verschil is
+# er met opzet: hier staat je GitHub-gebruikersnaam mee in het issue, bij het formulier
+# op de kaart niet.
+name: Feedback over de deelautokaart (Nederlands)
+description: Meld een probleem of geef een idee voor de kaart met de auto's van Dégage.
+title: "[Feedback] "
+labels: ["feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        > [!WARNING]
+        > **Je melding is publiek.** Ze verschijnt als openbaar issue op GitHub, voor iedereen
+        > zichtbaar, samen met je GitHub-gebruikersnaam. Zet er dus geen persoonlijke gegevens
+        > in, zoals je naam, adres, telefoonnummer, e-mailadres, lidnummer of een nummerplaat.
+        > Moet je iets melden dat niet openbaar mag komen? Mail dan naar info@degage.be.
+
+  - type: dropdown
+    id: soort
+    attributes:
+      label: Waarover gaat het?
+      options:
+        - Er klopt iets niet op de kaart
+        - De kaart werkt niet goed
+        - Idee of suggestie
+        - Iets anders
+    validations:
+      required: true
+
+  - type: textarea
+    id: beschrijving
+    attributes:
+      label: Beschrijving
+      description: Wat zag je, en wat had je verwacht? Over welke auto of welke plaats gaat het?
+    validations:
+      required: true
+
+  - type: input
+    id: toestel
+    attributes:
+      label: Toestel en browser (optioneel)
+      placeholder: bv. iPhone met Safari, laptop met Firefox
+
+  - type: checkboxes
+    id: publiek
+    attributes:
+      label: Bevestiging
+      options:
+        - label: Ik begrijp dat mijn melding publiek is, en er staan geen persoonlijke gegevens in.
+          required: true

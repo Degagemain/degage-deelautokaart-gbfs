@@ -15,7 +15,7 @@ Een statische site kan geen GitHub-token bewaren zonder hem aan iedereen te geve
 dit kleine tussenstuk. Het draait gratis op Cloudflare.
 
 Staat er in `map/config.js` geen adres voor de Worker, dan doet de knop wat hij altijd
-deed: hij opent het formulier op GitHub zelf (`.github/ISSUE_TEMPLATE/feedback.yml`),
+deed: hij opent het formulier op GitHub zelf (`.github/ISSUE_TEMPLATE/`, één sjabloon per taal),
 waarvoor je wél een account nodig hebt.
 
 ## Eenmalig instellen
