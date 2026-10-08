@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Deelauto's van Dégage</title>
+<title>Deelautokaart Dégage</title>
 
 <!-- Het pictogram in het tabblad. Twee maten: 32 px voor het tabblad zelf, de
      512 voor wie de pagina aan zijn beginscherm hangt. Naamsvermelding staat in
@@ -89,6 +89,11 @@
           stroke-linecap="round" stroke-linejoin="round">
     <path d="M6 4v16M12 4v16M18 4v8M6 12h12M4.4 4h3.2M10.4 4h3.2M16.4 4h3.2"/>
   </symbol>
+  <symbol id="i-klasse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3.5 12.6V4.5a1 1 0 0 1 1-1h8.1l8 8a1.4 1.4 0 0 1 0 2l-7.1 7.1a1.4 1.4 0 0 1-2 0z"/>
+    <circle cx="8" cy="8" r="1.4"/>
+  </symbol>
   <symbol id="i-norm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
           stroke-linecap="round" stroke-linejoin="round">
     <path d="M5 19c0-7 4.5-12 14-12 0 8-4.5 12-10 12H5zM7 17c1.5-4 4-6.5 7.5-8"/>
@@ -118,6 +123,15 @@
           stroke-linecap="round" stroke-linejoin="round">
     <rect x="5" y="3" width="14" height="14.5" rx="2.5"/><path d="M5 10.5h14M8 17.5V20M16 17.5V20"/>
     <circle cx="8.5" cy="14" r=".9" fill="currentColor"/><circle cx="15.5" cy="14" r=".9" fill="currentColor"/>
+  </symbol>
+  <!-- Tram: een tram VAN OPZIJ, met de stroomafnemer aan de bovenleiding en twee wielen.
+       Bus en trein staan van voren; een liggende vorm met een draad erboven valt in de
+       popup en in het filter meteen op als iets anders, ook op 16 px. -->
+  <symbol id="i-tram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round">
+    <path d="M2.5 2.5h19M9.5 8 12 2.5 14.5 8"/>
+    <rect x="2.5" y="8" width="19" height="9.5" rx="2"/><path d="M2.5 12.5h19M8.5 8v4.5M15.5 8v4.5"/>
+    <circle cx="7" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/>
   </symbol>
   <!-- Station: een trein van voren, met een ronde neus en schuine sporen eronder — anders
        dan de bus hierboven, zodat de twee regels in de popup meteen te onderscheiden zijn. -->
@@ -174,7 +188,7 @@
 <!-- Weergavekeuzes en de taalkeuze, geen filters: ze veranderen niets aan wélke wagens
      passen. Daarom niet in het paneel maar bij de kaartknoppen, achter het tandwiel onder
      de uitzoomknop — je zet ze één keer en kijkt er daarna niet meer naar om. De
-     schakelaars staan standaard aan. JavaScript hangt dit doosje onder die knop; het
+     schakelaars staan standaard aan, behalve "samen tonen". JavaScript hangt dit doosje onder die knop; het
      staat hier alleen omdat de vakjes zich beter in opmaak dan in JavaScript laten lezen.
 
      De teksten dragen `data-i18n`-sleutels; zie vertaalPagina() in het script. -->
@@ -187,6 +201,18 @@
   <label class="schakel">
     <input type="checkbox" id="knop-dichtbij" checked>
     <span data-i18n="instellingen.dichtbij">Lijst dichtstbijzijnde auto's tonen</span>
+  </label>
+  <!-- Wat er met de weggefilterde auto's gebeurt: een weergavekeuze die je één keer zet,
+       dus hier en niet bij de filters. -->
+  <label class="schakel">
+    <input type="checkbox" id="knop-grijs" checked>
+    <span data-i18n="filters.grijs">Gefilterde auto's grijs tonen</span>
+  </label>
+  <!-- Uit: elke auto zijn eigen popup, met de andere auto's op dezelfde plek als knop
+       eronder. Aan: alle auto's van de standplaats samen. Zie popupWagens(). -->
+  <label class="schakel">
+    <input type="checkbox" id="knop-samen">
+    <span data-i18n="instellingen.samen">Auto's op dezelfde plek samen tonen</span>
   </label>
   <label class="schakel schakel--taal">
     <span data-i18n="instellingen.taal">Taal</span>
@@ -220,7 +246,7 @@
 <div class="paneel" id="paneel">
   <!-- Alleen voor schermlezers: de kaart hoort een kop te hebben, maar in beeld doet de
        titel niets wat de omringende pagina niet al zegt. -->
-  <h1 class="enkel-schermlezer" data-i18n="app.titel">Auto's van Dégage</h1>
+  <h1 class="enkel-schermlezer" data-i18n="app.titel">Deelautokaart Dégage</h1>
 
   <div class="paneel__kop">
     <div class="kopregel">
@@ -288,14 +314,10 @@
   </div>
 
   <div class="filters" id="filters" hidden>
-    <!-- De twee schakelaars die over het filteren zelf gaan, staan bij de filters en niet
-         bij de weergavekeuzes achter het tandwiel: wie filtert, beslist hier meteen wat er
-         met de weggefilterde auto's gebeurt en of de lijst bij scrollen dichtklapt. -->
+    <!-- De schakelaar die over de filterlijst zelf gaat, staat bij de filters en niet bij
+         de weergavekeuzes achter het tandwiel: wie filtert, beslist hier of de lijst bij
+         scrollen dichtklapt. -->
     <div class="filterschakels">
-      <label class="schakel">
-        <input type="checkbox" id="knop-grijs" checked>
-        <span data-i18n="filters.grijs">Gefilterde auto's grijs tonen</span>
-      </label>
       <!-- `schakel--breed`: op een telefoon verborgen en dus altijd aan — daar laat een
            open filterlijst zo weinig kaart over dat ze bij het vegen hoort weg te gaan. -->
       <label class="schakel schakel--breed">
@@ -307,19 +329,26 @@
     <!-- Elke kop staat met zijn keuzes in een eigen blokje. Op een breed scherm doet dat
          niets; op een telefoon komen chips op dezelfde regel als hun kop en staan de
          schuiven per twee naast elkaar — zie `.sectie--chips` en `.sectie--schuif`. -->
-    <!-- Auto's die al in de live vloot staan maar nog niet in de feed, en dus nog zonder
-         details. Verborgen zolang er geen zijn; zie bouwFilters(). -->
-    <div class="sectie sectie--chips" id="sectie-nieuw" hidden>
-      <h2 data-i18n="kop.nieuw">Nieuw in de vloot</h2>
-      <div class="keuzes" id="filter-nieuw"></div>
-    </div>
-
-    <div class="sectie sectie--chips">
+    <div class="sectie sectie--chips" data-filter="soort">
       <h2 data-i18n="kop.soort">Soort auto</h2>
       <div class="keuzes" id="filter-soort"></div>
     </div>
 
-    <div class="sectie sectie--schuif">
+    <!-- De prijsklasse van Dégage. Wat A en B betekenen staat achter de ⓘ, zonder
+         bedragen: die veranderen per kwartaal en staan op degage.be. -->
+    <div class="sectie sectie--chips" data-filter="klasse">
+      <h2><span data-i18n="kop.klasse">Prijsklasse</span><button type="button"
+          class="uitleg-knop" aria-expanded="false" aria-controls="klasse-uitleg"
+          title="Uitleg" data-i18n-title="popup.uitleg"><svg class="ico" aria-hidden="true"><use
+          href="#i-info"/></svg><span class="enkel-schermlezer"
+          data-i18n="popup.uitleg">Uitleg</span></button></h2>
+      <div class="keuzes" id="filter-klasse"></div>
+      <p class="schuif__uitleg" id="klasse-uitleg" hidden
+         data-i18n="klasse.uitleg">Elke auto rijdt aan de kilometerprijs van zijn
+        prijsklasse. Prijsklasse B kost meer per kilometer dan prijsklasse A.</p>
+    </div>
+
+    <div class="sectie sectie--schuif" data-filter="zitplaatsen">
       <h2 data-i18n="kop.zitplaatsen">Zitplaatsen</h2>
       <div class="schuif">
         <input type="range" id="zit-schuif" min="0" step="1" value="0">
@@ -327,69 +356,93 @@
       </div>
     </div>
 
-    <div class="sectie sectie--chips">
+    <div class="sectie sectie--chips" data-filter="brandstof">
       <h2 data-i18n="kop.brandstof">Brandstof</h2>
       <div class="keuzes" id="filter-brandstof"></div>
     </div>
 
-    <div class="sectie sectie--chips">
+    <div class="sectie sectie--chips" data-filter="bak">
       <h2 data-i18n="kop.bak">Versnellingsbak</h2>
       <div class="keuzes" id="filter-bak"></div>
     </div>
 
-    <div class="sectie sectie--chips">
+    <div class="sectie sectie--chips" data-filter="toebehoren">
       <h2 data-i18n="kop.toebehoren">Toebehoren</h2>
       <div class="keuzes" id="filter-toebehoren"></div>
     </div>
 
-    <div class="sectie sectie--chips">
+    <div class="sectie sectie--chips" data-filter="afspraken">
       <h2 data-i18n="kop.afspraken">Afspraken</h2>
       <div class="keuzes" id="filter-afspraken"></div>
     </div>
 
-    <!-- Openbaar vervoer. Deze twee horen bij de STANDPLAATS, niet bij de wagen: wie hier
-         filtert, zoekt een auto die hij kan combineren met bus of trein — heen met de auto,
-         terug met de trein, of omgekeerd. Een blok verdwijnt als er geen OV-gegevens bij
-         deze feed horen, of als alle standplaatsen even ver van zo'n halte liggen; dan valt
-         er niets te kiezen. -->
-    <div class="sectie sectie--schuif" id="filter-bushalte">
+    <!-- Openbaar vervoer. Hoort bij de STANDPLAATS, niet bij de wagen: wie hier filtert,
+         zoekt een auto die hij kan combineren met bus, tram of trein — heen met de auto,
+         terug met de trein, of omgekeerd. Per soort twee schuiven, zonder aanvinkvakje: de
+         afstand tot de dichtste halte of het dichtste station (van klein naar groot, met
+         "elke afstand" rechts), en hoeveel er daar per uur vertrekt. Een soort filtert
+         zodra één van zijn schuiven verzet is. Stel je er meer in, dan volstaat er één,
+         tenzij "aan alle ingestelde voldoen" aanstaat. Zie bouwOv() in het script. Een
+         soort zonder gegevens verdwijnt, en het hele blok als er geen OV-gegevens bij deze
+         feed horen. De stand staat IN de schuifbalk (`schuif--in`), niet eronder: zes regels
+         tekst onder zes schuiven maakten het blok onleesbaar lang. -->
+    <div class="sectie sectie--ov" id="filter-ov" data-filter="ov">
       <!-- De uitleg staat achter een ⓘ, zoals in de popups: wie weet wat er staat, hoeft er
            niet telkens overheen te lezen. Zie de klikafhandeling bij de filters. -->
-      <h2><span data-i18n="kop.bushalte">Afstand tot een bushalte</span><button type="button"
-          class="uitleg-knop" aria-expanded="false" aria-controls="bus-uitleg"
+      <h2><span data-i18n="kop.ov">Openbaar vervoer</span><button type="button"
+          class="uitleg-knop" aria-expanded="false" aria-controls="ov-uitleg"
           title="Uitleg" data-i18n-title="popup.uitleg"><svg class="ico" aria-hidden="true"><use
           href="#i-info"/></svg><span class="enkel-schermlezer"
           data-i18n="popup.uitleg">Uitleg</span></button></h2>
-      <div class="schuif">
-        <input type="range" id="bus-schuif" min="0" step="1" value="0">
-        <p class="schuif__waarde" id="bus-waarde"></p>
-        <p class="schuif__uitleg" id="bus-uitleg" hidden
-           data-i18n="bushalte.uitleg">De hemelsbrede afstand van de standplaats tot de
-          dichtstbijzijnde bus- of tramhalte waar vaste lijnen stoppen. Elke stand toont die
-          afstand en alles daaronder. Te voet is de weg altijd wat langer.</p>
+      <div class="ovmodus" id="ovmodus-bus">
+        <p class="ovmodus__kop"><svg class="ico" aria-hidden="true"><use href="#i-ov"/></svg><span
+           data-i18n="filter.ovBus">Bus</span></p>
+        <div class="schuif schuif--in">
+          <input type="range" id="bus-schuif" min="0" step="1" value="0">
+          <p class="schuif__waarde" id="bus-waarde"></p>
+        </div>
+        <div class="schuif schuif--in">
+          <input type="range" id="busfreq-schuif" min="0" step="1" value="0">
+          <p class="schuif__waarde" id="busfreq-waarde"></p>
+        </div>
       </div>
-    </div>
-
-    <div class="sectie sectie--schuif" id="filter-station">
-      <h2><span data-i18n="kop.station">Afstand tot een treinstation</span><button type="button"
-          class="uitleg-knop" aria-expanded="false" aria-controls="trein-uitleg"
-          title="Uitleg" data-i18n-title="popup.uitleg"><svg class="ico" aria-hidden="true"><use
-          href="#i-info"/></svg><span class="enkel-schermlezer"
-          data-i18n="popup.uitleg">Uitleg</span></button></h2>
-      <div class="schuif">
-        <input type="range" id="trein-schuif" min="0" step="1" value="0">
-        <p class="schuif__waarde" id="trein-waarde"></p>
-        <p class="schuif__uitleg" id="trein-uitleg" hidden
-           data-i18n="station.uitleg">De hemelsbrede afstand van de standplaats tot het
-          dichtstbijzijnde treinstation. Elke stand toont die afstand en alles daaronder.
-          Naar een station fietst of rijdt men; vandaar dat de schaal verder reikt dan bij
-          een halte.</p>
+      <div class="ovmodus" id="ovmodus-tram">
+        <p class="ovmodus__kop"><svg class="ico" aria-hidden="true"><use href="#i-tram"/></svg><span
+           data-i18n="filter.ovTram">Tram</span></p>
+        <div class="schuif schuif--in">
+          <input type="range" id="tram-schuif" min="0" step="1" value="0">
+          <p class="schuif__waarde" id="tram-waarde"></p>
+        </div>
+        <div class="schuif schuif--in">
+          <input type="range" id="tramfreq-schuif" min="0" step="1" value="0">
+          <p class="schuif__waarde" id="tramfreq-waarde"></p>
+        </div>
       </div>
+      <div class="ovmodus" id="ovmodus-trein">
+        <p class="ovmodus__kop"><svg class="ico" aria-hidden="true"><use href="#i-trein"/></svg><span
+           data-i18n="filter.ovTrein">Trein</span></p>
+        <div class="schuif schuif--in">
+          <input type="range" id="trein-schuif" min="0" step="1" value="0">
+          <p class="schuif__waarde" id="trein-waarde"></p>
+        </div>
+        <div class="schuif schuif--in">
+          <input type="range" id="treinfreq-schuif" min="0" step="1" value="0">
+          <p class="schuif__waarde" id="treinfreq-waarde"></p>
+        </div>
+      </div>
+      <!-- Alleen als er twee of meer soorten ingesteld zijn: dan beslis je of er één
+           volstaat (uit, de standaard) of dat de standplaats aan allemaal moet voldoen. -->
+      <label class="schakel ovbeide" id="ovbeide-blok" hidden>
+        <input type="checkbox" id="ovbeide">
+        <span data-i18n="filter.ovBeide">Aan alle ingestelde voldoen</span>
+      </label>
+      <p class="schuif__uitleg" id="ov-uitleg" hidden
+         data-i18n="ov.filterUitleg">Stel een afstand of frequentie in voor bus, tram of trein.</p>
     </div>
 
     <!-- Euronorm en bouwjaar staan dicht: het zijn details waar de meeste bezoekers niet
          naar zoeken, en opengeklapt duwen ze de rest van de filters uit beeld. -->
-    <details class="vouw sectie sectie--schuif" id="vouw-euronorm">
+    <details class="vouw sectie sectie--schuif" id="vouw-euronorm" data-filter="euronorm">
       <summary data-i18n="kop.euronorm">Euronorm</summary>
       <div class="schuif">
         <input type="range" id="euronorm-schuif" min="0" step="1" value="0">
@@ -400,7 +453,7 @@
       </div>
     </details>
 
-    <details class="vouw sectie sectie--schuif" id="vouw-bouwjaar">
+    <details class="vouw sectie sectie--schuif" id="vouw-bouwjaar" data-filter="bouwjaar">
       <summary data-i18n="kop.bouwjaar">Bouwjaar</summary>
       <div class="schuif">
         <input type="range" id="bouwjaar-schuif" min="0" step="1" value="0">
@@ -474,6 +527,8 @@
       bijbehorende mogelijkheden tijdens je lidmaatschap hetzelfde blijven.</li>
     <li data-i18n-html="voorbehoud.fotos"><strong>De foto's zijn voorbeeldfoto's</strong> van
       het model, niet van de auto zelf.</li>
+    <!-- Gevuld door toonVoorbehoudLocatie(), met de afstand uit de feed. -->
+    <li id="voorbehoud-locatie" hidden></li>
   </ul>
   <div class="voorbehoud__tijd" id="voorbehoud-tijd" aria-hidden="true"></div>
 </aside>

@@ -16,6 +16,13 @@ window.DEGAGE_CONFIG = {
      Leeg maken (`[]`) toont ze weer allemaal. */
   verborgenVlaggen: ["bed", "aanhanger"],
 
+  /* Welke filters de kaart toont, in te stellen door de beheerders op /beheer/kaartfilters
+     van de Worker hieronder (feedback-worker/README.md). De kaart leest dit adres bij het
+     laden. Leeg, of de Worker antwoordt niet: alle filters staan er. */
+  instellingen: {
+    url: "https://degage-kaart-feedback.degage.workers.dev/instellingen",
+  },
+
   /* Het meldformulier achter de knop "Probleem melden": zo kan ook wie geen
      GitHub-account heeft iets melden. Het gaat via een Cloudflare Worker naar GitHub;
      hoe je die opzet, staat in `feedback-worker/README.md`.

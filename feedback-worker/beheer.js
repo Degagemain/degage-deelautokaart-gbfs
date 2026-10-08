@@ -1,4 +1,5 @@
-/* De beheerpagina (/beheer) en de opruimtaak: de mailadressen van wie een antwoord vroeg.
+/* De beheerpagina (/beheer) en de opruimtaak: de mailadressen van wie een antwoord vroeg,
+   en op /beheer/kaartfilters welke filters de kaart toont (instellingen.js).
    ------------------------------------------------------------------------------------
    Wie mag kijken, beslist GitHub, niet een eigen lijst. Je logt in met je GitHub-account
    (via de GitHub App van de Worker, met haar Client ID en client secret), en de Worker
@@ -15,6 +16,7 @@
 */
 
 import { github, naarBase64url } from "./github.js";
+import { FILTERS, leesVerborgen, bewaarVerborgen, laatsteWijziging } from "./instellingen.js";
 
 const SESSIE_DUUR = 8 * 60 * 60;        // seconden
 const RECHTEN = ["admin", "write"];     // GitHub geeft "write" ook voor maintain
@@ -68,7 +70,7 @@ export async function beheer(request, env) {
 
   if (pad === "/beheer/wis" && request.method === "POST") {
     // Het koekje is SameSite=Lax, maar dubbel is hier niet te veel: wissen is voorgoed.
-    if (request.headers.get("Origin") !== url.origin) {
+    if (!komtVanHier(request, url)) {
       return pagina(403, "Geweigerd", "<p>Dit verzoek kwam niet van deze pagina.</p>");
     }
     const formulier = await request.formData();
@@ -80,6 +82,24 @@ export async function beheer(request, env) {
     const terug = String(formulier.get("terug") || "");
     return doorsturen(url.origin + "/beheer" + (terug.startsWith("?") ? terug : ""), [], 303);
   }
+  if (pad === "/beheer/kaartfilters" && request.method === "POST") {
+    if (!komtVanHier(request, url)) {
+      return pagina(403, "Geweigerd", "<p>Dit verzoek kwam niet van deze pagina.</p>");
+    }
+    const formulier = await request.formData();
+    const zichtbaar = formulier.getAll("zichtbaar").map(String);
+    try {
+      await bewaarVerborgen(env, Object.keys(FILTERS).filter((k) => !zichtbaar.includes(k)), wie);
+    } catch (e) {
+      console.error("Instellingen bewaren:", e.message);
+      return pagina(500, "Niet bewaard",
+        "<p>De keuze kon niet bewaard worden. Staat de tabel <code>instellingen</code> al in " +
+        "de databank? Voer <code>schema.sql</code> opnieuw uit (README.md, stap 5).</p>" +
+        '<p><a href="/beheer/kaartfilters">Terug</a></p>');
+    }
+    return doorsturen(url.origin + "/beheer/kaartfilters?bewaard=1", [], 303);
+  }
+  if (pad === "/beheer/kaartfilters") return kaartfilters(env, wie, url);
   if (pad === "/beheer") return overzicht(env, wie, url);
   return pagina(404, "Niet gevonden", '<p><a href="/beheer">Naar het overzicht</a></p>');
 }
@@ -309,7 +329,7 @@ async function overzicht(env, wie, url) {
         ? '<details><summary>Wissen</summary><form method="post" action="/beheer/wis">' +
           '<input type="hidden" name="issue" value="' + i.number + '">' +
           '<input type="hidden" name="terug" value="' + ontsnap(terug) + '">' +
-          "<button>Ja, wis dit adres</button></form></details>"
+          '<button class="knop knop--gevaar">Ja, wis dit adres</button></form></details>'
         : "") + "</td>" +
       "</tr>";
   }).join("");
@@ -321,21 +341,19 @@ async function overzicht(env, wie, url) {
   const gefilterd = status !== "open" || antwoord !== "alle" || taal !== "alle" || zoek;
 
   return pagina(200, "Meldingen",
-    '<p class="wie">Aangemeld als <strong>' + ontsnap(wie) + '</strong> · ' +
-      '<a href="/beheer/uit">Afmelden</a></p>' +
-    "<p>Alle meldingen over de kaart: de issues met het label <code>feedback</code>. Wie op " +
+    "<p class=\"inleiding\">Alle meldingen over de kaart: de issues met het label <code>feedback</code>. Wie op " +
       'de kaart een mailadres achterliet, krijgt hier het label <span class="label">antwoord ' +
       "gewenst</span>. Dat adres staat niet op GitHub, alleen hier, en verdwijnt vanzelf " +
       dagen + " dagen nadat het issue gesloten is. Heb je het niet meer nodig, dan kun je " +
       "het ook meteen wissen.</p>" +
-    '<form class="filters" method="get" action="/beheer">' +
+    '<form class="vlak filters" method="get" action="/beheer">' +
       "<label>Status " + keuze("status", STATUSSEN, status) + "</label>" +
       "<label>Antwoord " + keuze("antwoord", ANTWOORD, antwoord) + "</label>" +
       "<label>Taal " + keuze("taal", TALEN, taal) + "</label>" +
       '<label>Zoeken <input type="search" name="zoek" value="' + ontsnap(zoek) + '" ' +
         'placeholder="titel, mailadres, #nummer of @naam"></label>' +
       // Alleen voor wie geen JavaScript heeft; filters.js verbergt hem.
-      '<button id="toon">Toon</button>' +
+      '<button class="knop knop--hoofd" id="toon">Toon</button>' +
       ' <a href="/beheer" id="wisfilters"' + (gefilterd ? "" : " hidden") + ">Wis filters</a>" +
     "</form>" +
     (storing
@@ -344,12 +362,45 @@ async function overzicht(env, wie, url) {
     '<p class="telling"><span id="zichtbaar">' + zichtbaar + "</span> van " + rijen.length +
       " meldingen</p>" +
     (html
-      ? "<table><thead><tr><th>Melding</th><th>Op GitHub</th><th>Antwoord</th><th>Taal</th>" +
-        "<th>Gemeld</th><th></th></tr></thead><tbody>" + html + "</tbody></table>" +
+      ? '<div class="vlak lijst"><table><thead><tr><th>Melding</th><th>Op GitHub</th>' +
+        "<th>Antwoord</th><th>Taal</th><th>Gemeld</th><th></th></tr></thead><tbody>" + html +
+        "</tbody></table>" +
         '<p id="geen"' + (zichtbaar ? " hidden" : "") +
-        "><em>Geen meldingen die aan deze filters voldoen.</em></p>"
-      : "<p><em>Er zijn nog geen meldingen.</em></p>") +
-    '<script src="/beheer/filters.js"></script>');
+        "><em>Geen meldingen die aan deze filters voldoen.</em></p></div>"
+      : '<p class="vlak leeg"><em>Er zijn nog geen meldingen.</em></p>') +
+    '<script src="/beheer/filters.js"></script>', kopregel(wie, "meldingen"));
+}
+
+/* In de kopbalk van elke beheerpagina: de weg naar de andere pagina, en wie er aangemeld is. */
+function kopregel(wie, hier) {
+  const naar = (sleutel, href, tekst) => '<a class="tab" href="' + href + '"' +
+    (sleutel === hier ? ' aria-current="page"' : "") + ">" + tekst + "</a>";
+  return '<nav class="tabs">' + naar("meldingen", "/beheer", "Meldingen") +
+      naar("kaartfilters", "/beheer/kaartfilters", "Filters op de kaart") + "</nav>" +
+    '<p class="wie"><span>aangemeld als <strong>@' + ontsnap(wie) + "</strong></span>" +
+      '<a class="knop" href="/beheer/uit">Afmelden</a></p>';
+}
+
+/* Welke filters de kaart toont. Een vinkje per filter; wat uit staat, verdwijnt uit de
+   filterlijst van de kaart. De kaart leest dit bij het laden (GET /instellingen), met een
+   minuut cache. Werkt zonder JavaScript: een gewoon formulier. */
+async function kaartfilters(env, wie, url) {
+  const verborgen = await leesVerborgen(env);
+  const laatst = await laatsteWijziging(env);
+  const vakjes = Object.entries(FILTERS).map(([sleutel, label]) =>
+    '<label class="vakje"><input type="checkbox" name="zichtbaar" value="' + sleutel + '"' +
+    (verborgen.includes(sleutel) ? "" : " checked") + "> " + ontsnap(label) + "</label>").join("");
+  return pagina(200, "Filters op de kaart",
+    "<p class=\"inleiding\">Welke filters bezoekers in de filterlijst van de kaart zien. Wat je uitvinkt, " +
+      "verdwijnt uit die lijst; de auto's blijven gewoon op de kaart. Een wijziging is " +
+      "binnen een minuut zichtbaar, zonder de kaart opnieuw te publiceren.</p>" +
+    (url.searchParams.get("bewaard") ? '<p class="bewaard">Bewaard.</p>' : "") +
+    '<form class="vlak" method="post" action="/beheer/kaartfilters">' +
+      '<fieldset class="vakjes"><legend>Tonen op de kaart</legend>' + vakjes + "</fieldset>" +
+      '<div class="voet"><button class="knop knop--hoofd">Bewaren</button>' +
+      (laatst ? '<span class="zacht">Laatst gewijzigd op ' + ontsnap(laatst.gewijzigd.slice(0, 10)) +
+        " door @" + ontsnap(laatst.door) + ".</span>" : "") + "</div>" +
+    "</form>", kopregel(wie, "kaartfilters"));
 }
 
 /* Het script achter de filters: elke wijziging werkt meteen, zonder herladen. Het filtert
@@ -452,7 +503,12 @@ async function meldingenOpGitHub(env, metMail) {
   return { issues, storing: false };
 }
 
-function pagina(status, titel, inhoud) {
+/* De pagina rond de inhoud, in dezelfde opmaak als de kaart (map/index.css): dezelfde kleuren,
+   witte vlakken met een zachte schaduw op een lichtgrijze grond, groene hoofdknoppen. Met `nav`
+   (de tabs en wie er aangemeld is, zie kopregel) staat de inhoud los op de pagina, in haar
+   eigen vlakken; zonder (de foutmeldingen, het afmelden) komt ze in één vlak. Alleen licht,
+   net als de kaart. Alles staat in de pagina zelf: de Worker deelt geen bestanden met de kaart. */
+function pagina(status, titel, inhoud, nav = "") {
   return new Response(`<!doctype html>
 <html lang="nl">
 <head>
@@ -461,35 +517,140 @@ function pagina(status, titel, inhoud) {
 <meta name="robots" content="noindex">
 <title>${ontsnap(titel)} — deelautokaart Dégage</title>
 <style>
-  :root { color-scheme: light dark; --lijn: #8884; }
-  body { font: 15px/1.5 system-ui, sans-serif; max-width: 960px; margin: 0 auto; padding: 16px; }
-  h1 { font-size: 20px; }
-  .wie { color: GrayText; }
-  table { border-collapse: collapse; width: 100%; }
-  th, td { text-align: left; vertical-align: top; padding: 6px 8px; border-bottom: 1px solid var(--lijn); }
-  td:nth-child(3) { word-break: break-all; }
-  .label { display: inline-block; padding: 0 8px; border-radius: 999px; font-size: 12px; font-weight: 600;
-           line-height: 20px; white-space: nowrap; color: #0a5a2c; background: #d6f5e0; border: 1px solid #9fd9b3; }
-  @media (prefers-color-scheme: dark) { .label { color: #b8f0cb; background: #12391f; border-color: #2e7046; } }
-  summary { cursor: pointer; }
+  :root {
+    color-scheme: light;
+    --inkt: #1d2a28; --inkt-zacht: #5a6a67;
+    --groen: #2f6f5e; --groen-diep: #235348; --groen-licht: #e3efeb;
+    --lijn: #dfe4e2; --vlak: #ffffff; --vlak-zacht: #f4f6f5;
+    --schaduw: 0 1px 2px rgba(29,42,40,.08), 0 4px 16px rgba(29,42,40,.10);
+    --radius: 10px;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+            Arial, "Noto Sans", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 15px/1.45 var(--font); color: var(--inkt); background: var(--vlak-zacht);
+         -webkit-text-size-adjust: 100%; }
+  a { color: var(--groen-diep); }
   [hidden] { display: none !important; }
-  .zacht, .telling { color: GrayText; }
-  .telling { font-size: 13px; margin: 8px 0 4px; }
-  .let-op { padding: 6px 10px; border-left: 4px solid #c99a1e; }
-  .filters { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: end; margin: 14px 0; }
-  .filters label { display: flex; flex-direction: column; font-size: 13px; gap: 2px; }
-  .filters select, .filters input, .filters button { font: inherit; padding: 4px 6px; }
+  :focus-visible { outline: 2px solid var(--groen); outline-offset: 2px; }
+
+  /* de kopbalk */
+  .kop { background: var(--vlak); border-bottom: 1px solid var(--lijn); box-shadow: var(--schaduw); }
+  .kop__binnen { max-width: 1040px; margin: 0 auto; padding: 10px 16px;
+                 display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; }
+  .merk { display: flex; align-items: center; gap: 10px; margin-right: auto; }
+  .merk__teken { flex: none; display: grid; place-items: center; width: 34px; height: 34px;
+                 color: #fff; background: var(--groen); border-radius: 9px; }
+  .merk__teken svg { width: 19px; height: 19px; }
+  .merk__naam { display: block; font-size: 15px; font-weight: 600; line-height: 1.2; }
+  .merk__sub { display: block; font-size: 12px; color: var(--inkt-zacht); }
+  .tabs { display: flex; gap: 4px; padding: 3px; background: var(--vlak-zacht);
+          border: 1px solid var(--lijn); border-radius: 999px; }
+  .tab { padding: 6px 14px; font-size: 13.5px; font-weight: 500; color: var(--inkt);
+         text-decoration: none; border-radius: 999px; white-space: nowrap; }
+  .tab:hover { background: var(--vlak); }
+  .tab[aria-current="page"] { color: #fff; background: var(--groen); }
+  .wie { display: flex; align-items: center; gap: 10px; margin: 0; font-size: 13px; color: var(--inkt-zacht); }
+  .wie strong { color: var(--inkt); font-weight: 600; }
+
+  /* de inhoud */
+  main { max-width: 1040px; margin: 0 auto; padding: 20px 16px 40px; }
+  h1 { margin: 0 0 6px; font-size: 20px; }
+  .inleiding { margin: 0 0 16px; max-width: 72ch; color: var(--inkt-zacht); }
+  .vlak { margin: 0 0 14px; padding: 14px 16px; background: var(--vlak);
+          border: 1px solid var(--lijn); border-radius: var(--radius); box-shadow: var(--schaduw); }
+  .vlak > :first-child { margin-top: 0; }
+  .vlak > :last-child { margin-bottom: 0; }
+  .zacht, .leeg { color: var(--inkt-zacht); }
+
+  /* knoppen, zoals .knop en .zoek__knop op de kaart */
+  .knop { display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+          min-height: 36px; padding: 6px 14px; font: inherit; font-size: 13.5px; font-weight: 500;
+          color: var(--inkt); text-decoration: none; background: var(--vlak);
+          border: 1px solid var(--lijn); border-radius: 8px; cursor: pointer;
+          transition: background .12s, border-color .12s; }
+  .knop:hover { background: var(--vlak-zacht); border-color: #cfd6d3; }
+  .knop--hoofd { color: #fff; font-weight: 600; background: var(--groen); border-color: var(--groen); }
+  .knop--hoofd:hover { background: var(--groen-diep); border-color: var(--groen-diep); }
+  .knop--gevaar { margin-top: 6px; min-height: 32px; color: #8a1f1f; background: #fdecec; border-color: #f0c4c4; }
+  .knop--gevaar:hover { background: #f9dcdc; border-color: #e4a9a9; }
+
+  /* de filters */
+  .filters { display: flex; flex-wrap: wrap; gap: 10px 12px; align-items: end; }
+  .filters label { display: flex; flex-direction: column; gap: 4px;
+                   font-size: 12px; font-weight: 600; color: var(--inkt-zacht); }
+  .filters label:has(input) { flex: 1 1 220px; }
+  .filters select, .filters input {
+    min-height: 38px; padding: 7px 10px; font: inherit; font-size: 13.5px; font-weight: 400;
+    color: var(--inkt); background: var(--vlak); border: 1px solid var(--lijn); border-radius: 8px; }
+  .filters select:hover, .filters input:hover { border-color: #cfd6d3; }
+  .filters input::placeholder { color: var(--inkt-zacht); }
+  .filters select:focus-visible, .filters input:focus-visible { outline-offset: -1px; }
+  #wisfilters { align-self: center; margin-top: 18px; font-size: 13px; }
+  .telling { margin: 0 0 10px; font-size: 13px; color: var(--inkt-zacht); font-variant-numeric: tabular-nums; }
+
+  /* de lijst */
+  .lijst { padding: 0; overflow: hidden; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  th { padding: 10px 14px; text-align: left; font-size: 12px; font-weight: 600; color: var(--inkt-zacht);
+       text-transform: uppercase; letter-spacing: .03em; background: var(--vlak-zacht);
+       border-bottom: 1px solid var(--lijn); }
+  td { padding: 11px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--lijn); }
+  tbody tr:hover { background: #fafbfa; }
+  tbody tr:last-child td { border-bottom: 0; }
+  td:first-child a { font-weight: 600; text-decoration: none; }
+  td:nth-child(3) { word-break: break-all; }
+  td .zacht { font-size: 12.5px; }
+  #geen { margin: 0; padding: 14px; color: var(--inkt-zacht); }
+  .label { display: inline-block; padding: 0 9px; border-radius: 999px; font-size: 12px; font-weight: 600;
+           line-height: 20px; white-space: nowrap; color: var(--groen-diep); background: var(--groen-licht);
+           border: 1px solid #b9d6cc; }
+  summary { cursor: pointer; font-size: 13px; color: var(--inkt-zacht); }
+  summary:hover { color: var(--inkt); }
+
+  /* meldingen, zoals het voorbehoud in het meldvenster van de kaart */
+  .let-op, .bewaard { margin: 0 0 14px; padding: 9px 12px; border-radius: 8px; }
+  .let-op { color: var(--inkt); background: #fff7e0; border: 1px solid #ecd9a0; border-left: 4px solid #c99a1e; }
+  .bewaard { color: var(--groen-diep); background: var(--groen-licht); border: 1px solid #b9d6cc;
+             border-left: 4px solid var(--groen); font-weight: 600; }
+
+  /* de kaartfilters */
+  .vakjes { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 2px 16px;
+            margin: 0; padding: 0; border: 0; }
+  .vakjes legend { margin-bottom: 8px; padding: 0; font-weight: 600; }
+  .vakje { display: flex; gap: 9px; align-items: center; padding: 6px 8px; border-radius: 8px; cursor: pointer; }
+  .vakje:hover { background: var(--vlak-zacht); }
+  .vakje input { flex: none; width: 16px; height: 16px; margin: 0; accent-color: var(--groen); }
+  .voet { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px;
+          margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--lijn); font-size: 13px; }
+
   @media (max-width: 640px) {
+    .kop__binnen { padding: 10px 12px; }
+    .tabs { order: 3; width: 100%; }
+    .tab { flex: 1; text-align: center; }
+    main { padding: 16px 12px 32px; }
+    .filters label { flex: 1 1 140px; }
     thead { display: none; }
     tr, td { display: block; }
-    tr { padding: 8px 0; border-bottom: 1px solid var(--lijn); }
+    tr { padding: 10px 14px; border-bottom: 1px solid var(--lijn); }
+    tbody tr:last-child { border-bottom: 0; }
     td { border: 0; padding: 2px 0; }
   }
 </style>
 </head>
 <body>
+<header class="kop"><div class="kop__binnen">
+  <div class="merk">
+    <span class="merk__teken"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.4"/></svg></span>
+    <span><span class="merk__naam">Deelautokaart Dégage</span><span class="merk__sub">Beheer</span></span>
+  </div>
+  ${nav}
+</div></header>
+<main>
 <h1>${ontsnap(titel)}</h1>
-${inhoud}
+${nav ? inhoud : '<div class="vlak">' + inhoud + "</div>"}
+</main>
 </body>
 </html>`, {
     status,
@@ -498,7 +659,11 @@ ${inhoud}
       "Cache-Control": "no-store",
       "Content-Security-Policy":
         "default-src 'none'; script-src 'self'; style-src 'unsafe-inline'; form-action 'self'; frame-ancestors 'none'",
-      "Referrer-Policy": "no-referrer",
+      /* `same-origin` en niet `no-referrer`: met `no-referrer` zet de browser bij het
+         versturen van een formulier `Origin: null`, en dan weigerde komtVanHier() elk
+         formulier op deze pagina's ("Dit verzoek kwam niet van deze pagina"). Naar andere
+         sites gaat er met `same-origin` nog altijd geen verwijzer mee. */
+      "Referrer-Policy": "same-origin",
       "X-Content-Type-Options": "nosniff"
     }
   });
@@ -506,6 +671,16 @@ ${inhoud}
 
 
 /* ---- hulpjes ------------------------------------------------------------------------- */
+
+/* Kwam dit formulier van een beheerpagina zelf, en niet van een andere site? De `Origin`
+   moet ons eigen adres zijn. Een browser die `Origin: null` stuurt — een pagina die nog
+   met de oude `Referrer-Policy: no-referrer` in een tabblad openstaat — zegt het ook met
+   `Sec-Fetch-Site`, dat een pagina niet zelf kan zetten. Geen van beide: weigeren. */
+function komtVanHier(request, url) {
+  const herkomst = request.headers.get("Origin");
+  if (herkomst && herkomst !== "null") return herkomst === url.origin;
+  return request.headers.get("Sec-Fetch-Site") === "same-origin";
+}
 
 function doorsturen(waarheen, koekjes = [], status = 302) {
   const headers = new Headers({ "Location": waarheen, "Cache-Control": "no-store" });

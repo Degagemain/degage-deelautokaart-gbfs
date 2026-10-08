@@ -142,6 +142,14 @@
                   "automatisch"
                 ]
               },
+              "klasse": {
+                "description": "De tariefklasse van Dégage. Elke wagen rijdt aan de kilometerprijs van zijn klasse; B is duurder dan A. Alleen de letter staat hier, de prijzen zelf staan op degage.be. NIET verplicht: ontbreekt het veld, dan is de klasse onbekend.",
+                "type": "string",
+                "enum": [
+                  "A",
+                  "B"
+                ]
+              },
               "euronorm": {
                 "description": "Herleid uit vrije tekst tot één generatie: de subletters (6b, 6c, 6d) zijn verfijningen binnen Euro 6 en worden op de generatie afgebeeld. NIET verplicht en bewust weglaatbaar: staat het veld er niet, dan is de norm onbekend — dat is iets anders dan 'geen norm'. Dubbelzinnige bronwaarden ('5 of 6') en niet-normen ('nvt', '*', '0') leveren geen veld op in plaats van een gok.",
                 "type": "string",

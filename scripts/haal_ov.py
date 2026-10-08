@@ -74,6 +74,13 @@ De OV-feiten — en dat zijn KEUZES, geen feiten
   kilometer" is geen afstand: wie de schuif op 2 km zet, kan zo'n standplaats niet
   beoordelen. Met een gemeten afstand kan het filter wél zeggen waar ze valt, en de
   bezoeker ziet zelf dat 3,4 km ver is. (11-09-2026)
+· Bus en tram ook APART, voor het filter op de kaart: de dichtste halte waar een bus stopt,
+  en de dichtste waar een tram stopt, elk met alleen de ritten van die soort. De kaart toont
+  die twee, in het filter en in de popup; de gemengde halte hierboven blijft staan voor
+  een kaart die nog een ouder ov.json verwacht. Wie op "tram binnen 500 m" filtert, zoekt een tram,
+  en de dichtste halte is vaak een bushalte terwijl de tram twee straten verder rijdt.
+  Trams rijden alleen in Gent, Antwerpen en aan de kust; elders staat er dus geen tramhalte
+  binnen HALTE_VER_M, en dan staat er niets. (08-10-2026)
 · Trein (NMBS): het dichtste station binnen TREIN_M, en hoeveel treinen er daar per uur
   stoppen, GEDEELD DOOR TWEE richtingen. Per perron tellen, zoals bij de bus, gaat hier niet:
   een groot station heeft tot twaalf perrons in dezelfde richting, en veel ritten staan op
@@ -405,23 +412,26 @@ def kies_dag(zips: dict[str, zipfile.ZipFile]) -> date:
 # ============================================================================
 # bus en tram
 # ============================================================================
-def _groepeer(z: zipfile.ZipFile, actief: dict[str, str], naam_van: dict[str, str],
-              kandidaten: dict[str, list[tuple[str, float]]]) -> dict[str, dict[str, list]]:
+def _groepeer(per_halte: dict[str, set], actief: dict[str, str], naam_van: dict[str, str],
+              kandidaten: dict[str, list[tuple[str, float]]],
+              soort: str | None = None) -> dict[str, dict[str, list]]:
     """Per standplaats per HALTENAAM: de kleinste afstand, alle ritten samen, en de drukste kant.
 
     De twee kanten van de straat heten meestal hetzelfde en zijn in de data twee haltes, één
     per richting; de drukste kant is wat je aan die halte per richting krijgt. Een halte waar
-    op de referentiedag niets stopt, bestaat op de kaart maar telt hier niet mee.
+    op de referentiedag niets stopt, bestaat op de kaart maar telt hier niet mee. Met `soort`
+    tellen alleen de ritten van die soort ("bus" of "tram"): een halte waar alleen trams
+    stoppen, is dan geen bushalte.
 
-    Het zware deel is `ritten_per_halte`, dat de haltetijden rij voor rij leest. Vandaar dat
-    `kandidaten` zo klein mogelijk gehouden wordt: dit is per aanroep één keer dat bestand.
+    `per_halte` komt uit `ritten_per_halte`, het zware deel dat de haltetijden rij voor rij
+    leest. Het wordt daarom één keer gelezen en per soort opnieuw gegroepeerd.
     """
-    nodig = {stop_id for lijst in kandidaten.values() for stop_id, _ in lijst}
-    per_halte = ritten_per_halte(z, actief, nodig)
     groepen: dict[str, dict[str, list]] = defaultdict(dict)
     for sid, lijst in kandidaten.items():
         for stop_id, d in lijst:
             ritten = per_halte.get(stop_id)
+            if ritten and soort:
+                ritten = {r for r in ritten if actief.get(r) == soort}
             if not ritten:
                 continue
             g = groepen[sid].setdefault(naam_van[stop_id], [d, set(), False, 0])
@@ -432,8 +442,18 @@ def _groepeer(z: zipfile.ZipFile, actief: dict[str, str], naam_van: dict[str, st
     return groepen
 
 
+def _dichtste(g: dict[str, list]) -> dict:
+    """De dichtste halte uit één groepering van _groepeer(), zoals ze in ov.json komt."""
+    uren = (VENSTER_TOT - VENSTER_VAN) / 3600
+    naam, (d, ritten, tram, drukste_kant) = min(g.items(), key=lambda kv: kv[1][0])
+    return {"naam": naam, "m": round(d / 10) * 10,
+            "per_richting": round(drukste_kant / uren, 1),
+            "per_uur": round(len(ritten) / uren, 1), "tram": tram}
+
+
 def bus_tram(z: zipfile.ZipFile, dag: date, standplaatsen: list) -> dict:
-    """Per standplaats: de dichtste halte met vaste lijnen, en hoeveel er in de buurt liggen."""
+    """Per standplaats: de dichtste halte met vaste lijnen, en hoeveel er in de buurt liggen.
+    Daarnaast, voor het filter, de dichtste bushalte en de dichtste tramhalte apart."""
     actief = actieve_ritten(z, dag, BRONNEN["delijn"]["soorten"])
     zeg(f"  {len(actief):,} bus- en tramritten op {dag}".replace(",", "."))
 
@@ -461,39 +481,74 @@ def bus_tram(z: zipfile.ZipFile, dag: date, standplaatsen: list) -> dict:
                         else op_afstand[:HALTE_VER_KANDIDATEN])
         return uit
 
+    def lees_ritten(kand: dict[str, list[tuple[str, float]]]) -> dict[str, set]:
+        return ritten_per_halte(z, actief, {s for lijst in kand.values() for s, _ in lijst})
+
     kandidaten = kandidaten_voor(standplaatsen, alles=False)
     zonder_dichtbij = sum(1 for lijst in kandidaten.values() if lijst and lijst[0][1] > HALTE_ZOEK_M)
     zeg(f"  {sum(len(v) for v in kandidaten.values()):,} halte-standplaatsparen bekeken; "
         f"{zonder_dichtbij} standplaatsen zonder halte binnen {HALTE_ZOEK_M} m".replace(",", "."))
-    groepen = _groepeer(z, actief, naam_van, kandidaten)
+    per_halte = lees_ritten(kandidaten)
+    groepen = _groepeer(per_halte, actief, naam_van, kandidaten)
+    bussen = _groepeer(per_halte, actief, naam_van, kandidaten, "bus")
 
     # Wie na die ronde nog geen halte met vaste lijnen heeft, staat in belbusgebied: er
     # liggen wél haltes vlakbij, maar er rijdt op de referentiedag niets met een vaste lijn,
     # en de twaalf dichtste zijn dan allemaal leeg. Voor die paar standplaatsen tellen álle
     # haltes tot HALTE_VER_M mee — met een tweede leesbeurt over de haltetijden erbij. Dat
     # kost een halve minuut voor een handvol standplaatsen, en levert een gemeten afstand op
-    # in plaats van een gat waar het filter niets mee kan.
-    open_nog = [s for s in standplaatsen if not groepen.get(s[0])]
+    # in plaats van een gat waar het filter niets mee kan. Hetzelfde voor wie wel een halte
+    # heeft maar geen bushalte: daar stopt in de buurt alleen een tram.
+    open_nog = [s for s in standplaatsen if not groepen.get(s[0]) or not bussen.get(s[0])]
     if open_nog:
-        zeg(f"  {len(open_nog)} standplaatsen zonder halte met vaste lijnen; "
+        zeg(f"  {len(open_nog)} standplaatsen zonder halte of bushalte met vaste lijnen; "
             f"tweede ronde tot {HALTE_VER_M} m")
-        groepen.update(_groepeer(z, actief, naam_van, kandidaten_voor(open_nog, alles=True)))
+        verder = kandidaten_voor(open_nog, alles=True)
+        per_verder = lees_ritten(verder)
+        for sid, g in _groepeer(per_verder, actief, naam_van, verder).items():
+            groepen.setdefault(sid, g)
+        for sid, g in _groepeer(per_verder, actief, naam_van, verder, "bus").items():
+            bussen.setdefault(sid, g)
 
-    uren = (VENSTER_TOT - VENSTER_VAN) / 3600
+    trams = tramhaltes(z, actief, naam_van, haltes, standplaatsen)
+
     uit = {}
     for sid, _, _ in standplaatsen:
         g = groepen.get(sid)
         if not g:
             uit[sid] = None
             continue
-        naam, (d, ritten, tram, drukste_kant) = min(g.items(), key=lambda kv: kv[1][0])
-        uit[sid] = {
-            "halte": {"naam": naam, "m": round(d / 10) * 10,
-                      "per_richting": round(drukste_kant / uren, 1),
-                      "per_uur": round(len(ritten) / uren, 1), "tram": tram},
-            "haltes_binnen": sum(1 for x in g.values() if x[0] <= HALTE_M),
-        }
+        uit[sid] = {"halte": _dichtste(g),
+                    "haltes_binnen": sum(1 for x in g.values() if x[0] <= HALTE_M)}
+        # De tramvlag zegt bij een bus- of tramhalte apart niets: die telt maar één soort.
+        if bussen.get(sid):
+            uit[sid]["bus"] = {k: v for k, v in _dichtste(bussen[sid]).items() if k != "tram"}
+        if trams.get(sid):
+            uit[sid]["tram"] = {k: v for k, v in _dichtste(trams[sid]).items() if k != "tram"}
+    zeg(f"  {sum(1 for v in uit.values() if v and 'bus' in v)} standplaatsen met een bushalte, "
+        f"{sum(1 for v in uit.values() if v and 'tram' in v)} met een tramhalte "
+        f"binnen {HALTE_VER_M} m")
     return uit
+
+
+def tramhaltes(z: zipfile.ZipFile, actief: dict[str, str], naam_van: dict[str, str],
+               haltes: list, standplaatsen: list) -> dict[str, dict[str, list]]:
+    """Per standplaats de tramhaltes tot HALTE_VER_M, gegroepeerd zoals bij de bus.
+
+    Apart, en niet via de kandidaten van bus_tram(): dat zijn de twaalf dichtste haltes, en
+    in Gent of Antwerpen zijn dat vaak allemaal bushaltes terwijl er op 600 m een tram rijdt.
+    Hier eerst ALLE haltes waar een tram stopt — dat zijn er weinig, dus een leesbeurt over
+    de haltetijden met alleen de tramritten blijft licht — en dan per standplaats alles
+    daarvan tot HALTE_VER_M.
+    """
+    tramritten = {r: s for r, s in actief.items() if s == "tram"}
+    if not tramritten:
+        return {}
+    per_halte = ritten_per_halte(z, tramritten, set(naam_van))
+    raster = Raster([h for h in haltes if per_halte.get(h[0])], HALTE_VER_M)
+    kandidaten = {sid: sorted(((p[0], d) for p, d in raster.binnen(lat, lon)), key=lambda x: x[1])
+                  for sid, lat, lon in standplaatsen}
+    return _groepeer(per_halte, tramritten, naam_van, kandidaten)
 
 
 # ============================================================================
@@ -656,7 +711,9 @@ def main() -> int:
             "over openbaar vervoer, door scripts/haal_ov.py. De Mobiscore is de totaalscore van "
             "de hectarecel, opgevraagd op het vervaagde punt uit de feed. De OV-feiten zijn "
             "keuzes, geen gegevens: zie de uitleg bovenaan dat script. Bussen en trams per "
-            "richting (de drukste kant van de halte), treinen als totaal gedeeld door twee; "
+            "richting (de drukste kant van de halte), treinen als totaal gedeeld door twee. "
+            "`bus` en `tram` zijn de dichtste halte met alleen die soort (voor het filter en de "
+            "popup); `halte` de dichtste met bus of tram, voor een kaart die dat nog verwacht; "
             "flexvervoer telt niet mee; afstanden in vogelvlucht."
         ),
         # De kaart gebruikt dit bestand alleen als het bij de feed hoort die ze toont.

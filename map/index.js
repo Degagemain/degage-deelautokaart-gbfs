@@ -63,6 +63,13 @@ const OV_BESTAND = "ov.json";
 const VLOOT_API = "https://degapp.be/api/v1/car/stands";
 const VLOOT_WACHTTIJD_MS = 8000;
 
+/* Welke filters de kaart toont, zoals de beheerders dat op /beheer van de Worker
+   instellen (feedback-worker/instellingen.js). Het adres staat in config.js; zonder
+   adres, of als de Worker niet binnen INSTELLINGEN_WACHTTIJD_MS antwoordt, staan alle
+   filters er. Een storing daar mag de kaart nooit armer maken. */
+const INSTELLINGEN_URL = ((window.DEGAGE_CONFIG || {}).instellingen || {}).url || "";
+const INSTELLINGEN_WACHTTIJD_MS = 3000;
+
 /* ==========================================================================
    TAAL
    ==========================================================================
@@ -531,6 +538,7 @@ const staat = {
   stations: [],           // { station_id, lat, lon, plaats, wagens[] }
   brandstoffen: [],       // gesorteerd op aantal, aflopend
   soorten: [],            // personenwagen / bestelwagen, gesorteerd op aantal
+  klassen: [],            // de tariefklassen die voorkomen (A, B, en KLASSE_ONBEKEND)
   zitplaatsen: [],        // de zitplaatsaantallen die voorkomen, oplopend
   minZit: null,           // gekozen ondergrens; null = geen zitplaatsfilter
   bakken: [],             // manueel / automatisch, gesorteerd op aantal
@@ -541,17 +549,22 @@ const staat = {
   bereik: {},             // "merk|model|bouwjaar" (of "merk|model") -> { km: [van, tot], ... }
   ov: null,               // map/ov.json, maar alleen als het bij deze feed hoort
   jaarVan: null,          // gekozen ondergrens bouwjaar; null = geen bouwjaarfilter
-  busDrempels: [],        // de standen van de halteschuif, in meter, aflopend
-  maxBus: null,           // gekozen bovengrens afstand tot een halte; null = geen filter
-  treinDrempels: [],      // de standen van de stationsschuif, in meter, aflopend
-  maxTrein: null,         // gekozen bovengrens afstand tot een station; null = geen filter
+  /* Het OV-filter: per modus de standen van zijn twee schuiven en wat er gekozen is
+     (null = geen grens). Zie bouwOv(). */
+  ovModus: {
+    bus:   { afstanden: [], freqs: [], maxM: null, minFreq: null },
+    tram:  { afstanden: [], freqs: [], maxM: null, minFreq: null },
+    trein: { afstanden: [], freqs: [], maxM: null, minFreq: null }
+  },
+  gekozenOvModi: new Set(),    // "bus", "tram" en/of "trein"; leeg = geen OV-filter
+  ovBeide: false,              // bij twee modi: moeten ze allebei voldoen?
   grijsTonen: true,       // uitgefilterde standplaatsen grijs laten staan i.p.v. verbergen
+  samenTonen: false,      // alle wagens van een standplaats in één popup i.p.v. elk apart
   gekozenBrandstof: new Set(),
   gekozenSoort: new Set(),
+  gekozenKlasse: new Set(),
   gekozenBak: new Set(),
   gekozenVlaggen: new Set(),   // toebehoren én afspraken; de sleutels zijn uniek
-  gekozenNieuw: new Set(),     // "nieuw" of leeg: enkel de nieuwe auto's uit de live vloot
-  aantalNieuw: 0,              // hoeveel nieuwe auto's er zijn; 0 = het filter verdwijnt
   totaalWagens: 0,
   bijgewerkt: null,       // `last_updated` uit de feed, voor de datumregel
   live: false             // true als de standplaatsen uit VLOOT_API komen, niet uit de feed
@@ -738,6 +751,25 @@ const API_BRANDSTOF = {
 };
 const API_BAK = { manual: "manueel", automatic: "automatisch" };
 
+/* De filters die uit staan, als Set van `data-filter`-sleutels uit index.html. */
+async function laadInstellingen() {
+  if (!INSTELLINGEN_URL) return new Set();
+  const stop = new AbortController();
+  const wekker = setTimeout(() => stop.abort(), INSTELLINGEN_WACHTTIJD_MS);
+  try {
+    const antwoord = await fetch(INSTELLINGEN_URL, { signal: stop.signal });
+    if (!antwoord.ok) throw new Error("status " + antwoord.status);
+    const { verborgenFilters } = await antwoord.json();
+    return new Set(Array.isArray(verborgenFilters) ? verborgenFilters : []);
+  } catch (e) {
+    console.warn("instellingen niet geladen (" + INSTELLINGEN_URL + "): " + e.message +
+                 " — alle filters staan er.");
+    return new Set();
+  } finally {
+    clearTimeout(wekker);
+  }
+}
+
 async function laadVloot() {
   const stop = new AbortController();
   const wekker = setTimeout(() => stop.abort(), VLOOT_WACHTTIJD_MS);
@@ -879,16 +911,27 @@ async function metLiveVloot(api, feedStations, feedWagens, ov, meter) {
 }
 
 async function laden() {
-  const [stationBestand, wagenBestand, , , ovBestand, vloot] = await Promise.all([
-    haal("station_information"),
-    haal("degage_vehicles"),
-    laadFotos(),
-    laadBereik(),
-    laadOv(),
-    laadVloot()
-  ]);
+  const [stationBestand, wagenBestand, , , ovBestand, vloot, verborgenFilters] =
+    await Promise.all([
+      haal("station_information"),
+      haal("degage_vehicles"),
+      laadFotos(),
+      laadBereik(),
+      laadOv(),
+      laadVloot(),
+      laadInstellingen()
+    ]);
+  /* Vóór bouwFilters(): een uitgezet filter verschijnt zo nooit even. De sectie blijft in
+     de opmaak staan, alleen onzichtbaar, zodat de rest van de code er niets van merkt.
+     Een stijl op het element en niet via `hidden` of een klasse: `hidden` zetten de
+     OV-filters zelf al, en een klasse hangt af van een index.css die na een publicatie
+     nog oud in de cache van de bezoeker kan zitten. */
+  for (const sectie of document.querySelectorAll("#filters [data-filter]")) {
+    sectie.style.display = verborgenFilters.has(sectie.dataset.filter) ? "none" : "";
+  }
 
   locatieVaagheid = wagenBestand.locatie_nauwkeurigheid_m || null;
+  toonVoorbehoudLocatie();
   staat.bijgewerkt = stationBestand.last_updated;
 
   /* De OV-gegevens alleen als ze bij DEZE feed horen. Een standplaats kan tussen twee
@@ -946,7 +989,6 @@ async function laden() {
   })).filter((s) => s.wagens.length > 0);
 
   staat.totaalWagens = staat.stations.reduce((n, s) => n + s.wagens.length, 0);
-  staat.aantalNieuw = staat.stations.reduce((n, s) => n + s.wagens.filter((w) => w.nieuw).length, 0);
 
   /* Brandstoffen uit de data halen in plaats van ze hier vast te leggen: duikt er in een
      volgende dump een achtste op, dan verschijnt die vanzelf in het filter. */
@@ -966,6 +1008,7 @@ async function laden() {
      niet in staat, verschijnt niet als keuze, en wat er wél in staat verschijnt vanzelf. */
   const bakTelling = new Map();
   const soortTelling = new Map();
+  const klasseTelling = new Map();
   const zitTelling = new Map();
   const rangen = new Set();
   const jaren = new Set();
@@ -977,6 +1020,7 @@ async function laden() {
       if (w.carrosserie) {
         soortTelling.set(w.carrosserie, (soortTelling.get(w.carrosserie) || 0) + 1);
       }
+      klasseTelling.set(klasseVan(w), (klasseTelling.get(klasseVan(w)) || 0) + 1);
       if (w.zitplaatsen) zitTelling.set(w.zitplaatsen, (zitTelling.get(w.zitplaatsen) || 0) + 1);
       /* Eén keer uitrekenen en bij de wagen bewaren: `teken()` loopt bij elke
          filterwijziging over alle 568 wagens. */
@@ -987,6 +1031,7 @@ async function laden() {
   }
   staat.bakken = [...bakTelling.entries()].sort((a, b) => a[0].localeCompare(b[0], "nl"));
   staat.soorten = [...soortTelling.entries()].sort((a, b) => a[0].localeCompare(b[0], "nl"));
+  staat.klassen = [...klasseTelling.entries()].sort((a, b) => a[0].localeCompare(b[0], "nl"));
   /* Zitplaatsen blijven numeriek oplopend — het is een schaal, geen lijst namen. */
   staat.zitplaatsen = [...zitTelling.keys()].sort((a, b) => a - b);
   staat.normRangen = [...rangen].sort((a, b) => a - b);
@@ -1000,6 +1045,16 @@ async function laden() {
              // ingezoomd (of de vloot klein genoeg), dan verschijnt de balk meteen
   // Staat er een publicatiefout in beeld, dan blijft die staan: die gaat niet over laden.
   if (!TAALBESTANDEN_ONTBREKEN) $("melding").hidden = true;
+}
+
+/* De stip staat met opzet niet precies op de standplaats: dat zou de voordeur van de
+   eigenaar aanwijzen. Dat zegt het voorbehoud bij het openen, met het getal uit de feed
+   (`locatie_nauwkeurigheid_m`), zodat belofte en werkelijke verschuiving niet uit elkaar
+   lopen. Draagt de feed het getal niet, dan zwijgt de kaart erover. Ook na een taalwissel. */
+function toonVoorbehoudLocatie() {
+  const li = $("voorbehoud-locatie");
+  li.hidden = !locatieVaagheid;
+  if (locatieVaagheid) li.innerHTML = t("voorbehoud.locatie", { m: getal(locatieVaagheid) });
 }
 
 /* De datum van de dump, in woorden en in de taal van de bezoeker. Apart, want hij moet
@@ -1029,6 +1084,22 @@ function keuzeVeld(groep, sleutel, label, aantal) {
   return wrap;
 }
 
+/* De klasse als filtersleutel. Een wagen zonder klasse — de bron kende ze niet, of het is
+   een nieuwe auto uit de live vloot — is niet "geen klasse" maar een onbekende, en die is
+   wél te kiezen: anders dan bij de euronorm is hier geen schaal waar hij buiten valt. */
+const KLASSE_ONBEKEND = "onbekend";
+
+function klasseVan(w) {
+  return w.klasse || KLASSE_ONBEKEND;
+}
+
+/* "Klasse A" in de taal van de bezoeker. De letter zelf wordt niet vertaald: het is de
+   naam die Dégage de klasse geeft, en die staat zo ook in de tarieven. */
+function klasseLabel(klasse) {
+  return klasse === KLASSE_ONBEKEND ? t("filter.klasseOnbekend")
+                                    : t("filter.klasse", { klasse: klasse });
+}
+
 /* Hoeveel wagens deze vlag dragen. Bij elke tekenbeurt opnieuw geteld: het zijn acht
    vlaggen over een vloot van een paar honderd wagens, en dat is goedkoper dan een tweede
    plek waar hetzelfde getal kan verouderen. */
@@ -1045,10 +1116,10 @@ function vlagTelling(sleutel) {
    `staat` en niet in de opmaak, dus opnieuw tekenen verliest geen enkele keuze. */
 function vulKeuzes() {
   const groepen = [
-    ["nieuw", "filter-nieuw",
-     [["nieuw", t("filter.nieuw"), staat.aantalNieuw]], staat.gekozenNieuw],
     ["soort", "filter-soort",
      staat.soorten.map(([w, n]) => [w, waarde(w), n]), staat.gekozenSoort],
+    ["klasse", "filter-klasse",
+     staat.klassen.map(([k, n]) => [k, klasseLabel(k), n]), staat.gekozenKlasse],
     ["brandstof", "filter-brandstof",
      staat.brandstoffen.map(([w, n]) => [w, waarde(w), n]), staat.gekozenBrandstof],
     ["bak", "filter-bak",
@@ -1077,14 +1148,11 @@ function vulKeuzes() {
 }
 
 function bouwFilters() {
-  /* Het blokje "Nieuw in de vloot" staat er alleen als er nieuwe auto's zijn: zonder live
-     vloot, of na een verversing die ze allemaal in de feed zette, is er niets te kiezen. */
-  $("sectie-nieuw").hidden = staat.aantalNieuw === 0;
   vulKeuzes();
   bouwZitplaatsen();
   bouwEuronorm();
   bouwBouwjaar();
-  bouwAfstanden();
+  bouwOv();
 
   /* Eén luisteraar op de hele filterlijst in plaats van één per vakje. De keuzes worden
      bij elke taalwissel opnieuw getekend; per vakje luisteren zou dan bij elke wissel
@@ -1093,8 +1161,8 @@ function bouwFilters() {
   const groepen = {
     brandstof: staat.gekozenBrandstof,
     soort: staat.gekozenSoort,
+    klasse: staat.gekozenKlasse,
     bak: staat.gekozenBak,
-    nieuw: staat.gekozenNieuw,
     vlag: staat.gekozenVlaggen
   };
   /* Op het paneel en niet op #filters: op een telefoon staan de chips in het zwevende
@@ -1214,91 +1282,211 @@ function bouwjaarFiltert() {
   return staat.jaarVan !== null;
 }
 
-/* De afstand tot het openbaar vervoer als BOVENgrens. Ze hoort bij de STANDPLAATS: een
-   wagen komt door het filter als de plek waar hij staat hoogstens zo ver van een halte of
-   een station ligt.
+/* ---------- het OV-filter --------------------------------------------------------------
+   Openbaar vervoer hoort bij de STANDPLAATS: een wagen komt door het filter als de plek
+   waar hij staat goed genoeg bediend wordt. Per modus — bus, tram, trein — twee schuiven,
+   zonder aanvinkvakje: een modus filtert zodra één van zijn schuiven niet op "alles"
+   staat (ovModiBijwerken()), en wat er ingesteld is, zie je aan de schuiven zelf.
 
-   De standen komen van een vaste ladder, niet uit de data zelf zoals bij de zitplaatsen:
-   "hoogstens 500 meter" is een ronde afspraak die een mens kan inschatten, en de gemeten
-   afstanden zijn allemaal verschillend. Van die ladder blijven alleen de standen over die
-   iets DOEN — een stand boven de verste standplaats filtert niets weg, en een schuif die
-   in de eerste helft niets verandert, liegt over wat ze kan.
+   · de AFSTAND tot de dichtste halte of het dichtste station, als bovengrens. Links
+     "elke afstand", daar staat hij als er niets ingesteld is; daarna de afstanden van
+     klein naar groot, zoals op een liniaal;
+   · de FREQUENTIE daar, als ondergrens: vertrekken per uur, per richting, zoals de popup
+     ze toont. Links "elke", naar rechts strenger.
 
-   De schuif loopt van links (alles) naar rechts (het dichtst), net als elke andere schuif
-   hier: verder naar rechts is altijd strenger. De ladder staat daarom aflopend. */
+   Welke stand "alles" is, staat als `data-rust` op de schuif; bij alle schuiven hier is
+   dat het begin. Wie een schuif terugzet of nagaat of hij iets doet, kijkt daarnaar (zie
+   werkKoppenBij()). Zijn er meer modi ingesteld, dan volstaat er één — wie
+   de trein neemt, hoeft geen bus — tenzij "aan alle ingestelde voldoen" aanstaat.
+
+   Bus en tram zijn elk hun eigen halte (`bus` en `tram` in ov.json): de dichtste halte
+   waar die soort stopt, met alleen haar ritten. De popup toont dezelfde twee. Een
+   ov.json van vóór die splitsing heeft ze niet; dan verdwijnen die twee blokjes.
+
+   De standen komen van vaste ladders, niet uit de data zelf: "hoogstens 500 meter" en
+   "minstens 4× per uur" zijn ronde afspraken die een mens kan inschatten. Van elke ladder
+   blijven alleen de standen over die iets DOEN. */
 const AFSTAND_LADDER = [250, 500, 750, 1000, 1500, 2000, 3000, 5000, 7500, 10000];
+const FREQ_LADDER = { bus: [1, 2, 3, 4, 6, 8, 12], tram: [1, 2, 3, 4, 6, 8, 12], trein: [1, 2, 3, 4, 6] };
+const OV_MODI = ["bus", "tram", "trein"];
+const OV_LABEL = { bus: "filter.ovBus", tram: "filter.ovTram", trein: "filter.ovTrein" };
 
-function afstandDrempels(kies) {
-  const gemeten = staat.ov
-    ? Object.values(staat.ov.stations).map(kies).filter((m) => typeof m === "number")
-    : [];
-  if (!gemeten.length) return [];
-  /* Alleen standen onder de verste standplaats: op of boven die afstand valt er niets weg.
-     Aflopend, zodat stand 1 de ruimste is en de laatste stand de strengste. */
-  const verste = Math.max(...gemeten);
-  return AFSTAND_LADDER.filter((m) => m < verste).reverse();
+/* Het stuk van ov.json voor deze modus: de bushalte, de tramhalte of het station, of null. */
+function ovDeel(o, modus) {
+  return o ? o[modus] || null : null;
 }
 
-/* Eén bouwer voor de twee schuiven: ze werken identiek en verschillen alleen in waar ze
-   hun afstand halen en waar ze hun tekst zetten. */
-function bouwAfstand(blokId, schuifId, drempelsVeld, grensVeld, kies, toon) {
-  staat[drempelsVeld] = afstandDrempels(kies);
-  const blok = $(blokId);
-  if (!staat[drempelsVeld].length) {
-    blok.hidden = true;
-    return;
+/* Vertrekken per uur, per richting. Een ouder ov.json zonder per_richting valt terug op de
+   helft van het totaal — dezelfde regel als in de popup. */
+function freqPerRichting(deel) {
+  return typeof deel.per_richting === "number" ? deel.per_richting : deel.per_uur / 2;
+}
+
+function ovDelen(modus) {
+  return staat.ov
+    ? Object.values(staat.ov.stations).map((o) => ovDeel(o, modus)).filter(Boolean)
+    : [];
+}
+
+/* Afstanden: alleen standen onder de verste standplaats (op of boven die afstand valt er
+   niets weg), oplopend; de schuif zet "elke afstand" er links voor. Frequenties: alleen
+   standen die iets wegfilteren, oplopend, met "elke" ervoor. */
+function ovStanden(modus) {
+  const delen = ovDelen(modus);
+  const afstanden = delen.map((d) => d.m).filter((m) => typeof m === "number");
+  const freqs = delen.map(freqPerRichting).filter((f) => typeof f === "number" && !isNaN(f));
+  const verste = afstanden.length ? Math.max(...afstanden) : 0;
+  const drukste = freqs.length ? Math.max(...freqs) : 0;
+  const rustigste = freqs.length ? Math.min(...freqs) : 0;
+  /* Een frequentiestand doet pas iets boven de rustigste halte: elke tramhalte heeft
+     minstens vier trams per uur, dus "minstens 1×" tot "minstens 4×" lieten bij de tram
+     alles staan, en de schuif leek stuk. */
+  return {
+    afstanden: AFSTAND_LADDER.filter((m) => m < verste),
+    freqs: FREQ_LADDER[modus].filter((f) => f > rustigste && f <= drukste)
+  };
+}
+
+function bouwOv() {
+  const heeftOv = OV_MODI.some((modus) => ovDelen(modus).length);
+  $("filter-ov").hidden = !heeftOv;
+  if (!heeftOv) return;
+
+  for (const modus of OV_MODI) {
+    const m = staat.ovModus[modus];
+    // Een modus zonder gegevens (een oud ov.json zonder bus of tram) toont niets.
+    $("ovmodus-" + modus).hidden = !ovDelen(modus).length;
+    Object.assign(m, ovStanden(modus));
+
+    // Afstand: stand 0, links, is "elke afstand"; stand i daarna afstanden[i - 1].
+    const afstand = $(modus + "-schuif");
+    afstand.max = String(m.afstanden.length);
+    afstand.dataset.rust = "0";
+    afstand.disabled = !m.afstanden.length;
+    afstand.addEventListener("input", () => {
+      const i = Number(afstand.value);
+      m.maxM = i === 0 ? null : m.afstanden[i - 1];
+      ovModiBijwerken();
+      toonOv();
+      teken();
+    });
+
+    // Frequentie: stand 0 is "elke", stand i daarna freqs[i - 1].
+    const freq = $(modus + "freq-schuif");
+    freq.max = String(m.freqs.length);
+    freq.dataset.rust = "0";
+    freq.disabled = !m.freqs.length;
+    freq.addEventListener("input", () => {
+      const i = Number(freq.value);
+      m.minFreq = i === 0 ? null : m.freqs[i - 1];
+      ovModiBijwerken();
+      toonOv();
+      teken();
+    });
+    wisOvModus(modus);
   }
-  blok.hidden = false;
-  const schuif = $(schuifId);
-  schuif.max = String(staat[drempelsVeld].length);
-  schuif.value = "0";
-  schuif.addEventListener("input", () => {
-    const i = Number(schuif.value);
-    staat[grensVeld] = i === 0 ? null : staat[drempelsVeld][i - 1];
-    toon();
+  $("ovbeide").addEventListener("change", (e) => {
+    staat.ovBeide = e.target.checked;
     teken();
   });
-  toon();
+  toonOv();
 }
 
-function bouwAfstanden() {
-  bouwAfstand("filter-bushalte", "bus-schuif", "busDrempels", "maxBus",
-              (o) => o.halte && o.halte.m, toonBushalte);
-  bouwAfstand("filter-station", "trein-schuif", "treinDrempels", "maxTrein",
-              (o) => o.trein && o.trein.m, toonStation);
+/* Beide schuiven van een modus terug op "alles" — elk naar zijn eigen ruststand. */
+function wisOvModus(modus) {
+  const m = staat.ovModus[modus];
+  m.maxM = null;
+  m.minFreq = null;
+  for (const id of [modus + "-schuif", modus + "freq-schuif"]) {
+    const schuif = $(id);
+    schuif.value = schuif.dataset.rust || "0";
+  }
+  ovModiBijwerken();
 }
 
-/* De stand voluit, in dezelfde woorden als de OV-regel in de popup: "hoogstens 500 meter",
-   "hoogstens 1,5 kilometer". Zo betekent hetzelfde getal op beide plaatsen hetzelfde. */
-function toonAfstandSchuif(schuifId, waardeId, grens, ariaSleutel) {
+/* Welke modi filteren: die met minstens één schuif die niet op "alles" staat. Er is geen
+   vakje meer dat dit apart bijhoudt, dus het kan ook niet uit de pas lopen. */
+function ovModiBijwerken() {
+  staat.gekozenOvModi.clear();
+  for (const modus of OV_MODI) {
+    const m = staat.ovModus[modus];
+    if (m.maxM !== null || m.minFreq !== null) staat.gekozenOvModi.add(modus);
+  }
+}
+
+/* Het groene streepje bij een ingestelde modus en de teksten bij de schuiven — ook na
+   een taalwissel. */
+function toonOv() {
+  for (const modus of OV_MODI) {
+    const m = staat.ovModus[modus];
+    $("ovmodus-" + modus).classList.toggle("is-aan", staat.gekozenOvModi.has(modus));
+    zetSchuiftekst(modus + "-schuif", modus + "-waarde", modus + ".aria",
+      m.maxM === null ? t("ov.elkeAfstand")
+                      : t("afstand.hoogstens", { afstand: ovAfstand(m.maxM) }));
+    zetSchuiftekst(modus + "freq-schuif", modus + "freq-waarde", modus + "freq.aria",
+      m.minFreq === null ? t("ov.elkeFrequentie")
+                         : t("ov.minstensFreq", { n: getal(m.minFreq) }));
+  }
+  const beide = staat.gekozenOvModi.size >= 2;
+  $("ovbeide-blok").hidden = !beide;
+  if (!beide && staat.ovBeide) {
+    staat.ovBeide = false;
+    $("ovbeide").checked = false;
+  }
+}
+
+function zetSchuiftekst(schuifId, waardeId, ariaSleutel, tekst) {
   const schuif = $(schuifId);
-  const tekst = grens === null ? t("afstand.alle")
-                               : t("afstand.hoogstens", { afstand: ovAfstand(grens) });
   $(waardeId).textContent = tekst;
   schuif.setAttribute("aria-label", t(ariaSleutel));
   schuif.setAttribute("aria-valuetext", tekst);
+  zetSchuifIn(schuif);
 }
 
-function toonBushalte() {
-  toonAfstandSchuif("bus-schuif", "bus-waarde", staat.maxBus, "bus.aria");
+/* Een schuif met zijn stand IN de balk (`schuif--in`, het OV-filter): de tekst gaat naar
+   de kant waar het bolletje niet staat, en de balk kleurt als hij iets filtert. Bij
+   elke stand opnieuw, want het bolletje schuift mee. */
+function zetSchuifIn(schuif) {
+  const vak = schuif.closest(".schuif--in");
+  if (!vak) return;
+  const max = Number(schuif.max) || 1;
+  vak.classList.toggle("duim-links", Number(schuif.value) <= max / 2);
+  vak.classList.toggle("is-gezet", schuif.value !== (schuif.dataset.rust || "0"));
 }
 
-function toonStation() {
-  toonAfstandSchuif("trein-schuif", "trein-waarde", staat.maxTrein, "trein.aria");
-}
-
-/* De gemeten afstand bij de standplaats van deze wagen, of null als ze er niet is. Een
-   standplaats zonder gemeten afstand komt door géén enkele bovengrens: we weten niet of
-   ze eraan voldoet, en een wagen tonen die misschien nergens bij een halte staat is erger
+/* Voldoet de standplaats van deze wagen aan de grenzen van deze modus? Een standplaats
+   zonder gekende halte of station voor die modus voldoet nooit: we weten niet of ze
+   eraan voldoet, en een wagen tonen die misschien nergens bij een halte staat is erger
    dan er eentje missen. */
-function haltAfstandVan(w) {
-  const o = staat.ov && staat.ov.stations[w.station_id];
-  return o && o.halte && typeof o.halte.m === "number" ? o.halte.m : null;
+function ovModusPast(w, modus) {
+  const d = ovDeel(staat.ov && staat.ov.stations[w.station_id], modus);
+  if (!d || typeof d.m !== "number") return false;
+  const m = staat.ovModus[modus];
+  if (m.maxM !== null && d.m > m.maxM) return false;
+  if (m.minFreq !== null && !(freqPerRichting(d) >= m.minFreq)) return false;
+  return true;
 }
 
-function stationAfstandVan(w) {
+function ovPast(w) {
+  if (!staat.gekozenOvModi.size) return true;
+  const modi = [...staat.gekozenOvModi];
+  return staat.ovBeide ? modi.every((modus) => ovModusPast(w, modus))
+                       : modi.some((modus) => ovModusPast(w, modus));
+}
+
+/* Voor de reden bij een grijze pin: wat deze standplaats per gekozen modus heeft,
+   "bus 0,8 km · 2× per uur". */
+function ovSamenvatting(w) {
   const o = staat.ov && staat.ov.stations[w.station_id];
-  return o && o.trein && typeof o.trein.m === "number" ? o.trein.m : null;
+  return [...staat.gekozenOvModi].map((modus) => {
+    const d = ovDeel(o, modus);
+    const naam = t(OV_LABEL[modus]);
+    if (!d || typeof d.m !== "number") return naam + ": " + t("reden.onbekend");
+    const f = freqPerRichting(d);
+    return naam + ": " + ovAfstandKort(d.m) + " · " +
+      (f >= 1 ? t("ov.keer", { n: getal(Math.round(f)) }) : t("ov.minderDanEenKeer")) +
+      " " + t("ov.perUurLabel");
+  }).join("; ");
 }
 
 /* Een wagen komt door het filter als hij aan élke aangezette groep voldoet, en binnen
@@ -1306,24 +1494,16 @@ function stationAfstandVan(w) {
    aangevinkte hebben ("met trekhaak én fietsdrager"). Er bestaat geen negatieve
    variant — op een ontbrekend toebehoren kan niet gefilterd worden. */
 function wagenPast(w) {
-  if (staat.gekozenNieuw.size && !w.nieuw) return false;
   if (staat.gekozenBrandstof.size && !staat.gekozenBrandstof.has(w.brandstof)) return false;
   if (staat.gekozenSoort.size && !staat.gekozenSoort.has(w.carrosserie)) return false;
+  if (staat.gekozenKlasse.size && !staat.gekozenKlasse.has(klasseVan(w))) return false;
   if (staat.minZit !== null && !(w.zitplaatsen >= staat.minZit)) return false;
   if (staat.gekozenBak.size && !staat.gekozenBak.has(w.versnellingsbak)) return false;
   if (staat.minNorm !== null && (w.normRang === null || w.normRang < staat.minNorm)) {
     return false;
   }
   if (staat.jaarVan !== null && !(w.bouwjaar >= staat.jaarVan)) return false;
-  // Een standplaats zonder gemeten afstand haalt geen enkele bovengrens; zie hierboven.
-  if (staat.maxBus !== null) {
-    const m = haltAfstandVan(w);
-    if (m === null || m > staat.maxBus) return false;
-  }
-  if (staat.maxTrein !== null) {
-    const m = stationAfstandVan(w);
-    if (m === null || m > staat.maxTrein) return false;
-  }
+  if (!ovPast(w)) return false;
   for (const sleutel of staat.gekozenVlaggen) {
     if (!(w.toebehoren && w.toebehoren[sleutel])) return false;
   }
@@ -1341,9 +1521,11 @@ function redenen(w) {
   const r = [];
   const onbekend = t("reden.onbekend");
   const paar = (kop, tekst) => t("reden.paar", { kop: t(kop), waarde: tekst });
-  if (staat.gekozenNieuw.size && !w.nieuw) r.push(t("reden.nietNieuw"));
   if (staat.gekozenSoort.size && !staat.gekozenSoort.has(w.carrosserie)) {
     r.push(paar("kop.soort", w.carrosserie ? waarde(w.carrosserie) : onbekend));
+  }
+  if (staat.gekozenKlasse.size && !staat.gekozenKlasse.has(klasseVan(w))) {
+    r.push(paar("kop.klasse", w.klasse || onbekend));
   }
   if (staat.minZit !== null && !(w.zitplaatsen >= staat.minZit)) {
     r.push(paar("kop.zitplaatsen", w.zitplaatsen || onbekend));
@@ -1359,18 +1541,7 @@ function redenen(w) {
     r.push(paar(TOEBEHOREN.includes(sleutel) ? "kop.toebehoren" : "kop.afspraken",
                 t("reden.nietVermeld", { vlag: vlagLabel(sleutel) })));
   }
-  if (staat.maxBus !== null) {
-    const m = haltAfstandVan(w);
-    if (m === null || m > staat.maxBus) {
-      r.push(paar("kop.bushalte", m === null ? onbekend : ovAfstand(m)));
-    }
-  }
-  if (staat.maxTrein !== null) {
-    const m = stationAfstandVan(w);
-    if (m === null || m > staat.maxTrein) {
-      r.push(paar("kop.station", m === null ? onbekend : ovAfstand(m)));
-    }
-  }
+  if (!ovPast(w)) r.push(paar("kop.ov", ovSamenvatting(w)));
   if (staat.minNorm !== null && (w.normRang === null || w.normRang < staat.minNorm)) {
     r.push(paar("kop.euronorm", w.euronorm || onbekend));
   }
@@ -1390,9 +1561,9 @@ function uitgefilterdTitel(station, naam) {
 }
 
 function herstelFilters() {
-  staat.gekozenNieuw.clear();
   staat.gekozenBrandstof.clear();
   staat.gekozenSoort.clear();
+  staat.gekozenKlasse.clear();
   staat.gekozenBak.clear();
   staat.gekozenVlaggen.clear();
   staat.minZit = null;
@@ -1404,12 +1575,10 @@ function herstelFilters() {
   staat.jaarVan = null;
   $("bouwjaar-schuif").value = "0";
   toonBouwjaar();
-  staat.maxBus = null;
-  $("bus-schuif").value = "0";
-  toonBushalte();
-  staat.maxTrein = null;
-  $("trein-schuif").value = "0";
-  toonStation();
+  for (const modus of OV_MODI) wisOvModus(modus);
+  staat.ovBeide = false;
+  $("ovbeide").checked = false;
+  toonOv();
   document.querySelectorAll('.keuze input[type="checkbox"]').forEach((v) => { v.checked = false; });
   teken();
 }
@@ -1417,10 +1586,42 @@ function herstelFilters() {
 /* ==========================================================================
    tekenen
    ========================================================================== */
-function popupHtml(station) {
-  /* Bewust álle wagens van de standplaats tonen, ook als er maar één door het filter
-     komt: elke wagen draagt zijn eigen brandstof en toebehoren, dus verwarring is niet
-     mogelijk, en de bezoeker ziet wat er écht staat. */
+/* Welke wagens een popup toont. Standaard één: de wagen waarop geklikt is (in de balk of
+   na een zoekopdracht), of bij een klik op de stip de eerste die door de filters komt.
+   Wie op één auto klikt, verwacht één auto; de andere wagens op dezelfde plek staan
+   onderaan als knop (ookHierHtml()). Met "samen tonen" in de instellingen staan ze er
+   allemaal, ook de wagens die door het filter zijn afgevallen: elke wagen draagt zijn
+   eigen gegevens, dus verwarring is niet mogelijk. */
+function popupWagens(station, wagen) {
+  if (staat.samenTonen || station.wagens.length === 1) return station.wagens;
+  return [wagen || station.wagens.find(wagenPast) || station.wagens[0]];
+}
+
+/* De andere wagens op dezelfde standplaats, als knoppen: één klik zet die wagen in de
+   popup (wisselWagen()). De knop draagt de standplaats en de plaats van de wagen erin,
+   want de popup is HTML-tekst en kan geen verwijzing naar een object meekrijgen. */
+function ookHierHtml(station, getoond) {
+  const andere = station.wagens.filter((w) => !getoond.includes(w));
+  if (!andere.length) return "";
+  return '<p class="popup__ook">' + ontsnap(t("popup.ookHier")) + " " +
+         andere.map((w) =>
+           '<button type="button" class="ook-knop" data-station="' +
+             ontsnap(station.station_id) + '" data-wagen="' + station.wagens.indexOf(w) + '">' +
+             ontsnap(w.naam) + "</button>").join(" ") +
+         "</p>";
+}
+
+/* Het district zoals de bezoeker het leest. Een paar lokale groepen dragen in de brondata
+   de naam van de organisatie ervoor ("Dégage - Dampoort", "Dégage Antwerpen"); op een
+   kaart van Dégage zegt dat niets, en het leest als een plaatsnaam die het niet is. De
+   feed blijft de naam uit de bron dragen: daar hangt het contactadres aan
+   (scripts/districten.json). */
+function districtNaam(district) {
+  return district ? district.replace(/^\s*d[ée]gage\b\s*[-–—:]?\s*/i, "").trim() : "";
+}
+
+function popupHtml(station, wagen) {
+  const wagens = popupWagens(station, wagen);
   /* De plaatsnaam komt per wagen uit zijn eigen adresrij, en op een gedeelde standplaats
      kunnen die verschillen terwijl het fysiek hetzelfde punt is: "Ledeberg" naast "Gent",
      "Vinderhoute" naast "Lievegem" (de fusiegemeente). Beide zijn
@@ -1429,9 +1630,9 @@ function popupHtml(station) {
   /* Sinds de gemeente per wagen tussen haakjes achter de naam staat, draagt elke wagen
      gewoon zijn eigen schrijfwijze. Hier is ze alleen nog nodig om te beslissen of het
      district iets toevoegt (zie onderaan). */
-  const plaats = [...new Set(station.wagens.map((w) => w.plaats))].join(" / ");
+  const plaats = [...new Set(wagens.map((w) => w.plaats))].join(" / ");
 
-  const blokken = station.wagens.map((w) => {
+  const blokken = wagens.map((w) => {
     /* Elk feit met zijn eigen pictogram. Het woord blijft er altijd bij staan: een
        pictogram alleen is een raadsel, en voor een schermlezer bestaat het niet. */
     /* Het soort voertuig staat hier niet meer: het model zegt het al. Het bouwjaar staat
@@ -1443,6 +1644,8 @@ function popupHtml(station) {
       feiten.push(feit(stroom ? "i-stroom" : "i-brandstof", waarde(w.brandstof), false, stroom));
     }
     if (w.versnellingsbak) feiten.push(feit("i-bak", waarde(w.versnellingsbak)));
+    // Een nieuwe auto uit de live vloot kent zijn klasse nog niet; dan zwijgen we erover.
+    if (w.klasse) feiten.push(feit("i-klasse", klasseLabel(w.klasse)));
     // Ontbreekt de euronorm, dan zwijgen we erover — "onbekend" is geen feit om te tonen.
     if (w.euronorm) feiten.push(feit("i-norm", w.euronorm));
 
@@ -1514,47 +1717,52 @@ function popupHtml(station) {
   /* Het district alleen tonen als het iets toevoegt: bij "Sint-Niklaas" in "9100
      Sint-Niklaas" is het dubbelop, bij "Gent - Brugse Poort" niet. Het krijgt een eigen
      regel onder de gemeente; naast het adres gezet leest het als een tweede plaatsnaam. */
-  const districten = [...new Set(station.wagens.map((w) => w.district).filter(Boolean))]
-    .filter((d) => !plaats.toLowerCase().includes(d.toLowerCase()));
+  /* De test op "dubbelop" gebeurt op de naam uit de bron, en pas daarna valt "Dégage"
+     weg (districtNaam()). Omgekeerd verdween "Dégage Antwerpen" bij een auto in Antwerpen
+     helemaal, in plaats van "Antwerpen" te worden. */
+  const districten = [...new Set(wagens.map((w) => w.district).filter(Boolean))]
+    .filter((d) => !plaats.toLowerCase().includes(d.toLowerCase()))
+    .map(districtNaam);
+
+  /* De gemeente staat bij elke wagen in de kop; onderaan alleen nog het district, en dat
+     alleen als het iets zegt wat de gemeente niet al zegt. Het staat in de voetregel van
+     het OV-blok, links naast de Mobiscore: allebei gaan ze over de plek. Zonder
+     OV-gegevens krijgt het een eigen regel. */
+  const district = districten.length
+    ? '<span class="plek">' + pictogram("i-plaats") + ontsnap(districten.join(" / ")) + "</span>"
+    : "";
+  const ov = ovHtml(station, district);
 
   return '<div class="popup">' +
            blokken +
-           ovHtml(station) +
-           /* De gemeente staat bij elke wagen in de kop; onderaan alleen nog het district,
-              en dat alleen als het iets zegt wat de gemeente niet al zegt. */
-           (districten.length
-             ? '<p class="popup__voet">' + pictogram("i-plaats") +
-                 ontsnap(districten.join(" / ")) +
-               "</p>"
-             : "") +
+           ookHierHtml(station, wagens) +
+           (ov || (district ? '<p class="popup__voet">' + district + "</p>" : "")) +
            /* Wie een wagen ziet staan die hem bevalt, wil weten wat het kost en hoe het
               werkt. Het contactadres van de lokale groep stond hier vroeger; de tarieven en
               de FAQ brengen een bezoeker sneller tot lid worden. */
            lidWordenHtml() +
-           /* De stip staat met opzet niet precies op de standplaats: dat zou de voordeur
-              van de eigenaar aanwijzen. Dat hoort de bezoeker te weten op de plek waar
-              hij naar de locatie kijkt, en niet alleen in een document dat hij nooit
-              leest. */
-           (locatieVaagheid
-             ? '<p class="popup__voet popup__voet--vaag">' +
-                 ontsnap(t("popup.locatieVaag")) +
-               "</p>"
-             : "") +
+           /* Dat de stip met opzet niet precies op de standplaats staat, zegt het
+              voorbehoud bij het openen (toonVoorbehoudLocatie()), niet elke popup. */
          "</div>";
 }
 
-/* De zin met twee links. De vertaling draagt {tarieven} en {faq} als plaatshouders, zodat
-   elke taal de links zelf in de zin kan zetten; de linkteksten worden apart vertaald. */
+/* De oproep om lid te worden: het enige in de popup dat iets van de bezoeker vraagt, dus
+   het enige dat mag opvallen. Een groen kader met de vraag vetgedrukt, en de tarieven en
+   de FAQ als twee knoppen in plaats van links in een zin: een knop zegt "hier klikken".
+   Allebei in hetzelfde ontwerp. */
 function lidWordenHtml() {
   const link = (url, sleutel) =>
-    '<a href="' + url + '" target="_blank" rel="noopener">' + ontsnap(t(sleutel)) + "</a>";
+    '<a class="lid__knop" href="' + url + '" target="_blank" rel="noopener">' +
+      ontsnap(t(sleutel)) + "</a>";
   const links = {
     tarieven: link("https://www.degage.be/de-prijzen/", "popup.tarieven"),
     faq: link("https://app.deeljeauto.be/app/faq", "popup.faq"),
   };
-  return '<p class="popup__voet popup__voet--lid">' +
-           ontsnap(t("popup.lidWorden")).replace(/\{(tarieven|faq)\}/g, (_, naam) => links[naam]) +
-         "</p>";
+  return '<div class="lid">' +
+           '<p class="lid__tekst"><strong>' + ontsnap(t("popup.lidVraag")) + "</strong> " +
+             ontsnap(t("popup.lidOproep")) + "</p>" +
+           '<p class="lid__knoppen">' + links.tarieven + links.faq + "</p>" +
+         "</div>";
 }
 
 /* Het bereik van één wagen: eerst per merk+model+bouwjaar (zo rekent haal_bereik.py), dan
@@ -1587,7 +1795,39 @@ function uitlegTekst(id, html) {
   return '<p class="uitleg" id="' + id + '" hidden>' + html + "</p>";
 }
 
+/* Een popup krijgt nooit een scrollbalk. Is hij hoger dan de vrije ruimte (`pasHoogte`
+   uit popupRanden()) — een standplaats met drie wagens, of een laag venster — dan zoomt
+   zijn inhoud evenredig uit tot hij past. `zoom` en geen `transform: scale`: met zoom
+   rekent de browser de opmaak echt kleiner uit, zodat Leaflet de juiste maat meet en de
+   punt onder de popup op de stip blijft. Nooit kleiner dan MIN_ZOOM; daaronder is de
+   tekst niet meer te lezen, en dan is een popup die even buiten beeld valt het mindere
+   kwaad. Ook na het openklappen van een uitleg, want dan groeit hij. */
+const MIN_ZOOM = 0.6;
+
+function pasPopupIn(popup) {
+  const el = popup.getElement();
+  const inhoud = el && el.querySelector(".leaflet-popup-content");
+  const ruimte = popup.options.pasHoogte;
+  if (!inhoud || !ruimte) return;
+  inhoud.style.zoom = "";
+  /* De kaders en de marge rond de inhoud tellen mee: zij zijn het verschil tussen de
+     hoogte van het hele popupvak en die van de inhoud. */
+  const vak = el.querySelector(".leaflet-popup-content-wrapper").offsetHeight;
+  const rand = vak - inhoud.offsetHeight;
+  if (vak > ruimte) {
+    inhoud.style.zoom = String(Math.max(MIN_ZOOM, (ruimte - rand) / inhoud.offsetHeight));
+  }
+  /* Interne methodes van Leaflet, zie de uitlegknop hieronder: opnieuw uitmeten en
+     bijschuiven zonder de inhoud opnieuw neer te zetten. */
+  if (popup._updateLayout && popup._updatePosition) {
+    popup._updateLayout();
+    popup._updatePosition();
+    if (popup._adjustPan) popup._adjustPan();
+  }
+}
+
 kaart.on("popupopen", (e) => {
+  pasPopupIn(e.popup);
   /* Op een telefoon staat de meldknop linksonder over de kaart, en hij ligt hoger dan de
      popuplaag van Leaflet: een popup die eroverheen valt, zou er een groene pil middenin
      krijgen. popupRanden() houdt daarom geen plaats voor hem vrij (de popup mag daar
@@ -1621,6 +1861,11 @@ kaart.on("popupopen", (e) => {
   if (el.dataset.uitleg) return;
   el.dataset.uitleg = "1";
   el.addEventListener("click", (klik) => {
+    const ander = klik.target.closest(".ook-knop");
+    /* Niet verder laten gaan: Leaflet beslist pas bij de kaart of een klik binnen een
+       popup viel, door vanaf de knop omhoog te lopen. Die knop is dan al vervangen en
+       hangt nergens meer, dus Leaflet zag een klik op de kaart en sloot de popup. */
+    if (ander) { klik.stopPropagation(); wisselWagen(e.popup, ander); return; }
     const knop = klik.target.closest(".uitleg-knop");
     if (!knop) return;
     const doel = el.querySelector("#" + knop.getAttribute("aria-controls"));
@@ -1632,20 +1877,33 @@ kaart.on("popupopen", (e) => {
        en dan klapt de uitleg meteen weer dicht (bij een markerpopup krijgen de knoppen
        zelfs nieuwe id's). Dit zijn interne methodes van Leaflet — ze bestaan in de
        gepinde 1.9.4; wie Leaflet opwaardeert, test dit knopje opnieuw. */
-    const p = e.popup;
-    if (p._updateLayout && p._updatePosition) {
-      p._updateLayout();
-      p._updatePosition();
-      if (p._adjustPan) p._adjustPan();
-    }
+    pasPopupIn(e.popup);
   });
 });
 
+/* Een andere wagen van dezelfde standplaats in de open popup zetten (zie ookHierHtml()).
+   setContent() en niet een nieuwe popup: de kaart blijft staan, en de popup ook. De
+   focus gaat naar de eerste knop in de nieuwe inhoud — de wagen van daarnet — zodat wie
+   met het toetsenbord werkt niet terug bij het begin van de pagina belandt. */
+function wisselWagen(popup, knop) {
+  const station = staat.stations.find((s) => s.station_id === knop.dataset.station);
+  const wagen = station && station.wagens[Number(knop.dataset.wagen)];
+  if (!wagen) return;
+  if (popup === balkPopup) balkPopupWagen = wagen;
+  popup.setContent(popupHtml(station, wagen));
+  pasPopupIn(popup);
+  const terug = popup.getElement() && popup.getElement().querySelector(".ook-knop");
+  if (terug) terug.focus({ preventScroll: true });
+}
+
 /* Het openbaar vervoer bij een standplaats (scripts/haal_ov.py).
 
-   Wat een bezoeker wil weten, is hoe ver het stappen is: de dichtste halte met vaste
-   lijnen en het dichtste station, elk op een eigen regel met de afstand groot rechts —
-   dat getal lees je eerst. Hoe vaak er iets vertrekt, staat klein onder de naam.
+   Wat een bezoeker wil weten, is hoe ver het stappen is en hoe vaak er iets vertrekt: de
+   dichtste bushalte, de dichtste tramhalte en het dichtste station, elk op een eigen regel
+   met een groot pictogram, de frequentie groot ernaast en de afstand rechts. Dezelfde drie
+   als in het filter, met dezelfde getallen. De naam van de halte
+   staat niet in de tekst maar in de alt-tekst van het pictogram (en als tooltip): zo blijft
+   de popup rustig, en een schermlezer leest hem toch voor.
 
    De Mobiscore van de Vlaamse overheid staat er nog, maar klein onderaan: hij gaat ook
    over winkels, scholen en zorg, en zegt dus minder over "kan ik hier met de bus
@@ -1670,50 +1928,63 @@ function ovAfstandKort(m) {
     { minimumFractionDigits: 1, maximumFractionDigits: 1 }) });
 }
 
-function ovHtml(station) {
+function ovHtml(station, district) {
   const ov = staat.ov && staat.ov.stations[station.station_id];
   if (!ov) return "";
 
-  /* Eén regel per halte of station, met wat het is als kop en de naam eronder:
-         [bus]    Bushalte                   0,5 km
-                  Zevergem Zevergemdorp · 5/u
-         [trein]  Treinstation               1,5 km
-                  Melsele · 2/u
-     De soort voorop, want die lees je eerst: is hier een bus, is hier een trein. De naam
-     zegt daarna wáár je opstapt. Een ov.json zonder halte-naam toont alleen de frequentie.
+  /* Eén regel per halte of station:
+         [BUS]    6× per uur        0,1 km
+         [TRAM]   8× per uur        0,6 km
+         [TREIN]  3× per uur        1,6 km
+     Het pictogram zegt wat het is; zijn alt-tekst (en tooltip) zegt welke halte:
+     "Bushalte: Pasbrug". Een ov.json zonder halte-naam geeft alleen de soort.
 
      De frequentie is per richting, niet beide richtingen samen: wie aan de halte staat,
      wacht op de bus naar één kant. Een ouder ov.json zonder per_richting valt terug op de
-     helft. Minder dan één vertrek per uur heet "<1/u", niet "0/u". Dat het per richting
+     helft. Minder dan één vertrek per uur heet "<1×", niet "0×". Dat het per richting
      is, zegt de uitleg achter de ⓘ. */
-  const perUur = (pr) => (pr >= 1 ? t("ov.perUur", { n: getal(Math.round(pr)) })
-                                  : t("ov.minderDanEen"));
-  const rij = (icoon, wat, onder, m) =>
-    '<li class="ov__rij">' + pictogram(icoon) +
-      '<span class="ov__wat">' + ontsnap(wat) +
-        (onder ? '<span class="ov__naam">' + ontsnap(onder) + "</span>" : "") + "</span>" +
+  const icoonMetAlt = (icoon, alt) =>
+    '<span class="ov__icoon" role="img" aria-label="' + ontsnap(alt) + '" title="' +
+      ontsnap(alt) + '">' + pictogram(icoon) + "</span>";
+  const frequentie = (pr) =>
+    '<span class="ov__freq"><strong>' +
+      ontsnap(pr >= 1 ? t("ov.keer", { n: getal(Math.round(pr)) }) : t("ov.minderDanEenKeer")) +
+      "</strong> " + ontsnap(t("ov.perUurLabel")) + "</span>";
+  const rij = (icoon, alt, midden, m) =>
+    '<li class="ov__rij">' + icoonMetAlt(icoon, alt) + midden +
       (m !== undefined ? '<span class="ov__afstand">' + ontsnap(ovAfstandKort(m)) + "</span>" : "") +
     "</li>";
-  const naamEnFreq = (naam, freq) => (naam ? naam + " · " + freq : freq);
+  const alt = (soort, naam) => (naam ? t("reden.paar", { kop: soort, waarde: naam }) : soort);
+
+  /* `halte_ver` is de straal waarbinnen `haal_ov.py` doorzoekt; `halte_zoek` is de oudere,
+     kleinere naam en blijft als terugval staan voor een ov.json van vóór die verruiming. */
+  const straal = ovAfstand(staat.ov.stralen_m.halte_ver || staat.ov.stralen_m.halte_zoek);
+  const geen = (icoon, soort, sleutel) =>
+    rij(icoon, soort, '<span class="ov__geen">' + ontsnap(t(sleutel, { straal })) + "</span>");
+  const halte = (icoon, soort, h) =>
+    rij(icoon, alt(soort, h.naam), frequentie(freqPerRichting(h)), h.m);
 
   const rijen = [];
-  if (ov.halte) {
-    const h = ov.halte;
-    const pr = typeof h.per_richting === "number" ? h.per_richting : h.per_uur / 2;
-    rijen.push(rij("i-ov", t(h.tram ? "ov.tramhalte" : "ov.bushalte"),
-                   naamEnFreq(h.naam, perUur(pr)), h.m));
+  if (ovDelen("bus").length || ovDelen("tram").length) {
+    /* Bus en tram elk apart (haal_ov.py sinds 08-10-2026). Een tramhalte ontbreekt buiten
+       Gent, Antwerpen en de kust; dat staat er dan, zoals bij een ontbrekende bushalte. */
+    rijen.push(ov.bus ? halte("i-ov", t("ov.bushalte"), ov.bus)
+                      : geen("i-ov", t("ov.bushalte"), "ov.geenBushalte"));
+    rijen.push(ov.tram ? halte("i-tram", t("ov.tramhalte"), ov.tram)
+                       : geen("i-tram", t("ov.tramhalte"), "ov.geenTramhalte"));
+  } else if (ov.halte) {
+    // Een ov.json van daarvoor: één gemengde halte, bus of tram.
+    rijen.push(halte(ov.halte.tram ? "i-tram" : "i-ov",
+                     t(ov.halte.tram ? "ov.tramhalte" : "ov.bushalte"), ov.halte));
   } else {
-    /* `halte_ver` is de straal waarbinnen `haal_ov.py` doorzoekt; `halte_zoek` is de oudere,
-       kleinere naam en blijft als terugval staan voor een ov.json van vóór die verruiming. */
-    const straal = staat.ov.stralen_m.halte_ver || staat.ov.stralen_m.halte_zoek;
-    rijen.push(rij("i-ov", t("ov.geenHalte", { straal: ovAfstand(straal) })));
+    rijen.push(geen("i-ov", t("ov.bushalte"), "ov.geenHalte"));
   }
   if (ov.trein) {
     const naam = ov.trein.naam[taal] || ov.trein.naam.nl || ov.trein.naam.fr;
     // Per richting: alle treinen van het station gedeeld door twee — zie haal_ov.py.
     const pr = typeof ov.trein.per_richting === "number" ? ov.trein.per_richting
                                                           : ov.trein.per_uur / 2;
-    rijen.push(rij("i-trein", t("ov.station"), naamEnFreq(naam, perUur(pr)), ov.trein.m));
+    rijen.push(rij("i-trein", alt(t("ov.station"), naam), frequentie(pr), ov.trein.m));
   }
 
   const score = typeof ov.mobiscore === "number"
@@ -1724,7 +1995,12 @@ function ovHtml(station) {
   const id = nieuweUitlegId();
   return '<div class="ov">' +
            '<ul class="ov__lijst">' + rijen.join("") + "</ul>" +
-           '<p class="ov__voet">' + ontsnap(t("ov.titel")) + " " + score + uitlegKnop(id) + "</p>" +
+           /* De voetregel: het district links, de Mobiscore rechts. Op een breed scherm
+              staan ze zo onder de haltes en het station, maar het is één regel over de
+              plek: de Mobiscore is geen score van het station. */
+           '<p class="ov__voet">' + (district || "") +
+             '<span class="ov__score">' + ontsnap(t("ov.titel")) + " " + score +
+               uitlegKnop(id) + "</span></p>" +
            uitlegTekst(id, ontsnap(t("ov.bron"))) +
          "</div>";
 }
@@ -1813,7 +2089,13 @@ function teken() {
        ingeklapt zijn en de balk open of dicht. Deze afhandelaar wordt met opzet vóór
        `bindPopup` geregistreerd: Leaflet roept ze in volgorde van registratie aan, dus
        zo staan de nieuwe randen er al voor de popup opengaat. */
-    marker.on("click", () => Object.assign(marker.getPopup().options, popupRanden()));
+    /* En de inhoud gaat terug naar de functie hieronder: wisselWagen() kan ze vervangen
+       hebben door de tekst van een andere wagen op deze plek. */
+    marker.on("click", () => {
+      const popup = marker.getPopup();
+      Object.assign(popup.options, popupRanden());
+      popup.setContent(() => popupHtml(station));
+    });
     marker.bindPopup(() => popupHtml(station), { closeButton: true });
 
     /* De naam naast de pin, zichtbaar vanaf NAAM_ZOOM (de opmaak beslist, zie
@@ -1836,13 +2118,12 @@ function teken() {
   toonNamen();
 
   const gefilterd = staat.gekozenBrandstof.size + staat.gekozenSoort.size +
-                    staat.gekozenNieuw.size +
+                    staat.gekozenKlasse.size +
                     staat.gekozenBak.size + staat.gekozenVlaggen.size +
                     (staat.minZit !== null ? 1 : 0) +
                     (staat.minNorm !== null ? 1 : 0) +
                     (bouwjaarFiltert() ? 1 : 0) +
-                    (staat.maxBus !== null ? 1 : 0) +
-                    (staat.maxTrein !== null ? 1 : 0);
+                    staat.gekozenOvModi.size;
   /* Niets gefilterd, niets te wissen: dan is de knop alleen maar ruis. `hidden` maakt hem
      hier onzichtbaar maar laat zijn plaats staan (zie `.herstel-knop` in de opmaak), zodat
      de tellerregel niet verspringt bij de eerste filter. */
@@ -2017,6 +2298,11 @@ function zetFilters(open) {
      geeft een andere hoogte, dus meteen opnieuw meten. */
   $("paneel").classList.toggle("toont-filters", open);
   meetDichtbij();
+  /* Wie de filters opent, is aan de slag en heeft het voorbehoud niet meer nodig. Op een
+     telefoon lag het bovendien over de open filters heen. Hier en niet bij elke oproeper:
+     de filters gaan open via het zoekveld, typen en het terughalen van het paneel. Ze
+     gaan nooit vanzelf open bij het laden, dus het voorbehoud staat er altijd eerst. */
+  if (open) sluitVoorbehoud();
 }
 
 $("zoekveld").addEventListener("focus", () => zetFilters(true));
@@ -2206,13 +2492,18 @@ function werkKoppenBij() {
   for (const sectie of filterSecties()) {
     const kop = kopVan(sectie);
     if (!kop) continue;
-    let n = 0;
+    /* Chips tellen per aangevinkte keuze, schuiven per schuif die niet op "alles" staat.
+       In het OV-filter zijn dat er hoogstens zes: per modus een afstand en een frequentie. */
+    let chips = 0, schuiven = 0;
     for (const bereik of [sectie, optiesVan.get(sectie)]) {
       if (!bereik) continue;
-      n += bereik.querySelectorAll(".keuze input:checked").length;
-      const schuif = bereik.querySelector('input[type="range"]');
-      if (schuif && schuif.value !== "0") n += 1;
+      chips += bereik.querySelectorAll(".keuze input:checked").length;
+      for (const schuif of bereik.querySelectorAll('input[type="range"]')) {
+        // `data-rust` is de stand die niets filtert; zonder dat attribuut is dat het begin.
+        if (schuif.value !== (schuif.dataset.rust || "0")) schuiven += 1;
+      }
     }
+    const n = chips || schuiven;
     if (n > 0) kop.dataset.aantal = String(n);
     else delete kop.dataset.aantal;
   }
@@ -2223,15 +2514,16 @@ smalScherm.addEventListener("change", plaatsOpties);
 new ResizeObserver(plaatsOptieVak).observe($("paneel"));
 window.addEventListener("resize", plaatsOptieVak);
 
-/* De twee filterschakelaars ("grijs tonen", "sluiten bij scrollen") verhuizen op een
-   telefoon naar het instellingendoosje achter het tandwiel. Daar is de filterlijst
-   krap, en het zijn keuzes die je één keer zet. Op een breed scherm staan ze bovenaan
-   de filters, waar ze bij het filteren meteen bij de hand zijn.
+/* De filterschakelaar "sluiten bij scrollen" verhuist op een telefoon naar het
+   instellingendoosje achter het tandwiel. Daar is de filterlijst krap, en het is een
+   keuze die je één keer zet. Op een breed scherm staat hij bovenaan de filters, waar hij
+   bij het filteren meteen bij de hand is. ("Grijs tonen" staat altijd achter het
+   tandwiel.)
 
    Echt verplaatsen, niet dupliceren: de luisteraars hangen aan de vakjes zelf, dus ze
    blijven werken, en er is maar één vakje om bij te houden. */
 function plaatsFilterschakels() {
-  const schakels = [$("knop-grijs"), $("knop-scrollsluit")].map((v) => v.closest(".schakel"));
+  const schakels = [$("knop-scrollsluit")].map((v) => v.closest(".schakel"));
   if (smalScherm.matches) {
     const taal = $("taalkeuze").closest(".schakel");
     for (const s of schakels) taal.parentNode.insertBefore(s, taal);
@@ -2339,6 +2631,14 @@ $("knop-dichtbij").addEventListener("change", (e) => {
     return;
   }
   verversDichtbij();
+});
+
+/* Alle wagens van een standplaats in één popup, of elk apart (standaard; zie
+   popupWagens()). Een openstaande popup gaat dicht: hij draagt afgewerkte tekst volgens
+   de oude keuze. */
+$("knop-samen").addEventListener("change", (e) => {
+  staat.samenTonen = e.target.checked;
+  kaart.closePopup();
 });
 
 // Zie sluitFiltersBijScrollen() hierboven.
@@ -2713,10 +3013,11 @@ let dichtbijRijen = [];
    opschrijven, ook als ze uit een zoekopdracht van vijf minuten geleden komt. */
 let dichtbijTitel = TITEL_DICHTBIJ;
 let dichtbijLeeg = () => "";
-// De popup die vanuit de balk geopend is, en bij welke standplaats hij hoort: samen
-// laten ze een tweede klik op hetzelfde kaartje de popup weer sluiten.
+// De popup die vanuit de balk geopend is, en bij welke standplaats en wagen hij hoort:
+// samen laten ze een tweede klik op hetzelfde kaartje de popup weer sluiten.
 let balkPopup = null;
 let balkPopupStation = null;
+let balkPopupWagen = null;
 
 /* De muis, bewaard als punt IN HET KAARTVENSTER en niet als coördinaat: zo blijft hij
    ook na pannen of zoomen wijzen waar de cursor werkelijk staat. Blijft null zolang er
@@ -2922,9 +3223,10 @@ function popupRanden() {
     maxWidth: mobiel ? 300 : 540,
     autoPanPaddingTopLeft: L.point(o.links + RAND, boven),
     autoPanPaddingBottomRight: L.point(o.rechts + RAND, onder),
-    /* Nooit hoger dan wat er is: Leaflet laat de inhoud dan binnen de popup scrollen in
-       plaats van hem af te snijden. */
-    maxHeight: Math.max(KRAP, Math.round(vrij))
+    /* Bewust GEEN maxHeight: daarmee laat Leaflet de inhoud binnen de popup scrollen, en
+       een scrollbalk in een popup willen we nooit. Wat er is, geven we mee onder een
+       eigen naam; past de popup daar niet in, dan zoomt pasPopupIn() hem uit. */
+    pasHoogte: Math.max(KRAP, Math.round(vrij))
   };
 }
 
@@ -3062,7 +3364,8 @@ function toonLijst(rijen, titelFn, legeFn) {
          schakelaar in plaats van een eenrichtingsknop — anders moet je het kruisje in de
          popup zoeken terwijl je cursor al op het kaartje staat. `hasLayer` vangt op dat
          de bezoeker de popup intussen zelf gesloten kan hebben. */
-      if (balkPopup && balkPopupStation === r.station) {
+      if (balkPopup && balkPopupStation === r.station &&
+          (staat.samenTonen || balkPopupWagen === r.wagen)) {
         kaart.closePopup(balkPopup);   // `popupclose` zet balkPopup weer op null
         return;
       }
@@ -3072,9 +3375,10 @@ function toonLijst(rijen, titelFn, legeFn) {
          je er net op geklikt hebt. Zodra `balkPopup` bestaat, staat de lijst stil. */
       const punt = L.latLng(r.station.lat, r.station.lon);
       balkPopupStation = r.station;
+      balkPopupWagen = r.wagen;
       balkPopup = L.popup(Object.assign({ closeButton: true }, popupRanden()))
         .setLatLng(punt)
-        .setContent(popupHtml(r.station));
+        .setContent(popupHtml(r.station, r.wagen));
       centreerVrij(punt, Math.max(kaart.getZoom(), 15));
       balkPopup.openOn(kaart);
     });
@@ -3180,7 +3484,7 @@ kaart.on("popupclose", (e) => {
     document.body.classList.remove("popup-over-balk");
     meetDichtbij();
   }
-  if (e.popup === balkPopup) { balkPopup = null; balkPopupStation = null; }
+  if (e.popup === balkPopup) { balkPopup = null; balkPopupStation = null; balkPopupWagen = null; }
 });
 kaart.on("zoomend", bijwerkenAutoDichtbij);
 // Alleen bijwerken tijdens pannen als de balk al door het inzoomen openstaat — anders
@@ -3320,7 +3624,7 @@ $("zoekform").addEventListener("submit", async (e) => {
       const s = treffers[0].station;
       centreerVrij(L.latLng(s.lat, s.lon), Math.max(kaart.getZoom(), 15));
       L.popup(Object.assign({ closeButton: true }, popupRanden()))
-        .setLatLng([s.lat, s.lon]).setContent(popupHtml(s)).openOn(kaart);
+        .setLatLng([s.lat, s.lon]).setContent(popupHtml(s, treffers[0].wagen)).openOn(kaart);
     } else {
       // Meerdere: alles in beeld brengen in plaats van er één te kiezen.
       kaart.fitBounds(L.latLngBounds(getoond.map((r) => [r.station.lat, r.station.lon])),
@@ -3551,9 +3855,9 @@ function pasTaalToe(nieuw) {
     toonZitplaatsen();
     toonEuronorm();
     toonBouwjaar();
-    toonBushalte();
-    toonStation();
+    toonOv();
     toonDatum();
+    toonVoorbehoudLocatie();
     teken();          // telling, markerbeschrijvingen en de automatische balk
   }
 

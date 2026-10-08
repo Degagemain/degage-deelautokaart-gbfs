@@ -9,3 +9,12 @@ CREATE TABLE IF NOT EXISTS contact (
   aangemaakt    TEXT NOT NULL,           -- ISO 8601, UTC
   gecontroleerd TEXT NOT NULL DEFAULT '' -- wanneer de opruimtaak het issue laatst bekeek
 );
+
+-- Instellingen van de kaart die een beheerder op /beheer wijzigt (instellingen.js).
+-- Opnieuw uitvoeren van dit bestand is veilig: bestaande tabellen blijven staan.
+CREATE TABLE IF NOT EXISTS instellingen (
+  sleutel   TEXT PRIMARY KEY,           -- bv. "verborgen_filters"
+  waarde    TEXT NOT NULL,              -- JSON
+  gewijzigd TEXT NOT NULL,              -- ISO 8601, UTC
+  door      TEXT NOT NULL               -- de GitHub-gebruikersnaam van wie het wijzigde
+);

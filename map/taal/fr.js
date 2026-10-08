@@ -29,7 +29,7 @@
   locale: "fr-BE",
 
   teksten: {
-    "app.titel": "Véhicules de Dégage",
+    "app.titel": "Carte des voitures partagées Dégage",
     "app.kaartLabel": "Carte des véhicules de Dégage",
 
     "voorbehoud.titel": "Bon à savoir",
@@ -43,6 +43,9 @@
                          "abonnement.",
     "voorbehoud.fotos": "<strong>Les photos sont des photos d'exemple</strong> du modèle, " +
                         "pas de la voiture elle-même.",
+    "voorbehoud.locatie": "<strong>Les positions sont approximatives</strong>, pour " +
+                          "des raisons de confidentialité : chaque point est décalé " +
+                          "de {m} mètres par rapport à l'emplacement réel.",
 
     "zoek.plaatshouder": "Nom de voiture, adresse ou commune…",
     "zoek.aria": "Rechercher un nom de voiture, une adresse ou une commune ; cliquer " +
@@ -87,9 +90,12 @@
     "filters.grijs": "Afficher en gris les voitures filtrées",
     "filters.scrollSluit": "Fermer les filtres en faisant défiler la carte",
     "filters.sluiten": "Fermer les filtres",
-    "kop.nieuw": "Nouveau dans la flotte",
-    "filter.nieuw": "Nouvelles voitures, sans détails pour l'instant",
     "kop.soort": "Type de véhicule",
+    "kop.klasse": "Catégorie de prix",
+    "filter.klasse": "Catégorie {klasse}",
+    "filter.klasseOnbekend": "Catégorie inconnue",
+    "klasse.uitleg": "Chaque voiture roule au prix kilométrique de sa catégorie de " +
+                     "prix. La catégorie B coûte plus cher au kilomètre que la catégorie A.",
     "kop.zitplaatsen": "Places assises",
     "kop.brandstof": "Carburant",
     "kop.bak": "Boîte de vitesses",
@@ -97,20 +103,27 @@
     "kop.afspraken": "Conditions",
     "kop.euronorm": "Norme Euro",
     "kop.bouwjaar": "Année de construction",
-    "kop.bushalte": "Distance d'un arrêt de bus",
-    "kop.station": "Distance d'une gare de train",
-    "bushalte.uitleg": "La distance à vol d'oiseau entre l'emplacement et l'arrêt de bus ou de " +
-                       "tram desservi par des lignes régulières le plus proche. Chaque position " +
-                       "affiche cette distance et toutes celles en dessous. À pied, le trajet " +
-                       "est toujours un peu plus long.",
-    "station.uitleg": "La distance à vol d'oiseau entre l'emplacement et la gare la plus " +
-                      "proche. Chaque position affiche cette distance et toutes celles en " +
-                      "dessous. On rejoint une gare à vélo ou en voiture ; l'échelle va donc " +
-                      "plus loin que celle d'un arrêt.",
-    "afstand.alle": "tous les emplacements",
+    "kop.ov": "Transports en commun",
+    "filter.ovBus": "Bus",
+    "filter.ovTram": "Tram",
+    "filter.ovTrein": "Train",
+    "filter.ovBeide": "Satisfaire à tous les modes réglés",
+    "ov.filterUitleg": "Réglez une distance ou une fréquence pour le bus, le tram ou le train ; un curseur " +
+                       "sur « toute » ne filtre rien. La distance est mesurée à vol d'oiseau, de " +
+                       "l'emplacement à l'arrêt ou à la gare le plus proche ; à pied, le trajet est un peu " +
+                       "plus long. La fréquence est le nombre de départs par heure et par sens, un jour de " +
+                       "semaine ordinaire. Si vous en réglez plusieurs, un seul suffit, sauf si « Satisfaire " +
+                       "à tous les modes réglés » est activé.",
+    "ov.elkeAfstand": "toute distance",
+    "ov.elkeFrequentie": "toute fréquence",
+    "ov.minstensFreq": "au moins {n}× par heure",
     "afstand.hoogstens": "{afstand} au maximum",
-    "bus.aria": "Distance maximale d'un arrêt de bus ou de tram",
+    "bus.aria": "Distance maximale d'un arrêt de bus",
+    "tram.aria": "Distance maximale d'un arrêt de tram",
     "trein.aria": "Distance maximale d'une gare",
+    "busfreq.aria": "Fréquence minimale à l'arrêt de bus, par sens",
+    "tramfreq.aria": "Fréquence minimale à l'arrêt de tram, par sens",
+    "treinfreq.aria": "Fréquence minimale à la gare, par sens",
     "jaar.alle": "toutes les années",
     "jaar.vanaf": "à partir de {jaar}",
     "jaar.enkel": "uniquement {jaar}",
@@ -144,6 +157,7 @@
 
     "instellingen.volgmuis": "La liste des voitures les plus proches suit la souris",
     "instellingen.dichtbij": "Afficher la liste des voitures les plus proches",
+    "instellingen.samen": "Afficher ensemble les voitures d'un même emplacement",
     "instellingen.taal": "Langue",
     "instellingen.taalOnthouden": "Langue mémorisée dans ce navigateur.",
     "instellingen.taalVergeten": "Oublier",
@@ -207,15 +221,16 @@
     "popup.plaatsen": "{n} places",
     "popup.geenFoto": "Aucune photo d'exemple disponible pour ce modèle",
     "popup.fotoAlt": "Photo d'exemple d'une {model}",
-    "popup.locatieVaag": "Position approximative pour des raisons de confidentialité.",
     "popup.nieuw": "Nouvelle voiture",
-    "popup.nieuwUitleg": "Pas encore dans les données de la carte. La marque, le modèle et les autres détails suivront lors de la prochaine mise à jour de la carte.",
-    "popup.lidWorden": "Envie de partager vous aussi ? Découvrez {tarieven} et la {faq}, et devenez membre de Dégage ! 🚗",
-    "popup.tarieven": "nos tarifs",
+    "popup.nieuwUitleg": "La marque, le modèle et les autres détails suivront lors de la prochaine mise à jour de la carte.",
+    "popup.ookHier": "Aussi à cet emplacement :",
+    "popup.lidVraag": "Envie de partager vous aussi ?",
+    "popup.lidOproep": "Devenez membre de Dégage ! 🚗",
+    "popup.tarieven": "Nos tarifs",
     "popup.faq": "FAQ",
     "popup.uitleg": "Explication",
-    "popup.bereikEen": "± {km} km d'autonomie",
-    "popup.bereikMarge": "{van}–{tot} km d'autonomie",
+    "popup.bereikEen": "± {km} km",
+    "popup.bereikMarge": "{van}–{tot} km",
     "popup.bereikUitleg": "Autonomie : estimation en usage mixte, pas WLTP. Une " +
                           "fourchette signifie qu'elle dépend de la batterie. Source :",
     "popup.bereikUitlegHandmatig": "Autonomie : estimation en usage mixte, pas WLTP. " +
@@ -226,14 +241,18 @@
     "ov.bushalte": "Arrêt de bus",
     "ov.tramhalte": "Arrêt de tram",
     "ov.geenHalte": "Aucun arrêt de bus ou de tram à moins de {straal}",
+    "ov.geenBushalte": "Aucun arrêt de bus à moins de {straal}",
+    "ov.geenTramhalte": "Aucun arrêt de tram à moins de {straal}",
     "ov.station": "Gare",
-    "ov.perUur": "{n}/h",
-    "ov.minderDanEen": "<1/h",
     "ov.meter": "{n} mètres",
     "ov.kilometer": "{n} kilomètres",
     "ov.kilometerEen": "1 kilomètre",
     "ov.kmKort": "{n} km",
-    "ov.bron": "Après le nom : départs par heure et par sens. " +
+    "ov.keer": "{n}×",
+    "ov.minderDanEenKeer": "<1×",
+    "ov.perUurLabel": "par heure",
+    "ov.bron": "À côté du pictogramme : départs par heure et par sens. Le nom de " +
+              "l'arrêt figure sur le pictogramme. " +
               "Mobiscore : Departement Omgeving, gouvernement flamand — commerces, écoles, " +
               "soins, loisirs et transports en commun à distance de marche et de vélo. Bus et " +
               "trams : De Lijn, par sens, du côté le plus fréquenté de l'arrêt. Trains : SNCB, " +
@@ -246,7 +265,6 @@
     "reden.buiten": "Hors des filtres — {redenen}",
     "reden.paar": "{kop} : {waarde}",
     "reden.onbekend": "inconnu",
-    "reden.nietNieuw": "pas une nouvelle voiture",
     "reden.nietVermeld": "{vlag} non renseigné",
 
     "fout.titel": "Impossible de charger les emplacements",

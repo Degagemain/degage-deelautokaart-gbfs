@@ -21,7 +21,9 @@ De Worker doet drie dingen:
 
 - **`POST /`** — een melding van de kaart wordt een issue (`feedback.js`);
 - **`/beheer`** — de beheerders zien wie een antwoord per mail vroeg (`beheer.js`);
-- **elke nacht** — de mailadressen van afgehandelde meldingen wissen (`beheer.js`).
+- **elke nacht** — de mailadressen van afgehandelde meldingen wissen (`beheer.js`);
+- **`GET /instellingen`** — welke filters de kaart toont, zoals de beheerders dat op
+  `/beheer/kaartfilters` instellen (`instellingen.js`).
 
 Met GitHub praten ze allemaal via `github.js`.
 
@@ -241,6 +243,28 @@ meteen zelf wissen.
 
 Ruim genoeg binnen het gratis plan van Cloudflare: D1 geeft 5 GB en 100.000
 schrijfopdrachten per dag, en een melding met mailadres is er één.
+
+### 6. Filters op de kaart (optioneel)
+
+Op **`/beheer/kaartfilters`** kiezen de beheerders welke filters bezoekers in de
+filterlijst van de kaart zien: een vinkje per filter, en *Bewaren*. Wat uit staat,
+verdwijnt uit de lijst; de auto's blijven op de kaart. De keuze staat in dezelfde
+databank, in de tabel `instellingen`. Bestond de databank al vóór deze pagina, voer dan
+`schema.sql` opnieuw uit; dat laat de bestaande tabel `contact` staan:
+
+```sh
+npx wrangler d1 execute degage-kaart-feedback --remote --file=schema.sql
+```
+
+De kaart leest de keuze bij het laden op `GET /instellingen` (het adres staat bij
+`instellingen` in `map/config.js`). Dat adres is openbaar en mag van elke site gelezen
+worden: er staat niets geheims in. Het antwoord blijft een minuut in de cache, dus een
+wijziging is binnen de minuut zichtbaar. Antwoordt de Worker niet binnen drie seconden,
+of staat er geen adres in `config.js`, dan toont de kaart alle filters.
+
+Een nieuw filter op de kaart instelbaar maken: geef zijn sectie in `map/index.html` een
+`data-filter`-sleutel, en zet dezelfde sleutel met een label in `FILTERS` in
+`instellingen.js`.
 
 ## Wat er in het issue komt
 

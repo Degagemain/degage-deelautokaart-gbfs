@@ -47,7 +47,7 @@ Draaien
 -------
     py scripts/haal_stockfotos.py
     py scripts/haal_stockfotos.py --opnieuw          ALLES weggooien en opnieuw (vraagt
-                                                     bevestiging; zie README.md)
+                                                     bevestiging; zie BEDIENING.md)
     py scripts/haal_stockfotos.py --max 20           eerst een handvol proberen
 """
 
@@ -453,7 +453,7 @@ def main() -> int:
                     help="fotomap (standaard: ../map/fotos)")
     ap.add_argument("--opnieuw", action="store_true",
                     help="GOOIT ALLE FOTO'S WEG en zoekt ze opnieuw, op merk en model "
-                         "zonder bouwjaar. Vraagt eerst bevestiging; zie README.md, "
+                         "zonder bouwjaar. Vraagt eerst bevestiging; zie BEDIENING.md, "
                          "'De juiste generatie'.")
     ap.add_argument("--ja", action="store_true",
                     help="bevestig --opnieuw zonder te vragen (voor wie het echt wil)")
@@ -494,7 +494,7 @@ def main() -> int:
         zeg("  zoekt alleen op merk en model, niet op bouwjaar, en kiest dus opnieuw vaak een")
         zeg("  foto van een andere generatie. Wat in 'geweigerd' en 'zoek_als' staat, blijft.")
         zeg("  Wil je één lelijke foto vervangen? Zet hem in 'geweigerd' en draai zonder")
-        zeg("  --opnieuw: dan wordt alleen die ene opnieuw gezocht. Zie README.md,")
+        zeg("  --opnieuw: dan wordt alleen die ene opnieuw gezocht. Zie BEDIENING.md,")
         zeg("  'De juiste generatie'.")
         if not args.ja:
             if not sys.stdin.isatty():

@@ -1,6 +1,9 @@
 /* Het tussenstuk tussen het meldformulier op de kaart en GitHub.
    ------------------------------------------------------------------------------------
-   Een Cloudflare Worker. De kaart is een statische site: ze kan geen GitHub-token
+   Een Cloudflare Worker. Daarnaast levert hij op GET /instellingen welke filters de kaart
+   toont; dat stellen de beheerders in op /beheer (instellingen.js).
+
+   De kaart is een statische site: ze kan geen GitHub-token
    bewaren zonder hem aan iedereen te geven. Deze Worker houdt de token geheim en maakt
    namens de bezoeker een issue aan — zo kan ook wie geen GitHub-account heeft iets
    melden. Installeren en instellen: zie README.md in deze map.
@@ -29,6 +32,7 @@
 
 import { beheer, ruimOp } from "./beheer.js";
 import { github } from "./github.js";
+import { voorDeKaart } from "./instellingen.js";
 
 /* De soorten melding, met de kop zoals ze in het issue komt. De issues zelf staan in het
    Nederlands, de taal van de beheerders; de taal van de bezoeker staat erbij. */
@@ -50,6 +54,7 @@ export default {
   async fetch(request, env) {
     const pad = new URL(request.url).pathname;
     if (pad === "/beheer" || pad.startsWith("/beheer/")) return beheer(request, env);
+    if (pad === "/instellingen") return voorDeKaart(request, env);
 
     const herkomst = request.headers.get("Origin") || "";
     const toegestaan = (env.TOEGESTANE_HERKOMST || "")

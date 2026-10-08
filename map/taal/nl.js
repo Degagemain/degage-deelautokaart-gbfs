@@ -29,7 +29,7 @@
   locale: "nl-BE",
 
   teksten: {
-    "app.titel": "Auto's van Dégage",
+    "app.titel": "Deelautokaart Dégage",
     "app.kaartLabel": "Kaart met de auto's van Dégage",
 
     "voorbehoud.titel": "Goed om te weten",
@@ -41,6 +41,8 @@
                          "bijbehorende mogelijkheden tijdens je lidmaatschap hetzelfde blijven.",
     "voorbehoud.fotos": "<strong>De foto's zijn voorbeeldfoto's</strong> van het model, " +
                         "niet van de auto zelf.",
+    "voorbehoud.locatie": "<strong>De locaties zijn bij benadering</strong>, vanwege " +
+                          "privacy: elke stip staat {m} meter naast de echte standplaats.",
 
     "zoek.plaatshouder": "Autonaam, adres of gemeente…",
     "zoek.aria": "Zoek een autonaam, adres of gemeente; klikken toont ook de filters",
@@ -80,9 +82,12 @@
     "filters.grijs": "Gefilterde auto's grijs tonen",
     "filters.scrollSluit": "Filters sluiten bij scrollen in de kaart",
     "filters.sluiten": "Filters sluiten",
-    "kop.nieuw": "Nieuw in de vloot",
-    "filter.nieuw": "Nieuwe auto's, nog zonder details",
     "kop.soort": "Soort auto",
+    "kop.klasse": "Prijsklasse",
+    "filter.klasse": "Klasse {klasse}",
+    "filter.klasseOnbekend": "Klasse onbekend",
+    "klasse.uitleg": "Elke auto rijdt aan de kilometerprijs van zijn prijsklasse. " +
+                     "Prijsklasse B kost meer per kilometer dan prijsklasse A.",
     "kop.zitplaatsen": "Zitplaatsen",
     "kop.brandstof": "Brandstof",
     "kop.bak": "Versnellingsbak",
@@ -90,19 +95,27 @@
     "kop.afspraken": "Afspraken",
     "kop.euronorm": "Euronorm",
     "kop.bouwjaar": "Bouwjaar",
-    "kop.bushalte": "Afstand tot een bushalte",
-    "kop.station": "Afstand tot een treinstation",
-    "bushalte.uitleg": "De hemelsbrede afstand van de standplaats tot de dichtstbijzijnde bus- " +
-                       "of tramhalte waar vaste lijnen stoppen. Elke stand toont die afstand " +
-                       "en alles daaronder. Te voet is de weg altijd wat langer.",
-    "station.uitleg": "De hemelsbrede afstand van de standplaats tot het dichtstbijzijnde " +
-                      "treinstation. Elke stand toont die afstand en alles daaronder. Naar een " +
-                      "station fietst of rijdt men; vandaar dat de schaal verder reikt dan bij " +
-                      "een halte.",
-    "afstand.alle": "alle standplaatsen",
+    "kop.ov": "Openbaar vervoer",
+    "filter.ovBus": "Bus",
+    "filter.ovTram": "Tram",
+    "filter.ovTrein": "Trein",
+    "filter.ovBeide": "Aan alle ingestelde voldoen",
+    "ov.filterUitleg": "Stel een afstand of frequentie in voor bus, tram of trein; staat een schuif op " +
+                       "\"elke\", dan filtert hij niet. De afstand is hemelsbreed, van de standplaats tot de " +
+                       "dichtstbijzijnde halte of het dichtstbijzijnde station; te voet is de weg wat " +
+                       "langer. De frequentie is het aantal vertrekken per uur, per richting, op een gewone " +
+                       "weekdag. Stel je er meer in, dan volstaat er één, tenzij \"Aan alle ingestelde " +
+                       "voldoen\" aanstaat.",
+    "ov.elkeAfstand": "elke afstand",
+    "ov.elkeFrequentie": "elke frequentie",
+    "ov.minstensFreq": "minstens {n}× per uur",
     "afstand.hoogstens": "hoogstens {afstand}",
-    "bus.aria": "Maximale afstand tot een bus- of tramhalte",
+    "bus.aria": "Maximale afstand tot een bushalte",
+    "tram.aria": "Maximale afstand tot een tramhalte",
     "trein.aria": "Maximale afstand tot een treinstation",
+    "busfreq.aria": "Minimale frequentie aan de bushalte, per richting",
+    "tramfreq.aria": "Minimale frequentie aan de tramhalte, per richting",
+    "treinfreq.aria": "Minimale frequentie in het treinstation, per richting",
     "jaar.alle": "alle bouwjaren",
     "jaar.vanaf": "vanaf {jaar}",
     "jaar.enkel": "enkel {jaar}",
@@ -136,6 +149,7 @@
 
     "instellingen.volgmuis": "Lijst dichtstbijzijnde auto's volgt muis",
     "instellingen.dichtbij": "Lijst dichtstbijzijnde auto's tonen",
+    "instellingen.samen": "Auto's op dezelfde plek samen tonen",
     "instellingen.taal": "Taal",
     "instellingen.taalOnthouden": "Taal onthouden in deze browser.",
     "instellingen.taalVergeten": "Vergeten",
@@ -199,15 +213,16 @@
     "popup.plaatsen": "{n} plaatsen",
     "popup.geenFoto": "Geen voorbeeldfoto van dit model beschikbaar",
     "popup.fotoAlt": "Voorbeeldfoto van een {model}",
-    "popup.locatieVaag": "Locatie bij benadering vanwege privacy.",
     "popup.nieuw": "Nieuwe auto",
-    "popup.nieuwUitleg": "Nog niet in de gegevens van de kaart. Merk, model en de andere details volgen bij de volgende bijwerking van de kaart.",
-    "popup.lidWorden": "Zin gekregen om mee te delen? Bekijk {tarieven} en de {faq}, en word lid van Dégage! 🚗",
-    "popup.tarieven": "onze tarieven",
-    "popup.faq": "veelgestelde vragen",
+    "popup.nieuwUitleg": "Merk, model en de andere details volgen bij de volgende bijwerking van de kaart.",
+    "popup.ookHier": "Op deze plek staat ook:",
+    "popup.lidVraag": "Zin gekregen om mee te delen?",
+    "popup.lidOproep": "Word lid van Dégage! 🚗",
+    "popup.tarieven": "Onze tarieven",
+    "popup.faq": "Veelgestelde vragen",
     "popup.uitleg": "Uitleg",
-    "popup.bereikEen": "± {km} km bereik",
-    "popup.bereikMarge": "{van}–{tot} km bereik",
+    "popup.bereikEen": "± {km} km",
+    "popup.bereikMarge": "{van}–{tot} km",
     "popup.bereikUitleg": "Bereik: schatting bij gemengd gebruik, geen WLTP. Een marge " +
                           "betekent dat het van de batterij afhangt. Bron:",
     "popup.bereikUitlegHandmatig": "Bereik: schatting bij gemengd gebruik, geen WLTP. " +
@@ -218,14 +233,18 @@
     "ov.bushalte": "Bushalte",
     "ov.tramhalte": "Tramhalte",
     "ov.geenHalte": "Geen bus- of tramhalte binnen {straal}",
+    "ov.geenBushalte": "Geen bushalte binnen {straal}",
+    "ov.geenTramhalte": "Geen tramhalte binnen {straal}",
     "ov.station": "Treinstation",
-    "ov.perUur": "{n}/u",
-    "ov.minderDanEen": "<1/u",
     "ov.meter": "{n} meter",
     "ov.kilometer": "{n} kilometer",
     "ov.kilometerEen": "1 kilometer",
     "ov.kmKort": "{n} km",
-    "ov.bron": "Achter de naam: vertrekken per uur, per richting. " +
+    "ov.keer": "{n}×",
+    "ov.minderDanEenKeer": "<1×",
+    "ov.perUurLabel": "per uur",
+    "ov.bron": "Naast het pictogram: vertrekken per uur, per richting. De naam " +
+              "van de halte staat op het pictogram. " +
               "Mobiscore: Departement Omgeving, Vlaamse overheid — winkels, scholen, zorg, " +
               "vrije tijd en openbaar vervoer op wandel- en fietsafstand. Bussen en trams: De " +
               "Lijn, per richting, aan de drukste kant van de halte. Treinen: NMBS, alle treinen " +
@@ -238,7 +257,6 @@
     "reden.buiten": "Valt buiten de filters — {redenen}",
     "reden.paar": "{kop}: {waarde}",
     "reden.onbekend": "onbekend",
-    "reden.nietNieuw": "geen nieuwe auto",
     "reden.nietVermeld": "{vlag} niet vermeld",
 
     "fout.titel": "De standplaatsen konden niet geladen worden",

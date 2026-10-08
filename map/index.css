@@ -559,7 +559,7 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 .filters[hidden] { display: none; }
-/* De twee filterschakelaars bovenaan: een eigen blokje met een streep eronder, zodat ze
+/* De filterschakelaar bovenaan: een eigen blokje met een streep eronder, zodat ze
    bij de filters horen maar niet voor een van de koppen aangezien worden. */
 .filterschakels {
   padding: 6px 0 10px;
@@ -635,6 +635,73 @@ body {
   margin: 4px 0 0;
   font-size: 11.5px; line-height: 1.35; color: var(--inkt-zacht);
 }
+
+/* ---------- het OV-filter -----------------------------------------------------------
+   Per modus een blokje: de naam en de twee schuiven eronder. Het streepje links is
+   grijs, en groen zodra een schuif van die modus verzet is: zo zie je in één oogopslag
+   welke modi meetellen. */
+.ovmodus {
+  margin-top: 9px; padding: 2px 0 2px 10px;
+  border-left: 3px solid var(--lijn);
+}
+.ovmodus.is-aan { border-left-color: var(--groen); }
+.ovmodus[hidden] { display: none; }
+.ovmodus__kop {
+  display: flex; align-items: center; gap: 6px; margin: 0;
+  font-size: 12.5px; font-weight: 600; color: var(--inkt);
+}
+.ovmodus__kop .ico { width: 16px; height: 16px; color: var(--groen); }
+.ovmodus .schuif { margin-top: 6px; }
+
+/* De stand IN de schuifbalk, niet eronder (alleen in het OV-filter, `schuif--in`). De
+   balk is een pil van 26 px hoog met de tekst erin; de tekst staat aan de kant waar het
+   bolletje NIET staat (`duim-links` zet hem rechts), zodat het bolletje hem nooit
+   bedekt. Een balk die iets filtert (`is-gezet`), kleurt lichtgroen, zoals een
+   aangevinkte chip. Zie zetSchuifIn() in het script.
+
+   Een schuifbalk is in elke browser anders opgebouwd, vandaar de twee reeksen
+   pseudo-elementen: -webkit- voor Chrome, Edge en Safari, -moz- voor Firefox. */
+.schuif--in { position: relative; margin-top: 6px; }
+.schuif--in input[type="range"] {
+  -webkit-appearance: none; appearance: none;
+  display: block; width: 100%; height: 26px; margin: 0;
+  background: transparent;
+}
+.schuif--in input[type="range"]::-webkit-slider-runnable-track {
+  height: 26px; box-sizing: border-box;
+  background: var(--vlak-zacht); border: 1px solid var(--lijn); border-radius: 13px;
+}
+.schuif--in input[type="range"]::-moz-range-track {
+  height: 26px; box-sizing: border-box;
+  background: var(--vlak-zacht); border: 1px solid var(--lijn); border-radius: 13px;
+}
+.schuif--in.is-gezet input[type="range"]::-webkit-slider-runnable-track { background: #e6f2ed; border-color: #bcd9cd; }
+.schuif--in.is-gezet input[type="range"]::-moz-range-track { background: #e6f2ed; border-color: #bcd9cd; }
+.schuif--in input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 20px; height: 20px; margin-top: 2px;
+  background: var(--groen); border: 2px solid #fff; border-radius: 50%;
+  box-shadow: 0 1px 2px rgba(0,0,0,.25);
+}
+.schuif--in input[type="range"]::-moz-range-thumb {
+  width: 16px; height: 16px;
+  background: var(--groen); border: 2px solid #fff; border-radius: 50%;
+  box-shadow: 0 1px 2px rgba(0,0,0,.25);
+}
+.schuif--in input[type="range"]:disabled { cursor: default; opacity: .45; }
+.schuif--in input[type="range"]:focus-visible { outline: 2px solid var(--groen); outline-offset: 2px; border-radius: 13px; }
+.schuif--in .schuif__waarde {
+  position: absolute; inset: 0; margin: 0;
+  display: flex; align-items: center; justify-content: flex-start;
+  padding: 0 12px 0 30px;
+  font-size: 12px; font-weight: 500; color: var(--inkt);
+  white-space: nowrap; overflow: hidden;
+  pointer-events: none;
+}
+.schuif--in.duim-links .schuif__waarde { justify-content: flex-end; padding: 0 12px 0 30px; }
+.schuif--in:not(.duim-links) .schuif__waarde { padding: 0 30px 0 12px; }
+.ovbeide { margin-top: 10px; }
+.ovbeide[hidden] { display: none; }
 
 /* ---------- inklapbare filtersectie ---------------------------------------------- */
 .vouw { margin-top: 13px; }
@@ -820,9 +887,13 @@ body {
 /* De stockfoto toont het model, niet dít exemplaar. Daarom een vaste verhouding en
    `object-fit: cover`: de foto's uit Commons hebben allemaal een andere maat, en
    zonder dit springt de popup bij elke wagen een andere hoogte in. */
+/* Op een breed scherm staat de naamsvermelding verticaal naast de foto; zie de popup op
+   een breed scherm, onderaan. Smal staat ze eronder: daar is de popup al zo breed als
+   het scherm toelaat, en valt er met draaien niets te winnen. */
+.wagen__beeld { margin: 8px 0 0; }
 .wagen__foto {
   display: block; width: 100%; aspect-ratio: 16 / 9;
-  margin: 8px 0 0;
+  margin: 0;
   object-fit: cover;
   background: var(--vlak-zacht);
   border: 1px solid var(--lijn); border-radius: 7px;
@@ -830,7 +901,7 @@ body {
 .wagen__geenfoto {
   display: flex; align-items: center; justify-content: center;
   width: 100%; aspect-ratio: 16 / 9;
-  margin: 8px 0 0;
+  margin: 0;
   background: var(--vlak-zacht);
   border: 1px dashed var(--lijn); border-radius: 7px;
   color: #b9c3c0;
@@ -838,7 +909,7 @@ body {
 .wagen__geenfoto svg { width: 46%; height: auto; }
 
 /* Naamsvermelding is een licentievoorwaarde, geen sierregel — zie de OSM-attributie. */
-.wagen__bron {
+.popup .wagen__bron {
   margin: 3px 0 0;
   font-size: 10.5px; line-height: 1.3; color: var(--inkt-zacht);
 }
@@ -873,21 +944,43 @@ body {
 .popup__voet .ico { color: var(--inkt-zacht); }
 /* Een tweede voetregel sluit aan bij de eerste in plaats van er een streep bij te zetten. */
 .popup__voet + .popup__voet { margin-top: 3px; padding-top: 0; border-top: 0; }
-/* De vervaagde locatie. Kleiner en grijzer dan de rest van de voet: het is een
-   voorbehoud bij wat erboven staat, geen extra gegeven. */
-/* De weg naar het lidmaatschap is een zin met links erin: als flex zou elk stuk tekst
-   en elke link een eigen vak worden, met een gat ertussen. */
-.popup__voet--lid { display: block; line-height: 1.45; }
-.popup__voet--vaag {
-  padding-left: 19px;
-  font-size: 11.5px; font-style: italic;
+/* De plek (het district): een pictogram met de naam erachter. In de voetregel van het
+   OV-blok of, zonder OV-gegevens, op een eigen voetregel. */
+.plek { display: inline-flex; align-items: center; gap: 5px; min-width: 0; }
+.plek .ico { color: var(--inkt-zacht); }
+
+/* De oproep om lid te worden: het enige in de popup dat iets van de bezoeker vraagt, en
+   dus het enige dat mag opvallen. Een groen getint kader, de vraag vet, en twee knoppen
+   in hetzelfde ontwerp: wit met een groene rand, vol groen onder de muis. */
+.lid {
+  margin: 10px 0 0; padding: 9px 11px 10px;
+  background: #e6f2ed;
+  border: 1px solid #bcd9cd; border-left: 4px solid var(--groen); border-radius: 7px;
+  color: var(--inkt);
+}
+.popup .lid__tekst { margin: 0; font-size: 13.5px; line-height: 1.35; }
+.lid__tekst strong { color: var(--groen-diep); }
+.popup .lid__knoppen { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 0; }
+.popup a.lid__knop {
+  display: inline-block; padding: 5px 12px;
+  font-size: 12.5px; font-weight: 600; text-decoration: none;
+  border: 1px solid var(--groen); border-radius: 999px;
+  color: var(--groen-diep); background: #fff;
+}
+.popup a.lid__knop:hover { border-color: var(--groen-diep); background: var(--groen-diep); color: #fff; }
+.popup a.lid__knop:focus-visible { outline: 2px solid var(--groen); outline-offset: 2px; }
+/* Smal: de twee knoppen naast elkaar houden. Onder elkaar maken ze de popup een regel
+   hoger, en dan moet pasPopupIn() hem verder verkleinen. */
+@media (max-width: 640px) {
+  .lid { padding: 8px 9px 9px; }
+  .popup .lid__knoppen { flex-wrap: nowrap; gap: 5px; }
+  .popup a.lid__knop { padding: 4px 9px; font-size: 12px; white-space: nowrap; }
 }
 
 /* Bereikbaarheid met openbaar vervoer. Een eigen blokje onder de wagens, want het hoort
-   bij de standplaats en niet bij één wagen. Per halte of station één regel: pictogram,
-   de soort (bushalte, treinstation) met naam en frequentie klein eronder, en rechts de
-   afstand — groot en groen, want dat is wat je eerst wilt weten. De Mobiscore staat
-   klein in de voetregel. */
+   bij de standplaats en niet bij één wagen. Per halte of station één regel: een groot
+   pictogram (de naam van de halte zit in zijn alt-tekst), de frequentie groot ernaast, en
+   rechts de afstand. De Mobiscore staat klein in de voetregel. */
 .ov {
   margin: 10px 0 0; padding: 8px 10px;
   background: var(--vlak-zacht);
@@ -900,21 +993,29 @@ body {
   display: flex; align-items: center; gap: 8px;
 }
 .ov__rij + .ov__rij { margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--lijn); }
-.ov__rij .ico { width: 18px; height: 18px; flex: none; color: var(--groen); }
-.ov__wat { flex: 1 1 auto; min-width: 0; color: var(--inkt); font-weight: 600; }
-.ov__naam { display: block; font-size: 11.5px; font-weight: 400; color: var(--inkt-zacht); }
+.ov__icoon { flex: none; display: inline-flex; cursor: help; }
+.ov__icoon .ico { width: 30px; height: 30px; color: var(--groen); }
+.ov__freq { flex: 1 1 auto; min-width: 0; white-space: nowrap; color: var(--inkt-zacht); }
+.ov__freq strong {
+  font-size: 18px; font-weight: 700; color: var(--inkt);
+  font-variant-numeric: tabular-nums;
+}
+.ov__geen { flex: 1 1 auto; min-width: 0; color: var(--inkt); }
 .ov__afstand {
   flex: none;
   font-size: 16px; font-weight: 700; color: var(--groen);
   font-variant-numeric: tabular-nums; white-space: nowrap;
 }
 /* De Mobiscore: klein en zacht, met de ⓘ voor de uitleg van het hele blok erachter. */
+/* De voetregel: het district links, de Mobiscore rechts — allebei over de plek. */
 .ov__voet {
-  display: flex; align-items: center; gap: 2px;
-  margin-top: 7px !important;
+  display: flex; align-items: center; justify-content: space-between; gap: 4px 10px;
+  flex-wrap: wrap;
+  margin-top: 7px !important; padding-top: 6px; border-top: 1px solid var(--lijn);
   font-size: 11.5px; color: var(--inkt-zacht);
   font-variant-numeric: tabular-nums;
 }
+.ov__score { display: inline-flex; align-items: center; margin-left: auto; white-space: nowrap; }
 
 /* Uitleg achter een ⓘ. De popup toont de feiten; wat een getal betekent en waar het
    vandaan komt, staat één klik verder — wie het wil weten vindt het, wie niet, leest
@@ -936,6 +1037,24 @@ body {
 .uitleg[hidden] { display: none; }
 .popup__voet a { color: var(--groen-diep); }
 
+/* De andere auto's op dezelfde standplaats, als er maar één in de popup staat (zie
+   ookHierHtml()). Een regel onder de wagen, met elke naam als een kleine knop: klikken zet
+   die auto in de popup. */
+.popup .popup__ook {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 5px;
+  margin: 10px 0 0; padding-top: 8px;
+  border-top: 1px solid var(--lijn);
+  font-size: 12px; color: var(--inkt-zacht);
+}
+.ook-knop {
+  padding: 2px 10px;
+  font: inherit; font-weight: 600; color: var(--groen-diep);
+  background: #fff; border: 1px solid var(--groen); border-radius: 999px;
+  cursor: pointer;
+}
+.ook-knop:hover { border-color: var(--groen-diep); background: var(--groen-diep); color: #fff; }
+.ook-knop:focus-visible { outline: 2px solid var(--groen); outline-offset: 2px; }
+
 /* ---------- de popup op een breed scherm -------------------------------------------
    Smal stond alles onder elkaar: naam, foto, feiten, labels, openbaar vervoer — een lange
    strook die op een laptopscherm al gauw moest scrollen. Op een breed scherm is er plaats
@@ -949,9 +1068,9 @@ body {
    Dezelfde grens als `mobiel` in popupRanden(), dat Leaflet hier de ruimte voor geeft. */
 @media (min-width: 641px) {
   /* De foto 225 × 127 (16:9): tussen de volle breedte van vroeger (± 260, te groot) en
-     de 190 van de eerste tweekolomsversie (te klein) in. De popup is daarop afgestemd,
-     zodat de feiten ernaast nog in twee kolommen passen. */
-  .popup { width: 490px; min-width: 0; max-width: none; }
+     de 190 van de eerste tweekolomsversie (te klein) in. Met de naamsvermelding verticaal
+     ernaast en de feiten in één kolom past alles in 410 px; dat was 490. */
+  .popup { width: 410px; min-width: 0; max-width: none; }
   /* De kop — naam, model en eventueel waarom de wagen buiten de filters valt — staat
      altijd bovenaan over de volle breedte, ook boven de foto: dat is waar je eerst naar
      kijkt. Daaronder de foto links en de feiten rechts, en helemaal onderaan de
@@ -963,7 +1082,7 @@ body {
      foto hoger dan de feiten, dan komt de rest daar en schuiven de feiten niet uit
      elkaar. Wat een wagen niet heeft (geen uitleg, geen labels), is een lege rij van 0. */
   .wagen {
-    display: grid; grid-template-columns: 225px minmax(0, 1fr);
+    display: grid; grid-template-columns: auto minmax(0, 1fr);
     grid-template-areas:
       "naam   naam"
       "model  model"
@@ -981,11 +1100,38 @@ body {
   .wagen > .feiten        { grid-area: feiten; }
   .wagen > .uitleg        { grid-area: uitleg; }
   .wagen > .labels        { grid-area: labels; }
+  /* Foto en naamsvermelding naast elkaar: de vermelding staat verticaal langs de
+     rechterrand van de foto, van onder naar boven te lezen, zoals een fotobijschrift in
+     een krant. Ze kost zo een smalle strook breedte in plaats van een regel hoogte. Ze is
+     nooit hoger dan de foto: een lange auteursnaam loopt over in een tweede kolom. Dat
+     doet `height: 0; min-height: 100%` — meetellen voor de hoogte van de rij doet ze
+     niet, vullen wel. Dat werkt omdat de foto hier een vaste breedte heeft. */
+  .wagen__beeld { display: grid; grid-template-columns: 225px auto; column-gap: 3px; }
+  .wagen__geenfoto { grid-column: 1 / -1; }
+  .popup .wagen__bron {
+    margin: 0; height: 0; min-height: 100%;
+    writing-mode: vertical-rl; transform: rotate(180deg);
+    font-size: 9.5px; line-height: 1.2;
+  }
+  /* Naast de foto is er plaats voor één kolom feiten, en die leest ook makkelijker. */
+  .wagen > .feiten { grid-template-columns: minmax(0, 1fr); margin-top: 8px; }
 
-  .ov__lijst { display: grid; grid-template-columns: 1fr 1fr; column-gap: 12px; }
+  /* Bus, tram en trein naast elkaar. Drie kolommen zijn te smal voor pictogram, frequentie
+     en afstand op één lijn: het pictogram staat links, de frequentie en de afstand onder
+     elkaar ernaast. */
+  .ov__lijst { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 10px; }
+  .ov__rij {
+    display: grid; grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas: "icoon freq" "icoon afstand";
+    column-gap: 7px; align-items: center;
+  }
+  .ov__icoon { grid-area: icoon; }
+  .ov__freq, .ov__geen { grid-area: freq; }
+  .ov__geen { grid-row: 1 / span 2; white-space: normal; font-size: 11.5px; }
+  .ov__afstand { grid-area: afstand; }
   .ov__rij + .ov__rij {
     margin-top: 0; padding-top: 0; border-top: 0;
-    padding-left: 12px; border-left: 1px solid var(--lijn);
+    padding-left: 10px; border-left: 1px solid var(--lijn);
   }
 }
 
@@ -1206,7 +1352,7 @@ body {
   .sectie.is-open > summary::before { transform: rotate(90deg); }
   .filters h2:focus-visible { outline: 2px solid var(--groen); outline-offset: 2px; }
   .sectie { min-width: 0; }
-  .sectie--schuif { order: 1; }
+  .sectie--schuif, .sectie--ov { order: 1; }
   /* De opties van het open label: een zwevend kaartje net onder het paneel, over de
      kaart. In de filterlijst zelf vielen ze vaak onder de scrollrand. `fixed` ontsnapt
      aan de `overflow: hidden` van het paneel (dat geen transform draagt); top en

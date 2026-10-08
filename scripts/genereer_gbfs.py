@@ -68,6 +68,7 @@ from pathlib import Path
 #   merk, model      str    vrije tekst; schrijfvarianten worden hier samengeklapt
 #   brandstof        str    één van BRANDSTOF_NAAR_PROPULSION
 #   inschrijving     str    één van INSCHRIJVING_SLUG
+#   klasse           str    één van KLASSEN: de tariefklasse van Dégage, of None
 #   zitplaatsen      int
 #   bouwjaar         int
 #   versnellingsbak  str    "manueel" of "automatisch"
@@ -79,7 +80,8 @@ from pathlib import Path
 #   district         str    de lokale groep, of None
 INVOERVELDEN = {
     "naam": str, "merk": str, "model": str, "brandstof": str, "inschrijving": str,
-    "zitplaatsen": int, "bouwjaar": int, "versnellingsbak": str, "toebehoren": list,
+    "klasse": (str, type(None)), "zitplaatsen": int, "bouwjaar": int,
+    "versnellingsbak": str, "toebehoren": list,
     "lat": float, "lon": float, "plaats": str, "postcode": (str, type(None)),
     "euronorm": (str, type(None)), "district": (str, type(None)),
 }
@@ -143,6 +145,14 @@ PROPULSION_NL = {
 # staat in de handmatige carrosserielijst hieronder.
 INSCHRIJVING_SLUG = {"personenwagen": "passenger", "lichte_vracht": "freight"}
 INSCHRIJVING_NL = {"personenwagen": "Personenwagen", "lichte_vracht": "Lichte vracht"}
+
+# De klasse is de tariefklasse van Dégage: elke wagen rijdt aan de kilometerprijs van zijn
+# klasse, en B is duurder dan A. Ze zegt dus iets wat een lid wil weten vóór het boekt.
+# Het is een indeling van Dégage, geen eigenschap van de wagen: de feed draagt alleen de
+# letter, de prijzen zelf veranderen per kwartaal en staan op degage.be. Kent de bron
+# geen klasse, dan blijft het veld weg (zoals bij de euronorm); een derde waarde laat dit
+# script luid vallen.
+KLASSEN = ("A", "B")
 
 # ============================================================================
 # CARROSSERIE — een handmatige lijst
@@ -403,6 +413,8 @@ def controleer_invoer(vloot: list[dict]) -> None:
             fouten.append(f"{wie}: onbekende brandstof {w.get('brandstof')!r}")
         if w.get("inschrijving") not in INSCHRIJVING_SLUG:
             fouten.append(f"{wie}: onbekende inschrijving {w.get('inschrijving')!r}")
+        if w.get("klasse") is not None and w.get("klasse") not in KLASSEN:
+            fouten.append(f"{wie}: onbekende klasse {w.get('klasse')!r}")
         if w.get("versnellingsbak") not in VERSNELLINGSBAKKEN:
             fouten.append(f"{wie}: onbekende versnellingsbak {w.get('versnellingsbak')!r}")
         for t in w.get("toebehoren") or []:
@@ -799,6 +811,13 @@ def bouw(vloot: list[dict], stempel: str, basis_url: str,
         f"{z}x{zitplaats_telling[z]}" for z in sorted(zitplaats_telling)))
     zeg()
 
+    klasse_telling = Counter(r["klasse"] for r in vloot)
+    zeg("klasse — de tariefklasse van Dégage; onbekend krijgt geen veld")
+    for klasse in (*KLASSEN, None):
+        n = klasse_telling[klasse]
+        zeg(f"  {klasse or 'onbekend':<12} {n:>4} wagens ({n / len(vloot) * 100:.1f}%)")
+    zeg()
+
     bak_telling = Counter(r["versnellingsbak"] for r in vloot)
     zeg("versnellingsbak — apart veld, geen toebehoren, altijd ingevuld")
     for bak, n in bak_telling.most_common():
@@ -948,6 +967,9 @@ def bouw(vloot: list[dict], stempel: str, basis_url: str,
             "bouwjaar": r["bouwjaar"],
             "versnellingsbak": r["versnellingsbak"],
         }
+        # Een onbekende klasse krijgt geen veld, net als een onbekende euronorm.
+        if r["klasse"]:
+            wagen["klasse"] = r["klasse"]
         # Alleen wegschrijven als we de norm kennen — zelfde regel als bij de
         # toebehoren. Een ontbrekend veld zegt "onbekend", niet "geen norm".
         if norm:

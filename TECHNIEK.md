@@ -8,7 +8,7 @@ waarom, staat in [`FUNCTIONEEL.md`](FUNCTIONEEL.md) — de regels achter de filt
 en de talen worden daar uitgelegd en hier niet herhaald. Het gaat ook niet over de feed:
 wat daarin staat leest een partner op `gbfs/index.html` en in de
 [GBFS-specificatie](https://github.com/MobilityData/gbfs). Voor het bedienen van het
-gereedschap is `README.md` de plek.
+gereedschap is `BEDIENING.md` de plek; hoe alle onderdelen samenhangen staat in `README.md`.
 
 ---
 
@@ -81,7 +81,7 @@ De kaart haalt **twee** bestanden op uit `../gbfs` (`GBFS_BASIS`, bovenaan `inde
   juiste) schrijfwijzen kunnen dragen.
 - `degage_vehicles.json` — de Dégage-uitbreiding op GBFS, met per auto: `station_id`,
   `naam`, `merk`, `model`, `carrosserie`, `brandstof`, `zitplaatsen`, `bouwjaar`,
-  `versnellingsbak`, `euronorm`, `toebehoren`, `plaats`, `postcode`, `district`, `contact`.
+  `versnellingsbak`, `klasse`, `euronorm`, `toebehoren`, `plaats`, `postcode`, `district`, `contact`.
   `plaats` is de gemeente met rechtgezette hoofdletters ("GENTBRUGGE" en "gent"
   worden "Gentbrugge" en "Gent"); dat gebeurt in `plaatsnaam()` in de generator, die
   alleen hoofdletters verandert en nooit letters. De kaart toont wat de feed draagt.
@@ -151,12 +151,6 @@ de wagen vallen (`wagenPast()`, dezelfde regel als voor een onbekende euronorm).
 toont het label `popup.nieuw` op de plaats van merk en model, met `popup.nieuwUitleg`
 eronder; de balk met dichtstbijzijnde auto's toont hetzelfde label. De stijl is
 `.wagen__nieuw` in `index.css`.
-
-Om ze te vinden is er een eigen filtergroep, `nieuw`: de sectie `#sectie-nieuw` bovenaan
-de filters, met één keuze (`filter.nieuw`) in `#filter-nieuw`, de set
-`staat.gekozenNieuw` en een regel in `wagenPast()` en `redenen()`
-(`reden.nietNieuw`). `staat.aantalNieuw` telt ze in `laden()`; bij 0 verbergt
-`bouwFilters()` de hele sectie.
 
 Een API-auto zonder bruikbare `geoPosition` (ontbrekend, geen getal, of 0) wordt
 overgeslagen: een auto zonder plek kan niet op een kaart.
@@ -231,7 +225,8 @@ laden()
 
 Alles wat de kaart weet, staat in het object **`staat`**. De gekozen filters leven daar als
 `Set`'s (`gekozenBrandstof`, `gekozenSoort`, `gekozenBak`, `gekozenVlaggen`) en als losse
-ondergrenzen (`minZit`, `minNorm`, `jaarVan`) en bovengrenzen (`maxBus`, `maxTrein`). De
+ondergrenzen (`minZit`, `minNorm`, `jaarVan`), en voor het OV-filter als `gekozenOvModi`,
+`ovBeide` en per modus de grenzen in `ovModus` (`maxM`, `minFreq`). De
 aangevinkte vakjes in de
 opmaak zijn daar een afspiegeling van, nooit de bron — daarom kan de filterlijst opnieuw
 getekend worden (bij een taalwissel) zonder dat er een keuze sneuvelt.
@@ -257,17 +252,63 @@ tussen haakjes achter zijn naam (op hetzelfde punt dus "Ledeberg" bij de ene en 
 bij de andere), en het merkteken op de pin volgt `passende` en niet `station.wagens`. De postcode
 wordt niet meer getoond.
 
+**Eén popup per auto, niet per stip.** Een stip blijft één standplaats, maar de popup toont
+standaard één wagen: `popupHtml(station, wagen)` vraagt `popupWagens()` welke. Uit de balk
+en na een zoekopdracht is dat de aangeklikte wagen. Bij een klik op de stip is het de eerste
+die door de filters komt. De andere wagens op die plek staan eronder als `.ook-knop`
+(`ookHierHtml()`). Die knop draagt het `station_id` en de plaats van de wagen in
+`station.wagens`, want de popup is HTML-tekst. `wisselWagen()` zet de andere wagen met
+`setContent()` in dezelfde popup.
+
+Drie dingen die je daarbij niet mag vergeten:
+
+- **De klik op `.ook-knop` stopt bij de popup** (`stopPropagation`). Leaflet beslist pas bij
+  de kaart of een klik binnen een popup viel, door vanaf het doel omhoog te lopen. Na
+  `setContent()` hangt de knop nergens meer, dus zonder die stop sloot de popup zich meteen.
+- **`setContent()` vervangt bij een stip de inhoudsfunctie van `bindPopup`.** De
+  `click`-afhandelaar in `teken()` zet die functie daarom bij elke klik terug, anders opent
+  de stip de volgende keer met de wagen van daarnet.
+- **De balk onthoudt naast `balkPopupStation` ook `balkPopupWagen`.** Een tweede klik op
+  hetzelfde kaartje sluit de popup, en een klik op de buurwagen wisselt hem.
+
+Met `staat.samenTonen` (de schakelaar `#knop-samen` in de instellingen, standaard uit) geeft
+`popupWagens()` gewoon `station.wagens` terug, zoals vroeger. Omzetten sluit een
+openstaande popup, want die draagt afgewerkte tekst volgens de oude keuze.
+
 ## 6. Filters
 
 `wagenPast(w)` is de enige plek waar beslist wordt of een auto door de filters komt.
-De twee OV-bovengrenzen (`maxBus` en `maxTrein`) zijn de enige die niet naar de auto kijken
-maar naar zijn standplaats (`haltAfstandVan()`, `stationAfstandVan()`); horen er geen
-OV-gegevens bij de feed, dan verdwijnen die schuiven (`bouwAfstanden()`).
+Het OV-filter is het enige dat niet naar de auto kijkt maar naar zijn standplaats
+(`ovPast()`, `ovModusPast()`). Elke modus (`OV_MODI`: bus, tram, trein) is een blok in de
+opmaak met twee schuiven, zonder aanvinkvakje. `staat.gekozenOvModi` wordt afgeleid uit de
+schuiven (`ovModiBijwerken()`): een modus filtert zodra `maxM` of `minFreq` niet `null` is.
+`wisOvModus()` zet beide schuiven terug op "alles". Bij twee of meer modi is het "of",
+tenzij `ovBeide` aanstaat. Een modus zonder gegevens verdwijnt, en het hele blok als er
+geen OV-gegevens bij de feed horen (`bouwOv()`).
 
-Hun standen komen uit `AFSTAND_LADDER` — ronde afstanden van 250 m tot 10 km — waarvan
-`afstandDrempels()` alles wegsnijdt wat op of boven de verste standplaats ligt: een stand die
-niets wegfiltert, doet de schuif over haar bereik liegen. De ladder staat **aflopend**, zodat
-verder naar rechts strenger is, net als bij elke andere schuif hier. Dat de filters op iets
+**De afstandsschuif** begint links met "elke afstand", en daar staat hij in rust; daarna
+volgen de afstanden van klein naar groot (250 m eerst). Welke stand "alles" is, draagt
+elke OV-schuif als `data-rust` (nu overal `0`). `wisOvModus()` en het telbolletje op
+de kop (`werkKoppenBij()`) kijken daarnaar; wie een nieuwe schuif toevoegt, hoeft niets te
+doen zolang 0 zijn ruststand is.
+
+**De stand staat ín de balk** bij de zes OV-schuiven (`.schuif--in`), niet eronder: de balk
+is een pil van 26 px met de tekst erin. `zetSchuifIn()`, aangeroepen vanuit
+`zetSchuiftekst()`, zet `duim-links` als het bolletje op de linkerhelft staat (dan gaat de
+tekst naar rechts) en `is-gezet` als de schuif niet in rust staat. De balk is getekend met
+pseudo-elementen voor zowel WebKit als Firefox; wie hem aanpast, test in beide.
+
+`ovDeel()` leest per modus `bus`, `tram` of `trein` uit `ov.json`. Bus en tram zijn elk de
+dichtste halte met alleen die soort ritten. De gemengde `halte`, de dichtste met bus óf
+tram, dient alleen nog als terugval in de popup (`ovHtml()`) voor zo'n ouder bestand. Een `ov.json` van vóór 08-10-2026 heeft geen `bus` en
+`tram`; dan verdwijnen die twee blokken tot `haal_ov.py` opnieuw gedraaid heeft.
+
+De afstanden komen uit `AFSTAND_LADDER` — ronde afstanden van 250 m tot 10 km — waarvan
+`ovStanden()` alles wegsnijdt wat op of boven de verste standplaats ligt: een stand die
+niets wegfiltert, doet de schuif over haar bereik liegen. Die ladder staat **oplopend**,
+met "elke afstand" er links voor. De frequenties komen uit `FREQ_LADDER` (per modus),
+oplopend, met alleen de standen boven de rustigste en tot de drukste halte; ze rekenen
+per richting, net als de popup (`freqPerRichting()`). Dat de filters op iets
 kunnen staan, hangt aan `haal_ov.py`: dat zoekt tot 10 km door, zodat er bij élke standplaats
 een gemeten afstand staat in plaats van een gat.
 Tussen groepen geldt EN, binnen een groep OF — behalve bij de vlaggen, waar ook binnen de
@@ -318,8 +359,15 @@ popup kwam dan half boven het scherm uit. Eerst stilstaan, dan openen.
 
 ### Een popup die niet past
 
+Een popup krijgt **nooit een scrollbalk**. `popupRanden()` geeft Leaflet daarom geen
+`maxHeight` meer (dan scrolt Leaflet de inhoud), maar de vrije hoogte als `pasHoogte`. Na
+het openen, en na het openklappen van een uitleg, meet `pasPopupIn()` de popup; is hij
+hoger, dan krijgt de inhoud een CSS-`zoom` tot hij past, nooit onder `MIN_ZOOM` (0,6).
+`zoom` en geen `transform: scale`, zodat Leaflet de verkleinde maat meet en de punt op de
+stip blijft.
+
 Op een telefoon is wat er tussen het paneel en de balk overblijft soms kleiner dan de popup
-zelf. Een `maxHeight` alleen lost dat niet op: onder een leesbare hoogte duwt Leaflet de
+zelf. Een kleinere popup alleen lost dat niet op: onder een leesbare hoogte duwt Leaflet de
 popup tegen de bovenrand en valt de onderkant van het scherm. `popupRanden()` geeft daarom
 bij plaatsgebrek de plaats **onderaan** terug — daar liggen de meldknop en de balk — en pas
 als het dan nog steeds te krap is, die bovenaan.

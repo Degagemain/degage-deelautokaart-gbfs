@@ -1,5 +1,5 @@
 {
- "toelichting": "Per standplaats de Mobiscore (Departement Omgeving, Vlaamse overheid) en feiten over openbaar vervoer, door scripts/haal_ov.py. De Mobiscore is de totaalscore van de hectarecel, opgevraagd op het vervaagde punt uit de feed. De OV-feiten zijn keuzes, geen gegevens: zie de uitleg bovenaan dat script. Bussen en trams per richting (de drukste kant van de halte), treinen als totaal gedeeld door twee; flexvervoer telt niet mee; afstanden in vogelvlucht.",
+ "toelichting": "Per standplaats de Mobiscore (Departement Omgeving, Vlaamse overheid) en feiten over openbaar vervoer, door scripts/haal_ov.py. De Mobiscore is de totaalscore van de hectarecel, opgevraagd op het vervaagde punt uit de feed. De OV-feiten zijn keuzes, geen gegevens: zie de uitleg bovenaan dat script. Bussen en trams per richting (de drukste kant van de halte), treinen als totaal gedeeld door twee. `bus` en `tram` zijn de dichtste halte met alleen die soort (voor het filter en de popup); `halte` de dichtste met bus of tram, voor een kaart die dat nog verwacht; flexvervoer telt niet mee; afstanden in vogelvlucht.",
  "voor_feed": "2026-07-31T00:00:00+02:00",
  "referentiedag": "2026-09-08",
  "venster": "07:00-19:00",
@@ -42,6 +42,18 @@
     "tram": false
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Gentbrugge Tweekapellenstraat",
+    "m": 120,
+    "per_richting": 4.8,
+    "per_uur": 9.7
+   },
+   "tram": {
+    "naam": "Ledeberg Van Lokerenstraat",
+    "m": 880,
+    "per_richting": 8.2,
+    "per_uur": 16.0
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -63,6 +75,12 @@
     "tram": false
    },
    "haltes_binnen": 4,
+   "bus": {
+    "naam": "Sint-Rochus Leopoldstraat",
+    "m": 320,
+    "per_richting": 2.2,
+    "per_uur": 4.2
+   },
    "trein": {
     "naam": {
      "fr": "Hal",
@@ -84,6 +102,18 @@
     "tram": false
    },
    "haltes_binnen": 14,
+   "bus": {
+    "naam": "Antwerpen Stuivenberg",
+    "m": 90,
+    "per_richting": 3.9,
+    "per_uur": 6.9
+   },
+   "tram": {
+    "naam": "Antwerpen Handel Metro",
+    "m": 480,
+    "per_richting": 26.2,
+    "per_uur": 52.3
+   },
    "trein": {
     "naam": {
      "fr": "Anvers-Central",
@@ -105,6 +135,18 @@
     "tram": false
    },
    "haltes_binnen": 13,
+   "bus": {
+    "naam": "Ledeberg Gaston Crommenlaan",
+    "m": 150,
+    "per_richting": 12.0,
+    "per_uur": 24.0
+   },
+   "tram": {
+    "naam": "Ledeberg P+R Ledeberg",
+    "m": 250,
+    "per_richting": 11.5,
+    "per_uur": 22.9
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -126,6 +168,18 @@
     "tram": false
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Mariakerke Jutestraat",
+    "m": 40,
+    "per_richting": 10.9,
+    "per_uur": 21.6
+   },
+   "tram": {
+    "naam": "Gent Guislainstraat",
+    "m": 1190,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Tronchiennes",
@@ -147,6 +201,18 @@
     "tram": false
    },
    "haltes_binnen": 11,
+   "bus": {
+    "naam": "Sint-Amandsberg Grondwetlaan",
+    "m": 180,
+    "per_richting": 13.2,
+    "per_uur": 25.9
+   },
+   "tram": {
+    "naam": "Gent Heilig-Kerst",
+    "m": 1620,
+    "per_richting": 6.7,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -168,6 +234,18 @@
     "tram": true
    },
    "haltes_binnen": 5,
+   "bus": {
+    "naam": "Gentbrugge Tennisstraat",
+    "m": 510,
+    "per_richting": 8.1,
+    "per_uur": 8.1
+   },
+   "tram": {
+    "naam": "Gentbrugge Tennisstraat",
+    "m": 490,
+    "per_richting": 7.8,
+    "per_uur": 15.7
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -189,6 +267,18 @@
     "tram": false
    },
    "haltes_binnen": 1,
+   "bus": {
+    "naam": "Schelderode Kerk",
+    "m": 520,
+    "per_richting": 2.6,
+    "per_uur": 5.0
+   },
+   "tram": {
+    "naam": "Zwijnaarde Bibliotheek",
+    "m": 3720,
+    "per_richting": 5.8,
+    "per_uur": 5.8
+   },
    "trein": {
     "naam": {
      "fr": "Moortsele",
@@ -210,6 +300,18 @@
     "tram": false
    },
    "haltes_binnen": 11,
+   "bus": {
+    "naam": "Sint-Amandsberg Rozebroekstraat",
+    "m": 240,
+    "per_richting": 3.8,
+    "per_uur": 7.4
+   },
+   "tram": {
+    "naam": "Gent Heilig-Kerst",
+    "m": 1760,
+    "per_richting": 6.7,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -231,6 +333,12 @@
     "tram": false
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Brugge Sabbestraat",
+    "m": 140,
+    "per_richting": 6.2,
+    "per_uur": 12.5
+   },
    "trein": {
     "naam": {
      "fr": "Bruges-Saint-Pierre",
@@ -252,6 +360,12 @@
     "tram": false
    },
    "haltes_binnen": 6,
+   "bus": {
+    "naam": "Halle Don Bosco",
+    "m": 330,
+    "per_richting": 2.2,
+    "per_uur": 5.3
+   },
    "trein": {
     "naam": {
      "fr": "Hal",
@@ -273,6 +387,18 @@
     "tram": false
    },
    "haltes_binnen": 3,
+   "bus": {
+    "naam": "Evergem Molenhoek",
+    "m": 370,
+    "per_richting": 0.2,
+    "per_uur": 0.2
+   },
+   "tram": {
+    "naam": "Gent Van Beverenplein (F. Ferrerlaan)",
+    "m": 3940,
+    "per_richting": 7.6,
+    "per_uur": 7.6
+   },
    "trein": {
     "naam": {
      "fr": "Evergem",
@@ -294,6 +420,12 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Deerlijk Sint-Rochusstraat",
+    "m": 140,
+    "per_richting": 0.2,
+    "per_uur": 0.2
+   },
    "trein": {
     "naam": {
      "fr": "Vichte",
@@ -315,6 +447,18 @@
     "tram": false
    },
    "haltes_binnen": 7,
+   "bus": {
+    "naam": "Sint-Amandsberg Snellaertplein",
+    "m": 230,
+    "per_richting": 3.6,
+    "per_uur": 3.6
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 2030,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -336,6 +480,18 @@
     "tram": false
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Merelbeke Kon. Elisabethlaan",
+    "m": 150,
+    "per_richting": 0.3,
+    "per_uur": 0.6
+   },
+   "tram": {
+    "naam": "Melle Leeuw",
+    "m": 1290,
+    "per_richting": 7.8,
+    "per_uur": 7.8
+   },
    "trein": {
     "naam": {
      "fr": "Merelbeke",
@@ -357,6 +513,18 @@
     "tram": false
    },
    "haltes_binnen": 1,
+   "bus": {
+    "naam": "Vinderhoute Neerstraat",
+    "m": 200,
+    "per_richting": 2.2,
+    "per_uur": 4.4
+   },
+   "tram": {
+    "naam": "Gent Hortensiastraat",
+    "m": 5140,
+    "per_richting": 7.7,
+    "per_uur": 15.3
+   },
    "trein": {
     "naam": {
      "fr": "Tronchiennes",
@@ -378,6 +546,18 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Sint-Amandsberg Zavelput",
+    "m": 140,
+    "per_richting": 8.4,
+    "per_uur": 16.4
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 1980,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -399,6 +579,12 @@
     "tram": false
    },
    "haltes_binnen": 11,
+   "bus": {
+    "naam": "Brugge Vlamingdam",
+    "m": 170,
+    "per_richting": 7.8,
+    "per_uur": 15.4
+   },
    "trein": {
     "naam": {
      "fr": "Bruges-Saint-Pierre",
@@ -420,6 +606,18 @@
     "tram": true
    },
    "haltes_binnen": 13,
+   "bus": {
+    "naam": "Ledeberg Botermarkt",
+    "m": 230,
+    "per_richting": 5.2,
+    "per_uur": 10.2
+   },
+   "tram": {
+    "naam": "Ledeberg Botermarkt",
+    "m": 190,
+    "per_richting": 11.2,
+    "per_uur": 22.5
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -441,6 +639,12 @@
     "tram": false
    },
    "haltes_binnen": 2,
+   "bus": {
+    "naam": "Olsene Kerk",
+    "m": 110,
+    "per_richting": 2.3,
+    "per_uur": 4.6
+   },
    "trein": {
     "naam": {
      "fr": "Waregem",
@@ -462,6 +666,18 @@
     "tram": true
    },
    "haltes_binnen": 16,
+   "bus": {
+    "naam": "Gent Vlaamsekaai",
+    "m": 350,
+    "per_richting": 2.4,
+    "per_uur": 7.1
+   },
+   "tram": {
+    "naam": "Ledeberg Van Lokerenstraat",
+    "m": 340,
+    "per_richting": 8.2,
+    "per_uur": 16.0
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -483,6 +699,18 @@
     "tram": false
    },
    "haltes_binnen": 0,
+   "bus": {
+    "naam": "Drongen Brug",
+    "m": 880,
+    "per_richting": 2.2,
+    "per_uur": 4.3
+   },
+   "tram": {
+    "naam": "Gent Guislainstraat",
+    "m": 4260,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Tronchiennes",
@@ -504,6 +732,12 @@
     "tram": false
    },
    "haltes_binnen": 6,
+   "bus": {
+    "naam": "Sint-Kruis Ter Lo",
+    "m": 210,
+    "per_richting": 3.0,
+    "per_uur": 6.0
+   },
    "trein": {
     "naam": {
      "fr": "Bruges",
@@ -525,6 +759,18 @@
     "tram": true
    },
    "haltes_binnen": 15,
+   "bus": {
+    "naam": "Antwerpen Sint-Andries",
+    "m": 90,
+    "per_richting": 8.0,
+    "per_uur": 16.0
+   },
+   "tram": {
+    "naam": "Antwerpen Sint-Andries",
+    "m": 90,
+    "per_richting": 5.8,
+    "per_uur": 11.4
+   },
    "trein": {
     "naam": {
      "fr": "Anvers-Central",
@@ -546,6 +792,18 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Gent Heymanslaan",
+    "m": 260,
+    "per_richting": 3.2,
+    "per_uur": 6.3
+   },
+   "tram": {
+    "naam": "Gent UZ",
+    "m": 450,
+    "per_richting": 6.8,
+    "per_uur": 6.8
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -567,6 +825,18 @@
     "tram": false
    },
    "haltes_binnen": 24,
+   "bus": {
+    "naam": "Gent Parkplein (Burggravenlaan)",
+    "m": 160,
+    "per_richting": 15.2,
+    "per_uur": 30.4
+   },
+   "tram": {
+    "naam": "Gent Sint-Pietersstation perron 20",
+    "m": 210,
+    "per_richting": 12.6,
+    "per_uur": 12.6
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -588,6 +858,12 @@
     "tram": false
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Petegem-aan-de-Leie Gaversesteenweg",
+    "m": 160,
+    "per_richting": 1.3,
+    "per_uur": 2.6
+   },
    "trein": {
     "naam": {
      "fr": "Deinze",
@@ -609,6 +885,18 @@
     "tram": false
    },
    "haltes_binnen": 5,
+   "bus": {
+    "naam": "Gent Bernadette Kerk",
+    "m": 240,
+    "per_richting": 4.8,
+    "per_uur": 9.5
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 1500,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -630,6 +918,18 @@
     "tram": false
    },
    "haltes_binnen": 16,
+   "bus": {
+    "naam": "Mariakerke Machinistenpark",
+    "m": 100,
+    "per_richting": 3.8,
+    "per_uur": 7.4
+   },
+   "tram": {
+    "naam": "Gent Hortensiastraat",
+    "m": 610,
+    "per_richting": 7.7,
+    "per_uur": 15.3
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -651,6 +951,18 @@
     "tram": false
    },
    "haltes_binnen": 4,
+   "bus": {
+    "naam": "Oostakker Wittewalle",
+    "m": 110,
+    "per_richting": 0.8,
+    "per_uur": 1.2
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 5450,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -672,6 +984,18 @@
     "tram": false
    },
    "haltes_binnen": 1,
+   "bus": {
+    "naam": "Vinderhoute Neerstraat",
+    "m": 260,
+    "per_richting": 2.2,
+    "per_uur": 4.4
+   },
+   "tram": {
+    "naam": "Gent Hortensiastraat",
+    "m": 5110,
+    "per_richting": 7.7,
+    "per_uur": 15.3
+   },
    "trein": {
     "naam": {
      "fr": "Tronchiennes",
@@ -693,6 +1017,18 @@
     "tram": false
    },
    "haltes_binnen": 12,
+   "bus": {
+    "naam": "Gent Crappéstraat",
+    "m": 180,
+    "per_richting": 3.8,
+    "per_uur": 7.4
+   },
+   "tram": {
+    "naam": "Gent Theresianenstraat",
+    "m": 1340,
+    "per_richting": 6.7,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -714,6 +1050,18 @@
     "tram": false
    },
    "haltes_binnen": 11,
+   "bus": {
+    "naam": "Destelbergen Lossystraat",
+    "m": 100,
+    "per_richting": 4.3,
+    "per_uur": 8.5
+   },
+   "tram": {
+    "naam": "Ledeberg Van Lokerenstraat",
+    "m": 1550,
+    "per_richting": 8.2,
+    "per_uur": 16.0
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -735,6 +1083,18 @@
     "tram": false
    },
    "haltes_binnen": 14,
+   "bus": {
+    "naam": "Sint-Amandsberg Aannemersstraat",
+    "m": 50,
+    "per_richting": 7.1,
+    "per_uur": 14.1
+   },
+   "tram": {
+    "naam": "Ledeberg Van Lokerenstraat",
+    "m": 1360,
+    "per_richting": 8.2,
+    "per_uur": 16.0
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -756,6 +1116,18 @@
     "tram": false
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Gent Maaltebruggestraat",
+    "m": 100,
+    "per_richting": 6.5,
+    "per_uur": 12.8
+   },
+   "tram": {
+    "naam": "Gent Sint-Pietersaalststraat",
+    "m": 920,
+    "per_richting": 12.8,
+    "per_uur": 25.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -777,6 +1149,18 @@
     "tram": false
    },
    "haltes_binnen": 17,
+   "bus": {
+    "naam": "Antwerpen AZ Stuivenberg",
+    "m": 30,
+    "per_richting": 6.8,
+    "per_uur": 6.8
+   },
+   "tram": {
+    "naam": "Antwerpen Handel Metro",
+    "m": 360,
+    "per_richting": 26.2,
+    "per_uur": 52.3
+   },
    "trein": {
     "naam": {
      "fr": "Anvers-Central",
@@ -798,6 +1182,18 @@
     "tram": true
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Gent Haardstedestraat",
+    "m": 430,
+    "per_richting": 8.1,
+    "per_uur": 8.1
+   },
+   "tram": {
+    "naam": "Zwijnaarde Gestichtstraat",
+    "m": 290,
+    "per_richting": 5.8,
+    "per_uur": 11.5
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -819,6 +1215,18 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Wondelgem Roodborstjesstraat",
+    "m": 360,
+    "per_richting": 3.5,
+    "per_uur": 3.5
+   },
+   "tram": {
+    "naam": "Gent Van Beverenplein (F. Ferrerlaan)",
+    "m": 1110,
+    "per_richting": 7.6,
+    "per_uur": 7.6
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -840,6 +1248,12 @@
     "tram": false
    },
    "haltes_binnen": 6,
+   "bus": {
+    "naam": "Deerlijk Kortrijkse Heerweg",
+    "m": 140,
+    "per_richting": 2.3,
+    "per_uur": 4.6
+   },
    "trein": {
     "naam": {
      "fr": "Harelbeke",
@@ -861,6 +1275,18 @@
     "tram": false
    },
    "haltes_binnen": 4,
+   "bus": {
+    "naam": "Drongen Baarleboslaan",
+    "m": 540,
+    "per_richting": 2.2,
+    "per_uur": 4.3
+   },
+   "tram": {
+    "naam": "Gent Meersstraat",
+    "m": 7490,
+    "per_richting": 18.4,
+    "per_uur": 36.8
+   },
    "trein": {
     "naam": {
      "fr": "Landegem",
@@ -882,6 +1308,12 @@
     "tram": false
    },
    "haltes_binnen": 7,
+   "bus": {
+    "naam": "Heule Watermolenkerk",
+    "m": 110,
+    "per_richting": 2.0,
+    "per_uur": 4.0
+   },
    "trein": {
     "naam": {
      "fr": "Courtrai",
@@ -903,6 +1335,18 @@
     "tram": false
    },
    "haltes_binnen": 6,
+   "bus": {
+    "naam": "Merelbeke Bergstraat",
+    "m": 150,
+    "per_richting": 4.5,
+    "per_uur": 8.8
+   },
+   "tram": {
+    "naam": "Gentbrugge Moscou",
+    "m": 1890,
+    "per_richting": 11.2,
+    "per_uur": 11.2
+   },
    "trein": {
     "naam": {
      "fr": "Merelbeke",
@@ -924,6 +1368,12 @@
     "tram": false
    },
    "haltes_binnen": 5,
+   "bus": {
+    "naam": "Bonheiden AZ Imelda",
+    "m": 90,
+    "per_richting": 4.2,
+    "per_uur": 4.2
+   },
    "trein": {
     "naam": {
      "fr": "Hever",
@@ -945,6 +1395,12 @@
     "tram": false
    },
    "haltes_binnen": 2,
+   "bus": {
+    "naam": "Rozebeke Dorp",
+    "m": 140,
+    "per_richting": 0.4,
+    "per_uur": 0.8
+   },
    "trein": {
     "naam": {
      "fr": "Munkzwalm",
@@ -966,6 +1422,18 @@
     "tram": false
    },
    "haltes_binnen": 11,
+   "bus": {
+    "naam": "Gent Malem (Rooigemlaan)",
+    "m": 120,
+    "per_richting": 7.2,
+    "per_uur": 14.2
+   },
+   "tram": {
+    "naam": "Gent Theresianenstraat",
+    "m": 1050,
+    "per_richting": 6.7,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -987,6 +1455,12 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Kortrijk Samenkomst",
+    "m": 40,
+    "per_richting": 4.4,
+    "per_uur": 8.8
+   },
    "trein": {
     "naam": {
      "fr": "Courtrai",
@@ -1008,6 +1482,18 @@
     "tram": false
    },
    "haltes_binnen": 22,
+   "bus": {
+    "naam": "Gent Sint-Pietersstation perron 6",
+    "m": 260,
+    "per_richting": 2.7,
+    "per_uur": 2.7
+   },
+   "tram": {
+    "naam": "Gent Meersstraat",
+    "m": 330,
+    "per_richting": 18.4,
+    "per_uur": 36.8
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -1029,6 +1515,18 @@
     "tram": true
    },
    "haltes_binnen": 41,
+   "bus": {
+    "naam": "Antwerpen Paardenmarkt",
+    "m": 140,
+    "per_richting": 27.9,
+    "per_uur": 56.2
+   },
+   "tram": {
+    "naam": "Antwerpen Paardenmarkt",
+    "m": 140,
+    "per_richting": 12.6,
+    "per_uur": 25.2
+   },
    "trein": {
     "naam": {
      "fr": "Anvers-Central",
@@ -1050,6 +1548,18 @@
     "tram": false
    },
    "haltes_binnen": 2,
+   "bus": {
+    "naam": "Drongen Brug",
+    "m": 350,
+    "per_richting": 2.2,
+    "per_uur": 4.3
+   },
+   "tram": {
+    "naam": "Gent Nieuwevaartbrug",
+    "m": 4120,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Tronchiennes",
@@ -1071,6 +1581,18 @@
     "tram": false
    },
    "haltes_binnen": 21,
+   "bus": {
+    "naam": "Gent Notelaarstraat",
+    "m": 220,
+    "per_richting": 7.3,
+    "per_uur": 14.7
+   },
+   "tram": {
+    "naam": "Gent Nieuwevaartbrug",
+    "m": 300,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -1092,6 +1614,12 @@
     "tram": false
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Deinze Station perron 1",
+    "m": 180,
+    "per_richting": 2.8,
+    "per_uur": 2.8
+   },
    "trein": {
     "naam": {
      "fr": "Deinze",
@@ -1113,6 +1641,18 @@
     "tram": false
    },
    "haltes_binnen": 12,
+   "bus": {
+    "naam": "Zwijnaarde De Deynestraat",
+    "m": 100,
+    "per_richting": 7.7,
+    "per_uur": 14.8
+   },
+   "tram": {
+    "naam": "Zwijnaarde Gestichtstraat",
+    "m": 630,
+    "per_richting": 5.8,
+    "per_uur": 11.5
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -1134,6 +1674,18 @@
     "tram": false
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Wondelgem Roodborstjesstraat",
+    "m": 320,
+    "per_richting": 3.5,
+    "per_uur": 3.5
+   },
+   "tram": {
+    "naam": "Gent Van Beverenplein (F. Ferrerlaan)",
+    "m": 900,
+    "per_richting": 7.6,
+    "per_uur": 7.6
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -1155,6 +1707,12 @@
     "tram": false
    },
    "haltes_binnen": 3,
+   "bus": {
+    "naam": "Poperinge Boeschepestraat",
+    "m": 640,
+    "per_richting": 0.2,
+    "per_uur": 0.2
+   },
    "trein": {
     "naam": {
      "fr": "Poperinge",
@@ -1176,6 +1734,18 @@
     "tram": true
    },
    "haltes_binnen": 12,
+   "bus": {
+    "naam": "Gent Koning Albertbrug (Neermeerskaai)",
+    "m": 410,
+    "per_richting": 12.6,
+    "per_uur": 24.9
+   },
+   "tram": {
+    "naam": "Gent Bernard Spaelaan",
+    "m": 230,
+    "per_richting": 18.3,
+    "per_uur": 36.6
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -1197,6 +1767,18 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Melle Tuinstraat",
+    "m": 140,
+    "per_richting": 4.4,
+    "per_uur": 9.1
+   },
+   "tram": {
+    "naam": "Melle Leeuw",
+    "m": 580,
+    "per_richting": 7.8,
+    "per_uur": 7.8
+   },
    "trein": {
     "naam": {
      "fr": "Merelbeke",
@@ -1218,6 +1800,18 @@
     "tram": false
    },
    "haltes_binnen": 30,
+   "bus": {
+    "naam": "Gent Jan van Gentstraat (Hagelandkaai)",
+    "m": 90,
+    "per_richting": 21.9,
+    "per_uur": 21.9
+   },
+   "tram": {
+    "naam": "Gent Duivelsteen",
+    "m": 640,
+    "per_richting": 8.1,
+    "per_uur": 15.9
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -1239,6 +1833,18 @@
     "tram": true
    },
    "haltes_binnen": 16,
+   "bus": {
+    "naam": "Oostende Koninginnelaan",
+    "m": 120,
+    "per_richting": 6.0,
+    "per_uur": 12.0
+   },
+   "tram": {
+    "naam": "Oostende Koninginnelaan",
+    "m": 210,
+    "per_richting": 4.1,
+    "per_uur": 8.0
+   },
    "trein": {
     "naam": {
      "fr": "Ostende",
@@ -1260,6 +1866,18 @@
     "tram": false
    },
    "haltes_binnen": 11,
+   "bus": {
+    "naam": "Mariakerke Molenwalstraat",
+    "m": 140,
+    "per_richting": 3.8,
+    "per_uur": 7.4
+   },
+   "tram": {
+    "naam": "Gent Hortensiastraat",
+    "m": 820,
+    "per_richting": 7.7,
+    "per_uur": 15.3
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -1281,6 +1899,18 @@
     "tram": false
    },
    "haltes_binnen": 0,
+   "bus": {
+    "naam": "Vinderhoute Neerstraat",
+    "m": 860,
+    "per_richting": 2.2,
+    "per_uur": 4.4
+   },
+   "tram": {
+    "naam": "Gent Hortensiastraat",
+    "m": 5440,
+    "per_richting": 7.7,
+    "per_uur": 15.3
+   },
    "trein": {
     "naam": {
      "fr": "Landegem",
@@ -1302,6 +1932,12 @@
     "tram": false
    },
    "haltes_binnen": 11,
+   "bus": {
+    "naam": "Sint-Andries Hertsvelde",
+    "m": 190,
+    "per_richting": 3.0,
+    "per_uur": 5.9
+   },
    "trein": {
     "naam": {
      "fr": "Bruges",
@@ -1323,6 +1959,12 @@
     "tram": false
    },
    "haltes_binnen": 6,
+   "bus": {
+    "naam": "Sint-Kruis Brieversweg",
+    "m": 110,
+    "per_richting": 3.2,
+    "per_uur": 6.2
+   },
    "trein": {
     "naam": {
      "fr": "Bruges",
@@ -1344,6 +1986,18 @@
     "tram": true
    },
    "haltes_binnen": 11,
+   "bus": {
+    "naam": "Gentbrugge Stelplaats",
+    "m": 370,
+    "per_richting": 11.8,
+    "per_uur": 23.2
+   },
+   "tram": {
+    "naam": "Gentbrugge Stelplaats",
+    "m": 260,
+    "per_richting": 9.2,
+    "per_uur": 16.7
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -1365,6 +2019,18 @@
     "tram": false
    },
    "haltes_binnen": 30,
+   "bus": {
+    "naam": "Sint-Amandsberg Heernisplein",
+    "m": 130,
+    "per_richting": 9.1,
+    "per_uur": 18.2
+   },
+   "tram": {
+    "naam": "Gent Zuid perron 1",
+    "m": 1130,
+    "per_richting": 19.8,
+    "per_uur": 19.8
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -1386,6 +2052,18 @@
     "tram": false
    },
    "haltes_binnen": 23,
+   "bus": {
+    "naam": "Gent Schoolstraat",
+    "m": 110,
+    "per_richting": 3.8,
+    "per_uur": 7.4
+   },
+   "tram": {
+    "naam": "Gent Heilig-Kerst",
+    "m": 1650,
+    "per_richting": 6.7,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -1407,6 +2085,18 @@
     "tram": false
    },
    "haltes_binnen": 3,
+   "bus": {
+    "naam": "Mariakerke Verschansingsstraat",
+    "m": 300,
+    "per_richting": 0.2,
+    "per_uur": 0.2
+   },
+   "tram": {
+    "naam": "Gent Guislainstraat",
+    "m": 2860,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Tronchiennes",
@@ -1428,6 +2118,18 @@
     "tram": false
    },
    "haltes_binnen": 6,
+   "bus": {
+    "naam": "Merelbeke Hebbelynckstraat",
+    "m": 200,
+    "per_richting": 4.8,
+    "per_uur": 9.3
+   },
+   "tram": {
+    "naam": "Zwijnaarde Molen",
+    "m": 2280,
+    "per_richting": 5.8,
+    "per_uur": 11.7
+   },
    "trein": {
     "naam": {
      "fr": "Merelbeke",
@@ -1449,6 +2151,18 @@
     "tram": true
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Ledeberg Botermarkt",
+    "m": 290,
+    "per_richting": 5.2,
+    "per_uur": 10.2
+   },
+   "tram": {
+    "naam": "Ledeberg Botermarkt",
+    "m": 190,
+    "per_richting": 11.2,
+    "per_uur": 22.5
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -1470,6 +2184,12 @@
     "tram": false
    },
    "haltes_binnen": 0,
+   "bus": {
+    "naam": "Meigem Berg",
+    "m": 1800,
+    "per_richting": 0.2,
+    "per_uur": 0.2
+   },
    "trein": {
     "naam": {
      "fr": "Hansbeke",
@@ -1491,6 +2211,18 @@
     "tram": false
    },
    "haltes_binnen": 5,
+   "bus": {
+    "naam": "Gent Glasgowstraat",
+    "m": 170,
+    "per_richting": 3.8,
+    "per_uur": 7.5
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 1560,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -1512,6 +2244,18 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Mariakerke Minoodtlaan",
+    "m": 130,
+    "per_richting": 0.2,
+    "per_uur": 0.2
+   },
+   "tram": {
+    "naam": "Gent Guislainstraat",
+    "m": 2310,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Tronchiennes",
@@ -1533,6 +2277,18 @@
     "tram": false
    },
    "haltes_binnen": 13,
+   "bus": {
+    "naam": "Sint-Amandsberg Gentbruggebrug",
+    "m": 20,
+    "per_richting": 7.1,
+    "per_uur": 14.1
+   },
+   "tram": {
+    "naam": "Ledeberg Van Lokerenstraat",
+    "m": 1120,
+    "per_richting": 8.2,
+    "per_uur": 16.0
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -1554,6 +2310,18 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Gentbrugge Jef Vandermeulenstraat",
+    "m": 410,
+    "per_richting": 4.8,
+    "per_uur": 9.6
+   },
+   "tram": {
+    "naam": "Gentbrugge P+R E17",
+    "m": 1340,
+    "per_richting": 7.9,
+    "per_uur": 15.7
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -1575,6 +2343,18 @@
     "tram": true
    },
    "haltes_binnen": 19,
+   "bus": {
+    "naam": "Gent Wittekaproenenplein",
+    "m": 190,
+    "per_richting": 2.4,
+    "per_uur": 4.6
+   },
+   "tram": {
+    "naam": "Gent Wittekaproenenplein",
+    "m": 190,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -1596,6 +2376,18 @@
     "tram": false
    },
    "haltes_binnen": 3,
+   "bus": {
+    "naam": "Drongen Rotonde",
+    "m": 170,
+    "per_richting": 6.2,
+    "per_uur": 12.2
+   },
+   "tram": {
+    "naam": "Gent Guislainstraat",
+    "m": 2980,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Tronchiennes",
@@ -1617,6 +2409,12 @@
     "tram": false
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Sint-Andries Hertsvelde",
+    "m": 190,
+    "per_richting": 3.0,
+    "per_uur": 5.9
+   },
    "trein": {
     "naam": {
      "fr": "Bruges",
@@ -1638,6 +2436,18 @@
     "tram": false
    },
    "haltes_binnen": 16,
+   "bus": {
+    "naam": "Gent Salamanderstraat",
+    "m": 110,
+    "per_richting": 0.1,
+    "per_uur": 0.1
+   },
+   "tram": {
+    "naam": "Gent Rerum-Novarumplein",
+    "m": 280,
+    "per_richting": 5.8,
+    "per_uur": 11.6
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -1659,6 +2469,18 @@
     "tram": false
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Deurne Seraphin de Grootestraat",
+    "m": 200,
+    "per_richting": 3.0,
+    "per_uur": 6.0
+   },
+   "tram": {
+    "naam": "Deurne Schotensesteenweg",
+    "m": 200,
+    "per_richting": 6.7,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Anvers-Central",
@@ -1680,6 +2502,12 @@
     "tram": false
    },
    "haltes_binnen": 21,
+   "bus": {
+    "naam": "Sint-Niklaas Paterskerk",
+    "m": 40,
+    "per_richting": 3.0,
+    "per_uur": 6.0
+   },
    "trein": {
     "naam": {
      "fr": "Saint-Nicolas",
@@ -1701,6 +2529,18 @@
     "tram": false
    },
    "haltes_binnen": 16,
+   "bus": {
+    "naam": "Gent Peerstraat",
+    "m": 240,
+    "per_richting": 7.2,
+    "per_uur": 14.2
+   },
+   "tram": {
+    "naam": "Gent Nieuwevaartbrug",
+    "m": 720,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -1722,6 +2562,18 @@
     "tram": false
    },
    "haltes_binnen": 4,
+   "bus": {
+    "naam": "Merelbeke Kastanjestraat",
+    "m": 480,
+    "per_richting": 2.6,
+    "per_uur": 5.0
+   },
+   "tram": {
+    "naam": "Zwijnaarde Bibliotheek",
+    "m": 2300,
+    "per_richting": 5.8,
+    "per_uur": 5.8
+   },
    "trein": {
     "naam": {
      "fr": "Merelbeke",
@@ -1743,6 +2595,18 @@
     "tram": false
    },
    "haltes_binnen": 22,
+   "bus": {
+    "naam": "Antwerpen Groeningerplein",
+    "m": 80,
+    "per_richting": 4.0,
+    "per_uur": 4.0
+   },
+   "tram": {
+    "naam": "Antwerpen Handel Metro",
+    "m": 650,
+    "per_richting": 26.2,
+    "per_uur": 52.3
+   },
    "trein": {
     "naam": {
      "fr": "Anvers-Central",
@@ -1764,6 +2628,18 @@
     "tram": false
    },
    "haltes_binnen": 17,
+   "bus": {
+    "naam": "Gent Seghersplein (Weversstraat)",
+    "m": 220,
+    "per_richting": 3.8,
+    "per_uur": 7.4
+   },
+   "tram": {
+    "naam": "Gent Brugsepoort (Begijnhoflaan)",
+    "m": 360,
+    "per_richting": 6.7,
+    "per_uur": 13.3
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -1785,6 +2661,18 @@
     "tram": false
    },
    "haltes_binnen": 3,
+   "bus": {
+    "naam": "Destelbergen Groenstraat",
+    "m": 60,
+    "per_richting": 0.1,
+    "per_uur": 0.2
+   },
+   "tram": {
+    "naam": "Gentbrugge Pecherstraat",
+    "m": 6450,
+    "per_richting": 7.9,
+    "per_uur": 15.8
+   },
    "trein": {
     "naam": {
      "fr": "Beervelde",
@@ -1806,6 +2694,18 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Wondelgem Roodborstjesstraat",
+    "m": 280,
+    "per_richting": 3.5,
+    "per_uur": 3.5
+   },
+   "tram": {
+    "naam": "Gent Van Beverenplein (F. Ferrerlaan)",
+    "m": 800,
+    "per_richting": 7.6,
+    "per_uur": 7.6
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -1827,6 +2727,12 @@
     "tram": false
    },
    "haltes_binnen": 14,
+   "bus": {
+    "naam": "Brugge Gentpoort (Ring)",
+    "m": 200,
+    "per_richting": 7.8,
+    "per_uur": 15.3
+   },
    "trein": {
     "naam": {
      "fr": "Bruges",
@@ -1848,6 +2754,18 @@
     "tram": false
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Zwijnaarde Technologiepark (parkeergebouw)",
+    "m": 310,
+    "per_richting": 3.6,
+    "per_uur": 3.6
+   },
+   "tram": {
+    "naam": "Zwijnaarde Klaartestraat",
+    "m": 330,
+    "per_richting": 5.8,
+    "per_uur": 11.7
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -1869,6 +2787,18 @@
     "tram": false
    },
    "haltes_binnen": 18,
+   "bus": {
+    "naam": "Gent Einde Were",
+    "m": 140,
+    "per_richting": 7.1,
+    "per_uur": 13.9
+   },
+   "tram": {
+    "naam": "Gent Theresianenstraat",
+    "m": 530,
+    "per_richting": 6.7,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -1890,6 +2820,12 @@
     "tram": false
    },
    "haltes_binnen": 12,
+   "bus": {
+    "naam": "Brugge Schaarstraat",
+    "m": 120,
+    "per_richting": 6.0,
+    "per_uur": 6.0
+   },
    "trein": {
     "naam": {
      "fr": "Bruges",
@@ -1911,6 +2847,18 @@
     "tram": false
    },
    "haltes_binnen": 0,
+   "bus": {
+    "naam": "Drongen Brug",
+    "m": 830,
+    "per_richting": 2.2,
+    "per_uur": 4.3
+   },
+   "tram": {
+    "naam": "Gent Guislainstraat",
+    "m": 4740,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Tronchiennes",
@@ -1932,6 +2880,18 @@
     "tram": false
    },
    "haltes_binnen": 17,
+   "bus": {
+    "naam": "Gent Rooigem (Bevrijdingslaan)",
+    "m": 230,
+    "per_richting": 7.3,
+    "per_uur": 7.3
+   },
+   "tram": {
+    "naam": "Gent Nieuwevaartbrug",
+    "m": 560,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -1953,6 +2913,18 @@
     "tram": false
    },
    "haltes_binnen": 14,
+   "bus": {
+    "naam": "Gent Koekoeklaan",
+    "m": 140,
+    "per_richting": 3.2,
+    "per_uur": 6.3
+   },
+   "tram": {
+    "naam": "Gent UZ",
+    "m": 380,
+    "per_richting": 6.8,
+    "per_uur": 6.8
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -1974,6 +2946,18 @@
     "tram": false
    },
    "haltes_binnen": 6,
+   "bus": {
+    "naam": "Sint-Amandsberg Vinkenlaan",
+    "m": 220,
+    "per_richting": 3.7,
+    "per_uur": 7.3
+   },
+   "tram": {
+    "naam": "Gent Neuseplein",
+    "m": 3040,
+    "per_richting": 6.7,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -1995,6 +2979,12 @@
     "tram": false
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Herent De Wildeman",
+    "m": 40,
+    "per_richting": 4.2,
+    "per_uur": 8.3
+   },
    "trein": {
     "naam": {
      "fr": "Herent",
@@ -2016,6 +3006,18 @@
     "tram": false
    },
    "haltes_binnen": 7,
+   "bus": {
+    "naam": "Sint-Amandsberg Visitatiestraat",
+    "m": 140,
+    "per_richting": 4.8,
+    "per_uur": 9.5
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 1290,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -2037,6 +3039,12 @@
     "tram": false
    },
    "haltes_binnen": 7,
+   "bus": {
+    "naam": "Sint-Niklaas Plezantstraat",
+    "m": 200,
+    "per_richting": 3.2,
+    "per_uur": 6.2
+   },
    "trein": {
     "naam": {
      "fr": "Saint-Nicolas",
@@ -2058,6 +3066,18 @@
     "tram": false
    },
    "haltes_binnen": 7,
+   "bus": {
+    "naam": "Gent Heymanslaan",
+    "m": 340,
+    "per_richting": 3.2,
+    "per_uur": 6.3
+   },
+   "tram": {
+    "naam": "Gent UZ",
+    "m": 520,
+    "per_richting": 6.8,
+    "per_uur": 6.8
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -2079,6 +3099,18 @@
     "tram": false
    },
    "haltes_binnen": 15,
+   "bus": {
+    "naam": "Gent Peerstraat",
+    "m": 150,
+    "per_richting": 7.2,
+    "per_uur": 14.2
+   },
+   "tram": {
+    "naam": "Gent Nieuwevaartbrug",
+    "m": 720,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -2100,6 +3132,18 @@
     "tram": false
    },
    "haltes_binnen": 18,
+   "bus": {
+    "naam": "Gent Vlaamsekaai",
+    "m": 140,
+    "per_richting": 2.4,
+    "per_uur": 7.1
+   },
+   "tram": {
+    "naam": "Gent Keizerpoort (Brusselsepoortstraat)",
+    "m": 510,
+    "per_richting": 8.2,
+    "per_uur": 16.1
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -2121,6 +3165,18 @@
     "tram": false
    },
    "haltes_binnen": 15,
+   "bus": {
+    "naam": "Gent Zomerstraat",
+    "m": 130,
+    "per_richting": 12.2,
+    "per_uur": 24.1
+   },
+   "tram": {
+    "naam": "Gent UZ",
+    "m": 600,
+    "per_richting": 6.8,
+    "per_uur": 6.8
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -2142,6 +3198,18 @@
     "tram": false
    },
    "haltes_binnen": 18,
+   "bus": {
+    "naam": "Gent Rabot (Griendeplein)",
+    "m": 80,
+    "per_richting": 2.2,
+    "per_uur": 4.3
+   },
+   "tram": {
+    "naam": "Gent Rabot (Begijnhoflaan)",
+    "m": 150,
+    "per_richting": 7.6,
+    "per_uur": 28.4
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -2163,6 +3231,18 @@
     "tram": false
    },
    "haltes_binnen": 28,
+   "bus": {
+    "naam": "Gent Blekerijstraat",
+    "m": 220,
+    "per_richting": 2.9,
+    "per_uur": 5.8
+   },
+   "tram": {
+    "naam": "Gent Coppinsstraat",
+    "m": 720,
+    "per_richting": 6.7,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -2184,6 +3264,18 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Oostakker Drie Zwaantjes",
+    "m": 80,
+    "per_richting": 4.0,
+    "per_uur": 8.0
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 3220,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -2205,6 +3297,18 @@
     "tram": false
    },
    "haltes_binnen": 18,
+   "bus": {
+    "naam": "Borgerhout Station Oost",
+    "m": 180,
+    "per_richting": 5.8,
+    "per_uur": 10.3
+   },
+   "tram": {
+    "naam": "Borgerhout De Roma",
+    "m": 420,
+    "per_richting": 6.0,
+    "per_uur": 11.9
+   },
    "trein": {
     "naam": {
      "fr": "Anvers-Berchem",
@@ -2226,6 +3330,18 @@
     "tram": true
    },
    "haltes_binnen": 7,
+   "bus": {
+    "naam": "Gentbrugge Tennisstraat",
+    "m": 390,
+    "per_richting": 8.1,
+    "per_uur": 8.1
+   },
+   "tram": {
+    "naam": "Gentbrugge Pecherstraat",
+    "m": 290,
+    "per_richting": 7.9,
+    "per_uur": 15.8
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -2247,6 +3363,18 @@
     "tram": false
    },
    "haltes_binnen": 0,
+   "bus": {
+    "naam": "Melsele Sint-Elisabethstraat",
+    "m": 1070,
+    "per_richting": 5.4,
+    "per_uur": 10.8
+   },
+   "tram": {
+    "naam": "Antwerpen Bolivarplaats",
+    "m": 7640,
+    "per_richting": 12.5,
+    "per_uur": 24.8
+   },
    "trein": {
     "naam": {
      "fr": "Melsele",
@@ -2268,6 +3396,18 @@
     "tram": false
    },
    "haltes_binnen": 17,
+   "bus": {
+    "naam": "Gent Vlaamsekaai",
+    "m": 250,
+    "per_richting": 2.4,
+    "per_uur": 7.1
+   },
+   "tram": {
+    "naam": "Ledeberg Van Lokerenstraat",
+    "m": 440,
+    "per_richting": 8.2,
+    "per_uur": 16.0
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -2289,6 +3429,18 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Gent Van Beverenplein",
+    "m": 120,
+    "per_richting": 15.4,
+    "per_uur": 30.5
+   },
+   "tram": {
+    "naam": "Gent Van Beverenplein (F. Ferrerlaan)",
+    "m": 190,
+    "per_richting": 7.6,
+    "per_uur": 7.6
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -2310,6 +3462,18 @@
     "tram": false
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Merksem Irislei",
+    "m": 150,
+    "per_richting": 7.8,
+    "per_uur": 15.4
+   },
+   "tram": {
+    "naam": "Merksem Victor Roosens",
+    "m": 430,
+    "per_richting": 13.2,
+    "per_uur": 26.2
+   },
    "trein": {
     "naam": {
      "fr": "Anvers-Luchtbal",
@@ -2331,6 +3495,18 @@
     "tram": false
    },
    "haltes_binnen": 5,
+   "bus": {
+    "naam": "Merelbeke Hebbelynckstraat",
+    "m": 280,
+    "per_richting": 4.8,
+    "per_uur": 9.3
+   },
+   "tram": {
+    "naam": "Zwijnaarde Molen",
+    "m": 2650,
+    "per_richting": 5.8,
+    "per_uur": 11.7
+   },
    "trein": {
     "naam": {
      "fr": "Merelbeke",
@@ -2352,6 +3528,18 @@
     "tram": false
    },
    "haltes_binnen": 16,
+   "bus": {
+    "naam": "Gent Seghersplein (Weversstraat)",
+    "m": 70,
+    "per_richting": 3.8,
+    "per_uur": 7.4
+   },
+   "tram": {
+    "naam": "Gent Brugsepoort (Begijnhoflaan)",
+    "m": 340,
+    "per_richting": 6.7,
+    "per_uur": 13.3
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -2373,6 +3561,12 @@
     "tram": false
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Sint-Andries Lange Munt",
+    "m": 80,
+    "per_richting": 6.2,
+    "per_uur": 12.2
+   },
    "trein": {
     "naam": {
      "fr": "Bruges",
@@ -2394,6 +3588,18 @@
     "tram": false
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Sint-Amandsberg Hartmannlaan",
+    "m": 120,
+    "per_richting": 2.2,
+    "per_uur": 2.2
+   },
+   "tram": {
+    "naam": "Gent Heilig-Kerst",
+    "m": 1830,
+    "per_richting": 6.7,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -2415,6 +3621,18 @@
     "tram": true
    },
    "haltes_binnen": 20,
+   "bus": {
+    "naam": "Gent Gagelstraat",
+    "m": 140,
+    "per_richting": 15.2,
+    "per_uur": 15.2
+   },
+   "tram": {
+    "naam": "Gent AZ Sint-Lucas (Blaisantvest)",
+    "m": 120,
+    "per_richting": 6.6,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -2436,6 +3654,18 @@
     "tram": false
    },
    "haltes_binnen": 4,
+   "bus": {
+    "naam": "Heusden Tramstraat",
+    "m": 110,
+    "per_richting": 2.0,
+    "per_uur": 4.0
+   },
+   "tram": {
+    "naam": "Melle Leeuw",
+    "m": 2430,
+    "per_richting": 7.8,
+    "per_uur": 7.8
+   },
    "trein": {
     "naam": {
      "fr": "Merelbeke",
@@ -2457,6 +3687,18 @@
     "tram": false
    },
    "haltes_binnen": 0,
+   "bus": {
+    "naam": "Scheldewindeke Keerken",
+    "m": 2160,
+    "per_richting": 0.2,
+    "per_uur": 0.2
+   },
+   "tram": {
+    "naam": "Zwijnaarde Bibliotheek",
+    "m": 9540,
+    "per_richting": 5.8,
+    "per_uur": 5.8
+   },
    "trein": {
     "naam": {
      "fr": "Scheldewindeke",
@@ -2478,6 +3720,18 @@
     "tram": false
    },
    "haltes_binnen": 26,
+   "bus": {
+    "naam": "Gent Ottogracht",
+    "m": 140,
+    "per_richting": 19.2,
+    "per_uur": 38.2
+   },
+   "tram": {
+    "naam": "Gent Sluizeken",
+    "m": 270,
+    "per_richting": 6.6,
+    "per_uur": 13.1
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -2499,6 +3753,18 @@
     "tram": false
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Gent Flamingostraat",
+    "m": 210,
+    "per_richting": 14.2,
+    "per_uur": 27.5
+   },
+   "tram": {
+    "naam": "Gent Sint-Pietersaalststraat",
+    "m": 740,
+    "per_richting": 12.8,
+    "per_uur": 25.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -2520,6 +3786,18 @@
     "tram": false
    },
    "haltes_binnen": 22,
+   "bus": {
+    "naam": "Sint-Amandsberg Halvemaanstraat",
+    "m": 160,
+    "per_richting": 13.2,
+    "per_uur": 26.1
+   },
+   "tram": {
+    "naam": "Gent Heilig-Kerst",
+    "m": 1090,
+    "per_richting": 6.7,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -2541,6 +3819,18 @@
     "tram": false
    },
    "haltes_binnen": 1,
+   "bus": {
+    "naam": "Vinderhoute Neerstraat",
+    "m": 170,
+    "per_richting": 2.2,
+    "per_uur": 4.4
+   },
+   "tram": {
+    "naam": "Gent Hortensiastraat",
+    "m": 5140,
+    "per_richting": 7.7,
+    "per_uur": 15.3
+   },
    "trein": {
     "naam": {
      "fr": "Tronchiennes",
@@ -2562,6 +3852,18 @@
     "tram": false
    },
    "haltes_binnen": 1,
+   "bus": {
+    "naam": "Schelderode Kerk",
+    "m": 350,
+    "per_richting": 2.6,
+    "per_uur": 5.0
+   },
+   "tram": {
+    "naam": "Zwijnaarde Bibliotheek",
+    "m": 3800,
+    "per_richting": 5.8,
+    "per_uur": 5.8
+   },
    "trein": {
     "naam": {
      "fr": "Moortsele",
@@ -2583,6 +3885,12 @@
     "tram": false
    },
    "haltes_binnen": 2,
+   "bus": {
+    "naam": "Petegem-aan-de-Leie Molenstraat",
+    "m": 160,
+    "per_richting": 2.3,
+    "per_uur": 4.5
+   },
    "trein": {
     "naam": {
      "fr": "Deinze",
@@ -2604,6 +3912,12 @@
     "tram": false
    },
    "haltes_binnen": 3,
+   "bus": {
+    "naam": "Petegem-aan-de-Leie Gaversesteenweg",
+    "m": 460,
+    "per_richting": 1.3,
+    "per_uur": 2.6
+   },
    "trein": {
     "naam": {
      "fr": "Deinze",
@@ -2625,6 +3939,18 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Sint-Amandsberg P+R Oostakker",
+    "m": 90,
+    "per_richting": 6.6,
+    "per_uur": 12.9
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 3630,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -2646,6 +3972,12 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Deerlijk Sint-Rochusstraat",
+    "m": 110,
+    "per_richting": 0.2,
+    "per_uur": 0.2
+   },
    "trein": {
     "naam": {
      "fr": "Vichte",
@@ -2667,6 +3999,12 @@
     "tram": false
    },
    "haltes_binnen": 1,
+   "bus": {
+    "naam": "Temse Kleine Dweersstraat",
+    "m": 750,
+    "per_richting": 0.6,
+    "per_uur": 1.0
+   },
    "trein": {
     "naam": {
      "fr": "Tamise",
@@ -2688,6 +4026,18 @@
     "tram": false
    },
    "haltes_binnen": 7,
+   "bus": {
+    "naam": "Sint-Amandsberg Everstraat",
+    "m": 70,
+    "per_richting": 4.8,
+    "per_uur": 9.2
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 2360,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -2709,6 +4059,18 @@
     "tram": false
    },
    "haltes_binnen": 4,
+   "bus": {
+    "naam": "Merelbeke Benoitlaan",
+    "m": 160,
+    "per_richting": 5.2,
+    "per_uur": 10.2
+   },
+   "tram": {
+    "naam": "Gentbrugge Moscou",
+    "m": 920,
+    "per_richting": 11.2,
+    "per_uur": 11.2
+   },
    "trein": {
     "naam": {
      "fr": "Merelbeke",
@@ -2730,6 +4092,12 @@
     "tram": false
    },
    "haltes_binnen": 16,
+   "bus": {
+    "naam": "Leuven Delvauxwijk",
+    "m": 170,
+    "per_richting": 4.2,
+    "per_uur": 8.2
+   },
    "trein": {
     "naam": {
      "fr": "Louvain",
@@ -2751,6 +4119,18 @@
     "tram": false
    },
    "haltes_binnen": 4,
+   "bus": {
+    "naam": "Zwijnaarde Zandvoordestraat",
+    "m": 240,
+    "per_richting": 0.1,
+    "per_uur": 0.2
+   },
+   "tram": {
+    "naam": "Zwijnaarde Bibliotheek",
+    "m": 570,
+    "per_richting": 5.8,
+    "per_uur": 5.8
+   },
    "trein": {
     "naam": {
      "fr": "De Pinte",
@@ -2772,6 +4152,18 @@
     "tram": false
    },
    "haltes_binnen": 5,
+   "bus": {
+    "naam": "Melle Gemeenteplein",
+    "m": 100,
+    "per_richting": 4.5,
+    "per_uur": 9.0
+   },
+   "tram": {
+    "naam": "Melle Leeuw",
+    "m": 3020,
+    "per_richting": 7.8,
+    "per_uur": 7.8
+   },
    "trein": {
     "naam": {
      "fr": "Melle",
@@ -2793,6 +4185,18 @@
     "tram": false
    },
    "haltes_binnen": 13,
+   "bus": {
+    "naam": "Sint-Amandsberg Baeyensstraat",
+    "m": 150,
+    "per_richting": 6.5,
+    "per_uur": 13.1
+   },
+   "tram": {
+    "naam": "Ledeberg Van Lokerenstraat",
+    "m": 1430,
+    "per_richting": 8.2,
+    "per_uur": 16.0
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -2814,6 +4218,18 @@
     "tram": true
    },
    "haltes_binnen": 12,
+   "bus": {
+    "naam": "Gent Koning Albertbrug (Neermeerskaai)",
+    "m": 500,
+    "per_richting": 12.6,
+    "per_uur": 24.9
+   },
+   "tram": {
+    "naam": "Gent Oude Houtlei",
+    "m": 440,
+    "per_richting": 11.8,
+    "per_uur": 23.3
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -2835,6 +4251,18 @@
     "tram": false
    },
    "haltes_binnen": 6,
+   "bus": {
+    "naam": "Sint-Amandsberg Schuurstraat",
+    "m": 380,
+    "per_richting": 3.7,
+    "per_uur": 7.3
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 3550,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -2856,6 +4284,12 @@
     "tram": false
    },
    "haltes_binnen": 0,
+   "bus": {
+    "naam": "Lokeren Doorslaardam",
+    "m": 1290,
+    "per_richting": 1.5,
+    "per_uur": 2.9
+   },
    "trein": {
     "naam": {
      "fr": "Lokeren",
@@ -2877,6 +4311,12 @@
     "tram": false
    },
    "haltes_binnen": 14,
+   "bus": {
+    "naam": "Sint-Niklaas Tereken Kerk",
+    "m": 110,
+    "per_richting": 1.0,
+    "per_uur": 1.0
+   },
    "trein": {
     "naam": {
      "fr": "Saint-Nicolas",
@@ -2898,6 +4338,18 @@
     "tram": false
    },
    "haltes_binnen": 5,
+   "bus": {
+    "naam": "Sint-Amandsberg Vinkenlaan",
+    "m": 330,
+    "per_richting": 3.7,
+    "per_uur": 7.3
+   },
+   "tram": {
+    "naam": "Gent Neuseplein",
+    "m": 3340,
+    "per_richting": 6.7,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -2919,6 +4371,12 @@
     "tram": false
    },
    "haltes_binnen": 2,
+   "bus": {
+    "naam": "Petegem-aan-de-Leie Nieuwgoedlaan",
+    "m": 210,
+    "per_richting": 1.3,
+    "per_uur": 2.6
+   },
    "trein": {
     "naam": {
      "fr": "Deinze",
@@ -2940,6 +4398,12 @@
     "tram": false
    },
    "haltes_binnen": 2,
+   "bus": {
+    "naam": "Lokeren Gentsestraat",
+    "m": 120,
+    "per_richting": 1.5,
+    "per_uur": 2.8
+   },
    "trein": {
     "naam": {
      "fr": "Lokeren",
@@ -2961,6 +4425,18 @@
     "tram": true
    },
    "haltes_binnen": 18,
+   "bus": {
+    "naam": "Gent Voortmanstraat",
+    "m": 30,
+    "per_richting": 15.2,
+    "per_uur": 15.2
+   },
+   "tram": {
+    "naam": "Gent Voortmanstraat",
+    "m": 110,
+    "per_richting": 6.6,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -2982,6 +4458,18 @@
     "tram": true
    },
    "haltes_binnen": 14,
+   "bus": {
+    "naam": "Gent Poel",
+    "m": 620,
+    "per_richting": 15.9,
+    "per_uur": 31.7
+   },
+   "tram": {
+    "naam": "Gent Oude Houtlei",
+    "m": 180,
+    "per_richting": 11.8,
+    "per_uur": 23.3
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -3003,6 +4491,18 @@
     "tram": false
    },
    "haltes_binnen": 11,
+   "bus": {
+    "naam": "Gent Oscar Colbrandtstraat",
+    "m": 310,
+    "per_richting": 2.2,
+    "per_uur": 4.5
+   },
+   "tram": {
+    "naam": "Gent Zuid perron 1",
+    "m": 2010,
+    "per_richting": 19.8,
+    "per_uur": 19.8
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -3024,6 +4524,18 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Mariakerke Losweg",
+    "m": 170,
+    "per_richting": 3.8,
+    "per_uur": 7.4
+   },
+   "tram": {
+    "naam": "Gent Hortensiastraat",
+    "m": 1230,
+    "per_richting": 7.7,
+    "per_uur": 15.3
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -3045,6 +4557,12 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Brussel Zuid perron 11",
+    "m": 500,
+    "per_richting": 1.8,
+    "per_uur": 1.8
+   },
    "trein": {
     "naam": {
      "fr": "Bruxelles-Chapelle",
@@ -3066,6 +4584,18 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Sint-Amandsberg Jef Crickstraat",
+    "m": 220,
+    "per_richting": 3.8,
+    "per_uur": 7.4
+   },
+   "tram": {
+    "naam": "Gent Heilig-Kerst",
+    "m": 2260,
+    "per_richting": 6.7,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -3087,6 +4617,18 @@
     "tram": false
    },
    "haltes_binnen": 5,
+   "bus": {
+    "naam": "Bottelare Pontstraat",
+    "m": 230,
+    "per_richting": 1.6,
+    "per_uur": 3.0
+   },
+   "tram": {
+    "naam": "Zwijnaarde Bibliotheek",
+    "m": 4940,
+    "per_richting": 5.8,
+    "per_uur": 5.8
+   },
    "trein": {
     "naam": {
      "fr": "Moortsele",
@@ -3108,6 +4650,18 @@
     "tram": false
    },
    "haltes_binnen": 20,
+   "bus": {
+    "naam": "Gent Seghersplein (Weversstraat)",
+    "m": 90,
+    "per_richting": 3.8,
+    "per_uur": 7.4
+   },
+   "tram": {
+    "naam": "Gent Wittekaproenenplein",
+    "m": 500,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -3129,6 +4683,18 @@
     "tram": true
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Ledeberg Botermarkt",
+    "m": 250,
+    "per_richting": 5.2,
+    "per_uur": 10.2
+   },
+   "tram": {
+    "naam": "Ledeberg Botermarkt",
+    "m": 170,
+    "per_richting": 11.2,
+    "per_uur": 22.5
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -3150,6 +4716,18 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Gentbrugge Arsenaal",
+    "m": 210,
+    "per_richting": 11.8,
+    "per_uur": 23.4
+   },
+   "tram": {
+    "naam": "Gentbrugge P+R E17",
+    "m": 280,
+    "per_richting": 7.9,
+    "per_uur": 15.7
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -3171,6 +4749,18 @@
     "tram": true
    },
    "haltes_binnen": 12,
+   "bus": {
+    "naam": "Ledeberg Ledebergplein",
+    "m": 140,
+    "per_richting": 11.8,
+    "per_uur": 23.2
+   },
+   "tram": {
+    "naam": "Ledeberg Ledebergplein",
+    "m": 140,
+    "per_richting": 11.2,
+    "per_uur": 22.9
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -3192,6 +4782,18 @@
     "tram": false
    },
    "haltes_binnen": 11,
+   "bus": {
+    "naam": "Wondelgem Vledermuisstraat",
+    "m": 70,
+    "per_richting": 8.1,
+    "per_uur": 16.1
+   },
+   "tram": {
+    "naam": "Gent Van Beverenplein (F. Ferrerlaan)",
+    "m": 2280,
+    "per_richting": 7.6,
+    "per_uur": 7.6
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -3213,6 +4815,18 @@
     "tram": true
    },
    "haltes_binnen": 13,
+   "bus": {
+    "naam": "Gent Jubileumlaan (Verenigde-Natieslaan)",
+    "m": 390,
+    "per_richting": 14.1,
+    "per_uur": 28.1
+   },
+   "tram": {
+    "naam": "Gent Bernard Spaelaan",
+    "m": 140,
+    "per_richting": 18.3,
+    "per_uur": 36.6
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -3234,6 +4848,12 @@
     "tram": false
    },
    "haltes_binnen": 2,
+   "bus": {
+    "naam": "Mere Oude Broekstraat",
+    "m": 270,
+    "per_richting": 1.0,
+    "per_uur": 1.9
+   },
    "trein": {
     "naam": {
      "fr": "Bambrugge",
@@ -3255,6 +4875,18 @@
     "tram": false
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Gentbrugge Jef Vandermeulenstraat",
+    "m": 150,
+    "per_richting": 4.8,
+    "per_uur": 9.6
+   },
+   "tram": {
+    "naam": "Gentbrugge Stelplaats",
+    "m": 780,
+    "per_richting": 9.2,
+    "per_uur": 16.7
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -3276,6 +4908,18 @@
     "tram": true
    },
    "haltes_binnen": 12,
+   "bus": {
+    "naam": "Ledeberg Ledebergplein",
+    "m": 180,
+    "per_richting": 11.8,
+    "per_uur": 23.2
+   },
+   "tram": {
+    "naam": "Ledeberg Ledebergplein",
+    "m": 180,
+    "per_richting": 11.2,
+    "per_uur": 22.9
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -3297,6 +4941,18 @@
     "tram": false
    },
    "haltes_binnen": 17,
+   "bus": {
+    "naam": "Gent Geitstraat",
+    "m": 160,
+    "per_richting": 3.8,
+    "per_uur": 7.4
+   },
+   "tram": {
+    "naam": "Gent Nieuwevaartbrug",
+    "m": 730,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -3318,6 +4974,18 @@
     "tram": false
    },
    "haltes_binnen": 6,
+   "bus": {
+    "naam": "Sint-Amandsberg Everstraat",
+    "m": 360,
+    "per_richting": 4.8,
+    "per_uur": 9.2
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 2370,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -3339,6 +5007,18 @@
     "tram": false
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Merksem Sint-Bartholomeusstraat",
+    "m": 90,
+    "per_richting": 4.1,
+    "per_uur": 8.2
+   },
+   "tram": {
+    "naam": "Merksem Barnkracht",
+    "m": 200,
+    "per_richting": 13.2,
+    "per_uur": 26.2
+   },
    "trein": {
     "naam": {
      "fr": "Anvers-Luchtbal",
@@ -3360,6 +5040,12 @@
     "tram": false
    },
    "haltes_binnen": 2,
+   "bus": {
+    "naam": "Petegem-aan-de-Leie Molenstraat",
+    "m": 50,
+    "per_richting": 2.3,
+    "per_uur": 4.5
+   },
    "trein": {
     "naam": {
      "fr": "Deinze",
@@ -3381,6 +5067,18 @@
     "tram": false
    },
    "haltes_binnen": 3,
+   "bus": {
+    "naam": "Melsele IJzerstraat",
+    "m": 480,
+    "per_richting": 5.4,
+    "per_uur": 10.7
+   },
+   "tram": {
+    "naam": "Antwerpen Abdijstraat",
+    "m": 8120,
+    "per_richting": 12.6,
+    "per_uur": 24.9
+   },
    "trein": {
     "naam": {
      "fr": "Melsele",
@@ -3402,6 +5100,18 @@
     "tram": false
    },
    "haltes_binnen": 16,
+   "bus": {
+    "naam": "Gent Seghersplein (Weversstraat)",
+    "m": 190,
+    "per_richting": 3.8,
+    "per_uur": 7.4
+   },
+   "tram": {
+    "naam": "Gent Brugsepoort (Begijnhoflaan)",
+    "m": 340,
+    "per_richting": 6.7,
+    "per_uur": 13.3
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -3423,6 +5133,18 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Oostakker Dorp",
+    "m": 150,
+    "per_richting": 6.3,
+    "per_uur": 9.2
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 4170,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -3444,6 +5166,18 @@
     "tram": false
    },
    "haltes_binnen": 5,
+   "bus": {
+    "naam": "Zevergem Zevergemdorp",
+    "m": 250,
+    "per_richting": 0.1,
+    "per_uur": 0.2
+   },
+   "tram": {
+    "naam": "Zwijnaarde Bibliotheek",
+    "m": 2670,
+    "per_richting": 5.8,
+    "per_uur": 5.8
+   },
    "trein": {
     "naam": {
      "fr": "De Pinte",
@@ -3465,6 +5199,18 @@
     "tram": false
    },
    "haltes_binnen": 14,
+   "bus": {
+    "naam": "Mariakerke Vaartstraat",
+    "m": 140,
+    "per_richting": 2.3,
+    "per_uur": 4.5
+   },
+   "tram": {
+    "naam": "Gent Guislainstraat",
+    "m": 810,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -3486,6 +5232,18 @@
     "tram": false
    },
    "haltes_binnen": 28,
+   "bus": {
+    "naam": "Gent Muinklaan",
+    "m": 40,
+    "per_richting": 20.2,
+    "per_uur": 39.4
+   },
+   "tram": {
+    "naam": "Gent Vijfwindgatenstraat",
+    "m": 190,
+    "per_richting": 19.8,
+    "per_uur": 39.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -3507,6 +5265,18 @@
     "tram": false
    },
    "haltes_binnen": 15,
+   "bus": {
+    "naam": "Gent Malpertuusplein",
+    "m": 230,
+    "per_richting": 10.8,
+    "per_uur": 21.5
+   },
+   "tram": {
+    "naam": "Gent Guislainstraat",
+    "m": 700,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -3528,6 +5298,18 @@
     "tram": false
    },
    "haltes_binnen": 7,
+   "bus": {
+    "naam": "Gentbrugge Jef Vandermeulenstraat",
+    "m": 320,
+    "per_richting": 4.8,
+    "per_uur": 9.6
+   },
+   "tram": {
+    "naam": "Gentbrugge P+R E17",
+    "m": 1220,
+    "per_richting": 7.9,
+    "per_uur": 15.7
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -3549,6 +5331,18 @@
     "tram": true
    },
    "haltes_binnen": 12,
+   "bus": {
+    "naam": "Borgerhout Morckhoven",
+    "m": 320,
+    "per_richting": 4.3,
+    "per_uur": 8.5
+   },
+   "tram": {
+    "naam": "Borgerhout Morckhoven",
+    "m": 320,
+    "per_richting": 6.2,
+    "per_uur": 12.1
+   },
    "trein": {
     "naam": {
      "fr": "Anvers-Berchem",
@@ -3570,6 +5364,18 @@
     "tram": false
    },
    "haltes_binnen": 17,
+   "bus": {
+    "naam": "Sint-Amandsberg Aannemersstraat",
+    "m": 160,
+    "per_richting": 7.1,
+    "per_uur": 14.1
+   },
+   "tram": {
+    "naam": "Gent Keizerpoort (Brusselsepoortstraat)",
+    "m": 1180,
+    "per_richting": 8.2,
+    "per_uur": 16.1
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -3591,6 +5397,18 @@
     "tram": true
    },
    "haltes_binnen": 13,
+   "bus": {
+    "naam": "Ledeberg Botermarkt",
+    "m": 310,
+    "per_richting": 5.2,
+    "per_uur": 10.2
+   },
+   "tram": {
+    "naam": "Ledeberg Botermarkt",
+    "m": 220,
+    "per_richting": 11.2,
+    "per_uur": 22.5
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -3612,6 +5430,18 @@
     "tram": false
    },
    "haltes_binnen": 11,
+   "bus": {
+    "naam": "Gentbrugge Jef Vandermeulenstraat",
+    "m": 300,
+    "per_richting": 4.8,
+    "per_uur": 9.6
+   },
+   "tram": {
+    "naam": "Gentbrugge Stelplaats",
+    "m": 620,
+    "per_richting": 9.2,
+    "per_uur": 16.7
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -3633,6 +5463,18 @@
     "tram": true
    },
    "haltes_binnen": 12,
+   "bus": {
+    "naam": "Ledeberg Botermarkt",
+    "m": 370,
+    "per_richting": 5.2,
+    "per_uur": 10.2
+   },
+   "tram": {
+    "naam": "Ledeberg Botermarkt",
+    "m": 260,
+    "per_richting": 11.2,
+    "per_uur": 22.5
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -3654,6 +5496,18 @@
     "tram": false
    },
    "haltes_binnen": 22,
+   "bus": {
+    "naam": "Gent Stapelplein",
+    "m": 280,
+    "per_richting": 2.9,
+    "per_uur": 5.8
+   },
+   "tram": {
+    "naam": "Gent Heilig-Kerst",
+    "m": 650,
+    "per_richting": 6.7,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -3675,6 +5529,18 @@
     "tram": false
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Wondelgem Neptunus (Botestraat)",
+    "m": 100,
+    "per_richting": 7.0,
+    "per_uur": 10.6
+   },
+   "tram": {
+    "naam": "Gent Van Beverenplein (F. Ferrerlaan)",
+    "m": 1560,
+    "per_richting": 7.6,
+    "per_uur": 7.6
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -3696,6 +5562,18 @@
     "tram": true
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Ledeberg Eindeke",
+    "m": 460,
+    "per_richting": 5.2,
+    "per_uur": 10.3
+   },
+   "tram": {
+    "naam": "Ledeberg van Ooteghemstraat",
+    "m": 170,
+    "per_richting": 11.2,
+    "per_uur": 22.5
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -3717,6 +5595,18 @@
     "tram": false
    },
    "haltes_binnen": 7,
+   "bus": {
+    "naam": "Antwerpen Hof Ter Schelde",
+    "m": 30,
+    "per_richting": 6.0,
+    "per_uur": 12.0
+   },
+   "tram": {
+    "naam": "Antwerpen Brouwersvliet",
+    "m": 1630,
+    "per_richting": 6.2,
+    "per_uur": 12.3
+   },
    "trein": {
     "naam": {
      "fr": "Anvers-Linkeroever",
@@ -3738,6 +5628,18 @@
     "tram": true
    },
    "haltes_binnen": 16,
+   "bus": {
+    "naam": "Ledeberg P+R Ledeberg",
+    "m": 60,
+    "per_richting": 0.2,
+    "per_uur": 0.3
+   },
+   "tram": {
+    "naam": "Ledeberg P+R Ledeberg",
+    "m": 60,
+    "per_richting": 11.5,
+    "per_uur": 22.9
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -3759,6 +5661,12 @@
     "tram": false
    },
    "haltes_binnen": 21,
+   "bus": {
+    "naam": "Sint-Niklaas Paterskerk",
+    "m": 10,
+    "per_richting": 3.0,
+    "per_uur": 6.0
+   },
    "trein": {
     "naam": {
      "fr": "Saint-Nicolas",
@@ -3780,6 +5688,12 @@
     "tram": false
    },
    "haltes_binnen": 4,
+   "bus": {
+    "naam": "Oostkamp Centrum",
+    "m": 390,
+    "per_richting": 2.5,
+    "per_uur": 4.9
+   },
    "trein": {
     "naam": {
      "fr": "Oostkamp",
@@ -3801,6 +5715,18 @@
     "tram": false
    },
    "haltes_binnen": 26,
+   "bus": {
+    "naam": "Gent Bagattenstraat",
+    "m": 190,
+    "per_richting": 0.1,
+    "per_uur": 0.1
+   },
+   "tram": {
+    "naam": "Gent Zuid perron 2",
+    "m": 330,
+    "per_richting": 19.3,
+    "per_uur": 19.3
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -3822,6 +5748,18 @@
     "tram": false
    },
    "haltes_binnen": 18,
+   "bus": {
+    "naam": "Borgerhout Helmstraat",
+    "m": 120,
+    "per_richting": 3.8,
+    "per_uur": 3.8
+   },
+   "tram": {
+    "naam": "Borgerhout Zegel Metro",
+    "m": 450,
+    "per_richting": 13.2,
+    "per_uur": 26.5
+   },
    "trein": {
     "naam": {
      "fr": "Anvers-Central",
@@ -3843,6 +5781,18 @@
     "tram": false
    },
    "haltes_binnen": 11,
+   "bus": {
+    "naam": "Gent Malpertuusplein",
+    "m": 190,
+    "per_richting": 10.8,
+    "per_uur": 21.5
+   },
+   "tram": {
+    "naam": "Gent Guislainstraat",
+    "m": 890,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Tronchiennes",
@@ -3864,6 +5814,18 @@
     "tram": true
    },
    "haltes_binnen": 13,
+   "bus": {
+    "naam": "Ledeberg Botermarkt",
+    "m": 220,
+    "per_richting": 5.2,
+    "per_uur": 10.2
+   },
+   "tram": {
+    "naam": "Ledeberg Botermarkt",
+    "m": 150,
+    "per_richting": 11.2,
+    "per_uur": 22.5
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -3885,6 +5847,18 @@
     "tram": false
    },
    "haltes_binnen": 1,
+   "bus": {
+    "naam": "Wijnegem H. Meeusstraat",
+    "m": 760,
+    "per_richting": 4.9,
+    "per_uur": 9.4
+   },
+   "tram": {
+    "naam": "Wijnegem Fortveld",
+    "m": 2190,
+    "per_richting": 13.5,
+    "per_uur": 13.5
+   },
    "trein": {
     "naam": {
      "fr": "Boechout",
@@ -3906,6 +5880,18 @@
     "tram": false
    },
    "haltes_binnen": 27,
+   "bus": {
+    "naam": "Sint-Amandsberg Heernisplein",
+    "m": 160,
+    "per_richting": 9.1,
+    "per_uur": 18.2
+   },
+   "tram": {
+    "naam": "Gent Lippensplein",
+    "m": 1320,
+    "per_richting": 19.3,
+    "per_uur": 39.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -3927,6 +5913,18 @@
     "tram": false
    },
    "haltes_binnen": 11,
+   "bus": {
+    "naam": "Wondelgem Biesbilkstraat",
+    "m": 110,
+    "per_richting": 3.5,
+    "per_uur": 3.5
+   },
+   "tram": {
+    "naam": "Gent Van Beverenplein (F. Ferrerlaan)",
+    "m": 1250,
+    "per_richting": 7.6,
+    "per_uur": 7.6
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -3948,6 +5946,18 @@
     "tram": false
    },
    "haltes_binnen": 12,
+   "bus": {
+    "naam": "Mariakerke Jutestraat",
+    "m": 100,
+    "per_richting": 10.9,
+    "per_uur": 21.6
+   },
+   "tram": {
+    "naam": "Gent Guislainstraat",
+    "m": 1220,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -3969,6 +5979,12 @@
     "tram": false
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Kortrijk Sint-Rochuskerk",
+    "m": 410,
+    "per_richting": 8.8,
+    "per_uur": 16.9
+   },
    "trein": {
     "naam": {
      "fr": "Courtrai",
@@ -3990,6 +6006,18 @@
     "tram": false
    },
    "haltes_binnen": 18,
+   "bus": {
+    "naam": "Borgerhout Station Oost",
+    "m": 190,
+    "per_richting": 5.8,
+    "per_uur": 10.3
+   },
+   "tram": {
+    "naam": "Borgerhout De Roma",
+    "m": 430,
+    "per_richting": 6.0,
+    "per_uur": 11.9
+   },
    "trein": {
     "naam": {
      "fr": "Anvers-Berchem",
@@ -4011,6 +6039,18 @@
     "tram": false
    },
    "haltes_binnen": 13,
+   "bus": {
+    "naam": "Gentbrugge Henri Van Daelestraat",
+    "m": 60,
+    "per_richting": 0.7,
+    "per_uur": 0.8
+   },
+   "tram": {
+    "naam": "Melle Leeuw",
+    "m": 590,
+    "per_richting": 7.8,
+    "per_uur": 7.8
+   },
    "trein": {
     "naam": {
      "fr": "Merelbeke",
@@ -4032,6 +6072,18 @@
     "tram": false
    },
    "haltes_binnen": 21,
+   "bus": {
+    "naam": "Gent Ottergemsesteenweg",
+    "m": 160,
+    "per_richting": 0.1,
+    "per_uur": 0.1
+   },
+   "tram": {
+    "naam": "Gent Sint-Lievenspoort (Zuidpark)",
+    "m": 710,
+    "per_richting": 11.6,
+    "per_uur": 23.0
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -4053,6 +6105,18 @@
     "tram": false
    },
    "haltes_binnen": 18,
+   "bus": {
+    "naam": "Gent Forelstraat",
+    "m": 190,
+    "per_richting": 2.4,
+    "per_uur": 4.8
+   },
+   "tram": {
+    "naam": "Gent Keizerpoort (Brusselsepoortstraat)",
+    "m": 980,
+    "per_richting": 8.2,
+    "per_uur": 16.1
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -4074,6 +6138,18 @@
     "tram": false
    },
    "haltes_binnen": 4,
+   "bus": {
+    "naam": "Eke Biesten",
+    "m": 370,
+    "per_richting": 1.6,
+    "per_uur": 3.0
+   },
+   "tram": {
+    "naam": "Zwijnaarde Bibliotheek",
+    "m": 7630,
+    "per_richting": 5.8,
+    "per_uur": 5.8
+   },
    "trein": {
     "naam": {
      "fr": "Eke-Nazareth",
@@ -4095,6 +6171,18 @@
     "tram": false
    },
    "haltes_binnen": 6,
+   "bus": {
+    "naam": "Gent Grensstraat",
+    "m": 40,
+    "per_richting": 15.4,
+    "per_uur": 30.8
+   },
+   "tram": {
+    "naam": "Gent Van Beverenplein (F. Ferrerlaan)",
+    "m": 700,
+    "per_richting": 7.6,
+    "per_uur": 7.6
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -4116,6 +6204,18 @@
     "tram": false
    },
    "haltes_binnen": 6,
+   "bus": {
+    "naam": "Sint-Amandsberg Vinkenlaan",
+    "m": 240,
+    "per_richting": 3.7,
+    "per_uur": 7.3
+   },
+   "tram": {
+    "naam": "Gent Neuseplein",
+    "m": 3090,
+    "per_richting": 6.7,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -4137,6 +6237,18 @@
     "tram": false
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Mariakerke Spellewerkstraat",
+    "m": 120,
+    "per_richting": 10.9,
+    "per_uur": 21.6
+   },
+   "tram": {
+    "naam": "Gent Guislainstraat",
+    "m": 1370,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -4158,6 +6270,18 @@
     "tram": true
    },
    "haltes_binnen": 21,
+   "bus": {
+    "naam": "Gent Brugsepoort (Brugsepoortstraat)",
+    "m": 290,
+    "per_richting": 15.9,
+    "per_uur": 31.5
+   },
+   "tram": {
+    "naam": "Gent de Mirabellostraat",
+    "m": 50,
+    "per_richting": 7.6,
+    "per_uur": 15.1
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -4179,6 +6303,18 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Destelbergen Stelplaats",
+    "m": 330,
+    "per_richting": 4.3,
+    "per_uur": 8.5
+   },
+   "tram": {
+    "naam": "Ledeberg Van Lokerenstraat",
+    "m": 2090,
+    "per_richting": 8.2,
+    "per_uur": 16.0
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -4200,6 +6336,18 @@
     "tram": false
    },
    "haltes_binnen": 3,
+   "bus": {
+    "naam": "Drongen Drongenplein",
+    "m": 140,
+    "per_richting": 3.9,
+    "per_uur": 7.8
+   },
+   "tram": {
+    "naam": "Gent Nieuwevaartbrug",
+    "m": 3100,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Tronchiennes",
@@ -4221,6 +6369,18 @@
     "tram": false
    },
    "haltes_binnen": 17,
+   "bus": {
+    "naam": "Gent Notelaarstraat",
+    "m": 140,
+    "per_richting": 7.3,
+    "per_uur": 14.7
+   },
+   "tram": {
+    "naam": "Gent Nieuwevaartbrug",
+    "m": 260,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -4242,6 +6402,18 @@
     "tram": false
    },
    "haltes_binnen": 4,
+   "bus": {
+    "naam": "Merelbeke Hebbelynckstraat",
+    "m": 260,
+    "per_richting": 4.8,
+    "per_uur": 9.3
+   },
+   "tram": {
+    "naam": "Zwijnaarde Molen",
+    "m": 2680,
+    "per_richting": 5.8,
+    "per_uur": 11.7
+   },
    "trein": {
     "naam": {
      "fr": "Merelbeke",
@@ -4263,6 +6435,18 @@
     "tram": false
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Gent van Ryhovelaan",
+    "m": 70,
+    "per_richting": 15.3,
+    "per_uur": 30.5
+   },
+   "tram": {
+    "naam": "Gent Van Beverenplein (F. Ferrerlaan)",
+    "m": 440,
+    "per_richting": 7.6,
+    "per_uur": 7.6
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -4284,6 +6468,18 @@
     "tram": true
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Mortsel Kuijpers",
+    "m": 140,
+    "per_richting": 5.2,
+    "per_uur": 10.5
+   },
+   "tram": {
+    "naam": "Mortsel Kuijpers",
+    "m": 140,
+    "per_richting": 12.8,
+    "per_uur": 25.4
+   },
    "trein": {
     "naam": {
      "fr": "Mortsel",
@@ -4305,6 +6501,18 @@
     "tram": false
    },
    "haltes_binnen": 21,
+   "bus": {
+    "naam": "Gent Sint-Pietersstation perron 23",
+    "m": 190,
+    "per_richting": 0.7,
+    "per_uur": 0.7
+   },
+   "tram": {
+    "naam": "Gent Sint-Pietersstation perron 20",
+    "m": 370,
+    "per_richting": 12.6,
+    "per_uur": 12.6
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -4326,6 +6534,12 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Sint-Michiels Abdijbeke",
+    "m": 320,
+    "per_richting": 3.0,
+    "per_uur": 6.0
+   },
    "trein": {
     "naam": {
      "fr": "Bruges",
@@ -4347,6 +6561,18 @@
     "tram": false
    },
    "haltes_binnen": 18,
+   "bus": {
+    "naam": "Sint-Amandsberg Aannemersstraat",
+    "m": 180,
+    "per_richting": 7.1,
+    "per_uur": 14.1
+   },
+   "tram": {
+    "naam": "Gent Keizerpoort (Brusselsepoortstraat)",
+    "m": 1170,
+    "per_richting": 8.2,
+    "per_uur": 16.1
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -4368,6 +6594,18 @@
     "tram": false
    },
    "haltes_binnen": 22,
+   "bus": {
+    "naam": "Gent Forelstraat",
+    "m": 170,
+    "per_richting": 2.4,
+    "per_uur": 4.8
+   },
+   "tram": {
+    "naam": "Gent Zuid perron 1",
+    "m": 1000,
+    "per_richting": 19.8,
+    "per_uur": 19.8
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -4389,6 +6627,18 @@
     "tram": false
    },
    "haltes_binnen": 4,
+   "bus": {
+    "naam": "Destelbergen Stationsstraat",
+    "m": 270,
+    "per_richting": 0.1,
+    "per_uur": 0.2
+   },
+   "tram": {
+    "naam": "Gentbrugge Schooldreef",
+    "m": 4250,
+    "per_richting": 7.9,
+    "per_uur": 15.8
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -4410,6 +6660,12 @@
     "tram": false
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Sint-Andries Sint-Baafskerk",
+    "m": 130,
+    "per_richting": 6.2,
+    "per_uur": 12.2
+   },
    "trein": {
     "naam": {
      "fr": "Bruges",
@@ -4431,6 +6687,12 @@
     "tram": false
    },
    "haltes_binnen": 11,
+   "bus": {
+    "naam": "Mechelen Vrijgeweidestraat",
+    "m": 270,
+    "per_richting": 0.1,
+    "per_uur": 0.1
+   },
    "trein": {
     "naam": {
      "fr": "Malines",
@@ -4452,6 +6714,18 @@
     "tram": false
    },
    "haltes_binnen": 13,
+   "bus": {
+    "naam": "Wondelgem Biesbilkstraat",
+    "m": 290,
+    "per_richting": 3.5,
+    "per_uur": 3.5
+   },
+   "tram": {
+    "naam": "Gent Van Beverenplein (F. Ferrerlaan)",
+    "m": 1530,
+    "per_richting": 7.6,
+    "per_uur": 7.6
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -4473,6 +6747,18 @@
     "tram": false
    },
    "haltes_binnen": 20,
+   "bus": {
+    "naam": "Gent Poel",
+    "m": 170,
+    "per_richting": 15.9,
+    "per_uur": 31.7
+   },
+   "tram": {
+    "naam": "Gent Korenmarkt perron 3",
+    "m": 300,
+    "per_richting": 8.1,
+    "per_uur": 8.1
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -4494,6 +6780,18 @@
     "tram": false
    },
    "haltes_binnen": 13,
+   "bus": {
+    "naam": "Wondelgem Evergemsesteenweg",
+    "m": 120,
+    "per_richting": 15.0,
+    "per_uur": 29.5
+   },
+   "tram": {
+    "naam": "Gent Van Beverenplein (F. Ferrerlaan)",
+    "m": 1980,
+    "per_richting": 7.6,
+    "per_uur": 7.6
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -4515,6 +6813,18 @@
     "tram": false
    },
    "haltes_binnen": 11,
+   "bus": {
+    "naam": "Oostende Mac Leodplein",
+    "m": 350,
+    "per_richting": 9.1,
+    "per_uur": 18.0
+   },
+   "tram": {
+    "naam": "Oostende Renbaan",
+    "m": 580,
+    "per_richting": 4.1,
+    "per_uur": 8.0
+   },
    "trein": {
     "naam": {
      "fr": "Ostende",
@@ -4536,6 +6846,18 @@
     "tram": false
    },
    "haltes_binnen": 7,
+   "bus": {
+    "naam": "Sint-Amandsberg Visitatiestraat",
+    "m": 60,
+    "per_richting": 4.8,
+    "per_uur": 9.5
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 1380,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -4557,6 +6879,18 @@
     "tram": false
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Gent Crappéstraat",
+    "m": 90,
+    "per_richting": 3.8,
+    "per_uur": 7.4
+   },
+   "tram": {
+    "naam": "Gent Nieuwevaartbrug",
+    "m": 1320,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -4578,6 +6912,12 @@
     "tram": false
    },
    "haltes_binnen": 3,
+   "bus": {
+    "naam": "Nieuwkerken Wallenhof",
+    "m": 370,
+    "per_richting": 1.8,
+    "per_uur": 1.8
+   },
    "trein": {
     "naam": {
      "fr": "Nieuwkerken-Waas",
@@ -4599,6 +6939,18 @@
     "tram": false
    },
    "haltes_binnen": 7,
+   "bus": {
+    "naam": "Wondelgem Neptunus (Willy Maststraat)",
+    "m": 100,
+    "per_richting": 3.6,
+    "per_uur": 3.6
+   },
+   "tram": {
+    "naam": "Gent Van Beverenplein (F. Ferrerlaan)",
+    "m": 1460,
+    "per_richting": 7.6,
+    "per_uur": 7.6
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -4620,6 +6972,18 @@
     "tram": true
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Gentbrugge Schooldreef",
+    "m": 240,
+    "per_richting": 7.9,
+    "per_uur": 23.4
+   },
+   "tram": {
+    "naam": "Gentbrugge Schooldreef",
+    "m": 310,
+    "per_richting": 7.9,
+    "per_uur": 15.8
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -4641,6 +7005,18 @@
     "tram": false
    },
    "haltes_binnen": 7,
+   "bus": {
+    "naam": "Sint-Amandsberg Visitatiestraat",
+    "m": 100,
+    "per_richting": 4.8,
+    "per_uur": 9.5
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 1330,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -4662,6 +7038,18 @@
     "tram": false
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Sint-Amandsberg Rozebroekstraat",
+    "m": 130,
+    "per_richting": 3.8,
+    "per_uur": 7.4
+   },
+   "tram": {
+    "naam": "Gent Heilig-Kerst",
+    "m": 1890,
+    "per_richting": 6.7,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -4683,6 +7071,12 @@
     "tram": false
    },
    "haltes_binnen": 2,
+   "bus": {
+    "naam": "Eine Grimbergen",
+    "m": 320,
+    "per_richting": 1.8,
+    "per_uur": 3.3
+   },
    "trein": {
     "naam": {
      "fr": "Eine",
@@ -4704,6 +7098,18 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Sint-Amandsberg Everstraat",
+    "m": 250,
+    "per_richting": 4.8,
+    "per_uur": 9.2
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 2100,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -4725,6 +7131,18 @@
     "tram": false
    },
    "haltes_binnen": 2,
+   "bus": {
+    "naam": "Steendorp Hemelrijkstraat",
+    "m": 210,
+    "per_richting": 4.4,
+    "per_uur": 8.2
+   },
+   "tram": {
+    "naam": "Hoboken P+R Schoonselhof",
+    "m": 7180,
+    "per_richting": 6.7,
+    "per_uur": 6.7
+   },
    "trein": {
     "naam": {
      "fr": "Tamise",
@@ -4746,6 +7164,18 @@
     "tram": false
    },
    "haltes_binnen": 1,
+   "bus": {
+    "naam": "Drongen Beekstraat",
+    "m": 690,
+    "per_richting": 2.1,
+    "per_uur": 4.3
+   },
+   "tram": {
+    "naam": "Gent Guislainstraat",
+    "m": 4370,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Tronchiennes",
@@ -4767,6 +7197,18 @@
     "tram": true
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Gent Van Beverenplein",
+    "m": 170,
+    "per_richting": 15.4,
+    "per_uur": 30.5
+   },
+   "tram": {
+    "naam": "Gent Van Beverenplein (F. Ferrerlaan)",
+    "m": 60,
+    "per_richting": 7.6,
+    "per_uur": 7.6
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -4788,6 +7230,12 @@
     "tram": false
    },
    "haltes_binnen": 2,
+   "bus": {
+    "naam": "Beitem Plaats",
+    "m": 80,
+    "per_richting": 0.9,
+    "per_uur": 0.9
+   },
    "trein": {
     "naam": {
      "fr": "Roulers",
@@ -4809,6 +7257,18 @@
     "tram": false
    },
    "haltes_binnen": 6,
+   "bus": {
+    "naam": "Wetteren Zwembad",
+    "m": 150,
+    "per_richting": 0.8,
+    "per_uur": 1.5
+   },
+   "tram": {
+    "naam": "Melle Leeuw",
+    "m": 8980,
+    "per_richting": 7.8,
+    "per_uur": 7.8
+   },
    "trein": {
     "naam": {
      "fr": "Wetteren",
@@ -4830,6 +7290,12 @@
     "tram": false
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Sint-Kruis Beukenlaan",
+    "m": 200,
+    "per_richting": 3.0,
+    "per_uur": 6.0
+   },
    "trein": {
     "naam": {
      "fr": "Bruges",
@@ -4851,6 +7317,18 @@
     "tram": false
    },
    "haltes_binnen": 7,
+   "bus": {
+    "naam": "Destelbergen Dorekenswegel",
+    "m": 80,
+    "per_richting": 0.1,
+    "per_uur": 0.2
+   },
+   "tram": {
+    "naam": "Gentbrugge Tennisstraat",
+    "m": 4470,
+    "per_richting": 7.8,
+    "per_uur": 15.7
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -4872,6 +7350,18 @@
     "tram": false
    },
    "haltes_binnen": 26,
+   "bus": {
+    "naam": "Gent Sint-Jacobs perron 1",
+    "m": 190,
+    "per_richting": 0.1,
+    "per_uur": 0.1
+   },
+   "tram": {
+    "naam": "Gent Korenmarkt perron 4",
+    "m": 250,
+    "per_richting": 7.9,
+    "per_uur": 7.9
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -4893,6 +7383,18 @@
     "tram": false
    },
    "haltes_binnen": 11,
+   "bus": {
+    "naam": "Wondelgem Biesbilkstraat",
+    "m": 90,
+    "per_richting": 3.5,
+    "per_uur": 3.5
+   },
+   "tram": {
+    "naam": "Gent Van Beverenplein (F. Ferrerlaan)",
+    "m": 1310,
+    "per_richting": 7.6,
+    "per_uur": 7.6
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -4914,6 +7416,18 @@
     "tram": true
    },
    "haltes_binnen": 16,
+   "bus": {
+    "naam": "Gent Poel",
+    "m": 440,
+    "per_richting": 15.9,
+    "per_uur": 31.7
+   },
+   "tram": {
+    "naam": "Gent Galgenberg",
+    "m": 120,
+    "per_richting": 11.8,
+    "per_uur": 23.3
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -4935,6 +7449,18 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Melle Veerweg",
+    "m": 460,
+    "per_richting": 4.4,
+    "per_uur": 8.8
+   },
+   "tram": {
+    "naam": "Melle Leeuw",
+    "m": 3640,
+    "per_richting": 7.8,
+    "per_uur": 7.8
+   },
    "trein": {
     "naam": {
      "fr": "Melle",
@@ -4956,6 +7482,18 @@
     "tram": false
    },
    "haltes_binnen": 1,
+   "bus": {
+    "naam": "Gontrode Kerk",
+    "m": 770,
+    "per_richting": 0.2,
+    "per_uur": 0.3
+   },
+   "tram": {
+    "naam": "Melle Leeuw",
+    "m": 4650,
+    "per_richting": 7.8,
+    "per_uur": 7.8
+   },
    "trein": {
     "naam": {
      "fr": "Gontrode",
@@ -4977,6 +7515,18 @@
     "tram": false
    },
    "haltes_binnen": 13,
+   "bus": {
+    "naam": "Gentbrugge Henri Van Daelestraat",
+    "m": 120,
+    "per_richting": 0.7,
+    "per_uur": 0.8
+   },
+   "tram": {
+    "naam": "Melle Leeuw",
+    "m": 430,
+    "per_richting": 7.8,
+    "per_uur": 7.8
+   },
    "trein": {
     "naam": {
      "fr": "Merelbeke",
@@ -4998,6 +7548,18 @@
     "tram": false
    },
    "haltes_binnen": 3,
+   "bus": {
+    "naam": "Drongen Drongenplein",
+    "m": 210,
+    "per_richting": 3.9,
+    "per_uur": 7.8
+   },
+   "tram": {
+    "naam": "Gent Nieuwevaartbrug",
+    "m": 3270,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Tronchiennes",
@@ -5019,6 +7581,18 @@
     "tram": false
    },
    "haltes_binnen": 11,
+   "bus": {
+    "naam": "Sint-Amandsberg Dienstencentrum",
+    "m": 160,
+    "per_richting": 13.2,
+    "per_uur": 26.1
+   },
+   "tram": {
+    "naam": "Gent Heilig-Kerst",
+    "m": 1590,
+    "per_richting": 6.7,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -5040,6 +7614,18 @@
     "tram": false
    },
    "haltes_binnen": 11,
+   "bus": {
+    "naam": "Wondelgem Biesbilkstraat",
+    "m": 70,
+    "per_richting": 3.5,
+    "per_uur": 3.5
+   },
+   "tram": {
+    "naam": "Gent Van Beverenplein (F. Ferrerlaan)",
+    "m": 1190,
+    "per_richting": 7.6,
+    "per_uur": 7.6
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -5061,6 +7647,18 @@
     "tram": false
    },
    "haltes_binnen": 13,
+   "bus": {
+    "naam": "Gent Heymanslaan",
+    "m": 90,
+    "per_richting": 3.2,
+    "per_uur": 6.3
+   },
+   "tram": {
+    "naam": "Gent UZ",
+    "m": 260,
+    "per_richting": 6.8,
+    "per_uur": 6.8
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -5082,6 +7680,18 @@
     "tram": false
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Gentbrugge Tweekapellenstraat",
+    "m": 90,
+    "per_richting": 4.8,
+    "per_uur": 9.7
+   },
+   "tram": {
+    "naam": "Ledeberg Van Lokerenstraat",
+    "m": 960,
+    "per_richting": 8.2,
+    "per_uur": 16.0
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -5103,6 +7713,18 @@
     "tram": false
    },
    "haltes_binnen": 12,
+   "bus": {
+    "naam": "Gent Peerstraat",
+    "m": 170,
+    "per_richting": 7.2,
+    "per_uur": 14.2
+   },
+   "tram": {
+    "naam": "Gent Nieuwevaartbrug",
+    "m": 940,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Tronchiennes",
@@ -5124,6 +7746,18 @@
     "tram": false
    },
    "haltes_binnen": 4,
+   "bus": {
+    "naam": "Gentbrugge De Guchteneerestraat",
+    "m": 140,
+    "per_richting": 3.6,
+    "per_uur": 3.6
+   },
+   "tram": {
+    "naam": "Gentbrugge Schooldreef",
+    "m": 1600,
+    "per_richting": 7.9,
+    "per_uur": 15.8
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -5145,6 +7779,18 @@
     "tram": false
    },
    "haltes_binnen": 16,
+   "bus": {
+    "naam": "Gent Peerstraat",
+    "m": 180,
+    "per_richting": 7.2,
+    "per_uur": 14.2
+   },
+   "tram": {
+    "naam": "Gent Nieuwevaartbrug",
+    "m": 690,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -5166,6 +7812,18 @@
     "tram": false
    },
    "haltes_binnen": 25,
+   "bus": {
+    "naam": "Gent Blandijnberg",
+    "m": 180,
+    "per_richting": 0.1,
+    "per_uur": 0.1
+   },
+   "tram": {
+    "naam": "Gent Vijfwindgatenstraat",
+    "m": 350,
+    "per_richting": 19.8,
+    "per_uur": 39.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -5187,6 +7845,12 @@
     "tram": false
    },
    "haltes_binnen": 5,
+   "bus": {
+    "naam": "Roeselare Onze Jeugd",
+    "m": 50,
+    "per_richting": 2.5,
+    "per_uur": 4.8
+   },
    "trein": {
     "naam": {
      "fr": "Roulers",
@@ -5208,6 +7872,18 @@
     "tram": true
    },
    "haltes_binnen": 6,
+   "bus": {
+    "naam": "Gentbrugge Tennisstraat",
+    "m": 450,
+    "per_richting": 8.1,
+    "per_uur": 8.1
+   },
+   "tram": {
+    "naam": "Gentbrugge Tennisstraat",
+    "m": 430,
+    "per_richting": 7.8,
+    "per_uur": 15.7
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -5229,6 +7905,12 @@
     "tram": false
    },
    "haltes_binnen": 7,
+   "bus": {
+    "naam": "Sint-Kruis Paalbos",
+    "m": 170,
+    "per_richting": 3.0,
+    "per_uur": 6.0
+   },
    "trein": {
     "naam": {
      "fr": "Bruges",
@@ -5250,6 +7932,12 @@
     "tram": false
    },
    "haltes_binnen": 7,
+   "bus": {
+    "naam": "Halle Don Bosco",
+    "m": 320,
+    "per_richting": 2.2,
+    "per_uur": 5.3
+   },
    "trein": {
     "naam": {
      "fr": "Hal",
@@ -5271,6 +7959,18 @@
     "tram": false
    },
    "haltes_binnen": 2,
+   "bus": {
+    "naam": "Lovendegem Oostveld Kouter",
+    "m": 220,
+    "per_richting": 4.2,
+    "per_uur": 8.2
+   },
+   "tram": {
+    "naam": "Gent Hortensiastraat",
+    "m": 6740,
+    "per_richting": 7.7,
+    "per_uur": 15.3
+   },
    "trein": {
     "naam": {
      "fr": "Sleidinge",
@@ -5292,6 +7992,18 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Destelbergen Stelplaats",
+    "m": 350,
+    "per_richting": 4.3,
+    "per_uur": 8.5
+   },
+   "tram": {
+    "naam": "Ledeberg Van Lokerenstraat",
+    "m": 2100,
+    "per_richting": 8.2,
+    "per_uur": 16.0
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -5313,6 +8025,18 @@
     "tram": false
    },
    "haltes_binnen": 17,
+   "bus": {
+    "naam": "Gent Rooigem (R40)",
+    "m": 90,
+    "per_richting": 7.2,
+    "per_uur": 10.8
+   },
+   "tram": {
+    "naam": "Gent Nieuwevaartbrug",
+    "m": 620,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -5334,6 +8058,18 @@
     "tram": false
    },
    "haltes_binnen": 14,
+   "bus": {
+    "naam": "Deurne Eksterlaar",
+    "m": 190,
+    "per_richting": 9.8,
+    "per_uur": 19.4
+   },
+   "tram": {
+    "naam": "Deurne Waterbaan",
+    "m": 470,
+    "per_richting": 12.8,
+    "per_uur": 25.3
+   },
    "trein": {
     "naam": {
      "fr": "Anvers-Berchem",
@@ -5355,6 +8091,18 @@
     "tram": false
    },
    "haltes_binnen": 3,
+   "bus": {
+    "naam": "Mariakerke Lusthoflaan",
+    "m": 630,
+    "per_richting": 7.2,
+    "per_uur": 14.1
+   },
+   "tram": {
+    "naam": "Gent Van Beverenplein (F. Ferrerlaan)",
+    "m": 2180,
+    "per_richting": 7.6,
+    "per_uur": 7.6
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -5376,6 +8124,12 @@
     "tram": false
    },
    "haltes_binnen": 5,
+   "bus": {
+    "naam": "Buizingen Gemeenteplein",
+    "m": 320,
+    "per_richting": 4.8,
+    "per_uur": 9.3
+   },
    "trein": {
     "naam": {
      "fr": "Hal",
@@ -5397,6 +8151,18 @@
     "tram": false
    },
    "haltes_binnen": 28,
+   "bus": {
+    "naam": "Gent Zalmstraat",
+    "m": 0,
+    "per_richting": 2.3,
+    "per_uur": 4.6
+   },
+   "tram": {
+    "naam": "Gent Keizerpoort (Brusselsepoortstraat)",
+    "m": 730,
+    "per_richting": 8.2,
+    "per_uur": 16.1
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -5418,6 +8184,18 @@
     "tram": false
    },
    "haltes_binnen": 23,
+   "bus": {
+    "naam": "Gent van Arenbergstraat",
+    "m": 90,
+    "per_richting": 3.8,
+    "per_uur": 7.4
+   },
+   "tram": {
+    "naam": "Gent Lippensplein",
+    "m": 1270,
+    "per_richting": 19.3,
+    "per_uur": 39.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -5439,6 +8217,18 @@
     "tram": true
    },
    "haltes_binnen": 11,
+   "bus": {
+    "naam": "Ledeberg Eindeke",
+    "m": 420,
+    "per_richting": 5.2,
+    "per_uur": 10.3
+   },
+   "tram": {
+    "naam": "Ledeberg van Ooteghemstraat",
+    "m": 170,
+    "per_richting": 11.2,
+    "per_uur": 22.5
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -5460,6 +8250,18 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Gent Liverpoolstraat",
+    "m": 140,
+    "per_richting": 3.8,
+    "per_uur": 7.6
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 550,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -5481,6 +8283,18 @@
     "tram": false
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Wetteren Station Achterzijde",
+    "m": 200,
+    "per_richting": 4.2,
+    "per_uur": 4.2
+   },
+   "tram": {
+    "naam": "Melle Leeuw",
+    "m": 8140,
+    "per_richting": 7.8,
+    "per_uur": 7.8
+   },
    "trein": {
     "naam": {
      "fr": "Wetteren",
@@ -5502,6 +8316,12 @@
     "tram": false
    },
    "haltes_binnen": 3,
+   "bus": {
+    "naam": "Moerbeke-Waas Oostvaart",
+    "m": 60,
+    "per_richting": 2.2,
+    "per_uur": 4.4
+   },
    "trein": {
     "naam": {
      "fr": "Sinaai",
@@ -5523,6 +8343,18 @@
     "tram": false
    },
    "haltes_binnen": 18,
+   "bus": {
+    "naam": "Borgerhout Helmstraat",
+    "m": 220,
+    "per_richting": 3.8,
+    "per_uur": 3.8
+   },
+   "tram": {
+    "naam": "Borgerhout Zegel Metro",
+    "m": 300,
+    "per_richting": 13.2,
+    "per_uur": 26.5
+   },
    "trein": {
     "naam": {
      "fr": "Anvers-Central",
@@ -5544,6 +8376,18 @@
     "tram": false
    },
    "haltes_binnen": 3,
+   "bus": {
+    "naam": "Mariakerke Lusthoflaan",
+    "m": 640,
+    "per_richting": 7.2,
+    "per_uur": 14.1
+   },
+   "tram": {
+    "naam": "Gent Van Beverenplein (F. Ferrerlaan)",
+    "m": 2220,
+    "per_richting": 7.6,
+    "per_uur": 7.6
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -5565,6 +8409,18 @@
     "tram": false
    },
    "haltes_binnen": 5,
+   "bus": {
+    "naam": "Mariakerke Dienstencentrum",
+    "m": 400,
+    "per_richting": 3.7,
+    "per_uur": 7.2
+   },
+   "tram": {
+    "naam": "Gent Hortensiastraat",
+    "m": 2360,
+    "per_richting": 7.7,
+    "per_uur": 15.3
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -5586,6 +8442,18 @@
     "tram": false
    },
    "haltes_binnen": 1,
+   "bus": {
+    "naam": "Sint-Amandsberg Schuurstraat",
+    "m": 720,
+    "per_richting": 3.7,
+    "per_uur": 7.3
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 3920,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -5607,6 +8475,12 @@
     "tram": false
    },
    "haltes_binnen": 14,
+   "bus": {
+    "naam": "Halle Sportoase Hallebad",
+    "m": 270,
+    "per_richting": 6.8,
+    "per_uur": 13.4
+   },
    "trein": {
     "naam": {
      "fr": "Hal",
@@ -5628,6 +8502,18 @@
     "tram": false
    },
    "haltes_binnen": 6,
+   "bus": {
+    "naam": "Merelbeke Ginstdreef",
+    "m": 330,
+    "per_richting": 0.3,
+    "per_uur": 0.6
+   },
+   "tram": {
+    "naam": "Melle Leeuw",
+    "m": 2070,
+    "per_richting": 7.8,
+    "per_uur": 7.8
+   },
    "trein": {
     "naam": {
      "fr": "Merelbeke",
@@ -5649,6 +8535,12 @@
     "tram": false
    },
    "haltes_binnen": 7,
+   "bus": {
+    "naam": "Sint-Andries Zandstraat",
+    "m": 70,
+    "per_richting": 3.0,
+    "per_uur": 5.9
+   },
    "trein": {
     "naam": {
      "fr": "Bruges",
@@ -5670,6 +8562,18 @@
     "tram": false
    },
    "haltes_binnen": 6,
+   "bus": {
+    "naam": "Gent Bernadette Kerk",
+    "m": 390,
+    "per_richting": 4.8,
+    "per_uur": 9.5
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 1340,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -5691,6 +8595,18 @@
     "tram": false
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Sint-Amandsberg Carelshof",
+    "m": 360,
+    "per_richting": 4.8,
+    "per_uur": 9.2
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 2570,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -5712,6 +8628,18 @@
     "tram": false
    },
    "haltes_binnen": 17,
+   "bus": {
+    "naam": "Gent Notelaarstraat",
+    "m": 220,
+    "per_richting": 7.3,
+    "per_uur": 14.7
+   },
+   "tram": {
+    "naam": "Gent Nieuwevaartbrug",
+    "m": 550,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -5733,6 +8661,18 @@
     "tram": false
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Gentbrugge Tweekapellenstraat",
+    "m": 140,
+    "per_richting": 4.8,
+    "per_uur": 9.7
+   },
+   "tram": {
+    "naam": "Ledeberg Van Lokerenstraat",
+    "m": 1120,
+    "per_richting": 8.2,
+    "per_uur": 16.0
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -5754,6 +8694,18 @@
     "tram": false
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Mariakerke Jutestraat",
+    "m": 110,
+    "per_richting": 10.9,
+    "per_uur": 21.6
+   },
+   "tram": {
+    "naam": "Gent Guislainstraat",
+    "m": 1100,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -5775,6 +8727,18 @@
     "tram": true
    },
    "haltes_binnen": 28,
+   "bus": {
+    "naam": "Gent Flamingostraat",
+    "m": 410,
+    "per_richting": 14.2,
+    "per_uur": 27.5
+   },
+   "tram": {
+    "naam": "Gent Sint-Pietersaalststraat",
+    "m": 120,
+    "per_richting": 12.8,
+    "per_uur": 25.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -5796,6 +8760,12 @@
     "tram": false
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Assebroek Odegemstraat",
+    "m": 0,
+    "per_richting": 3.0,
+    "per_uur": 6.0
+   },
    "trein": {
     "naam": {
      "fr": "Bruges",
@@ -5817,6 +8787,18 @@
     "tram": false
    },
    "haltes_binnen": 7,
+   "bus": {
+    "naam": "Gent Bernadette Kerk",
+    "m": 430,
+    "per_richting": 4.8,
+    "per_uur": 9.5
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 1300,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -5838,6 +8820,18 @@
     "tram": false
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Wondelgem Roodborstjesstraat",
+    "m": 290,
+    "per_richting": 3.5,
+    "per_uur": 3.5
+   },
+   "tram": {
+    "naam": "Gent Van Beverenplein (F. Ferrerlaan)",
+    "m": 950,
+    "per_richting": 7.6,
+    "per_uur": 7.6
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -5859,6 +8853,12 @@
     "tram": false
    },
    "haltes_binnen": 0,
+   "bus": {
+    "naam": "Sint-Goriks-Oudenhove Langendries",
+    "m": 1290,
+    "per_richting": 0.2,
+    "per_uur": 0.5
+   },
    "trein": {
     "naam": {
      "fr": "Zottegem",
@@ -5880,6 +8880,12 @@
     "tram": false
    },
    "haltes_binnen": 13,
+   "bus": {
+    "naam": "Deinze Station perron 1",
+    "m": 130,
+    "per_richting": 2.8,
+    "per_uur": 2.8
+   },
    "trein": {
     "naam": {
      "fr": "Deinze",
@@ -5901,6 +8907,18 @@
     "tram": false
    },
    "haltes_binnen": 16,
+   "bus": {
+    "naam": "Gent Rooigem (Bevrijdingslaan)",
+    "m": 150,
+    "per_richting": 7.3,
+    "per_uur": 7.3
+   },
+   "tram": {
+    "naam": "Gent Guislainstraat",
+    "m": 340,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -5922,6 +8940,18 @@
     "tram": true
    },
    "haltes_binnen": 15,
+   "bus": {
+    "naam": "Deurne Muggenberg",
+    "m": 280,
+    "per_richting": 4.3,
+    "per_uur": 8.5
+   },
+   "tram": {
+    "naam": "Deurne Muggenberg",
+    "m": 280,
+    "per_richting": 12.8,
+    "per_uur": 25.3
+   },
    "trein": {
     "naam": {
      "fr": "Anvers-Berchem",
@@ -5943,6 +8973,18 @@
     "tram": true
    },
    "haltes_binnen": 14,
+   "bus": {
+    "naam": "Ledeberg Ledebergplein",
+    "m": 140,
+    "per_richting": 11.8,
+    "per_uur": 23.2
+   },
+   "tram": {
+    "naam": "Ledeberg Ledebergplein",
+    "m": 140,
+    "per_richting": 11.2,
+    "per_uur": 22.9
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -5964,6 +9006,18 @@
     "tram": false
    },
    "haltes_binnen": 17,
+   "bus": {
+    "naam": "Gent Wondelgembrug (Roggestraat)",
+    "m": 70,
+    "per_richting": 15.2,
+    "per_uur": 15.2
+   },
+   "tram": {
+    "naam": "Gent Guislainstraat",
+    "m": 430,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -5985,6 +9039,12 @@
     "tram": false
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Sint-Andries Lange Munt",
+    "m": 140,
+    "per_richting": 6.2,
+    "per_uur": 12.2
+   },
    "trein": {
     "naam": {
      "fr": "Bruges",
@@ -6006,6 +9066,12 @@
     "tram": false
    },
    "haltes_binnen": 22,
+   "bus": {
+    "naam": "Kessel-Lo Achterzijde Station",
+    "m": 80,
+    "per_richting": 4.0,
+    "per_uur": 7.9
+   },
    "trein": {
     "naam": {
      "fr": "Louvain",
@@ -6027,6 +9093,18 @@
     "tram": false
    },
    "haltes_binnen": 20,
+   "bus": {
+    "naam": "Gent Roosakker",
+    "m": 360,
+    "per_richting": 0.8,
+    "per_uur": 1.2
+   },
+   "tram": {
+    "naam": "Gent Meersstraat",
+    "m": 620,
+    "per_richting": 18.4,
+    "per_uur": 36.8
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -6048,6 +9126,18 @@
     "tram": false
    },
    "haltes_binnen": 4,
+   "bus": {
+    "naam": "Hove Gemeentehuis",
+    "m": 290,
+    "per_richting": 1.0,
+    "per_uur": 1.0
+   },
+   "tram": {
+    "naam": "Mortsel Hof Savelkoul",
+    "m": 2530,
+    "per_richting": 6.8,
+    "per_uur": 13.7
+   },
    "trein": {
     "naam": {
      "fr": "Hove",
@@ -6069,6 +9159,18 @@
     "tram": true
    },
    "haltes_binnen": 13,
+   "bus": {
+    "naam": "Ledeberg Ledebergplein",
+    "m": 140,
+    "per_richting": 11.8,
+    "per_uur": 23.2
+   },
+   "tram": {
+    "naam": "Ledeberg Ledebergplein",
+    "m": 140,
+    "per_richting": 11.2,
+    "per_uur": 22.9
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -6090,6 +9192,18 @@
     "tram": false
    },
    "haltes_binnen": 16,
+   "bus": {
+    "naam": "Gent Seghersplein (Weversstraat)",
+    "m": 100,
+    "per_richting": 3.8,
+    "per_uur": 7.4
+   },
+   "tram": {
+    "naam": "Gent Brugsepoort (Begijnhoflaan)",
+    "m": 300,
+    "per_richting": 6.7,
+    "per_uur": 13.3
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -6111,6 +9225,18 @@
     "tram": false
    },
    "haltes_binnen": 19,
+   "bus": {
+    "naam": "Sint-Amandsberg Aannemersstraat",
+    "m": 220,
+    "per_richting": 7.1,
+    "per_uur": 14.1
+   },
+   "tram": {
+    "naam": "Gent Keizerpoort (Brusselsepoortstraat)",
+    "m": 1150,
+    "per_richting": 8.2,
+    "per_uur": 16.1
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -6132,6 +9258,18 @@
     "tram": false
    },
    "haltes_binnen": 1,
+   "bus": {
+    "naam": "Landegem Dorp",
+    "m": 650,
+    "per_richting": 0.3,
+    "per_uur": 0.5
+   },
+   "tram": {
+    "naam": "Gent Guislainstraat",
+    "m": 9520,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Landegem",
@@ -6153,6 +9291,18 @@
     "tram": false
    },
    "haltes_binnen": 7,
+   "bus": {
+    "naam": "Sint-Amandsberg Visitatiestraat",
+    "m": 110,
+    "per_richting": 4.8,
+    "per_uur": 9.5
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 1330,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -6174,6 +9324,18 @@
     "tram": false
    },
    "haltes_binnen": 7,
+   "bus": {
+    "naam": "Gentbrugge Voordries",
+    "m": 280,
+    "per_richting": 3.6,
+    "per_uur": 7.1
+   },
+   "tram": {
+    "naam": "Gentbrugge Schooldreef",
+    "m": 930,
+    "per_richting": 7.9,
+    "per_uur": 15.8
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -6195,6 +9357,18 @@
     "tram": false
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Wondelgem Biesbilkstraat",
+    "m": 230,
+    "per_richting": 3.5,
+    "per_uur": 3.5
+   },
+   "tram": {
+    "naam": "Gent Van Beverenplein (F. Ferrerlaan)",
+    "m": 1100,
+    "per_richting": 7.6,
+    "per_uur": 7.6
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -6216,6 +9390,18 @@
     "tram": false
    },
    "haltes_binnen": 25,
+   "bus": {
+    "naam": "Gent van Cleemputteplein",
+    "m": 210,
+    "per_richting": 2.2,
+    "per_uur": 4.5
+   },
+   "tram": {
+    "naam": "Gent Lippensplein",
+    "m": 1530,
+    "per_richting": 19.3,
+    "per_uur": 39.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -6237,6 +9423,18 @@
     "tram": false
    },
    "haltes_binnen": 22,
+   "bus": {
+    "naam": "Gent van Arenbergstraat",
+    "m": 120,
+    "per_richting": 3.8,
+    "per_uur": 7.4
+   },
+   "tram": {
+    "naam": "Gent Heilig-Kerst",
+    "m": 1190,
+    "per_richting": 6.7,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -6258,6 +9456,18 @@
     "tram": false
    },
    "haltes_binnen": 5,
+   "bus": {
+    "naam": "Bottelare Dorpsstraat",
+    "m": 110,
+    "per_richting": 1.1,
+    "per_uur": 2.1
+   },
+   "tram": {
+    "naam": "Zwijnaarde Bibliotheek",
+    "m": 5200,
+    "per_richting": 5.8,
+    "per_uur": 5.8
+   },
    "trein": {
     "naam": {
      "fr": "Moortsele",
@@ -6279,6 +9489,18 @@
     "tram": true
    },
    "haltes_binnen": 20,
+   "bus": {
+    "naam": "Gent Poel",
+    "m": 440,
+    "per_richting": 15.9,
+    "per_uur": 31.7
+   },
+   "tram": {
+    "naam": "Gent de Mirabellostraat",
+    "m": 230,
+    "per_richting": 7.6,
+    "per_uur": 15.1
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -6300,6 +9522,18 @@
     "tram": false
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Sint-Amandsberg P+R Oostakker",
+    "m": 140,
+    "per_richting": 6.6,
+    "per_uur": 12.9
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 3560,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -6321,6 +9555,18 @@
     "tram": true
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Gentbrugge Stelplaats",
+    "m": 380,
+    "per_richting": 11.8,
+    "per_uur": 23.2
+   },
+   "tram": {
+    "naam": "Gentbrugge Stelplaats",
+    "m": 380,
+    "per_richting": 9.2,
+    "per_uur": 16.7
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -6342,6 +9588,12 @@
     "tram": false
    },
    "haltes_binnen": 14,
+   "bus": {
+    "naam": "Brugge Beenhouwersstraat (Gulden-Vlieslaan)",
+    "m": 240,
+    "per_richting": 15.1,
+    "per_uur": 27.2
+   },
    "trein": {
     "naam": {
      "fr": "Bruges-Saint-Pierre",
@@ -6363,6 +9615,12 @@
     "tram": false
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Kortrijk Gentpoort",
+    "m": 40,
+    "per_richting": 2.2,
+    "per_uur": 4.3
+   },
    "trein": {
     "naam": {
      "fr": "Courtrai",
@@ -6384,6 +9642,18 @@
     "tram": false
    },
    "haltes_binnen": 12,
+   "bus": {
+    "naam": "Merelbeke Kerk Flora",
+    "m": 230,
+    "per_richting": 0.8,
+    "per_uur": 1.5
+   },
+   "tram": {
+    "naam": "Melle Leeuw",
+    "m": 980,
+    "per_richting": 7.8,
+    "per_uur": 7.8
+   },
    "trein": {
     "naam": {
      "fr": "Merelbeke",
@@ -6405,6 +9675,18 @@
     "tram": false
    },
    "haltes_binnen": 16,
+   "bus": {
+    "naam": "Gent Geitstraat",
+    "m": 150,
+    "per_richting": 3.8,
+    "per_uur": 7.4
+   },
+   "tram": {
+    "naam": "Gent Nieuwevaartbrug",
+    "m": 750,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -6426,6 +9708,18 @@
     "tram": false
    },
    "haltes_binnen": 14,
+   "bus": {
+    "naam": "Gent Koekoeklaan",
+    "m": 200,
+    "per_richting": 3.2,
+    "per_uur": 6.3
+   },
+   "tram": {
+    "naam": "Gent UZ",
+    "m": 490,
+    "per_richting": 6.8,
+    "per_uur": 6.8
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -6447,6 +9741,12 @@
     "tram": false
    },
    "haltes_binnen": 20,
+   "bus": {
+    "naam": "Brugge Hoefijzer",
+    "m": 100,
+    "per_richting": 24.8,
+    "per_uur": 49.6
+   },
    "trein": {
     "naam": {
      "fr": "Bruges",
@@ -6468,6 +9768,18 @@
     "tram": true
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Gentbrugge Stelplaats",
+    "m": 230,
+    "per_richting": 11.8,
+    "per_uur": 23.2
+   },
+   "tram": {
+    "naam": "Gentbrugge Stelplaats",
+    "m": 140,
+    "per_richting": 9.2,
+    "per_uur": 16.7
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -6489,6 +9801,18 @@
     "tram": false
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Gentbrugge Jef Vandermeulenstraat",
+    "m": 210,
+    "per_richting": 4.8,
+    "per_uur": 9.6
+   },
+   "tram": {
+    "naam": "Gentbrugge Stelplaats",
+    "m": 720,
+    "per_richting": 9.2,
+    "per_uur": 16.7
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -6510,6 +9834,18 @@
     "tram": false
    },
    "haltes_binnen": 16,
+   "bus": {
+    "naam": "Borgerhout Hof ter Lo",
+    "m": 210,
+    "per_richting": 4.6,
+    "per_uur": 8.9
+   },
+   "tram": {
+    "naam": "Borgerhout Stenenbrug",
+    "m": 370,
+    "per_richting": 6.2,
+    "per_uur": 12.1
+   },
    "trein": {
     "naam": {
      "fr": "Anvers-Central",
@@ -6531,6 +9867,18 @@
     "tram": false
    },
    "haltes_binnen": 17,
+   "bus": {
+    "naam": "Gent Notelaarstraat",
+    "m": 200,
+    "per_richting": 7.3,
+    "per_uur": 14.7
+   },
+   "tram": {
+    "naam": "Gent Nieuwevaartbrug",
+    "m": 520,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -6552,6 +9900,18 @@
     "tram": false
    },
    "haltes_binnen": 6,
+   "bus": {
+    "naam": "Mariakerke Kerk",
+    "m": 430,
+    "per_richting": 0.2,
+    "per_uur": 0.2
+   },
+   "tram": {
+    "naam": "Gent Guislainstraat",
+    "m": 1880,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Tronchiennes",
@@ -6573,6 +9933,18 @@
     "tram": false
    },
    "haltes_binnen": 12,
+   "bus": {
+    "naam": "Gent Malem (Drongensesteenweg)",
+    "m": 70,
+    "per_richting": 3.8,
+    "per_uur": 7.4
+   },
+   "tram": {
+    "naam": "Gent Brugsepoort (Begijnhoflaan)",
+    "m": 1080,
+    "per_richting": 6.7,
+    "per_uur": 13.3
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -6594,6 +9966,18 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Gent Europalaan",
+    "m": 260,
+    "per_richting": 8.0,
+    "per_uur": 15.9
+   },
+   "tram": {
+    "naam": "Gent Bernard Spaelaan",
+    "m": 1030,
+    "per_richting": 18.3,
+    "per_uur": 36.6
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -6615,6 +9999,12 @@
     "tram": false
    },
    "haltes_binnen": 6,
+   "bus": {
+    "naam": "Kortrijk Roggelaan",
+    "m": 70,
+    "per_richting": 2.3,
+    "per_uur": 4.6
+   },
    "trein": {
     "naam": {
      "fr": "Courtrai",
@@ -6636,6 +10026,18 @@
     "tram": false
    },
    "haltes_binnen": 7,
+   "bus": {
+    "naam": "Mariakerke Verschansingsstraat",
+    "m": 160,
+    "per_richting": 0.2,
+    "per_uur": 0.2
+   },
+   "tram": {
+    "naam": "Gent Hortensiastraat",
+    "m": 2490,
+    "per_richting": 7.7,
+    "per_uur": 15.3
+   },
    "trein": {
     "naam": {
      "fr": "Tronchiennes",
@@ -6657,6 +10059,12 @@
     "tram": false
    },
    "haltes_binnen": 5,
+   "bus": {
+    "naam": "Sint-Kruis Markgraaf",
+    "m": 320,
+    "per_richting": 3.0,
+    "per_uur": 6.0
+   },
    "trein": {
     "naam": {
      "fr": "Bruges",
@@ -6678,6 +10086,18 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Gentbrugge Jef Vandermeulenstraat",
+    "m": 170,
+    "per_richting": 4.8,
+    "per_uur": 9.6
+   },
+   "tram": {
+    "naam": "Gentbrugge P+R E17",
+    "m": 1020,
+    "per_richting": 7.9,
+    "per_uur": 15.7
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -6699,6 +10119,18 @@
     "tram": false
    },
    "haltes_binnen": 3,
+   "bus": {
+    "naam": "Semmerzake Schokkaartstraat",
+    "m": 280,
+    "per_richting": 2.7,
+    "per_uur": 5.2
+   },
+   "tram": {
+    "naam": "Zwijnaarde Bibliotheek",
+    "m": 7700,
+    "per_richting": 5.8,
+    "per_uur": 5.8
+   },
    "trein": {
     "naam": {
      "fr": "Gavere-Asper",
@@ -6720,6 +10152,18 @@
     "tram": false
    },
    "haltes_binnen": 7,
+   "bus": {
+    "naam": "Sint-Amandsberg Snellaertplein",
+    "m": 370,
+    "per_richting": 3.6,
+    "per_uur": 3.6
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 2170,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -6741,6 +10185,18 @@
     "tram": false
    },
    "haltes_binnen": 5,
+   "bus": {
+    "naam": "Gent Rotterdamstraat",
+    "m": 100,
+    "per_richting": 3.8,
+    "per_uur": 7.6
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 1170,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -6762,6 +10218,18 @@
     "tram": false
    },
    "haltes_binnen": 14,
+   "bus": {
+    "naam": "Gent Geitstraat",
+    "m": 100,
+    "per_richting": 3.8,
+    "per_uur": 7.4
+   },
+   "tram": {
+    "naam": "Gent Nieuwevaartbrug",
+    "m": 830,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -6783,6 +10251,18 @@
     "tram": false
    },
    "haltes_binnen": 29,
+   "bus": {
+    "naam": "Gent Banierstraat",
+    "m": 130,
+    "per_richting": 9.2,
+    "per_uur": 18.3
+   },
+   "tram": {
+    "naam": "Gent Lippensplein",
+    "m": 1220,
+    "per_richting": 19.3,
+    "per_uur": 39.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -6804,6 +10284,18 @@
     "tram": true
    },
    "haltes_binnen": 11,
+   "bus": {
+    "naam": "Gentbrugge Werkhuizenstraat",
+    "m": 440,
+    "per_richting": 0.7,
+    "per_uur": 0.8
+   },
+   "tram": {
+    "naam": "Gentbrugge Moscou",
+    "m": 220,
+    "per_richting": 11.2,
+    "per_uur": 11.2
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -6825,6 +10317,12 @@
     "tram": false
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Lokeren Markt",
+    "m": 450,
+    "per_richting": 2.5,
+    "per_uur": 3.8
+   },
    "trein": {
     "naam": {
      "fr": "Lokeren",
@@ -6846,6 +10344,18 @@
     "tram": true
    },
    "haltes_binnen": 24,
+   "bus": {
+    "naam": "Gent Poel",
+    "m": 240,
+    "per_richting": 15.9,
+    "per_uur": 31.7
+   },
+   "tram": {
+    "naam": "Gent Sint-Elisabethplein",
+    "m": 180,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -6867,6 +10377,18 @@
     "tram": false
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Mariakerke Molenwalstraat",
+    "m": 430,
+    "per_richting": 3.8,
+    "per_uur": 7.4
+   },
+   "tram": {
+    "naam": "Gent Hortensiastraat",
+    "m": 510,
+    "per_richting": 7.7,
+    "per_uur": 15.3
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -6888,6 +10410,18 @@
     "tram": true
    },
    "haltes_binnen": 17,
+   "bus": {
+    "naam": "Gent UZ Zwijnaardsesteenweg",
+    "m": 160,
+    "per_richting": 8.2,
+    "per_uur": 16.2
+   },
+   "tram": {
+    "naam": "Gent De Pintelaan",
+    "m": 90,
+    "per_richting": 5.8,
+    "per_uur": 11.7
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -6909,6 +10443,18 @@
     "tram": false
    },
    "haltes_binnen": 14,
+   "bus": {
+    "naam": "Gent Oscar Colbrandtstraat",
+    "m": 100,
+    "per_richting": 2.2,
+    "per_uur": 4.5
+   },
+   "tram": {
+    "naam": "Gent Zuid perron 1",
+    "m": 1800,
+    "per_richting": 19.8,
+    "per_uur": 19.8
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -6930,6 +10476,18 @@
     "tram": false
    },
    "haltes_binnen": 27,
+   "bus": {
+    "naam": "Gent Lousbergskaai",
+    "m": 270,
+    "per_richting": 2.3,
+    "per_uur": 4.6
+   },
+   "tram": {
+    "naam": "Gent Keizerpoort (Brusselsepoortstraat)",
+    "m": 340,
+    "per_richting": 8.2,
+    "per_uur": 16.1
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -6951,6 +10509,18 @@
     "tram": false
    },
    "haltes_binnen": 4,
+   "bus": {
+    "naam": "Heusden Spangerede",
+    "m": 170,
+    "per_richting": 0.5,
+    "per_uur": 0.9
+   },
+   "tram": {
+    "naam": "Melle Leeuw",
+    "m": 1930,
+    "per_richting": 7.8,
+    "per_uur": 7.8
+   },
    "trein": {
     "naam": {
      "fr": "Merelbeke",
@@ -6972,6 +10542,18 @@
     "tram": false
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Melle Park Ten Hovelaan",
+    "m": 130,
+    "per_richting": 0.2,
+    "per_uur": 0.3
+   },
+   "tram": {
+    "naam": "Melle Leeuw",
+    "m": 1320,
+    "per_richting": 7.8,
+    "per_uur": 7.8
+   },
    "trein": {
     "naam": {
      "fr": "Merelbeke",
@@ -6993,6 +10575,18 @@
     "tram": false
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Mariakerke Molenwalstraat",
+    "m": 350,
+    "per_richting": 3.8,
+    "per_uur": 7.4
+   },
+   "tram": {
+    "naam": "Gent Hortensiastraat",
+    "m": 550,
+    "per_richting": 7.7,
+    "per_uur": 15.3
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -7014,6 +10608,18 @@
     "tram": false
    },
    "haltes_binnen": 6,
+   "bus": {
+    "naam": "Melle Klaverstraat",
+    "m": 220,
+    "per_richting": 0.2,
+    "per_uur": 0.3
+   },
+   "tram": {
+    "naam": "Melle Leeuw",
+    "m": 2340,
+    "per_richting": 7.8,
+    "per_uur": 7.8
+   },
    "trein": {
     "naam": {
      "fr": "Melle",
@@ -7035,6 +10641,18 @@
     "tram": false
    },
    "haltes_binnen": 16,
+   "bus": {
+    "naam": "Gent Malpertuusplein",
+    "m": 290,
+    "per_richting": 10.8,
+    "per_uur": 21.5
+   },
+   "tram": {
+    "naam": "Gent Guislainstraat",
+    "m": 640,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -7056,6 +10674,18 @@
     "tram": false
    },
    "haltes_binnen": 3,
+   "bus": {
+    "naam": "Sint-Amandsberg Achtendries",
+    "m": 310,
+    "per_richting": 2.0,
+    "per_uur": 2.0
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 4410,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -7077,6 +10707,18 @@
     "tram": false
    },
    "haltes_binnen": 18,
+   "bus": {
+    "naam": "Gent Guislainbrug",
+    "m": 160,
+    "per_richting": 3.7,
+    "per_uur": 7.3
+   },
+   "tram": {
+    "naam": "Gent Guislainstraat",
+    "m": 300,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -7098,6 +10740,18 @@
     "tram": true
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Gentbrugge Tennisstraat",
+    "m": 170,
+    "per_richting": 8.1,
+    "per_uur": 8.1
+   },
+   "tram": {
+    "naam": "Gentbrugge Tennisstraat",
+    "m": 150,
+    "per_richting": 7.8,
+    "per_uur": 15.7
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -7119,6 +10773,18 @@
     "tram": true
    },
    "haltes_binnen": 12,
+   "bus": {
+    "naam": "Ledeberg Ledebergplein",
+    "m": 240,
+    "per_richting": 11.8,
+    "per_uur": 23.2
+   },
+   "tram": {
+    "naam": "Ledeberg Ledebergplein",
+    "m": 240,
+    "per_richting": 11.2,
+    "per_uur": 22.9
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -7140,6 +10806,12 @@
     "tram": false
    },
    "haltes_binnen": 0,
+   "bus": {
+    "naam": "Ganshoren Riethuisen",
+    "m": 840,
+    "per_richting": 7.5,
+    "per_uur": 14.8
+   },
    "trein": {
     "naam": {
      "fr": "Jette",
@@ -7161,6 +10833,18 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Wetteren Veldstraat",
+    "m": 100,
+    "per_richting": 2.0,
+    "per_uur": 4.0
+   },
+   "tram": {
+    "naam": "Melle Leeuw",
+    "m": 7380,
+    "per_richting": 7.8,
+    "per_uur": 7.8
+   },
    "trein": {
     "naam": {
      "fr": "Wetteren",
@@ -7182,6 +10866,18 @@
     "tram": false
    },
    "haltes_binnen": 2,
+   "bus": {
+    "naam": "Merelbeke Koekoeksdreef",
+    "m": 150,
+    "per_richting": 0.3,
+    "per_uur": 0.6
+   },
+   "tram": {
+    "naam": "Melle Leeuw",
+    "m": 2120,
+    "per_richting": 7.8,
+    "per_uur": 7.8
+   },
    "trein": {
     "naam": {
      "fr": "Merelbeke",
@@ -7203,6 +10899,18 @@
     "tram": false
    },
    "haltes_binnen": 22,
+   "bus": {
+    "naam": "Gent Tuinwijklaan",
+    "m": 190,
+    "per_richting": 14.2,
+    "per_uur": 27.5
+   },
+   "tram": {
+    "naam": "Gent Sint-Pietersaalststraat",
+    "m": 340,
+    "per_richting": 12.8,
+    "per_uur": 25.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -7224,6 +10932,18 @@
     "tram": false
    },
    "haltes_binnen": 24,
+   "bus": {
+    "naam": "Gent Tuinwijklaan",
+    "m": 180,
+    "per_richting": 14.2,
+    "per_uur": 27.5
+   },
+   "tram": {
+    "naam": "Gent Sint-Pietersaalststraat",
+    "m": 310,
+    "per_richting": 12.8,
+    "per_uur": 25.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -7245,6 +10965,18 @@
     "tram": false
    },
    "haltes_binnen": 17,
+   "bus": {
+    "naam": "Gent Nieuwewandeling",
+    "m": 230,
+    "per_richting": 6.9,
+    "per_uur": 13.8
+   },
+   "tram": {
+    "naam": "Gent Theresianenstraat",
+    "m": 300,
+    "per_richting": 6.7,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -7266,6 +10998,18 @@
     "tram": false
    },
    "haltes_binnen": 12,
+   "bus": {
+    "naam": "Gent Pauwstraat",
+    "m": 80,
+    "per_richting": 3.8,
+    "per_uur": 7.6
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 320,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -7287,6 +11031,12 @@
     "tram": false
    },
    "haltes_binnen": 3,
+   "bus": {
+    "naam": "Sint-Niklaas Camiel Huysmanslaan",
+    "m": 560,
+    "per_richting": 2.5,
+    "per_uur": 4.9
+   },
    "trein": {
     "naam": {
      "fr": "Saint-Nicolas",
@@ -7308,6 +11058,18 @@
     "tram": true
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Gentbrugge Schooldreef",
+    "m": 230,
+    "per_richting": 7.9,
+    "per_uur": 23.4
+   },
+   "tram": {
+    "naam": "Gentbrugge Schooldreef",
+    "m": 300,
+    "per_richting": 7.9,
+    "per_uur": 15.8
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -7329,6 +11091,18 @@
     "tram": true
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Gentbrugge Stelplaats",
+    "m": 450,
+    "per_richting": 11.8,
+    "per_uur": 23.2
+   },
+   "tram": {
+    "naam": "Ledeberg Van Lokerenstraat",
+    "m": 350,
+    "per_richting": 8.2,
+    "per_uur": 16.0
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -7350,6 +11124,18 @@
     "tram": true
    },
    "haltes_binnen": 11,
+   "bus": {
+    "naam": "Gentbrugge Werkhuizenstraat",
+    "m": 390,
+    "per_richting": 0.7,
+    "per_uur": 0.8
+   },
+   "tram": {
+    "naam": "Gentbrugge Moscou",
+    "m": 270,
+    "per_richting": 11.2,
+    "per_uur": 11.2
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -7371,6 +11157,18 @@
     "tram": false
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Wondelgem Vroonstalledries",
+    "m": 290,
+    "per_richting": 3.6,
+    "per_uur": 7.1
+   },
+   "tram": {
+    "naam": "Gent Van Beverenplein (F. Ferrerlaan)",
+    "m": 2080,
+    "per_richting": 7.6,
+    "per_uur": 7.6
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -7392,6 +11190,12 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Sint-Andries Sint-Willibrordus",
+    "m": 310,
+    "per_richting": 0.2,
+    "per_uur": 0.2
+   },
    "trein": {
     "naam": {
      "fr": "Bruges",
@@ -7413,6 +11217,12 @@
     "tram": false
    },
    "haltes_binnen": 12,
+   "bus": {
+    "naam": "Sint-Kruis Kerk",
+    "m": 140,
+    "per_richting": 6.3,
+    "per_uur": 12.7
+   },
    "trein": {
     "naam": {
      "fr": "Bruges",
@@ -7434,6 +11244,18 @@
     "tram": false
    },
    "haltes_binnen": 7,
+   "bus": {
+    "naam": "Gent van Ryhovelaan",
+    "m": 140,
+    "per_richting": 15.3,
+    "per_uur": 30.5
+   },
+   "tram": {
+    "naam": "Gent Van Beverenplein (F. Ferrerlaan)",
+    "m": 560,
+    "per_richting": 7.6,
+    "per_uur": 7.6
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -7455,6 +11277,12 @@
     "tram": false
    },
    "haltes_binnen": 4,
+   "bus": {
+    "naam": "Veltem-Beisem Stationsstraat",
+    "m": 260,
+    "per_richting": 2.6,
+    "per_uur": 5.1
+   },
    "trein": {
     "naam": {
      "fr": "Veltem",
@@ -7476,6 +11304,18 @@
     "tram": false
    },
    "haltes_binnen": 1,
+   "bus": {
+    "naam": "Landegem Dorp",
+    "m": 320,
+    "per_richting": 0.3,
+    "per_uur": 0.5
+   },
+   "tram": {
+    "naam": "Gent Guislainstraat",
+    "m": 8790,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Landegem",
@@ -7497,6 +11337,12 @@
     "tram": false
    },
    "haltes_binnen": 13,
+   "bus": {
+    "naam": "Sint-Rochus Kerk",
+    "m": 40,
+    "per_richting": 2.2,
+    "per_uur": 4.2
+   },
    "trein": {
     "naam": {
      "fr": "Hal",
@@ -7518,6 +11364,12 @@
     "tram": false
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Assebroek Brugs-Kerkhofstraat",
+    "m": 70,
+    "per_richting": 10.5,
+    "per_uur": 20.5
+   },
    "trein": {
     "naam": {
      "fr": "Bruges",
@@ -7539,6 +11391,12 @@
     "tram": false
    },
    "haltes_binnen": 7,
+   "bus": {
+    "naam": "Sint-Pieters Poelweg",
+    "m": 250,
+    "per_richting": 2.9,
+    "per_uur": 5.8
+   },
    "trein": {
     "naam": {
      "fr": "Bruges-Saint-Pierre",
@@ -7560,6 +11418,12 @@
     "tram": false
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Lokeren Markt",
+    "m": 380,
+    "per_richting": 2.5,
+    "per_uur": 3.8
+   },
    "trein": {
     "naam": {
      "fr": "Lokeren",
@@ -7581,6 +11445,18 @@
     "tram": true
    },
    "haltes_binnen": 25,
+   "bus": {
+    "naam": "Gent Parkplein (Burggravenlaan)",
+    "m": 450,
+    "per_richting": 15.2,
+    "per_uur": 30.4
+   },
+   "tram": {
+    "naam": "Gent Sint-Pietersaalststraat",
+    "m": 110,
+    "per_richting": 12.8,
+    "per_uur": 25.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -7602,6 +11478,18 @@
     "tram": false
    },
    "haltes_binnen": 11,
+   "bus": {
+    "naam": "Wondelgem Vroonstalledries",
+    "m": 240,
+    "per_richting": 3.6,
+    "per_uur": 7.1
+   },
+   "tram": {
+    "naam": "Gent Van Beverenplein (F. Ferrerlaan)",
+    "m": 2170,
+    "per_richting": 7.6,
+    "per_uur": 7.6
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -7623,6 +11511,18 @@
     "tram": false
    },
    "haltes_binnen": 7,
+   "bus": {
+    "naam": "Merelbeke Polderstraat",
+    "m": 150,
+    "per_richting": 2.6,
+    "per_uur": 5.0
+   },
+   "tram": {
+    "naam": "Zwijnaarde Bibliotheek",
+    "m": 2610,
+    "per_richting": 5.8,
+    "per_uur": 5.8
+   },
    "trein": {
     "naam": {
      "fr": "Merelbeke",
@@ -7644,6 +11544,18 @@
     "tram": false
    },
    "haltes_binnen": 13,
+   "bus": {
+    "naam": "Gent Vlaamsekaai",
+    "m": 310,
+    "per_richting": 2.4,
+    "per_uur": 7.1
+   },
+   "tram": {
+    "naam": "Ledeberg Van Lokerenstraat",
+    "m": 450,
+    "per_richting": 8.2,
+    "per_uur": 16.0
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -7665,6 +11577,18 @@
     "tram": false
    },
    "haltes_binnen": 6,
+   "bus": {
+    "naam": "Merelbeke Plataan",
+    "m": 410,
+    "per_richting": 4.5,
+    "per_uur": 9.2
+   },
+   "tram": {
+    "naam": "Melle Leeuw",
+    "m": 2210,
+    "per_richting": 7.8,
+    "per_uur": 7.8
+   },
    "trein": {
     "naam": {
      "fr": "Merelbeke",
@@ -7686,6 +11610,18 @@
     "tram": false
    },
    "haltes_binnen": 11,
+   "bus": {
+    "naam": "Mariakerke Jutestraat",
+    "m": 140,
+    "per_richting": 10.9,
+    "per_uur": 21.6
+   },
+   "tram": {
+    "naam": "Gent Guislainstraat",
+    "m": 1080,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -7707,6 +11643,12 @@
     "tram": false
    },
    "haltes_binnen": 11,
+   "bus": {
+    "naam": "Halle Ninoofsepoort",
+    "m": 50,
+    "per_richting": 12.3,
+    "per_uur": 24.3
+   },
    "trein": {
     "naam": {
      "fr": "Hal",
@@ -7728,6 +11670,18 @@
     "tram": false
    },
    "haltes_binnen": 16,
+   "bus": {
+    "naam": "Gent Notelaarstraat",
+    "m": 150,
+    "per_richting": 7.3,
+    "per_uur": 14.7
+   },
+   "tram": {
+    "naam": "Gent Nieuwevaartbrug",
+    "m": 490,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -7749,6 +11703,12 @@
     "tram": false
    },
    "haltes_binnen": 21,
+   "bus": {
+    "naam": "Brugge Hoefijzer",
+    "m": 360,
+    "per_richting": 24.8,
+    "per_uur": 49.6
+   },
    "trein": {
     "naam": {
      "fr": "Bruges",
@@ -7770,6 +11730,18 @@
     "tram": true
    },
    "haltes_binnen": 13,
+   "bus": {
+    "naam": "Ledeberg Botermarkt",
+    "m": 230,
+    "per_richting": 5.2,
+    "per_uur": 10.2
+   },
+   "tram": {
+    "naam": "Ledeberg Botermarkt",
+    "m": 160,
+    "per_richting": 11.2,
+    "per_uur": 22.5
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -7791,6 +11763,18 @@
     "tram": false
    },
    "haltes_binnen": 7,
+   "bus": {
+    "naam": "Sint-Amandsberg Visitatiestraat",
+    "m": 260,
+    "per_richting": 4.8,
+    "per_uur": 9.5
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 1270,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -7812,6 +11796,18 @@
     "tram": true
    },
    "haltes_binnen": 12,
+   "bus": {
+    "naam": "Ledeberg Ledebergplein",
+    "m": 180,
+    "per_richting": 11.8,
+    "per_uur": 23.2
+   },
+   "tram": {
+    "naam": "Ledeberg Van Lokerenstraat",
+    "m": 110,
+    "per_richting": 8.2,
+    "per_uur": 16.0
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -7833,6 +11829,12 @@
     "tram": false
    },
    "haltes_binnen": 4,
+   "bus": {
+    "naam": "Bonheiden Tramweg",
+    "m": 80,
+    "per_richting": 2.3,
+    "per_uur": 4.7
+   },
    "trein": {
     "naam": {
      "fr": "Malines-Nekkerspoel",
@@ -7854,6 +11856,18 @@
     "tram": false
    },
    "haltes_binnen": 5,
+   "bus": {
+    "naam": "Mariakerke Kerk",
+    "m": 520,
+    "per_richting": 0.2,
+    "per_uur": 0.2
+   },
+   "tram": {
+    "naam": "Gent Guislainstraat",
+    "m": 2030,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Tronchiennes",
@@ -7875,6 +11889,18 @@
     "tram": false
    },
    "haltes_binnen": 6,
+   "bus": {
+    "naam": "Sint-Amandsberg Snellaertplein",
+    "m": 210,
+    "per_richting": 3.6,
+    "per_uur": 3.6
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 1930,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -7896,6 +11922,12 @@
     "tram": false
    },
    "haltes_binnen": 6,
+   "bus": {
+    "naam": "Sint-Gillis Moricharplein",
+    "m": 280,
+    "per_richting": 4.0,
+    "per_uur": 7.8
+   },
    "trein": {
     "naam": {
      "fr": "Bruxelles-Midi",
@@ -7917,6 +11949,18 @@
     "tram": false
    },
    "haltes_binnen": 3,
+   "bus": {
+    "naam": "Heusden Brugwegel",
+    "m": 160,
+    "per_richting": 2.0,
+    "per_uur": 3.9
+   },
+   "tram": {
+    "naam": "Melle Leeuw",
+    "m": 2390,
+    "per_richting": 7.8,
+    "per_uur": 7.8
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -7938,6 +11982,18 @@
     "tram": false
    },
    "haltes_binnen": 13,
+   "bus": {
+    "naam": "Gent van Haelststraat",
+    "m": 120,
+    "per_richting": 8.2,
+    "per_uur": 8.2
+   },
+   "tram": {
+    "naam": "Gent Rerum-Novarumplein",
+    "m": 210,
+    "per_richting": 5.8,
+    "per_uur": 11.6
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -7959,6 +12015,18 @@
     "tram": true
    },
    "haltes_binnen": 25,
+   "bus": {
+    "naam": "Gent AZ Sint-Lucas (Fratersplein)",
+    "m": 460,
+    "per_richting": 19.2,
+    "per_uur": 38.3
+   },
+   "tram": {
+    "naam": "Gent Opgeëistenlaan",
+    "m": 160,
+    "per_richting": 6.7,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -7980,6 +12048,12 @@
     "tram": false
    },
    "haltes_binnen": 3,
+   "bus": {
+    "naam": "Sint-Niklaas Waasland Shopping perron 1",
+    "m": 650,
+    "per_richting": 10.0,
+    "per_uur": 10.0
+   },
    "trein": {
     "naam": {
      "fr": "Saint-Nicolas",
@@ -8001,6 +12075,18 @@
     "tram": true
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Gentbrugge Tennisstraat",
+    "m": 340,
+    "per_richting": 8.1,
+    "per_uur": 8.1
+   },
+   "tram": {
+    "naam": "Gentbrugge Pecherstraat",
+    "m": 230,
+    "per_richting": 7.9,
+    "per_uur": 15.8
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -8022,6 +12108,18 @@
     "tram": false
    },
    "haltes_binnen": 3,
+   "bus": {
+    "naam": "Destelbergen Stelplaats",
+    "m": 130,
+    "per_richting": 4.3,
+    "per_uur": 8.5
+   },
+   "tram": {
+    "naam": "Gentbrugge Stelplaats",
+    "m": 2160,
+    "per_richting": 9.2,
+    "per_uur": 16.7
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -8043,6 +12141,18 @@
     "tram": true
    },
    "haltes_binnen": 16,
+   "bus": {
+    "naam": "Gent Jubileumlaan (Verenigde-Natieslaan)",
+    "m": 320,
+    "per_richting": 14.1,
+    "per_uur": 28.1
+   },
+   "tram": {
+    "naam": "Gent Rozemarijnbrug",
+    "m": 110,
+    "per_richting": 18.5,
+    "per_uur": 36.8
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -8064,6 +12174,18 @@
     "tram": false
    },
    "haltes_binnen": 12,
+   "bus": {
+    "naam": "Gent Dok-Noord",
+    "m": 290,
+    "per_richting": 2.9,
+    "per_uur": 5.8
+   },
+   "tram": {
+    "naam": "Gent Neuseplein",
+    "m": 530,
+    "per_richting": 6.7,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -8085,6 +12207,18 @@
     "tram": false
    },
    "haltes_binnen": 3,
+   "bus": {
+    "naam": "Destelbergen Stelplaats",
+    "m": 250,
+    "per_richting": 4.3,
+    "per_uur": 8.5
+   },
+   "tram": {
+    "naam": "Ledeberg Van Lokerenstraat",
+    "m": 2260,
+    "per_richting": 8.2,
+    "per_uur": 16.0
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -8106,6 +12240,18 @@
     "tram": false
    },
    "haltes_binnen": 5,
+   "bus": {
+    "naam": "Merelbeke Van Goethemstraat",
+    "m": 230,
+    "per_richting": 5.2,
+    "per_uur": 10.2
+   },
+   "tram": {
+    "naam": "Gentbrugge Moscou",
+    "m": 1200,
+    "per_richting": 11.2,
+    "per_uur": 11.2
+   },
    "trein": {
     "naam": {
      "fr": "Merelbeke",
@@ -8127,6 +12273,18 @@
     "tram": false
    },
    "haltes_binnen": 12,
+   "bus": {
+    "naam": "Melle Vogelstraat",
+    "m": 190,
+    "per_richting": 0.7,
+    "per_uur": 0.8
+   },
+   "tram": {
+    "naam": "Melle Leeuw",
+    "m": 530,
+    "per_richting": 7.8,
+    "per_uur": 7.8
+   },
    "trein": {
     "naam": {
      "fr": "Merelbeke",
@@ -8148,6 +12306,18 @@
     "tram": false
    },
    "haltes_binnen": 3,
+   "bus": {
+    "naam": "Destelbergen Admiraalstraat",
+    "m": 280,
+    "per_richting": 4.3,
+    "per_uur": 8.5
+   },
+   "tram": {
+    "naam": "Ledeberg Van Lokerenstraat",
+    "m": 2320,
+    "per_richting": 8.2,
+    "per_uur": 16.0
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -8169,6 +12339,18 @@
     "tram": false
    },
    "haltes_binnen": 12,
+   "bus": {
+    "naam": "Gentbrugge Werkhuizenstraat",
+    "m": 140,
+    "per_richting": 0.7,
+    "per_uur": 0.8
+   },
+   "tram": {
+    "naam": "Gentbrugge Schooldreef",
+    "m": 470,
+    "per_richting": 7.9,
+    "per_uur": 15.8
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -8190,6 +12372,18 @@
     "tram": false
    },
    "haltes_binnen": 13,
+   "bus": {
+    "naam": "Gent Fuchsiastraat",
+    "m": 80,
+    "per_richting": 15.3,
+    "per_uur": 30.4
+   },
+   "tram": {
+    "naam": "Gent Van Beverenplein (F. Ferrerlaan)",
+    "m": 320,
+    "per_richting": 7.6,
+    "per_uur": 7.6
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -8211,6 +12405,18 @@
     "tram": false
    },
    "haltes_binnen": 4,
+   "bus": {
+    "naam": "Sint-Amandsberg Schuurstraat",
+    "m": 460,
+    "per_richting": 3.7,
+    "per_uur": 7.3
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 3580,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -8232,6 +12438,18 @@
     "tram": false
    },
    "haltes_binnen": 6,
+   "bus": {
+    "naam": "Merelbeke Bergstraat",
+    "m": 160,
+    "per_richting": 4.5,
+    "per_uur": 8.8
+   },
+   "tram": {
+    "naam": "Gentbrugge Moscou",
+    "m": 1870,
+    "per_richting": 11.2,
+    "per_uur": 11.2
+   },
    "trein": {
     "naam": {
      "fr": "Merelbeke",
@@ -8253,6 +12471,18 @@
     "tram": false
    },
    "haltes_binnen": 11,
+   "bus": {
+    "naam": "Mariakerke Jutestraat",
+    "m": 220,
+    "per_richting": 10.9,
+    "per_uur": 21.6
+   },
+   "tram": {
+    "naam": "Gent Guislainstraat",
+    "m": 1060,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -8274,6 +12504,12 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Halle Brusselpoort",
+    "m": 260,
+    "per_richting": 6.2,
+    "per_uur": 12.3
+   },
    "trein": {
     "naam": {
      "fr": "Hal",
@@ -8295,6 +12531,12 @@
     "tram": false
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Kortrijk Sint-Janskerk",
+    "m": 90,
+    "per_richting": 2.2,
+    "per_uur": 4.5
+   },
    "trein": {
     "naam": {
      "fr": "Courtrai",
@@ -8316,6 +12558,18 @@
     "tram": false
    },
    "haltes_binnen": 3,
+   "bus": {
+    "naam": "Mariakerke Minoodtlaan",
+    "m": 700,
+    "per_richting": 0.2,
+    "per_uur": 0.2
+   },
+   "tram": {
+    "naam": "Gent Guislainstraat",
+    "m": 2330,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Tronchiennes",
@@ -8337,6 +12591,12 @@
     "tram": false
    },
    "haltes_binnen": 1,
+   "bus": {
+    "naam": "Roeselare Runenstraat",
+    "m": 590,
+    "per_richting": 2.5,
+    "per_uur": 4.8
+   },
    "trein": {
     "naam": {
      "fr": "Roulers",
@@ -8358,6 +12618,18 @@
     "tram": false
    },
    "haltes_binnen": 2,
+   "bus": {
+    "naam": "De Pinte Groenpark",
+    "m": 480,
+    "per_richting": 1.5,
+    "per_uur": 1.5
+   },
+   "tram": {
+    "naam": "Zwijnaarde Bibliotheek",
+    "m": 5240,
+    "per_richting": 5.8,
+    "per_uur": 5.8
+   },
    "trein": {
     "naam": {
      "fr": "De Pinte",
@@ -8379,6 +12651,12 @@
     "tram": false
    },
    "haltes_binnen": 3,
+   "bus": {
+    "naam": "Poperinge Voorstad",
+    "m": 320,
+    "per_richting": 0.4,
+    "per_uur": 0.8
+   },
    "trein": {
     "naam": {
      "fr": "Poperinge",
@@ -8400,6 +12678,18 @@
     "tram": false
    },
    "haltes_binnen": 14,
+   "bus": {
+    "naam": "Sint-Amandsberg Gentbruggebrug",
+    "m": 120,
+    "per_richting": 7.1,
+    "per_uur": 14.1
+   },
+   "tram": {
+    "naam": "Ledeberg Van Lokerenstraat",
+    "m": 1180,
+    "per_richting": 8.2,
+    "per_uur": 16.0
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -8421,6 +12711,18 @@
     "tram": true
    },
    "haltes_binnen": 11,
+   "bus": {
+    "naam": "Gentbrugge Werkhuizenstraat",
+    "m": 380,
+    "per_richting": 0.7,
+    "per_uur": 0.8
+   },
+   "tram": {
+    "naam": "Gentbrugge Moscou",
+    "m": 330,
+    "per_richting": 11.2,
+    "per_uur": 11.2
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -8442,6 +12744,12 @@
     "tram": false
    },
    "haltes_binnen": 7,
+   "bus": {
+    "naam": "Herent Tildonksesteenweg",
+    "m": 340,
+    "per_richting": 4.3,
+    "per_uur": 8.6
+   },
    "trein": {
     "naam": {
      "fr": "Herent",
@@ -8463,6 +12771,18 @@
     "tram": false
    },
    "haltes_binnen": 4,
+   "bus": {
+    "naam": "Sint-Amandsberg Vinkenlaan",
+    "m": 500,
+    "per_richting": 3.7,
+    "per_uur": 7.3
+   },
+   "tram": {
+    "naam": "Gent Heilig-Kerst",
+    "m": 3390,
+    "per_richting": 6.7,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -8484,6 +12804,18 @@
     "tram": false
    },
    "haltes_binnen": 12,
+   "bus": {
+    "naam": "Gent Peerstraat",
+    "m": 180,
+    "per_richting": 7.2,
+    "per_uur": 14.2
+   },
+   "tram": {
+    "naam": "Gent Nieuwevaartbrug",
+    "m": 800,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Tronchiennes",
@@ -8505,6 +12837,18 @@
     "tram": true
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Gentbrugge Tennisstraat",
+    "m": 200,
+    "per_richting": 8.1,
+    "per_uur": 8.1
+   },
+   "tram": {
+    "naam": "Gentbrugge Tennisstraat",
+    "m": 180,
+    "per_richting": 7.8,
+    "per_uur": 15.7
+   },
    "trein": {
     "naam": {
      "fr": "Merelbeke",
@@ -8526,6 +12870,18 @@
     "tram": false
    },
    "haltes_binnen": 11,
+   "bus": {
+    "naam": "Zwijnaarde Campusstraat",
+    "m": 110,
+    "per_richting": 2.8,
+    "per_uur": 5.6
+   },
+   "tram": {
+    "naam": "Zwijnaarde Molen",
+    "m": 360,
+    "per_richting": 5.8,
+    "per_uur": 11.7
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -8547,6 +12903,18 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Gentbrugge Tweekapellenstraat",
+    "m": 150,
+    "per_richting": 4.8,
+    "per_uur": 9.7
+   },
+   "tram": {
+    "naam": "Gentbrugge Stelplaats",
+    "m": 730,
+    "per_richting": 9.2,
+    "per_uur": 16.7
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -8568,6 +12936,18 @@
     "tram": true
    },
    "haltes_binnen": 13,
+   "bus": {
+    "naam": "Ledeberg Ledebergplein",
+    "m": 210,
+    "per_richting": 11.8,
+    "per_uur": 23.2
+   },
+   "tram": {
+    "naam": "Ledeberg Ledebergplein",
+    "m": 110,
+    "per_richting": 11.2,
+    "per_uur": 22.9
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -8589,6 +12969,18 @@
     "tram": false
    },
    "haltes_binnen": 18,
+   "bus": {
+    "naam": "Gent Notelaarstraat",
+    "m": 150,
+    "per_richting": 7.3,
+    "per_uur": 14.7
+   },
+   "tram": {
+    "naam": "Gent Nieuwevaartbrug",
+    "m": 230,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -8610,6 +13002,18 @@
     "tram": true
    },
    "haltes_binnen": 20,
+   "bus": {
+    "naam": "Gent Rabot (Griendeplein)",
+    "m": 260,
+    "per_richting": 2.2,
+    "per_uur": 4.3
+   },
+   "tram": {
+    "naam": "Gent Rabot (Begijnhoflaan)",
+    "m": 210,
+    "per_richting": 7.6,
+    "per_uur": 28.4
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -8631,6 +13035,18 @@
     "tram": false
    },
    "haltes_binnen": 23,
+   "bus": {
+    "naam": "Gent van Arenbergstraat",
+    "m": 20,
+    "per_richting": 3.8,
+    "per_uur": 7.4
+   },
+   "tram": {
+    "naam": "Gent Heilig-Kerst",
+    "m": 1320,
+    "per_richting": 6.7,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -8652,6 +13068,18 @@
     "tram": false
    },
    "haltes_binnen": 14,
+   "bus": {
+    "naam": "Gent Geitstraat",
+    "m": 160,
+    "per_richting": 3.8,
+    "per_uur": 7.4
+   },
+   "tram": {
+    "naam": "Gent Nieuwevaartbrug",
+    "m": 850,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -8673,6 +13101,18 @@
     "tram": false
    },
    "haltes_binnen": 16,
+   "bus": {
+    "naam": "Gent Vlaamsekaai",
+    "m": 130,
+    "per_richting": 2.4,
+    "per_uur": 7.1
+   },
+   "tram": {
+    "naam": "Gent Keizerpoort (Brusselsepoortstraat)",
+    "m": 490,
+    "per_richting": 8.2,
+    "per_uur": 16.1
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -8694,6 +13134,18 @@
     "tram": false
    },
    "haltes_binnen": 6,
+   "bus": {
+    "naam": "Oostakker Krijtestraat",
+    "m": 520,
+    "per_richting": 1.8,
+    "per_uur": 3.5
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 3700,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -8715,6 +13167,12 @@
     "tram": false
    },
    "haltes_binnen": 2,
+   "bus": {
+    "naam": "Lokeren Papestraat",
+    "m": 460,
+    "per_richting": 1.5,
+    "per_uur": 2.9
+   },
    "trein": {
     "naam": {
      "fr": "Lokeren",
@@ -8736,6 +13194,18 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Gentbrugge Jef Vandermeulenstraat",
+    "m": 200,
+    "per_richting": 4.8,
+    "per_uur": 9.6
+   },
+   "tram": {
+    "naam": "Gentbrugge P+R E17",
+    "m": 1020,
+    "per_richting": 7.9,
+    "per_uur": 15.7
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -8757,6 +13227,18 @@
     "tram": false
    },
    "haltes_binnen": 19,
+   "bus": {
+    "naam": "Gent Wondelgembrug",
+    "m": 160,
+    "per_richting": 15.2,
+    "per_uur": 15.2
+   },
+   "tram": {
+    "naam": "Gent Wittekaproenenplein",
+    "m": 230,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -8778,6 +13260,18 @@
     "tram": false
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Gentbrugge Tweekapellenstraat",
+    "m": 210,
+    "per_richting": 4.8,
+    "per_uur": 9.7
+   },
+   "tram": {
+    "naam": "Gentbrugge Stelplaats",
+    "m": 660,
+    "per_richting": 9.2,
+    "per_uur": 16.7
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -8799,6 +13293,18 @@
     "tram": true
    },
    "haltes_binnen": 28,
+   "bus": {
+    "naam": "Antwerpen Kerkstraat",
+    "m": 290,
+    "per_richting": 15.0,
+    "per_uur": 29.7
+   },
+   "tram": {
+    "naam": "Antwerpen Ploeg",
+    "m": 210,
+    "per_richting": 8.0,
+    "per_uur": 16.0
+   },
    "trein": {
     "naam": {
      "fr": "Anvers-Central",
@@ -8820,6 +13326,18 @@
     "tram": false
    },
    "haltes_binnen": 31,
+   "bus": {
+    "naam": "Gent Jan van Gentstraat (Hagelandkaai)",
+    "m": 170,
+    "per_richting": 21.9,
+    "per_uur": 21.9
+   },
+   "tram": {
+    "naam": "Gent Duivelsteen",
+    "m": 680,
+    "per_richting": 8.1,
+    "per_uur": 15.9
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -8841,6 +13359,18 @@
     "tram": false
    },
    "haltes_binnen": 23,
+   "bus": {
+    "naam": "Gent van Cleemputteplein",
+    "m": 150,
+    "per_richting": 2.2,
+    "per_uur": 4.5
+   },
+   "tram": {
+    "naam": "Gent Lippensplein",
+    "m": 1640,
+    "per_richting": 19.3,
+    "per_uur": 39.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -8862,6 +13392,18 @@
     "tram": false
    },
    "haltes_binnen": 17,
+   "bus": {
+    "naam": "Gent Notelaarstraat",
+    "m": 170,
+    "per_richting": 7.3,
+    "per_uur": 14.7
+   },
+   "tram": {
+    "naam": "Gent Nieuwevaartbrug",
+    "m": 280,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -8883,6 +13425,18 @@
     "tram": true
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Gentbrugge Stelplaats",
+    "m": 450,
+    "per_richting": 11.8,
+    "per_uur": 23.2
+   },
+   "tram": {
+    "naam": "Gentbrugge Stelplaats",
+    "m": 480,
+    "per_richting": 9.2,
+    "per_uur": 16.7
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -8904,6 +13458,12 @@
     "tram": false
    },
    "haltes_binnen": 3,
+   "bus": {
+    "naam": "Moerbrugge Kerk",
+    "m": 20,
+    "per_richting": 0.3,
+    "per_uur": 0.5
+   },
    "trein": {
     "naam": {
      "fr": "Oostkamp",
@@ -8925,6 +13485,18 @@
     "tram": false
    },
    "haltes_binnen": 22,
+   "bus": {
+    "naam": "Sint-Amandsberg Heernisplein",
+    "m": 240,
+    "per_richting": 9.1,
+    "per_uur": 18.2
+   },
+   "tram": {
+    "naam": "Gent Keizerpoort (Brusselsepoortstraat)",
+    "m": 1080,
+    "per_richting": 8.2,
+    "per_uur": 16.1
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -8946,6 +13518,18 @@
     "tram": false
    },
    "haltes_binnen": 17,
+   "bus": {
+    "naam": "Gent Gagelstraat",
+    "m": 10,
+    "per_richting": 15.2,
+    "per_uur": 15.2
+   },
+   "tram": {
+    "naam": "Gent Voortmanstraat",
+    "m": 150,
+    "per_richting": 6.6,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -8967,6 +13551,12 @@
     "tram": false
    },
    "haltes_binnen": 5,
+   "bus": {
+    "naam": "Waregem Renbaan",
+    "m": 390,
+    "per_richting": 2.2,
+    "per_uur": 3.9
+   },
    "trein": {
     "naam": {
      "fr": "Waregem",
@@ -8988,6 +13578,18 @@
     "tram": false
    },
    "haltes_binnen": 14,
+   "bus": {
+    "naam": "Gent Geitstraat",
+    "m": 110,
+    "per_richting": 3.8,
+    "per_uur": 7.4
+   },
+   "tram": {
+    "naam": "Gent Nieuwevaartbrug",
+    "m": 840,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -9009,6 +13611,18 @@
     "tram": true
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Ledeberg Eindeke",
+    "m": 390,
+    "per_richting": 5.2,
+    "per_uur": 10.3
+   },
+   "tram": {
+    "naam": "Gentbrugge Moscou",
+    "m": 100,
+    "per_richting": 11.2,
+    "per_uur": 11.2
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -9030,6 +13644,18 @@
     "tram": false
    },
    "haltes_binnen": 6,
+   "bus": {
+    "naam": "Sint-Amandsberg Everstraat",
+    "m": 340,
+    "per_richting": 4.8,
+    "per_uur": 9.2
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 2320,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -9051,6 +13677,18 @@
     "tram": true
    },
    "haltes_binnen": 11,
+   "bus": {
+    "naam": "Hoboken Karel Meyvis",
+    "m": 80,
+    "per_richting": 4.8,
+    "per_uur": 9.9
+   },
+   "tram": {
+    "naam": "Hoboken Karel Meyvis",
+    "m": 90,
+    "per_richting": 6.7,
+    "per_uur": 13.3
+   },
    "trein": {
     "naam": {
      "fr": "Hoboken-Polder",
@@ -9072,6 +13710,18 @@
     "tram": false
    },
    "haltes_binnen": 17,
+   "bus": {
+    "naam": "Gent Peerstraat",
+    "m": 240,
+    "per_richting": 7.2,
+    "per_uur": 14.2
+   },
+   "tram": {
+    "naam": "Gent Nieuwevaartbrug",
+    "m": 700,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -9093,6 +13743,12 @@
     "tram": false
    },
    "haltes_binnen": 6,
+   "bus": {
+    "naam": "Kessel-Lo Groeneweg",
+    "m": 140,
+    "per_richting": 0.1,
+    "per_uur": 0.2
+   },
    "trein": {
     "naam": {
      "fr": "Louvain",
@@ -9114,6 +13770,18 @@
     "tram": true
    },
    "haltes_binnen": 16,
+   "bus": {
+    "naam": "Gent Korenmarkt perron 2",
+    "m": 510,
+    "per_richting": 15.9,
+    "per_uur": 15.9
+   },
+   "tram": {
+    "naam": "Gent Oude Houtlei",
+    "m": 90,
+    "per_richting": 11.8,
+    "per_uur": 23.3
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -9135,6 +13803,18 @@
     "tram": false
    },
    "haltes_binnen": 16,
+   "bus": {
+    "naam": "Gent Nieuwewandeling",
+    "m": 220,
+    "per_richting": 6.9,
+    "per_uur": 13.8
+   },
+   "tram": {
+    "naam": "Gent Brugsepoort (Begijnhoflaan)",
+    "m": 560,
+    "per_richting": 6.7,
+    "per_uur": 13.3
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -9156,6 +13836,18 @@
     "tram": false
    },
    "haltes_binnen": 6,
+   "bus": {
+    "naam": "Zwijnaarde Remi Vlerickstraat",
+    "m": 40,
+    "per_richting": 0.1,
+    "per_uur": 0.2
+   },
+   "tram": {
+    "naam": "Zwijnaarde Bibliotheek",
+    "m": 200,
+    "per_richting": 5.8,
+    "per_uur": 5.8
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -9177,6 +13869,18 @@
     "tram": true
    },
    "haltes_binnen": 25,
+   "bus": {
+    "naam": "Gent Parkplein (Burggravenlaan)",
+    "m": 290,
+    "per_richting": 15.2,
+    "per_uur": 30.4
+   },
+   "tram": {
+    "naam": "Gent Sint-Pietersaalststraat",
+    "m": 200,
+    "per_richting": 12.8,
+    "per_uur": 25.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -9198,6 +13902,12 @@
     "tram": false
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Mechelen Weidestraat",
+    "m": 130,
+    "per_richting": 8.2,
+    "per_uur": 16.2
+   },
    "trein": {
     "naam": {
      "fr": "Malines-Nekkerspoel",
@@ -9219,6 +13929,18 @@
     "tram": false
    },
    "haltes_binnen": 2,
+   "bus": {
+    "naam": "Drongen Brug",
+    "m": 740,
+    "per_richting": 2.2,
+    "per_uur": 4.3
+   },
+   "tram": {
+    "naam": "Gent Guislainstraat",
+    "m": 4030,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Tronchiennes",
@@ -9240,6 +13962,18 @@
     "tram": false
    },
    "haltes_binnen": 19,
+   "bus": {
+    "naam": "Gent Forelstraat",
+    "m": 100,
+    "per_richting": 2.4,
+    "per_uur": 4.8
+   },
+   "tram": {
+    "naam": "Gent Keizerpoort (Brusselsepoortstraat)",
+    "m": 790,
+    "per_richting": 8.2,
+    "per_uur": 16.1
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -9261,6 +13995,18 @@
     "tram": false
    },
    "haltes_binnen": 7,
+   "bus": {
+    "naam": "Sint-Amandsberg Visitatiestraat",
+    "m": 100,
+    "per_richting": 4.8,
+    "per_uur": 9.5
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 1340,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -9282,6 +14028,18 @@
     "tram": true
    },
    "haltes_binnen": 13,
+   "bus": {
+    "naam": "Antwerpen Weilandstraat",
+    "m": 340,
+    "per_richting": 3.0,
+    "per_uur": 5.9
+   },
+   "tram": {
+    "naam": "Antwerpen Stuivenbergplein",
+    "m": 170,
+    "per_richting": 6.0,
+    "per_uur": 11.9
+   },
    "trein": {
     "naam": {
      "fr": "Anvers-Central",
@@ -9303,6 +14061,18 @@
     "tram": true
    },
    "haltes_binnen": 31,
+   "bus": {
+    "naam": "Gent Vijfwindgatenstraat",
+    "m": 240,
+    "per_richting": 24.9,
+    "per_uur": 48.8
+   },
+   "tram": {
+    "naam": "Gent Vijfwindgatenstraat",
+    "m": 240,
+    "per_richting": 19.8,
+    "per_uur": 39.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -9324,6 +14094,18 @@
     "tram": false
    },
    "haltes_binnen": 20,
+   "bus": {
+    "naam": "Gent Poel",
+    "m": 90,
+    "per_richting": 15.9,
+    "per_uur": 31.7
+   },
+   "tram": {
+    "naam": "Gent Sint-Elisabethplein",
+    "m": 120,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -9345,6 +14127,18 @@
     "tram": false
    },
    "haltes_binnen": 17,
+   "bus": {
+    "naam": "Gent Einde Were",
+    "m": 180,
+    "per_richting": 7.1,
+    "per_uur": 13.9
+   },
+   "tram": {
+    "naam": "Gent Theresianenstraat",
+    "m": 520,
+    "per_richting": 6.7,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -9366,6 +14160,18 @@
     "tram": false
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Sint-Amandsberg Carelshof",
+    "m": 230,
+    "per_richting": 4.8,
+    "per_uur": 9.2
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 2830,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -9387,6 +14193,12 @@
     "tram": false
    },
    "haltes_binnen": 14,
+   "bus": {
+    "naam": "Sint-Andries Jan Breydellaan",
+    "m": 290,
+    "per_richting": 3.0,
+    "per_uur": 5.9
+   },
    "trein": {
     "naam": {
      "fr": "Bruges",
@@ -9408,6 +14220,18 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Mariakerke Molenwalstraat",
+    "m": 580,
+    "per_richting": 3.8,
+    "per_uur": 7.4
+   },
+   "tram": {
+    "naam": "Gent Van Beverenplein (F. Ferrerlaan)",
+    "m": 580,
+    "per_richting": 7.6,
+    "per_uur": 7.6
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -9429,6 +14253,18 @@
     "tram": false
    },
    "haltes_binnen": 4,
+   "bus": {
+    "naam": "Destelbergen Stationsstraat",
+    "m": 480,
+    "per_richting": 0.1,
+    "per_uur": 0.2
+   },
+   "tram": {
+    "naam": "Gentbrugge P+R E17",
+    "m": 4600,
+    "per_richting": 7.9,
+    "per_uur": 15.7
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -9450,6 +14286,18 @@
     "tram": true
    },
    "haltes_binnen": 14,
+   "bus": {
+    "naam": "Gent Poel",
+    "m": 470,
+    "per_richting": 15.9,
+    "per_uur": 31.7
+   },
+   "tram": {
+    "naam": "Gent Galgenberg",
+    "m": 60,
+    "per_richting": 11.8,
+    "per_uur": 23.3
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -9471,6 +14319,18 @@
     "tram": false
    },
    "haltes_binnen": 20,
+   "bus": {
+    "naam": "Antwerpen Groeningerplein",
+    "m": 100,
+    "per_richting": 4.0,
+    "per_uur": 4.0
+   },
+   "tram": {
+    "naam": "Borgerhout Zegel Metro",
+    "m": 620,
+    "per_richting": 13.2,
+    "per_uur": 26.5
+   },
    "trein": {
     "naam": {
      "fr": "Anvers-Central",
@@ -9492,6 +14352,12 @@
     "tram": false
    },
    "haltes_binnen": 3,
+   "bus": {
+    "naam": "Oostkamp E. Welvaertstraat",
+    "m": 170,
+    "per_richting": 2.5,
+    "per_uur": 4.9
+   },
    "trein": {
     "naam": {
      "fr": "Oostkamp",
@@ -9513,6 +14379,18 @@
     "tram": false
    },
    "haltes_binnen": 17,
+   "bus": {
+    "naam": "Gent Wondelgembrug",
+    "m": 80,
+    "per_richting": 15.2,
+    "per_uur": 15.2
+   },
+   "tram": {
+    "naam": "Gent Wittekaproenenplein",
+    "m": 400,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -9534,6 +14412,12 @@
     "tram": false
    },
    "haltes_binnen": 4,
+   "bus": {
+    "naam": "Lembeke Rotonde",
+    "m": 240,
+    "per_richting": 2.0,
+    "per_uur": 4.2
+   },
    "trein": {
     "naam": {
      "fr": "Waarschoot",
@@ -9555,6 +14439,18 @@
     "tram": true
    },
    "haltes_binnen": 21,
+   "bus": {
+    "naam": "Gent Heilig-Kerst",
+    "m": 80,
+    "per_richting": 3.0,
+    "per_uur": 5.9
+   },
+   "tram": {
+    "naam": "Gent Heilig-Kerst",
+    "m": 80,
+    "per_richting": 6.7,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -9576,6 +14472,18 @@
     "tram": true
    },
    "haltes_binnen": 20,
+   "bus": {
+    "naam": "Gent Wittekaproenenplein",
+    "m": 190,
+    "per_richting": 2.4,
+    "per_uur": 4.6
+   },
+   "tram": {
+    "naam": "Gent Wittekaproenenplein",
+    "m": 190,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -9597,6 +14505,12 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Kortrijk Sint-Janskerk",
+    "m": 300,
+    "per_richting": 2.2,
+    "per_uur": 4.5
+   },
    "trein": {
     "naam": {
      "fr": "Courtrai",
@@ -9618,6 +14532,18 @@
     "tram": false
    },
    "haltes_binnen": 12,
+   "bus": {
+    "naam": "Gent Peerstraat",
+    "m": 290,
+    "per_richting": 7.2,
+    "per_uur": 14.2
+   },
+   "tram": {
+    "naam": "Gent Nieuwevaartbrug",
+    "m": 970,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Tronchiennes",
@@ -9639,6 +14565,18 @@
     "tram": false
    },
    "haltes_binnen": 14,
+   "bus": {
+    "naam": "Gent Fluweelstraat",
+    "m": 80,
+    "per_richting": 10.9,
+    "per_uur": 21.6
+   },
+   "tram": {
+    "naam": "Gent Guislainstraat",
+    "m": 950,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -9660,6 +14598,12 @@
     "tram": false
    },
    "haltes_binnen": 4,
+   "bus": {
+    "naam": "Grotenberge Kerk",
+    "m": 130,
+    "per_richting": 0.2,
+    "per_uur": 0.5
+   },
    "trein": {
     "naam": {
      "fr": "Zottegem",
@@ -9681,6 +14625,18 @@
     "tram": false
    },
    "haltes_binnen": 17,
+   "bus": {
+    "naam": "Gent Notelaarstraat",
+    "m": 80,
+    "per_richting": 7.3,
+    "per_uur": 14.7
+   },
+   "tram": {
+    "naam": "Gent Nieuwevaartbrug",
+    "m": 360,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -9702,6 +14658,18 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Gentbrugge Tweekapellenstraat",
+    "m": 30,
+    "per_richting": 4.8,
+    "per_uur": 9.7
+   },
+   "tram": {
+    "naam": "Gentbrugge Stelplaats",
+    "m": 840,
+    "per_richting": 9.2,
+    "per_uur": 16.7
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -9723,6 +14691,18 @@
     "tram": false
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Sint-Amandsberg Dienstencentrum",
+    "m": 280,
+    "per_richting": 13.2,
+    "per_uur": 26.1
+   },
+   "tram": {
+    "naam": "Gent Heilig-Kerst",
+    "m": 1350,
+    "per_richting": 6.7,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -9744,6 +14724,18 @@
     "tram": false
    },
    "haltes_binnen": 15,
+   "bus": {
+    "naam": "Gent Wolterslaan",
+    "m": 200,
+    "per_richting": 2.2,
+    "per_uur": 4.5
+   },
+   "tram": {
+    "naam": "Ledeberg Van Lokerenstraat",
+    "m": 1080,
+    "per_richting": 8.2,
+    "per_uur": 16.0
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -9765,6 +14757,18 @@
     "tram": false
    },
    "haltes_binnen": 40,
+   "bus": {
+    "naam": "Gent Puinstraat",
+    "m": 50,
+    "per_richting": 2.3,
+    "per_uur": 4.7
+   },
+   "tram": {
+    "naam": "Gent Lippensplein",
+    "m": 440,
+    "per_richting": 19.3,
+    "per_uur": 39.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -9786,6 +14790,18 @@
     "tram": false
    },
    "haltes_binnen": 15,
+   "bus": {
+    "naam": "Gent Zomerstraat",
+    "m": 130,
+    "per_richting": 12.2,
+    "per_uur": 24.1
+   },
+   "tram": {
+    "naam": "Gent UZ",
+    "m": 630,
+    "per_richting": 6.8,
+    "per_uur": 6.8
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -9807,6 +14823,18 @@
     "tram": false
    },
    "haltes_binnen": 4,
+   "bus": {
+    "naam": "Destelbergen Stelplaats",
+    "m": 380,
+    "per_richting": 4.3,
+    "per_uur": 8.5
+   },
+   "tram": {
+    "naam": "Ledeberg Van Lokerenstraat",
+    "m": 2340,
+    "per_richting": 8.2,
+    "per_uur": 16.0
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -9828,6 +14856,18 @@
     "tram": false
    },
    "haltes_binnen": 7,
+   "bus": {
+    "naam": "Gentbrugge Voordries",
+    "m": 290,
+    "per_richting": 3.6,
+    "per_uur": 7.1
+   },
+   "tram": {
+    "naam": "Gentbrugge P+R E17",
+    "m": 1300,
+    "per_richting": 7.9,
+    "per_uur": 15.7
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -9849,6 +14889,18 @@
     "tram": false
    },
    "haltes_binnen": 11,
+   "bus": {
+    "naam": "Sint-Amandsberg Rozebroekstraat",
+    "m": 260,
+    "per_richting": 3.8,
+    "per_uur": 7.4
+   },
+   "tram": {
+    "naam": "Gent Heilig-Kerst",
+    "m": 1870,
+    "per_richting": 6.7,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -9870,6 +14922,18 @@
     "tram": false
    },
    "haltes_binnen": 4,
+   "bus": {
+    "naam": "Gentbrugge Groeningewijk",
+    "m": 60,
+    "per_richting": 3.6,
+    "per_uur": 3.6
+   },
+   "tram": {
+    "naam": "Gentbrugge Schooldreef",
+    "m": 1440,
+    "per_richting": 7.9,
+    "per_uur": 15.8
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -9891,6 +14955,18 @@
     "tram": false
    },
    "haltes_binnen": 5,
+   "bus": {
+    "naam": "Zwijnaarde Schayckstraat",
+    "m": 140,
+    "per_richting": 2.8,
+    "per_uur": 5.4
+   },
+   "tram": {
+    "naam": "Zwijnaarde Molen",
+    "m": 500,
+    "per_richting": 5.8,
+    "per_uur": 11.7
+   },
    "trein": {
     "naam": {
      "fr": "Merelbeke",
@@ -9912,6 +14988,12 @@
     "tram": false
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Kessel-Lo Raadhuislaan",
+    "m": 300,
+    "per_richting": 1.2,
+    "per_uur": 2.2
+   },
    "trein": {
     "naam": {
      "fr": "Louvain",
@@ -9933,6 +15015,18 @@
     "tram": false
    },
    "haltes_binnen": 22,
+   "bus": {
+    "naam": "Gent Schoolstraat",
+    "m": 60,
+    "per_richting": 3.8,
+    "per_uur": 7.4
+   },
+   "tram": {
+    "naam": "Gent Heilig-Kerst",
+    "m": 1600,
+    "per_richting": 6.7,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -9954,6 +15048,18 @@
     "tram": false
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Gentbrugge Jef Vandermeulenstraat",
+    "m": 200,
+    "per_richting": 4.8,
+    "per_uur": 9.6
+   },
+   "tram": {
+    "naam": "Gentbrugge Stelplaats",
+    "m": 720,
+    "per_richting": 9.2,
+    "per_uur": 16.7
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -9975,6 +15081,18 @@
     "tram": false
    },
    "haltes_binnen": 6,
+   "bus": {
+    "naam": "Wetteren Serskampstraat",
+    "m": 180,
+    "per_richting": 0.2,
+    "per_uur": 0.4
+   },
+   "tram": {
+    "naam": "Melle Leeuw",
+    "m": 8940,
+    "per_richting": 7.8,
+    "per_uur": 7.8
+   },
    "trein": {
     "naam": {
      "fr": "Wetteren",
@@ -9996,6 +15114,18 @@
     "tram": true
    },
    "haltes_binnen": 21,
+   "bus": {
+    "naam": "Gent Koning Albertbrug (Neermeerskaai)",
+    "m": 230,
+    "per_richting": 12.6,
+    "per_uur": 24.9
+   },
+   "tram": {
+    "naam": "Gent Koning Albertbrug",
+    "m": 180,
+    "per_richting": 18.4,
+    "per_uur": 36.8
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -10017,6 +15147,12 @@
     "tram": false
    },
    "haltes_binnen": 20,
+   "bus": {
+    "naam": "Sint-Niklaas Paterskerk",
+    "m": 250,
+    "per_richting": 3.0,
+    "per_uur": 6.0
+   },
    "trein": {
     "naam": {
      "fr": "Saint-Nicolas",
@@ -10038,6 +15174,18 @@
     "tram": false
    },
    "haltes_binnen": 19,
+   "bus": {
+    "naam": "Gent Vlaamsekaai",
+    "m": 130,
+    "per_richting": 2.4,
+    "per_uur": 7.1
+   },
+   "tram": {
+    "naam": "Gent Keizerpoort (Brusselsepoortstraat)",
+    "m": 610,
+    "per_richting": 8.2,
+    "per_uur": 16.1
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -10059,6 +15207,18 @@
     "tram": false
    },
    "haltes_binnen": 18,
+   "bus": {
+    "naam": "Gent Brugsepoort (Brugsepoortstraat)",
+    "m": 170,
+    "per_richting": 15.9,
+    "per_uur": 31.5
+   },
+   "tram": {
+    "naam": "Gent Theresianenstraat",
+    "m": 190,
+    "per_richting": 6.7,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -10080,6 +15240,18 @@
     "tram": false
    },
    "haltes_binnen": 42,
+   "bus": {
+    "naam": "Gent Van Eyckstraat",
+    "m": 60,
+    "per_richting": 2.3,
+    "per_uur": 4.7
+   },
+   "tram": {
+    "naam": "Gent Lippensplein",
+    "m": 360,
+    "per_richting": 19.3,
+    "per_uur": 39.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -10101,6 +15273,18 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Sint-Amandsberg Snellaertplein",
+    "m": 360,
+    "per_richting": 3.6,
+    "per_uur": 3.6
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 2140,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -10122,6 +15306,18 @@
     "tram": false
    },
    "haltes_binnen": 12,
+   "bus": {
+    "naam": "Gent Oscar Colbrandtstraat",
+    "m": 130,
+    "per_richting": 2.2,
+    "per_uur": 4.5
+   },
+   "tram": {
+    "naam": "Gent Zuid perron 1",
+    "m": 1830,
+    "per_richting": 19.8,
+    "per_uur": 19.8
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -10143,6 +15339,18 @@
     "tram": false
    },
    "haltes_binnen": 15,
+   "bus": {
+    "naam": "Gent Vlaamsekaai",
+    "m": 270,
+    "per_richting": 2.4,
+    "per_uur": 7.1
+   },
+   "tram": {
+    "naam": "Ledeberg Van Lokerenstraat",
+    "m": 640,
+    "per_richting": 8.2,
+    "per_uur": 16.0
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -10164,6 +15372,18 @@
     "tram": false
    },
    "haltes_binnen": 4,
+   "bus": {
+    "naam": "Sint-Denijs-Westrem Kromme Leie",
+    "m": 60,
+    "per_richting": 0.8,
+    "per_uur": 1.2
+   },
+   "tram": {
+    "naam": "Gent Sint-Pietersstation perron 17",
+    "m": 1920,
+    "per_richting": 12.8,
+    "per_uur": 12.8
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -10185,6 +15405,18 @@
     "tram": false
    },
    "haltes_binnen": 14,
+   "bus": {
+    "naam": "Gent Wondelgembrug (Roggestraat)",
+    "m": 130,
+    "per_richting": 15.2,
+    "per_uur": 15.2
+   },
+   "tram": {
+    "naam": "Gent Hortensiastraat",
+    "m": 350,
+    "per_richting": 7.7,
+    "per_uur": 15.3
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -10206,6 +15438,18 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Wondelgem Vroonstalledries",
+    "m": 370,
+    "per_richting": 3.6,
+    "per_uur": 7.1
+   },
+   "tram": {
+    "naam": "Gent Van Beverenplein (F. Ferrerlaan)",
+    "m": 2110,
+    "per_richting": 7.6,
+    "per_uur": 7.6
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -10227,6 +15471,12 @@
     "tram": false
    },
    "haltes_binnen": 5,
+   "bus": {
+    "naam": "Sint-Kruis Paalbos",
+    "m": 420,
+    "per_richting": 3.0,
+    "per_uur": 6.0
+   },
    "trein": {
     "naam": {
      "fr": "Bruges",
@@ -10248,6 +15498,18 @@
     "tram": false
    },
    "haltes_binnen": 23,
+   "bus": {
+    "naam": "Antwerpen Montensstraat",
+    "m": 140,
+    "per_richting": 5.6,
+    "per_uur": 5.6
+   },
+   "tram": {
+    "naam": "Antwerpen Plantin & Moretus",
+    "m": 320,
+    "per_richting": 8.0,
+    "per_uur": 16.0
+   },
    "trein": {
     "naam": {
      "fr": "Anvers-Central",
@@ -10269,6 +15531,12 @@
     "tram": false
    },
    "haltes_binnen": 24,
+   "bus": {
+    "naam": "Sint-Niklaas Truweelstraat",
+    "m": 100,
+    "per_richting": 3.0,
+    "per_uur": 6.0
+   },
    "trein": {
     "naam": {
      "fr": "Saint-Nicolas",
@@ -10290,6 +15558,18 @@
     "tram": false
    },
    "haltes_binnen": 7,
+   "bus": {
+    "naam": "Gent La Sapinière",
+    "m": 50,
+    "per_richting": 4.8,
+    "per_uur": 9.5
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 1540,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -10311,6 +15591,18 @@
     "tram": false
    },
    "haltes_binnen": 20,
+   "bus": {
+    "naam": "Gent Forelstraat",
+    "m": 50,
+    "per_richting": 2.4,
+    "per_uur": 4.8
+   },
+   "tram": {
+    "naam": "Gent Zuid perron 1",
+    "m": 810,
+    "per_richting": 19.8,
+    "per_uur": 19.8
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -10332,6 +15624,12 @@
     "tram": false
    },
    "haltes_binnen": 3,
+   "bus": {
+    "naam": "Petegem-aan-de-Leie Industrielaan",
+    "m": 520,
+    "per_richting": 2.3,
+    "per_uur": 4.5
+   },
    "trein": {
     "naam": {
      "fr": "Deinze",
@@ -10353,6 +15651,18 @@
     "tram": false
    },
    "haltes_binnen": 7,
+   "bus": {
+    "naam": "Gentbrugge Tweekapellenstraat",
+    "m": 50,
+    "per_richting": 4.8,
+    "per_uur": 9.7
+   },
+   "tram": {
+    "naam": "Gentbrugge Stelplaats",
+    "m": 890,
+    "per_richting": 9.2,
+    "per_uur": 16.7
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -10374,6 +15684,12 @@
     "tram": false
    },
    "haltes_binnen": 5,
+   "bus": {
+    "naam": "Kortrijk Soetens Molen",
+    "m": 340,
+    "per_richting": 4.9,
+    "per_uur": 9.8
+   },
    "trein": {
     "naam": {
      "fr": "Courtrai",
@@ -10395,6 +15711,12 @@
     "tram": false
    },
    "haltes_binnen": 4,
+   "bus": {
+    "naam": "Nieuwkerken Wallenhof",
+    "m": 250,
+    "per_richting": 1.8,
+    "per_uur": 1.8
+   },
    "trein": {
     "naam": {
      "fr": "Nieuwkerken-Waas",
@@ -10416,6 +15738,12 @@
     "tram": false
    },
    "haltes_binnen": 6,
+   "bus": {
+    "naam": "Kortrijk Senator Coolestraat",
+    "m": 360,
+    "per_richting": 0.2,
+    "per_uur": 0.2
+   },
    "trein": {
     "naam": {
      "fr": "Courtrai",
@@ -10437,6 +15765,18 @@
     "tram": false
    },
    "haltes_binnen": 6,
+   "bus": {
+    "naam": "De Pinte Begonialaan",
+    "m": 280,
+    "per_richting": 1.4,
+    "per_uur": 2.7
+   },
+   "tram": {
+    "naam": "Zwijnaarde Bibliotheek",
+    "m": 4020,
+    "per_richting": 5.8,
+    "per_uur": 5.8
+   },
    "trein": {
     "naam": {
      "fr": "De Pinte",
@@ -10458,6 +15798,18 @@
     "tram": false
    },
    "haltes_binnen": 16,
+   "bus": {
+    "naam": "Borgerhout Luitenant Lippenslaan",
+    "m": 100,
+    "per_richting": 4.2,
+    "per_uur": 8.6
+   },
+   "tram": {
+    "naam": "Borgerhout Morckhoven",
+    "m": 410,
+    "per_richting": 6.2,
+    "per_uur": 12.1
+   },
    "trein": {
     "naam": {
      "fr": "Anvers-Berchem",
@@ -10479,6 +15831,18 @@
     "tram": false
    },
    "haltes_binnen": 14,
+   "bus": {
+    "naam": "Melle Vogelhoekplein",
+    "m": 130,
+    "per_richting": 4.2,
+    "per_uur": 8.3
+   },
+   "tram": {
+    "naam": "Melle Leeuw",
+    "m": 650,
+    "per_richting": 7.8,
+    "per_uur": 7.8
+   },
    "trein": {
     "naam": {
      "fr": "Merelbeke",
@@ -10500,6 +15864,18 @@
     "tram": false
    },
    "haltes_binnen": 4,
+   "bus": {
+    "naam": "Gent Rotterdamstraat",
+    "m": 90,
+    "per_richting": 3.8,
+    "per_uur": 7.6
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 1170,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -10521,6 +15897,18 @@
     "tram": true
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Deurne Muggenberg",
+    "m": 260,
+    "per_richting": 4.3,
+    "per_uur": 8.5
+   },
+   "tram": {
+    "naam": "Deurne Muggenberg",
+    "m": 260,
+    "per_richting": 12.8,
+    "per_uur": 25.3
+   },
    "trein": {
     "naam": {
      "fr": "Anvers-Berchem",
@@ -10542,6 +15930,18 @@
     "tram": false
    },
    "haltes_binnen": 15,
+   "bus": {
+    "naam": "Gent Rooigem (R40)",
+    "m": 110,
+    "per_richting": 7.2,
+    "per_uur": 10.8
+   },
+   "tram": {
+    "naam": "Gent Guislainstraat",
+    "m": 710,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Tronchiennes",
@@ -10563,6 +15963,18 @@
     "tram": false
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Mariakerke Kerk",
+    "m": 130,
+    "per_richting": 0.2,
+    "per_uur": 0.2
+   },
+   "tram": {
+    "naam": "Gent Hortensiastraat",
+    "m": 1920,
+    "per_richting": 7.7,
+    "per_uur": 15.3
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -10584,6 +15996,18 @@
     "tram": false
    },
    "haltes_binnen": 18,
+   "bus": {
+    "naam": "Gent Forelstraat",
+    "m": 190,
+    "per_richting": 2.4,
+    "per_uur": 4.8
+   },
+   "tram": {
+    "naam": "Gent Keizerpoort (Brusselsepoortstraat)",
+    "m": 970,
+    "per_richting": 8.2,
+    "per_uur": 16.1
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -10605,6 +16029,18 @@
     "tram": false
    },
    "haltes_binnen": 13,
+   "bus": {
+    "naam": "Gent Oscar Colbrandtstraat",
+    "m": 180,
+    "per_richting": 2.2,
+    "per_uur": 4.5
+   },
+   "tram": {
+    "naam": "Gent Zuid perron 1",
+    "m": 1890,
+    "per_richting": 19.8,
+    "per_uur": 19.8
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -10626,6 +16062,18 @@
     "tram": false
    },
    "haltes_binnen": 25,
+   "bus": {
+    "naam": "Gent Stapelplein",
+    "m": 110,
+    "per_richting": 2.9,
+    "per_uur": 5.8
+   },
+   "tram": {
+    "naam": "Gent Heilig-Kerst",
+    "m": 490,
+    "per_richting": 6.7,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -10647,6 +16095,12 @@
     "tram": false
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Sint-Andries Zandstraat",
+    "m": 250,
+    "per_richting": 3.0,
+    "per_uur": 5.9
+   },
    "trein": {
     "naam": {
      "fr": "Bruges",
@@ -10668,6 +16122,18 @@
     "tram": true
    },
    "haltes_binnen": 14,
+   "bus": {
+    "naam": "Gent Jubileumlaan (Verenigde-Natieslaan)",
+    "m": 340,
+    "per_richting": 14.1,
+    "per_uur": 28.1
+   },
+   "tram": {
+    "naam": "Gent Bernard Spaelaan",
+    "m": 90,
+    "per_richting": 18.3,
+    "per_uur": 36.6
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -10689,6 +16155,18 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Gentbrugge Meersemdries",
+    "m": 130,
+    "per_richting": 4.8,
+    "per_uur": 16.7
+   },
+   "tram": {
+    "naam": "Gentbrugge P+R E17",
+    "m": 830,
+    "per_richting": 7.9,
+    "per_uur": 15.7
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -10710,6 +16188,12 @@
     "tram": false
    },
    "haltes_binnen": 11,
+   "bus": {
+    "naam": "Petegem-aan-de-Leie Machelenstraat",
+    "m": 370,
+    "per_richting": 2.3,
+    "per_uur": 4.5
+   },
    "trein": {
     "naam": {
      "fr": "Deinze",
@@ -10731,6 +16215,18 @@
     "tram": false
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Gent Heymanslaan",
+    "m": 300,
+    "per_richting": 3.2,
+    "per_uur": 6.3
+   },
+   "tram": {
+    "naam": "Gent UZ",
+    "m": 490,
+    "per_richting": 6.8,
+    "per_uur": 6.8
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -10752,6 +16248,18 @@
     "tram": false
    },
    "haltes_binnen": 11,
+   "bus": {
+    "naam": "Melle Vogelhoekplein",
+    "m": 300,
+    "per_richting": 4.2,
+    "per_uur": 8.3
+   },
+   "tram": {
+    "naam": "Melle Leeuw",
+    "m": 710,
+    "per_richting": 7.8,
+    "per_uur": 7.8
+   },
    "trein": {
     "naam": {
      "fr": "Merelbeke",
@@ -10773,6 +16281,18 @@
     "tram": false
    },
    "haltes_binnen": 17,
+   "bus": {
+    "naam": "Gent Nieuwewandeling",
+    "m": 230,
+    "per_richting": 6.9,
+    "per_uur": 13.8
+   },
+   "tram": {
+    "naam": "Gent Theresianenstraat",
+    "m": 310,
+    "per_richting": 6.7,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -10794,6 +16314,12 @@
     "tram": false
    },
    "haltes_binnen": 15,
+   "bus": {
+    "naam": "Roeselare Gentpoort",
+    "m": 280,
+    "per_richting": 1.4,
+    "per_uur": 2.8
+   },
    "trein": {
     "naam": {
      "fr": "Roulers",
@@ -10815,6 +16341,18 @@
     "tram": false
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Gentbrugge Braemkasteel",
+    "m": 290,
+    "per_richting": 4.8,
+    "per_uur": 4.8
+   },
+   "tram": {
+    "naam": "Gentbrugge P+R E17",
+    "m": 440,
+    "per_richting": 7.9,
+    "per_uur": 15.7
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -10836,6 +16374,18 @@
     "tram": true
    },
    "haltes_binnen": 15,
+   "bus": {
+    "naam": "Deurne Florent Pauwels",
+    "m": 280,
+    "per_richting": 9.7,
+    "per_uur": 19.2
+   },
+   "tram": {
+    "naam": "Deurne Florent Pauwels",
+    "m": 260,
+    "per_richting": 12.7,
+    "per_uur": 25.3
+   },
    "trein": {
     "naam": {
      "fr": "Mortsel",
@@ -10857,6 +16407,18 @@
     "tram": true
    },
    "haltes_binnen": 14,
+   "bus": {
+    "naam": "Gent Vlaamsekaai",
+    "m": 450,
+    "per_richting": 2.4,
+    "per_uur": 7.1
+   },
+   "tram": {
+    "naam": "Ledeberg Van Lokerenstraat",
+    "m": 380,
+    "per_richting": 8.2,
+    "per_uur": 16.0
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -10878,6 +16440,18 @@
     "tram": false
    },
    "haltes_binnen": 11,
+   "bus": {
+    "naam": "Deurne Sport",
+    "m": 240,
+    "per_richting": 3.0,
+    "per_uur": 3.0
+   },
+   "tram": {
+    "naam": "Antwerpen Sport Metro",
+    "m": 280,
+    "per_richting": 19.7,
+    "per_uur": 39.2
+   },
    "trein": {
     "naam": {
      "fr": "Anvers-Luchtbal",
@@ -10899,6 +16473,12 @@
     "tram": false
    },
    "haltes_binnen": 5,
+   "bus": {
+    "naam": "Nederename De Preesterstraat",
+    "m": 330,
+    "per_richting": 0.2,
+    "per_uur": 0.3
+   },
    "trein": {
     "naam": {
      "fr": "Eine",
@@ -10920,6 +16500,12 @@
     "tram": false
    },
    "haltes_binnen": 7,
+   "bus": {
+    "naam": "Heverlee Abdij van Park",
+    "m": 210,
+    "per_richting": 5.7,
+    "per_uur": 11.2
+   },
    "trein": {
     "naam": {
      "fr": "Heverlee",
@@ -10941,6 +16527,18 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Destelbergen Stelplaats",
+    "m": 340,
+    "per_richting": 4.3,
+    "per_uur": 8.5
+   },
+   "tram": {
+    "naam": "Ledeberg Van Lokerenstraat",
+    "m": 2070,
+    "per_richting": 8.2,
+    "per_uur": 16.0
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -10962,6 +16560,18 @@
     "tram": false
    },
    "haltes_binnen": 19,
+   "bus": {
+    "naam": "Gent Tolpoort (Tolhuislaan)",
+    "m": 60,
+    "per_richting": 22.1,
+    "per_uur": 44.1
+   },
+   "tram": {
+    "naam": "Gent Tolpoort (Neuseplein)",
+    "m": 110,
+    "per_richting": 6.6,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -10983,6 +16593,18 @@
     "tram": false
    },
    "haltes_binnen": 19,
+   "bus": {
+    "naam": "Gent Forelstraat",
+    "m": 200,
+    "per_richting": 2.4,
+    "per_uur": 4.8
+   },
+   "tram": {
+    "naam": "Gent Keizerpoort (Brusselsepoortstraat)",
+    "m": 970,
+    "per_richting": 8.2,
+    "per_uur": 16.1
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -11004,6 +16626,18 @@
     "tram": true
    },
    "haltes_binnen": 16,
+   "bus": {
+    "naam": "Gent Poel",
+    "m": 700,
+    "per_richting": 15.9,
+    "per_uur": 31.7
+   },
+   "tram": {
+    "naam": "Gent Oude Houtlei",
+    "m": 210,
+    "per_richting": 11.8,
+    "per_uur": 23.3
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -11025,6 +16659,18 @@
     "tram": false
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Destelbergen Lossystraat",
+    "m": 320,
+    "per_richting": 4.3,
+    "per_uur": 8.5
+   },
+   "tram": {
+    "naam": "Gentbrugge Stelplaats",
+    "m": 1550,
+    "per_richting": 9.2,
+    "per_uur": 16.7
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -11046,6 +16692,18 @@
     "tram": true
    },
    "haltes_binnen": 22,
+   "bus": {
+    "naam": "Gent Poel",
+    "m": 160,
+    "per_richting": 15.9,
+    "per_uur": 31.7
+   },
+   "tram": {
+    "naam": "Gent Sint-Elisabethplein",
+    "m": 160,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -11067,6 +16725,18 @@
     "tram": true
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Gent Van Beverenplein",
+    "m": 280,
+    "per_richting": 15.4,
+    "per_uur": 30.5
+   },
+   "tram": {
+    "naam": "Gent Van Beverenplein (F. Ferrerlaan)",
+    "m": 140,
+    "per_richting": 7.6,
+    "per_uur": 7.6
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -11088,6 +16758,18 @@
     "tram": false
    },
    "haltes_binnen": 12,
+   "bus": {
+    "naam": "Mariakerke Vaartstraat",
+    "m": 190,
+    "per_richting": 2.3,
+    "per_uur": 4.5
+   },
+   "tram": {
+    "naam": "Gent Hortensiastraat",
+    "m": 1140,
+    "per_richting": 7.7,
+    "per_uur": 15.3
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -11109,6 +16791,18 @@
     "tram": false
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Gent Heymanslaan",
+    "m": 250,
+    "per_richting": 3.2,
+    "per_uur": 6.3
+   },
+   "tram": {
+    "naam": "Gent UZ",
+    "m": 440,
+    "per_richting": 6.8,
+    "per_uur": 6.8
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -11130,6 +16824,12 @@
     "tram": false
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Lokeren Groendreef",
+    "m": 80,
+    "per_richting": 2.9,
+    "per_uur": 5.6
+   },
    "trein": {
     "naam": {
      "fr": "Lokeren",
@@ -11151,6 +16851,12 @@
     "tram": false
    },
    "haltes_binnen": 16,
+   "bus": {
+    "naam": "Leuven Riddersstraat",
+    "m": 120,
+    "per_richting": 3.0,
+    "per_uur": 5.9
+   },
    "trein": {
     "naam": {
      "fr": "Louvain",
@@ -11172,6 +16878,18 @@
     "tram": false
    },
    "haltes_binnen": 0,
+   "bus": {
+    "naam": "Zwijndrecht P+R Melsele perron 6",
+    "m": 1570,
+    "per_richting": 10.4,
+    "per_uur": 10.4
+   },
+   "tram": {
+    "naam": "Hoboken Zwaantjes",
+    "m": 5750,
+    "per_richting": 12.3,
+    "per_uur": 31.9
+   },
    "trein": {
     "naam": {
      "fr": "Melsele",
@@ -11193,6 +16911,18 @@
     "tram": true
    },
    "haltes_binnen": 12,
+   "bus": {
+    "naam": "Ledeberg Ledebergplein",
+    "m": 270,
+    "per_richting": 11.8,
+    "per_uur": 23.2
+   },
+   "tram": {
+    "naam": "Ledeberg Van Lokerenstraat",
+    "m": 40,
+    "per_richting": 8.2,
+    "per_uur": 16.0
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -11214,6 +16944,18 @@
     "tram": false
    },
    "haltes_binnen": 4,
+   "bus": {
+    "naam": "Gent M. Middelares - Maalte",
+    "m": 190,
+    "per_richting": 6.5,
+    "per_uur": 12.8
+   },
+   "tram": {
+    "naam": "Gent Sint-Pietersaalststraat",
+    "m": 1520,
+    "per_richting": 12.8,
+    "per_uur": 25.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -11235,6 +16977,18 @@
     "tram": false
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Mariakerke Damstraat",
+    "m": 120,
+    "per_richting": 3.8,
+    "per_uur": 7.4
+   },
+   "tram": {
+    "naam": "Gent Hortensiastraat",
+    "m": 1010,
+    "per_richting": 7.7,
+    "per_uur": 15.3
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -11256,6 +17010,12 @@
     "tram": false
    },
    "haltes_binnen": 0,
+   "bus": {
+    "naam": "Meigem Berg",
+    "m": 1850,
+    "per_richting": 0.2,
+    "per_uur": 0.2
+   },
    "trein": {
     "naam": {
      "fr": "Hansbeke",
@@ -11277,6 +17037,18 @@
     "tram": true
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Zwijnaarde Molen",
+    "m": 170,
+    "per_richting": 2.8,
+    "per_uur": 2.8
+   },
+   "tram": {
+    "naam": "Zwijnaarde Molen",
+    "m": 140,
+    "per_richting": 5.8,
+    "per_uur": 11.7
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -11298,6 +17070,18 @@
     "tram": false
    },
    "haltes_binnen": 11,
+   "bus": {
+    "naam": "Gent Verenigde-Natieslaan",
+    "m": 220,
+    "per_richting": 12.6,
+    "per_uur": 24.9
+   },
+   "tram": {
+    "naam": "Gent Koning Albertbrug",
+    "m": 710,
+    "per_richting": 18.4,
+    "per_uur": 36.8
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -11319,6 +17103,18 @@
     "tram": false
    },
    "haltes_binnen": 5,
+   "bus": {
+    "naam": "Gent Liverpoolstraat",
+    "m": 190,
+    "per_richting": 3.8,
+    "per_uur": 7.6
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 880,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Wondelgem",
@@ -11340,6 +17136,18 @@
     "tram": true
    },
    "haltes_binnen": 13,
+   "bus": {
+    "naam": "Ledeberg Ledebergplein",
+    "m": 250,
+    "per_richting": 11.8,
+    "per_uur": 23.2
+   },
+   "tram": {
+    "naam": "Ledeberg Ledebergplein",
+    "m": 250,
+    "per_richting": 11.2,
+    "per_uur": 22.9
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -11361,6 +17169,18 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Sint-Amandsberg Snellaertplein",
+    "m": 140,
+    "per_richting": 3.6,
+    "per_uur": 3.6
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 1720,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -11382,6 +17202,18 @@
     "tram": false
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Gent Koning Albertbrug (Neermeerskaai)",
+    "m": 220,
+    "per_richting": 12.6,
+    "per_uur": 24.9
+   },
+   "tram": {
+    "naam": "Gent Koning Albertbrug",
+    "m": 270,
+    "per_richting": 18.4,
+    "per_uur": 36.8
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -11403,6 +17235,12 @@
     "tram": false
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Brugge Komvest",
+    "m": 40,
+    "per_richting": 13.6,
+    "per_uur": 27.2
+   },
    "trein": {
     "naam": {
      "fr": "Bruges-Saint-Pierre",
@@ -11424,6 +17262,18 @@
     "tram": true
    },
    "haltes_binnen": 14,
+   "bus": {
+    "naam": "Ledeberg Ledebergplein",
+    "m": 310,
+    "per_richting": 11.8,
+    "per_uur": 23.2
+   },
+   "tram": {
+    "naam": "Ledeberg Ledebergplein",
+    "m": 310,
+    "per_richting": 11.2,
+    "per_uur": 22.9
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -11445,6 +17295,18 @@
     "tram": false
    },
    "haltes_binnen": 25,
+   "bus": {
+    "naam": "Gent Blekerijstraat",
+    "m": 170,
+    "per_richting": 2.9,
+    "per_uur": 5.8
+   },
+   "tram": {
+    "naam": "Gent Coppinsstraat",
+    "m": 430,
+    "per_richting": 6.7,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -11466,6 +17328,18 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Oostakker Onze-Lieve-Vrouwstraat",
+    "m": 150,
+    "per_richting": 0.8,
+    "per_uur": 1.6
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 2730,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -11487,6 +17361,18 @@
     "tram": false
    },
    "haltes_binnen": 7,
+   "bus": {
+    "naam": "Oostakker Krijtestraat",
+    "m": 110,
+    "per_richting": 1.8,
+    "per_uur": 3.5
+   },
+   "tram": {
+    "naam": "Gent Muidebrug",
+    "m": 3080,
+    "per_richting": 13.2,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -11508,6 +17394,18 @@
     "tram": false
    },
    "haltes_binnen": 3,
+   "bus": {
+    "naam": "Gontrode Station",
+    "m": 220,
+    "per_richting": 0.2,
+    "per_uur": 0.3
+   },
+   "tram": {
+    "naam": "Melle Leeuw",
+    "m": 5110,
+    "per_richting": 7.8,
+    "per_uur": 7.8
+   },
    "trein": {
     "naam": {
      "fr": "Gontrode",
@@ -11529,6 +17427,18 @@
     "tram": true
    },
    "haltes_binnen": 13,
+   "bus": {
+    "naam": "Deurne Venneborg",
+    "m": 280,
+    "per_richting": 4.6,
+    "per_uur": 8.8
+   },
+   "tram": {
+    "naam": "Deurne Venneborg",
+    "m": 280,
+    "per_richting": 6.7,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Anvers-Central",
@@ -11550,6 +17460,18 @@
     "tram": false
    },
    "haltes_binnen": 18,
+   "bus": {
+    "naam": "Gent Notelaarstraat",
+    "m": 120,
+    "per_richting": 7.3,
+    "per_uur": 14.7
+   },
+   "tram": {
+    "naam": "Gent Nieuwevaartbrug",
+    "m": 220,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -11571,6 +17493,12 @@
     "tram": false
    },
    "haltes_binnen": 4,
+   "bus": {
+    "naam": "Oostkamp Kapellestraat",
+    "m": 40,
+    "per_richting": 0.3,
+    "per_uur": 0.5
+   },
    "trein": {
     "naam": {
      "fr": "Oostkamp",
@@ -11592,6 +17520,18 @@
     "tram": false
    },
    "haltes_binnen": 1,
+   "bus": {
+    "naam": "Gent Bovenhove",
+    "m": 740,
+    "per_richting": 4.2,
+    "per_uur": 8.2
+   },
+   "tram": {
+    "naam": "Zwijnaarde Gestichtstraat",
+    "m": 1980,
+    "per_richting": 5.8,
+    "per_uur": 11.5
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Saint-Pierre",
@@ -11613,6 +17553,18 @@
     "tram": false
    },
    "haltes_binnen": 19,
+   "bus": {
+    "naam": "Borgerhout Te Boelaarlei",
+    "m": 100,
+    "per_richting": 4.0,
+    "per_uur": 8.0
+   },
+   "tram": {
+    "naam": "Deurne Muggenberg",
+    "m": 590,
+    "per_richting": 12.8,
+    "per_uur": 25.3
+   },
    "trein": {
     "naam": {
      "fr": "Anvers-Berchem",
@@ -11634,6 +17586,18 @@
     "tram": false
    },
    "haltes_binnen": 17,
+   "bus": {
+    "naam": "Gent Oscar Colbrandtstraat",
+    "m": 110,
+    "per_richting": 2.2,
+    "per_uur": 4.5
+   },
+   "tram": {
+    "naam": "Gent Zuid perron 1",
+    "m": 1590,
+    "per_richting": 19.8,
+    "per_uur": 19.8
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -11655,6 +17619,18 @@
     "tram": false
    },
    "haltes_binnen": 0,
+   "bus": {
+    "naam": "Drongen Drongenplein",
+    "m": 840,
+    "per_richting": 3.9,
+    "per_uur": 7.8
+   },
+   "tram": {
+    "naam": "Gent Bernard Spaelaan",
+    "m": 3090,
+    "per_richting": 18.3,
+    "per_uur": 36.6
+   },
    "trein": {
     "naam": {
      "fr": "Tronchiennes",
@@ -11676,6 +17652,18 @@
     "tram": false
    },
    "haltes_binnen": 19,
+   "bus": {
+    "naam": "Antwerpen Groeningerplein",
+    "m": 210,
+    "per_richting": 4.0,
+    "per_uur": 4.0
+   },
+   "tram": {
+    "naam": "Antwerpen Handel Metro",
+    "m": 680,
+    "per_richting": 26.2,
+    "per_uur": 52.3
+   },
    "trein": {
     "naam": {
      "fr": "Anvers-Central",
@@ -11697,6 +17685,18 @@
     "tram": false
    },
    "haltes_binnen": 6,
+   "bus": {
+    "naam": "Merelbeke Ginstdreef",
+    "m": 350,
+    "per_richting": 0.3,
+    "per_uur": 0.6
+   },
+   "tram": {
+    "naam": "Melle Leeuw",
+    "m": 2040,
+    "per_richting": 7.8,
+    "per_uur": 7.8
+   },
    "trein": {
     "naam": {
      "fr": "Merelbeke",
@@ -11718,6 +17718,18 @@
     "tram": false
    },
    "haltes_binnen": 4,
+   "bus": {
+    "naam": "Gentbrugge De Guchteneerestraat",
+    "m": 170,
+    "per_richting": 3.6,
+    "per_uur": 3.6
+   },
+   "tram": {
+    "naam": "Gentbrugge Schooldreef",
+    "m": 1630,
+    "per_richting": 7.9,
+    "per_uur": 15.8
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -11739,6 +17751,18 @@
     "tram": false
    },
    "haltes_binnen": 22,
+   "bus": {
+    "naam": "Gent van Cleemputteplein",
+    "m": 120,
+    "per_richting": 2.2,
+    "per_uur": 4.5
+   },
+   "tram": {
+    "naam": "Gent Heilig-Kerst",
+    "m": 1620,
+    "per_richting": 6.7,
+    "per_uur": 13.2
+   },
    "trein": {
     "naam": {
      "fr": "Gand-Dampoort",
@@ -11760,6 +17784,12 @@
     "tram": false
    },
    "haltes_binnen": 2,
+   "bus": {
+    "naam": "Belsele Sportkringpark",
+    "m": 750,
+    "per_richting": 3.0,
+    "per_uur": 3.0
+   },
    "trein": {
     "naam": {
      "fr": "Saint-Nicolas",
@@ -11781,6 +17811,18 @@
     "tram": false
    },
    "haltes_binnen": 9,
+   "bus": {
+    "naam": "Gentbrugge Jef Vandermeulenstraat",
+    "m": 450,
+    "per_richting": 4.8,
+    "per_uur": 9.6
+   },
+   "tram": {
+    "naam": "Gentbrugge Stelplaats",
+    "m": 500,
+    "per_richting": 9.2,
+    "per_uur": 16.7
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -11802,6 +17844,18 @@
     "tram": false
    },
    "haltes_binnen": 13,
+   "bus": {
+    "naam": "Gent Malpertuusplein",
+    "m": 260,
+    "per_richting": 10.8,
+    "per_uur": 21.5
+   },
+   "tram": {
+    "naam": "Gent Guislainstraat",
+    "m": 850,
+    "per_richting": 7.7,
+    "per_uur": 15.2
+   },
    "trein": {
     "naam": {
      "fr": "Tronchiennes",
@@ -11823,6 +17877,18 @@
     "tram": false
    },
    "haltes_binnen": 3,
+   "bus": {
+    "naam": "Merelbeke Notelaarstraat",
+    "m": 120,
+    "per_richting": 2.6,
+    "per_uur": 5.0
+   },
+   "tram": {
+    "naam": "Zwijnaarde Bibliotheek",
+    "m": 2240,
+    "per_richting": 5.8,
+    "per_uur": 5.8
+   },
    "trein": {
     "naam": {
      "fr": "Landskouter",
@@ -11844,6 +17910,12 @@
     "tram": false
    },
    "haltes_binnen": 7,
+   "bus": {
+    "naam": "Kortrijk Meensepoort",
+    "m": 210,
+    "per_richting": 13.8,
+    "per_uur": 27.2
+   },
    "trein": {
     "naam": {
      "fr": "Courtrai",
@@ -11865,6 +17937,18 @@
     "tram": false
    },
    "haltes_binnen": 10,
+   "bus": {
+    "naam": "Gentbrugge Tweekapellenstraat",
+    "m": 210,
+    "per_richting": 4.8,
+    "per_uur": 9.7
+   },
+   "tram": {
+    "naam": "Ledeberg Van Lokerenstraat",
+    "m": 730,
+    "per_richting": 8.2,
+    "per_uur": 16.0
+   },
    "trein": {
     "naam": {
      "fr": "Gentbrugge",
@@ -11886,6 +17970,12 @@
     "tram": false
    },
    "haltes_binnen": 8,
+   "bus": {
+    "naam": "Sint-Katelijne-Waver Pasbrug",
+    "m": 80,
+    "per_richting": 6.1,
+    "per_uur": 6.1
+   },
    "trein": {
     "naam": {
      "fr": "Malines-Nekkerspoel",
