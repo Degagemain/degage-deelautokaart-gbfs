@@ -169,7 +169,18 @@
     "meldformulier.soortAnders": "Autre chose",
     "meldformulier.beschrijving": "Description",
     "meldformulier.beschrijvingPlh": "Qu'avez-vous vu, et à quoi vous attendiez-vous ? De quelle voiture ou de quel endroit s'agit-il ?",
-    "meldformulier.akkoord": "Je comprends que mon signalement est public, et il ne contient aucune donnée personnelle.",
+    "meldformulier.mail": "Adresse e-mail (facultatif)",
+    "meldformulier.mailUitleg": "Seulement si vous souhaitez une réponse. Votre adresse " +
+                                "e-mail n'est pas publiée sur GitHub : seuls les gestionnaires " +
+                                "de la carte la voient, et elle est effacée 30 jours après le " +
+                                "traitement de votre signalement.",
+    "meldformulier.veldMail": "Ceci ne ressemble pas à une adresse e-mail. Vérifiez-la, ou laissez le champ vide.",
+    "meldformulier.bedanktMail": "Votre adresse e-mail ne figure pas dans le signalement sur " +
+                                 "GitHub. Nous l'utilisons uniquement pour vous répondre.",
+    "meldformulier.mailMislukt": "Votre signalement est sur GitHub, mais votre adresse e-mail " +
+                                 "n'a pas pu être enregistrée. Vous souhaitez une réponse ? " +
+                                 "Écrivez alors à <a href=\"mailto:info@degage.be\">info@degage.be</a>.",
+    "meldformulier.akkoord":"Je comprends que mon signalement est public, et il ne contient aucune donnée personnelle.",
     "meldformulier.annuleren": "Annuler",
     "meldformulier.versturen": "Envoyer",
     "meldformulier.bezig": "Envoi en cours…",

@@ -10,7 +10,30 @@ GITHUB_REPO = "Degagemain/degage-deelautokaart-gbfs"
 # slash op het einde. localhost staat erbij om lokaal te kunnen testen; gebruik je een
 # andere poort dan 8000, pas die dan aan.
 TOEGESTANE_HERKOMST = "https://degagemain.github.io,http://localhost:8000"
+# Het App ID van de GitHub App waarmee de Worker issues aanmaakt (niet geheim). Leeg: de
+# Worker gebruikt de vaste token GITHUB_TOKEN. Zie github.js en README.md, stap 1.
+GITHUB_APP_ID = "5236302"
+# De Client ID van dezelfde GitHub App (begint met Iv23; niet het App ID hierboven), om
+# beheerders aan te melden op /beheer. Niet geheim. Leeg: geen beheerpagina.
+GITHUB_OAUTH_ID = "Iv23liGTSFxEhYMIMzXm"
+# Hoeveel dagen na het sluiten van een issue het mailadres gewist wordt. Het formulier op
+# de kaart belooft dit getal (meldformulier.mailUitleg in map/taal/); verander ze samen.
+BEWAARTERMIJN_DAGEN = "30"
+
+# De mailadressen van wie een antwoord wil. Maak de databank aan met
+#   npx wrangler d1 create degage-kaart-feedback
+# en zet het database_id dat je dan krijgt hieronder.
+[[d1_databases]]
+binding = "DB"
+database_name = "degage-kaart-feedback"
+database_id = "c73b835d-0266-4e22-b9a8-e85e0f0ec854"
+
+# De opruimtaak: elke nacht om 3.17 u (UTC) de mailadressen van gesloten issues wissen.
+[triggers]
+crons = ["17 3 * * *"]
 
 # Geheimen staan NIET hier, maar worden ingesteld met:
-#   npx wrangler secret put GITHUB_TOKEN
+#   npx wrangler secret put GITHUB_APP_SLEUTEL   (of, zonder GitHub App: GITHUB_TOKEN)
 #   npx wrangler secret put TURNSTILE_SECRET
+#   npx wrangler secret put GITHUB_OAUTH_GEHEIM
+#   npx wrangler secret put SESSIE_GEHEIM

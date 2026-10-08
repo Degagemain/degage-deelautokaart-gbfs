@@ -525,6 +525,18 @@
                   placeholder="Wat zag je, en wat had je verwacht? Over welke auto of welke plaats gaat het?"></textarea>
       </label>
 
+      <!-- Voor wie een antwoord wil. Het enige veld dat NIET in het issue komt: de Worker
+           bewaart het apart, zie feedback-worker/beheer.js. Alleen zichtbaar als
+           `melden.antwoordPerMail` in config.js aan staat. -->
+      <label class="meldvenster__veld" id="meldmailveld" hidden>
+        <span data-i18n="meldformulier.mail">E-mailadres (optioneel)</span>
+        <input type="email" name="mail" maxlength="254" autocomplete="email"
+               aria-describedby="meldmailuitleg">
+        <small class="meldvenster__uitleg" id="meldmailuitleg" data-i18n="meldformulier.mailUitleg">Alleen
+          als je een antwoord wil. Je e-mailadres komt niet op GitHub: enkel de beheerders van
+          de kaart zien het, en het wordt gewist 30 dagen nadat je melding afgehandeld is.</small>
+      </label>
+
       <!-- Een lokveld voor robots: een mens ziet het niet en vult het dus niet in. -->
       <input type="text" name="website" class="meldvenster__lok" tabindex="-1"
              autocomplete="off" aria-hidden="true">
@@ -557,6 +569,9 @@
       </div>
       <!-- Verborgen zolang de Worker geen adres teruggaf: een link die naar het lege
            formulier op GitHub wijst, belooft iets wat hij niet toont. -->
+      <!-- Alleen als de bezoeker een mailadres gaf: dat het niet in het overzicht hierboven
+           staat, is geen vergissing. De tekst hangt af van of het bewaren lukte. -->
+      <p id="meldmailregel" hidden></p>
       <p id="meldlinkregel" hidden><a id="meldlink" target="_blank" rel="noopener"
             data-i18n="meldformulier.bekijk">Bekijk je melding</a></p>
       <div class="meldvenster__knoppen">

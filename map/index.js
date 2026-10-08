@@ -2453,6 +2453,7 @@ const MELDVALIDATIE = {
   soort:        { valueMissing: "meldformulier.veldSoort" },
   beschrijving: { valueMissing: "meldformulier.veldBeschrijving",
                   tooShort:     "meldformulier.veldTeKort" },
+  mail:         { typeMismatch: "meldformulier.veldMail" },
   akkoord:      { valueMissing: "meldformulier.veldAkkoord" }
 };
 
@@ -2469,7 +2470,8 @@ function zetVeldfout(veld) {
   veld.setCustomValidity("");
   const staat = veld.validity;
   const sleutel = (staat.valueMissing && sleutels.valueMissing) ||
-                  (staat.tooShort && sleutels.tooShort) || "";
+                  (staat.tooShort && sleutels.tooShort) ||
+                  (staat.typeMismatch && sleutels.typeMismatch) || "";
   if (sleutel) veld.setCustomValidity(t(sleutel, { min: veld.minLength }));
 }
 
@@ -2531,6 +2533,7 @@ async function verstuurMelding(e) {
   const soortLabel = velden.soort.selectedOptions[0]
     ? velden.soort.selectedOptions[0].textContent.trim() : "";
   const beschrijving = velden.beschrijving.value;
+  const mail = MELDEN.antwoordPerMail ? velden.mail.value.trim() : "";
 
   const knop = $("meldverstuur");
   knop.disabled = true;
@@ -2544,12 +2547,19 @@ async function verstuurMelding(e) {
         beschrijving,
         website: velden.website.value,
         taal,
-        token
+        token,
+        ...(mail ? { mail } : {})
       })
     });
     const uitslag = await antwoord.json().catch(() => ({}));
     if (!antwoord.ok) throw new Error(uitslag.fout || "status " + antwoord.status);
     toonMeldoverzicht(soortLabel, beschrijving);
+    /* Het mailadres staat niet in het overzicht, want het staat niet op GitHub. Dat zegt
+       deze regel — of, als de Worker het niet kon bewaren, dat er geen antwoord komt. Het
+       lokveld geeft geen `mailBewaard` terug; dan blijft de regel weg. */
+    $("meldmailregel").hidden = !(mail && "mailBewaard" in uitslag);
+    $("meldmailregel").innerHTML = uitslag.mailBewaard
+      ? ontsnap(t("meldformulier.bedanktMail")) : t("meldformulier.mailMislukt");
     /* Het lokveld geeft een geslaagd antwoord zonder adres terug: dan valt er niets te
        bekijken, en blijft de link weg. */
     $("meldlinkregel").hidden = !uitslag.url;
@@ -2575,6 +2585,7 @@ if (MELDEN.url) {
   // Opent nu geen github.com meer, dus de tekstballon zegt dat ook niet meer.
   meldknop.setAttribute("data-i18n-title", "melden.titelFormulier");
   meldknop.setAttribute("aria-haspopup", "dialog");
+  $("meldmailveld").hidden = !MELDEN.antwoordPerMail;
   meldknop.addEventListener("click", (e) => {
     e.preventDefault();
     openMeldvenster();

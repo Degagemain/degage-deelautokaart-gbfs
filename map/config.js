@@ -23,9 +23,14 @@ window.DEGAGE_CONFIG = {
        url               het adres van de Worker. Leeg: de knop opent dan het formulier
                          op github.com zelf, waarvoor je wél een account nodig hebt.
        turnstileSitekey  de publieke sleutel van Turnstile, de spamcontrole. Leeg: geen
-                         controle in het formulier (dan moet de Worker ook zonder). */
+                         controle in het formulier (dan moet de Worker ook zonder).
+       antwoordPerMail   true: het formulier vraagt een optioneel e-mailadres voor wie een
+                         antwoord wil. Dat komt niet op GitHub maar in de databank van de
+                         Worker. Zet het pas aan als die databank ingesteld is (README.md
+                         van de Worker, stap 5); anders weigert de Worker zulke meldingen. */
   melden: {
     url: "https://degage-kaart-feedback.degage.workers.dev",
     turnstileSitekey: "0x4AAAAAAFOUUs1zrXUf92iY",
+    antwoordPerMail: true,
   },
 };

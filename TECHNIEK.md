@@ -530,14 +530,17 @@ wordt, gaat naar een Cloudflare Worker, en die maakt het issue aan:
 
 ```
 formulier op de kaart  ──POST──▶  Worker  ──GitHub API──▶  issue met label "feedback"
-                                  (houdt de token geheim,
+                                  (meldt zich aan als GitHub App,
                                    controleert Turnstile)
 ```
 
-Het tussenstuk is nodig omdat een statische site geen GitHub-token kan bewaren zonder hem
-aan iedereen te geven. Opzetten doe je één keer; dat staat in
-[`feedback-worker/README.md`](feedback-worker/README.md). Zonder `melden.url` verandert er
-niets en blijft de knop een link — dat is ook de toestand waarin de repo staat.
+Het tussenstuk is nodig omdat een statische site geen sleutel voor GitHub kan bewaren
+zonder hem aan iedereen te geven. De Worker meldt zich aan als **GitHub App** van de
+organisatie: met de privésleutel van de app maakt hij zelf een token aan die een uur
+geldig is. Er is dus geen token die verloopt en die iemand moet vernieuwen, en de issues
+staan op naam van de app (`…[bot]`), niet van een persoon. Opzetten doe je één keer; dat
+staat in [`feedback-worker/README.md`](feedback-worker/README.md). Zonder `melden.url`
+verandert er niets en blijft de knop een link.
 
 **Wat de bezoeker te zien krijgt**, in alle drie de talen: bovenaan in een gele kader dat
 de melding publiek wordt, en onderaan een verplicht vinkje dat hij dat begrepen heeft en er
@@ -550,6 +553,15 @@ alleen een robot ziet), en een Turnstile-token dat niet klopt. De tekst van de b
 komt in een **codeblok** in het issue terecht, met een omheining die langer is dan de
 langste reeks backticks in die tekst zelf: zo kan er geen @vermelding, afbeelding of link
 uit een melding ontsnappen. Er gaat geen IP-adres en geen browsergegeven mee.
+
+**Een mailadres voor een antwoord** (alleen met `melden.antwoordPerMail` in `config.js`):
+het enige veld dat niet in het issue komt. De Worker bewaart het in zijn D1-databank,
+bij het nummer van het issue, en zet in het issue alleen *Antwoord gevraagd: ja*. De
+beheerders zien de adressen op `/beheer` van de Worker. Daar meld je je aan met GitHub, en
+binnen mag wie schrijfrechten op de repo heeft. Een nachtelijke taak wist een adres 30
+dagen nadat zijn issue gesloten is. Lukt het bewaren niet, dan staat het issue er wel, en
+zegt het bedankscherm dat er geen antwoord per mail komt. Alles over de opzet staat in
+[`feedback-worker/README.md`](feedback-worker/README.md), stap 5.
 
 **Als het misloopt** — Worker plat, netwerk weg, Turnstile stuk — dan staat in de
 foutmelding de link naar GitHub. Dat is de uitweg die altijd blijft werken.

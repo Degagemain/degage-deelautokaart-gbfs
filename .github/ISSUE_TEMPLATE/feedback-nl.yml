@@ -3,9 +3,10 @@
 # waarin ze op dat moment staat — zie zetMeldlink() in map/index.js.
 #
 # De teksten komen uit map/taal/nl.js, zodat dit formulier hetzelfde zegt als het
-# formulier op de kaart. Verandert daar een zin, verander ze hier mee. Eén verschil is
-# er met opzet: hier staat je GitHub-gebruikersnaam mee in het issue, bij het formulier
-# op de kaart niet.
+# formulier op de kaart. Verandert daar een zin, verander ze hier mee. Twee verschillen zijn
+# er met opzet. Hier staat je GitHub-gebruikersnaam mee in het issue, bij het formulier
+# op de kaart niet. Omgekeerd kan het formulier op de kaart om een e-mailadres vragen
+# voor een antwoord (dat niet in het issue komt); hier antwoord je gewoon op GitHub.
 name: Feedback over de deelautokaart (Nederlands)
 description: Meld een probleem of geef een idee voor de kaart met de auto's van Dégage.
 title: "[Feedback] "

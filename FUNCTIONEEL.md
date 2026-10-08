@@ -453,6 +453,12 @@ er geen persoonlijke gegevens in te zetten: geen naam, adres, telefoonnummer, e-
 of lidnummer. Wil je iets melden dat niet publiek kan, neem dan contact op met je lokale
 groep — dat adres staat in de popup van de auto.
 
+**Wil je een antwoord**, dan kun je in het formulier een e-mailadres achterlaten. Dat veld
+is optioneel, en het is het enige wat níét publiek wordt: het adres komt niet op GitHub,
+alleen de beheerders van de kaart zien het. In het issue staat alleen dat je een antwoord
+wil. Het adres wordt vanzelf gewist 30 dagen nadat je melding afgehandeld is. (Dit veld
+staat er pas als de beheerders het aanzetten.)
+
 Er gaat verder niets mee: geen IP-adres, geen browsergegevens, geen locatie. Na het
 versturen krijg je de link naar je eigen melding, zodat je kunt volgen wat ermee gebeurt.
 

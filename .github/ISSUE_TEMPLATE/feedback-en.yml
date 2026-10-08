@@ -3,9 +3,10 @@
 # language it is showing at the time — see zetMeldlink() in map/index.js.
 #
 # The texts come from map/taal/en.js, so this form says the same thing as the form on
-# the map. If a sentence changes there, change it here too. One difference is
-# deliberate: here your GitHub username ends up in the issue, which is not the case for
-# the form on the map.
+# the map. If a sentence changes there, change it here too. Two differences are
+# deliberate. Here your GitHub username ends up in the issue, which is not the case for
+# the form on the map. Conversely, the form on the map can ask for an email address for
+# a reply (which stays out of the issue); here, replies simply happen on GitHub.
 name: Feedback on the car-sharing map (English)
 description: Report a problem or suggest an idea for the map of Dégage's cars.
 title: "[Feedback] "

@@ -3,9 +3,11 @@
 # langue affichée à ce moment — voir zetMeldlink() dans map/index.js.
 #
 # Les textes viennent de map/taal/fr.js, pour que ce formulaire dise la même chose que
-# celui de la carte. Une phrase change là-bas ? Changez-la ici aussi. Une seule
-# différence est voulue : ici, votre nom d'utilisateur GitHub figure dans le ticket, ce
-# qui n'est pas le cas du formulaire sur la carte.
+# celui de la carte. Une phrase change là-bas ? Changez-la ici aussi. Deux
+# différences sont voulues. Ici, votre nom d'utilisateur GitHub figure dans le ticket, ce
+# qui n'est pas le cas du formulaire sur la carte. À l'inverse, le formulaire de la carte
+# peut demander une adresse e-mail pour une réponse (absente du ticket) ; ici, on répond
+# simplement sur GitHub.
 name: Avis sur la carte des voitures partagées (Français)
 description: Signalez un problème ou proposez une idée pour la carte des voitures de Dégage.
 title: "[Feedback] "

@@ -161,7 +161,18 @@
     "meldformulier.soortAnders": "Iets anders",
     "meldformulier.beschrijving": "Beschrijving",
     "meldformulier.beschrijvingPlh": "Wat zag je, en wat had je verwacht? Over welke auto of welke plaats gaat het?",
-    "meldformulier.akkoord": "Ik begrijp dat mijn melding publiek is, en er staan geen persoonlijke gegevens in.",
+    "meldformulier.mail": "E-mailadres (optioneel)",
+    /* De 30 dagen staan ook als BEWAARTERMIJN_DAGEN in feedback-worker/wrangler.toml. */
+    "meldformulier.mailUitleg": "Alleen als je een antwoord wil. Je e-mailadres komt niet op " +
+                                "GitHub: enkel de beheerders van de kaart zien het, en het " +
+                                "wordt gewist 30 dagen nadat je melding afgehandeld is.",
+    "meldformulier.veldMail": "Dit lijkt geen e-mailadres. Kijk het na, of laat het veld leeg.",
+    "meldformulier.bedanktMail": "Je e-mailadres staat niet in de melding op GitHub. We " +
+                                 "gebruiken het alleen om je te antwoorden.",
+    "meldformulier.mailMislukt": "Je melding staat op GitHub, maar je e-mailadres kon niet " +
+                                 "bewaard worden. Wil je een antwoord? Mail dan naar " +
+                                 "<a href=\"mailto:info@degage.be\">info@degage.be</a>.",
+    "meldformulier.akkoord":"Ik begrijp dat mijn melding publiek is, en er staan geen persoonlijke gegevens in.",
     "meldformulier.annuleren": "Annuleren",
     "meldformulier.versturen": "Versturen",
     "meldformulier.bezig": "Bezig met versturen…",
