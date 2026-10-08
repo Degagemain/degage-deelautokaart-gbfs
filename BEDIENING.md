@@ -162,6 +162,26 @@ py -m http.server 8000
 Dan `http://localhost:8000/map/`. Een webserver is nodig omdat de pagina de feed
 via relatieve paden leest — als `file://` blokkeert de browser dat.
 
+## De beheerpagina
+
+**<https://degage-kaart-feedback.degage.workers.dev/beheer>**
+
+Je meldt je aan met je GitHub-account. Binnen mag wie schrijfrechten heeft op deze repo;
+voor de anderen blijft de pagina dicht. Toegang geven doe je dus op GitHub, onder
+*Settings → Collaborators*, niet op de pagina zelf. Het adres is geen geheim: de aanmelding
+beschermt de pagina. Na acht uur meld je je opnieuw aan.
+
+- **Meldingen** — alles wat op de kaart gemeld werd, met een link naar het issue op GitHub.
+  Wie een mailadres achterliet, krijgt het label *antwoord gewenst*; een klik op het adres
+  opent een mail met het issuenummer als onderwerp. Dat adres staat alleen hier, nooit op
+  GitHub, en verdwijnt vanzelf dertig dagen nadat het issue gesloten is. Wissen kan ook
+  meteen.
+- **Filters op de kaart** — welke filters bezoekers zien, en per filter welke keuzes. Een
+  toebehoren dat uit staat (zoals *bed*), verdwijnt ook uit de popup. Een wijziging is
+  binnen een minuut op de kaart te zien.
+
+Hoe je de pagina opzet, staat in [`feedback-worker/README.md`](feedback-worker/README.md).
+
 ---
 
 # De onderdelen apart
