@@ -1,6 +1,6 @@
 # Het meldformulier: van de kaart naar GitHub
 
-De knop **Probleem melden** op de kaart opent een formulier. Wat iemand daar invult, komt
+De knop **Probleem of feedback** op de kaart opent een formulier. Wat iemand daar invult, komt
 als **openbaar issue** in deze repository terecht — ook als die persoon geen
 GitHub-account heeft. Het formulier zegt dat uitdrukkelijk, en wie het invult, moet dat
 aanvinken voor het verstuurd kan worden.

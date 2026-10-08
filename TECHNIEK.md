@@ -564,7 +564,7 @@ nul, en `--dichtbij-ruimte` zou daar het hele venster van maken.
 
 ## 12. Melden
 
-De knop **"Probleem melden"** rechtsboven is in de opmaak een gewone link naar het
+De knop **"Probleem of feedback"** rechtsboven is in de opmaak een gewone link naar het
 issueformulier op GitHub. Dat staat er in drie talen — `feedback-nl.yml`, `-fr` en `-en`
 in `.github/ISSUE_TEMPLATE/` — en `zetMeldlink()` zet bij het opstarten en bij elke
 taalwissel het juiste sjabloon achter `?template=`. De `href` in `index.html` wijst naar

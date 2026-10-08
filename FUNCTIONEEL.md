@@ -494,7 +494,7 @@ liggen hier boven elkaar en laten samen nauwelijks kaart over. Ze komt ongewijzi
 zodra de filters dichtgaan. De lijst volgt daar geen muis — die is er niet — en meet vanaf
 het midden van de kaart.
 
-Een popup valt op een telefoon nooit meer half buiten beeld. De knop **"Probleem melden"**
+Een popup valt op een telefoon nooit meer half buiten beeld. De knop **"Probleem of feedback"**
 gaat zolang weg — die stond er precies in de weg — en past de popup ook dan niet tussen het
 paneel en de lijst, dan neemt hij de plaats van de lijst in en stapt die zolang opzij.
 Allebei komen ze terug zodra je de popup sluit. Blijft er nog te weinig plaats, dan schuift
@@ -502,7 +502,7 @@ de inhoud binnen de popup zelf.
 
 ## Iets melden
 
-Rechtsboven staat **"Probleem melden"**. Dat is er voor wie ziet dat een auto op de
+Rechtsboven staat **"Probleem of feedback"**. Dat is er voor wie ziet dat een auto op de
 verkeerde plaats staat, dat er iets niet werkt, of wie gewoon een idee heeft.
 
 De knop opent een formulier op de kaart zelf: waarover het gaat, een beschrijving, en
@@ -512,7 +512,7 @@ te bouwen. Het formulier staat in dezelfde drie talen als de rest van de kaart.
 **Wat je invult, wordt publiek.** Het komt als een openbaar issue op GitHub terecht, waar
 iedereen het kan lezen. Dat staat bovenaan het formulier in een gele kader, en je moet
 onderaan aanvinken dat je het begrepen hebt voor je kunt versturen. Vandaar ook de vraag om
-er geen persoonlijke gegevens in te zetten: geen naam, adres, telefoonnummer, e-mailadres
+geen persoonlijke gegevens in de beschrijving te zetten: geen naam, adres, telefoonnummer, e-mailadres
 of lidnummer. Wil je iets melden dat niet publiek kan, neem dan contact op met je lokale
 groep — dat adres staat in de popup van de auto.
 

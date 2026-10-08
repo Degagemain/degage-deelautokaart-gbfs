@@ -163,17 +163,18 @@
     "instellingen.bronLive": "Les voitures et leur emplacement sont à jour. La marque, le modèle et les équipements ont été mis à jour le {datum}.",
     "instellingen.bronDump": "Données du {datum}.",
     "instellingen.pictogram": "Icône de l'onglet :",
-    "melden.knop": "Signaler un problème",
+    "melden.knop": "Problème ou avis",
     "melden.titel": "Signaler un problème ou donner un avis — ouvre github.com dans un nouvel onglet ; votre avis sera public",
     "melden.titelFormulier": "Signaler un problème ou donner un avis — votre signalement sera public",
     /* Het issueformulier op GitHub in deze taal; zie .github/ISSUE_TEMPLATE/. */
     "melden.sjabloon": "feedback-fr.yml",
-    "meldformulier.titel": "Signaler un problème",
-    "meldformulier.publiek": "<strong>Votre signalement est public.</strong> Il est publié comme " +
-                             "ticket public sur GitHub, visible par tout le monde. N'y mettez donc " +
-                             "aucune donnée personnelle : nom, adresse, numéro de téléphone, adresse " +
-                             "e-mail, numéro de membre ou plaque d'immatriculation. Vous devez " +
-                             "signaler quelque chose qui ne peut pas être public ? Écrivez alors à " +
+    "meldformulier.titel": "Problème ou avis",
+    "meldformulier.publiek": "<strong>Votre signalement est public.</strong> Ce que vous écrivez " +
+                             "dans la description est publié comme ticket public sur GitHub, visible " +
+                             "par tout le monde. N'y mettez donc aucune donnée personnelle : nom, " +
+                             "adresse, numéro de téléphone, adresse e-mail, numéro de membre ou plaque " +
+                             "d'immatriculation. Vous devez signaler quelque chose qui ne peut pas être " +
+                             "public ? Écrivez alors à " +
                              "<a href=\"mailto:info@degage.be\">info@degage.be</a>.",
     "meldformulier.soort": "De quoi s'agit-il ?",
     "meldformulier.soortKaart": "Quelque chose est incorrect sur la carte",
@@ -183,17 +184,14 @@
     "meldformulier.beschrijving": "Description",
     "meldformulier.beschrijvingPlh": "Qu'avez-vous vu, et à quoi vous attendiez-vous ? De quelle voiture ou de quel endroit s'agit-il ?",
     "meldformulier.mail": "Adresse e-mail (facultatif)",
-    "meldformulier.mailUitleg": "Seulement si vous souhaitez une réponse. Votre adresse " +
-                                "e-mail n'est pas publiée sur GitHub : seuls les gestionnaires " +
-                                "de la carte la voient, et elle est effacée 30 jours après le " +
-                                "traitement de votre signalement.",
+    "meldformulier.mailUitleg": "Seulement si vous souhaitez une réponse. Elle reste privée et est effacée 30 jours après traitement.",
     "meldformulier.veldMail": "Ceci ne ressemble pas à une adresse e-mail. Vérifiez-la, ou laissez le champ vide.",
     "meldformulier.bedanktMail": "Votre adresse e-mail ne figure pas dans le signalement sur " +
                                  "GitHub. Nous l'utilisons uniquement pour vous répondre.",
     "meldformulier.mailMislukt": "Votre signalement est sur GitHub, mais votre adresse e-mail " +
                                  "n'a pas pu être enregistrée. Vous souhaitez une réponse ? " +
                                  "Écrivez alors à <a href=\"mailto:info@degage.be\">info@degage.be</a>.",
-    "meldformulier.akkoord":"Je comprends que mon signalement est public, et il ne contient aucune donnée personnelle.",
+    "meldformulier.akkoord":"Je comprends que ma description sera publique, et elle ne contient aucune donnée personnelle.",
     "meldformulier.annuleren": "Annuler",
     "meldformulier.versturen": "Envoyer",
     "meldformulier.bezig": "Envoi en cours…",

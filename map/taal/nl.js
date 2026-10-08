@@ -155,17 +155,17 @@
     "instellingen.bronLive": "De auto's en hun standplaats zijn actueel. Merk, model en toebehoren zijn bijgewerkt op {datum}.",
     "instellingen.bronDump": "Gegevens van {datum}.",
     "instellingen.pictogram": "Tabbladpictogram:",
-    "melden.knop": "Probleem melden",
+    "melden.knop": "Probleem of feedback",
     "melden.titel": "Probleem melden of feedback geven — opent github.com in een nieuw tabblad; je feedback is publiek zichtbaar",
     "melden.titelFormulier": "Probleem melden of feedback geven — je melding is publiek zichtbaar",
     /* Het issueformulier op GitHub in deze taal; zie .github/ISSUE_TEMPLATE/. */
     "melden.sjabloon": "feedback-nl.yml",
-    "meldformulier.titel": "Probleem melden",
-    "meldformulier.publiek": "<strong>Je melding is publiek.</strong> Ze verschijnt als openbaar " +
-                             "issue op GitHub, voor iedereen zichtbaar. Zet er dus geen persoonlijke " +
-                             "gegevens in, zoals je naam, adres, telefoonnummer, e-mailadres, " +
-                             "lidnummer of een nummerplaat. Moet je iets melden dat niet openbaar " +
-                             "mag komen? Mail dan naar " +
+    "meldformulier.titel": "Probleem of feedback",
+    "meldformulier.publiek": "<strong>Je melding is publiek.</strong> Wat je in de beschrijving " +
+                             "schrijft, verschijnt als openbaar issue op GitHub, voor iedereen " +
+                             "zichtbaar. Laat er dus persoonlijke gegevens uit, zoals je naam, adres, " +
+                             "telefoonnummer, e-mailadres, lidnummer of een nummerplaat. Moet je iets " +
+                             "melden dat niet openbaar mag komen? Mail dan naar " +
                              "<a href=\"mailto:info@degage.be\">info@degage.be</a>.",
     "meldformulier.soort": "Waarover gaat het?",
     "meldformulier.soortKaart": "Er klopt iets niet op de kaart",
@@ -176,16 +176,14 @@
     "meldformulier.beschrijvingPlh": "Wat zag je, en wat had je verwacht? Over welke auto of welke plaats gaat het?",
     "meldformulier.mail": "E-mailadres (optioneel)",
     /* De 30 dagen staan ook als BEWAARTERMIJN_DAGEN in feedback-worker/wrangler.toml. */
-    "meldformulier.mailUitleg": "Alleen als je een antwoord wil. Je e-mailadres komt niet op " +
-                                "GitHub: enkel de beheerders van de kaart zien het, en het " +
-                                "wordt gewist 30 dagen nadat je melding afgehandeld is.",
+    "meldformulier.mailUitleg": "Alleen als je een antwoord wil. Het blijft privé en wordt 30 dagen na afhandeling gewist.",
     "meldformulier.veldMail": "Dit lijkt geen e-mailadres. Kijk het na, of laat het veld leeg.",
     "meldformulier.bedanktMail": "Je e-mailadres staat niet in de melding op GitHub. We " +
                                  "gebruiken het alleen om je te antwoorden.",
     "meldformulier.mailMislukt": "Je melding staat op GitHub, maar je e-mailadres kon niet " +
                                  "bewaard worden. Wil je een antwoord? Mail dan naar " +
                                  "<a href=\"mailto:info@degage.be\">info@degage.be</a>.",
-    "meldformulier.akkoord":"Ik begrijp dat mijn melding publiek is, en er staan geen persoonlijke gegevens in.",
+    "meldformulier.akkoord":"Ik begrijp dat mijn beschrijving publiek wordt, en er staan geen persoonlijke gegevens in.",
     "meldformulier.annuleren": "Annuleren",
     "meldformulier.versturen": "Versturen",
     "meldformulier.bezig": "Bezig met versturen…",

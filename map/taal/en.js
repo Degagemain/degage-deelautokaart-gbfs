@@ -154,17 +154,17 @@
     "instellingen.bronLive": "The cars and their locations are up to date. Make, model and equipment were last updated on {datum}.",
     "instellingen.bronDump": "Data as of {datum}.",
     "instellingen.pictogram": "Tab icon:",
-    "melden.knop": "Report a problem",
+    "melden.knop": "Problem or feedback",
     "melden.titel": "Report a problem or give feedback — opens github.com in a new tab; your feedback will be public",
     "melden.titelFormulier": "Report a problem or give feedback — your report will be public",
     /* Het issueformulier op GitHub in deze taal; zie .github/ISSUE_TEMPLATE/. */
     "melden.sjabloon": "feedback-en.yml",
-    "meldformulier.titel": "Report a problem",
-    "meldformulier.publiek": "<strong>Your report is public.</strong> It is posted as a public " +
-                             "issue on GitHub, visible to everyone. So please don't include any " +
-                             "personal details, such as your name, address, phone number, email " +
-                             "address, membership number or a number plate. Do you need to report " +
-                             "something that cannot be public? Then email " +
+    "meldformulier.titel": "Problem or feedback",
+    "meldformulier.publiek": "<strong>Your report is public.</strong> What you write in the " +
+                             "description is posted as a public issue on GitHub, visible to everyone. " +
+                             "So leave out any personal details, such as your name, address, phone " +
+                             "number, email address, membership number or a number plate. Do you need " +
+                             "to report something that cannot be public? Then email " +
                              "<a href=\"mailto:info@degage.be\">info@degage.be</a>.",
     "meldformulier.soort": "What is it about?",
     "meldformulier.soortKaart": "Something on the map is wrong",
@@ -174,16 +174,14 @@
     "meldformulier.beschrijving": "Description",
     "meldformulier.beschrijvingPlh": "What did you see, and what did you expect? Which car or place is it about?",
     "meldformulier.mail": "Email address (optional)",
-    "meldformulier.mailUitleg": "Only if you would like a reply. Your email address is not " +
-                                "posted on GitHub: only the map's administrators can see it, " +
-                                "and it is deleted 30 days after your report has been dealt with.",
+    "meldformulier.mailUitleg": "Only if you'd like a reply. It stays private and is deleted 30 days after your report is dealt with.",
     "meldformulier.veldMail": "This doesn't look like an email address. Please check it, or leave the field empty.",
     "meldformulier.bedanktMail": "Your email address is not in the report on GitHub. We only " +
                                  "use it to reply to you.",
     "meldformulier.mailMislukt": "Your report is on GitHub, but your email address could not " +
                                  "be saved. Would you like a reply? Then email " +
                                  "<a href=\"mailto:info@degage.be\">info@degage.be</a>.",
-    "meldformulier.akkoord":"I understand that my report is public, and it contains no personal details.",
+    "meldformulier.akkoord":"I understand that my description will be public, and it contains no personal details.",
     "meldformulier.annuleren": "Cancel",
     "meldformulier.versturen": "Send",
     "meldformulier.bezig": "Sending…",

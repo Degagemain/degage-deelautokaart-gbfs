@@ -15,7 +15,7 @@ window.DEGAGE_CONFIG = {
     url: "https://degage-kaart-feedback.degage.workers.dev/instellingen",
   },
 
-  /* Het meldformulier achter de knop "Probleem melden": zo kan ook wie geen
+  /* Het meldformulier achter de knop "Probleem of feedback": zo kan ook wie geen
      GitHub-account heeft iets melden. Het gaat via een Cloudflare Worker naar GitHub;
      hoe je die opzet, staat in `feedback-worker/README.md`.
 

@@ -182,7 +182,7 @@
     <path d="M13 8.2v4"/>
     <circle cx="13" cy="15.2" r=".9" fill="currentColor" stroke="none"/>
   </svg>
-  <span data-i18n="melden.knop">Probleem melden</span>
+  <span data-i18n="melden.knop">Probleem of feedback</span>
 </a>
 
 <!-- Weergavekeuzes en de taalkeuze, geen filters: ze veranderen niets aan wélke wagens
@@ -544,7 +544,7 @@
        publiek is, en niet halverwege bij de eerste keuzelijst. -->
   <div class="meldvenster__kader" role="dialog" aria-modal="true" tabindex="-1"
        aria-labelledby="meldvenster-titel">
-    <h2 id="meldvenster-titel" data-i18n="meldformulier.titel">Probleem melden</h2>
+    <h2 id="meldvenster-titel" data-i18n="meldformulier.titel">Probleem of feedback</h2>
     <!-- Hetzelfde kruisje als bij het voorbehoud, dus ook dezelfde klasse. -->
     <button type="button" class="voorbehoud__sluit" id="meldvenster-sluit"
             title="Sluiten" data-i18n-title="voorbehoud.sluiten">
@@ -557,10 +557,10 @@
 
     <form id="meldformulier">
       <p class="meldvenster__publiek" data-i18n-html="meldformulier.publiek"><strong>Je
-        melding is publiek.</strong> Ze verschijnt als openbaar issue op GitHub, voor
-        iedereen zichtbaar. Zet er dus geen persoonlijke gegevens in, zoals je naam, adres,
-        telefoonnummer, e-mailadres, lidnummer of een nummerplaat. Moet je iets melden dat
-        niet openbaar mag komen? Mail dan naar
+        melding is publiek.</strong> Wat je in de beschrijving schrijft, verschijnt als
+        openbaar issue op GitHub, voor iedereen zichtbaar. Laat er dus persoonlijke gegevens
+        uit, zoals je naam, adres, telefoonnummer, e-mailadres, lidnummer of een nummerplaat.
+        Moet je iets melden dat niet openbaar mag komen? Mail dan naar
         <a href="mailto:info@degage.be">info@degage.be</a>.</p>
 
       <label class="meldvenster__veld">
@@ -588,8 +588,7 @@
         <input type="email" name="mail" maxlength="254" autocomplete="email"
                aria-describedby="meldmailuitleg">
         <small class="meldvenster__uitleg" id="meldmailuitleg" data-i18n="meldformulier.mailUitleg">Alleen
-          als je een antwoord wil. Je e-mailadres komt niet op GitHub: enkel de beheerders van
-          de kaart zien het, en het wordt gewist 30 dagen nadat je melding afgehandeld is.</small>
+          als je een antwoord wil. Het blijft privé en wordt 30 dagen na afhandeling gewist.</small>
       </label>
 
       <!-- Een lokveld voor robots: een mens ziet het niet en vult het dus niet in. -->
@@ -598,7 +597,7 @@
 
       <label class="meldvenster__akkoord">
         <input type="checkbox" name="akkoord" required>
-        <span data-i18n="meldformulier.akkoord">Ik begrijp dat mijn melding publiek is, en er staan geen persoonlijke gegevens in.</span>
+        <span data-i18n="meldformulier.akkoord">Ik begrijp dat mijn beschrijving publiek wordt, en er staan geen persoonlijke gegevens in.</span>
       </label>
 
       <div class="meldvenster__controle" id="meldcontrole"></div>
