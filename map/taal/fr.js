@@ -43,9 +43,8 @@
                          "abonnement.",
     "voorbehoud.fotos": "<strong>Les photos sont des photos d'exemple</strong> du modèle, " +
                         "pas de la voiture elle-même.",
-    "voorbehoud.locatie": "<strong>Les positions sont approximatives</strong>, pour " +
-                          "des raisons de confidentialité : chaque point est décalé " +
-                          "de {m} mètres par rapport à l'emplacement réel.",
+    "voorbehoud.locatie": "<strong>Les positions sont approximatives</strong>, pour des " +
+                          "raisons de confidentialité.",
 
     "zoek.plaatshouder": "Nom de voiture, adresse ou commune…",
     "zoek.aria": "Rechercher un nom de voiture, une adresse ou une commune ; cliquer " +

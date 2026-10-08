@@ -180,8 +180,8 @@ standplaats met drie auto's, of een laag venster — dan wordt de hele popup eve
 kleiner tot hij past. Leesbaar blijft hij altijd: kleiner dan 60% gaat hij niet.
 
 **Dat de locatie bij benadering is**, staat niet in elke popup maar in *"Goed om te
-weten"* bij het openen: *"De locaties zijn bij benadering, vanwege privacy: elke stip staat
-20 meter naast de echte standplaats."* Het getal komt uit de feed. Dat venster gaat
+weten"* bij het openen: *"De locaties zijn bij benadering, vanwege privacy."* Hoe ver een
+stip verschoven is, zegt de kaart bewust niet. Dat venster gaat
 vanzelf dicht na vijftien seconden, met het kruisje of Escape, en zodra je de filters
 opent: wie begint te zoeken of te filteren, heeft het gelezen of wil verder.
 
@@ -349,8 +349,10 @@ te typen. Ze gaan weer dicht met een klik op de kaart, met Escape, en zodra je i
 scrollt of veegt — dat laatste is uit te zetten met de schakelaar boven de filters.
 
 Welke filters er staan, kiezen de beheerders op de beheerpagina (`/beheer/kaartfilters`
-op de Worker, zie `feedback-worker/README.md`). Een uitgezet filter verdwijnt uit de lijst;
-de auto's blijven gewoon op de kaart. Een wijziging is binnen een minuut zichtbaar, zonder
+op de Worker, zie `feedback-worker/README.md`), en ook welke keuzes erin staan — zo staan
+*bed* en *aanhangwagen* niet bij de toebehoren. Een uitgezet filter of keuze verdwijnt uit
+de lijst; de auto's blijven gewoon op de kaart. Een uitgezet toebehoren of afspraak staat
+ook niet in de popup van een auto. Een wijziging is binnen een minuut zichtbaar, zonder
 de kaart opnieuw te publiceren. Antwoordt de Worker niet, dan staan alle filters er.
 
 | filter | wat het doet |

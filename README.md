@@ -84,7 +84,7 @@ degapp.be (live vloot) ────────────────▶ kaart
 | `map/index.css` | de opmaak van de kaart |
 | `map/index.js` | de logica van de kaart |
 | `map/taal/` | de teksten, één bestand per taal (`nl.js`, `fr.js`, `en.js`) |
-| `map/config.js` | instellingen zonder code: welke toebehoren de kaart verbergt, en waar ze de Worker vindt |
+| `map/config.js` | instellingen zonder code: waar de kaart de Worker vindt |
 | `map/fotos/` | modelfoto's van Wikimedia Commons + `fotos.json` met licentie en auteur |
 | `feedback-worker/` | het tussenstuk dat een melding van de kaart als issue op GitHub zet, zodat je er geen GitHub-account voor nodig hebt; bewaart ook, apart en niet publiek, het mailadres van wie een antwoord wil (beheerpagina `/beheer`) |
 | `.github/ISSUE_TEMPLATE/feedback-{nl,fr,en}.yml` | hetzelfde formulier op GitHub zelf, één per taal, voor wie er wél een account heeft |

@@ -63,10 +63,10 @@ const OV_BESTAND = "ov.json";
 const VLOOT_API = "https://degapp.be/api/v1/car/stands";
 const VLOOT_WACHTTIJD_MS = 8000;
 
-/* Welke filters de kaart toont, zoals de beheerders dat op /beheer van de Worker
-   instellen (feedback-worker/instellingen.js). Het adres staat in config.js; zonder
-   adres, of als de Worker niet binnen INSTELLINGEN_WACHTTIJD_MS antwoordt, staan alle
-   filters er. Een storing daar mag de kaart nooit armer maken. */
+/* Welke filters de kaart toont, en welke keuzes daarin, zoals de beheerders dat op
+   /beheer van de Worker instellen (feedback-worker/instellingen.js). Het adres staat in
+   config.js; zonder adres, of als de Worker niet binnen INSTELLINGEN_WACHTTIJD_MS
+   antwoordt, staat alles er. Een storing daar mag de kaart nooit armer maken. */
 const INSTELLINGEN_URL = ((window.DEGAGE_CONFIG || {}).instellingen || {}).url || "";
 const INSTELLINGEN_WACHTTIJD_MS = 3000;
 
@@ -255,15 +255,22 @@ const VOLLEDIGE_BBOX = [[50.7249, 2.7098], [51.2461, 4.7341]];
    taalbestand van de bezoeker (zie `taal/nl.js`). Alfabetisch gesorteerd wordt er pas bij het tekenen, want de volgorde hangt
    van dat label af — zie vulKeuzes().
 
-   Wat in `config.js` onder `verborgenVlaggen` staat, valt hier al weg: dan bestaat die
-   vlag voor de hele kaart niet — geen filter, geen regel in de popup. */
-const VERBORGEN_VLAGGEN = new Set((window.DEGAGE_CONFIG || {}).verborgenVlaggen || []);
-const zichtbaar = (sleutel) => !VERBORGEN_VLAGGEN.has(sleutel);
-const TOEBEHOREN = ["aanhanger", "bed", "fietsdrager", "gps", "kinderzitje", "trekhaak"]
-  .filter(zichtbaar);
-const AFSPRAKEN = ["huisdieren", "leren_autorijden"].filter(zichtbaar);
+   Een vlag die de beheerders op /beheer uitzetten (zie optieZichtbaar()), bestaat voor
+   de hele kaart niet — geen filter, geen regel in de popup. */
+const TOEBEHOREN = ["aanhanger", "bed", "fietsdrager", "gps", "kinderzitje", "trekhaak"];
+const AFSPRAKEN = ["huisdieren", "leren_autorijden"];
+
+/* De keuzes die de beheerders uitzetten, als { filter: Set(keuze) }, met als filter de
+   `data-filter`-sleutel uit index.html. Gevuld door laden(), vóór er iets getekend wordt. */
+let verborgenOpties = {};
+function optieZichtbaar(filter, sleutel) {
+  return !(verborgenOpties[filter] && verborgenOpties[filter].has(sleutel));
+}
 /* Voor de popup: één lijst, zodat elke vlag die een wagen draagt ook getoond wordt. */
-const ALLE_VLAGGEN = [...TOEBEHOREN, ...AFSPRAKEN];
+function alleVlaggen() {
+  return [...TOEBEHOREN.filter((k) => optieZichtbaar("toebehoren", k)),
+          ...AFSPRAKEN.filter((k) => optieZichtbaar("afspraken", k))];
+}
 
 /* ==========================================================================
    EURONORM — een schaal, en waar elektrisch en hybride daarop staan
@@ -751,20 +758,30 @@ const API_BRANDSTOF = {
 };
 const API_BAK = { manual: "manueel", automatic: "automatisch" };
 
-/* De filters die uit staan, als Set van `data-filter`-sleutels uit index.html. */
+/* Wat de beheerders uitzetten: `filters` als Set van `data-filter`-sleutels uit
+   index.html, `opties` als { filter: Set(keuze) }. Lukt het niet: niets staat uit. */
 async function laadInstellingen() {
-  if (!INSTELLINGEN_URL) return new Set();
+  const niets = { filters: new Set(), opties: {} };
+  if (!INSTELLINGEN_URL) return niets;
   const stop = new AbortController();
   const wekker = setTimeout(() => stop.abort(), INSTELLINGEN_WACHTTIJD_MS);
   try {
     const antwoord = await fetch(INSTELLINGEN_URL, { signal: stop.signal });
     if (!antwoord.ok) throw new Error("status " + antwoord.status);
-    const { verborgenFilters } = await antwoord.json();
-    return new Set(Array.isArray(verborgenFilters) ? verborgenFilters : []);
+    const json = await antwoord.json();
+    const verborgenFilters = json.verborgenFilters;
+    const opties = {};
+    for (const [filter, lijst] of Object.entries(json.verborgenOpties || {})) {
+      if (Array.isArray(lijst)) opties[filter] = new Set(lijst);
+    }
+    return {
+      filters: new Set(Array.isArray(verborgenFilters) ? verborgenFilters : []),
+      opties
+    };
   } catch (e) {
     console.warn("instellingen niet geladen (" + INSTELLINGEN_URL + "): " + e.message +
                  " — alle filters staan er.");
-    return new Set();
+    return niets;
   } finally {
     clearTimeout(wekker);
   }
@@ -911,7 +928,7 @@ async function metLiveVloot(api, feedStations, feedWagens, ov, meter) {
 }
 
 async function laden() {
-  const [stationBestand, wagenBestand, , , ovBestand, vloot, verborgenFilters] =
+  const [stationBestand, wagenBestand, , , ovBestand, vloot, verborgen] =
     await Promise.all([
       haal("station_information"),
       haal("degage_vehicles"),
@@ -925,9 +942,11 @@ async function laden() {
      de opmaak staan, alleen onzichtbaar, zodat de rest van de code er niets van merkt.
      Een stijl op het element en niet via `hidden` of een klasse: `hidden` zetten de
      OV-filters zelf al, en een klasse hangt af van een index.css die na een publicatie
-     nog oud in de cache van de bezoeker kan zitten. */
+     nog oud in de cache van de bezoeker kan zitten. Een filter waarvan alle keuzes uit
+     staan, verbergt vulKeuzes(). */
+  verborgenOpties = verborgen.opties;
   for (const sectie of document.querySelectorAll("#filters [data-filter]")) {
-    sectie.style.display = verborgenFilters.has(sectie.dataset.filter) ? "none" : "";
+    sectie.style.display = verborgen.filters.has(sectie.dataset.filter) ? "none" : "";
   }
 
   locatieVaagheid = wagenBestand.locatie_nauwkeurigheid_m || null;
@@ -1048,9 +1067,10 @@ async function laden() {
 }
 
 /* De stip staat met opzet niet precies op de standplaats: dat zou de voordeur van de
-   eigenaar aanwijzen. Dat zegt het voorbehoud bij het openen, met het getal uit de feed
-   (`locatie_nauwkeurigheid_m`), zodat belofte en werkelijke verschuiving niet uit elkaar
-   lopen. Draagt de feed het getal niet, dan zwijgt de kaart erover. Ook na een taalwissel. */
+   eigenaar aanwijzen. Dat zegt het voorbehoud bij het openen, zonder te zeggen hoe ver: dat
+   getal (`locatie_nauwkeurigheid_m` uit de feed) gaat de bezoeker niet aan. Het blijft als
+   {m} beschikbaar voor een vertaling. Draagt de feed het getal niet, dan is er niets
+   verschoven en zwijgt de kaart erover. Ook na een taalwissel. */
 function toonVoorbehoudLocatie() {
   const li = $("voorbehoud-locatie");
   li.hidden = !locatieVaagheid;
@@ -1116,27 +1136,35 @@ function vlagTelling(sleutel) {
    `staat` en niet in de opmaak, dus opnieuw tekenen verliest geen enkele keuze. */
 function vulKeuzes() {
   const groepen = [
-    ["soort", "filter-soort",
+    ["soort", "soort",
      staat.soorten.map(([w, n]) => [w, waarde(w), n]), staat.gekozenSoort],
-    ["klasse", "filter-klasse",
+    ["klasse", "klasse",
      staat.klassen.map(([k, n]) => [k, klasseLabel(k), n]), staat.gekozenKlasse],
-    ["brandstof", "filter-brandstof",
+    ["brandstof", "brandstof",
      staat.brandstoffen.map(([w, n]) => [w, waarde(w), n]), staat.gekozenBrandstof],
-    ["bak", "filter-bak",
+    ["bak", "bak",
      staat.bakken.map(([w, n]) => [w, waarde(w), n]), staat.gekozenBak],
-    ["vlag", "filter-toebehoren",
+    ["vlag", "toebehoren",
      TOEBEHOREN.map((k) => [k, vlagLabel(k), vlagTelling(k)]), staat.gekozenVlaggen],
-    ["vlag", "filter-afspraken",
+    ["vlag", "afspraken",
      AFSPRAKEN.map((k) => [k, vlagLabel(k), vlagTelling(k)]), staat.gekozenVlaggen]
   ];
 
-  for (const [groep, vakId, rijen, gekozen] of groepen) {
+  for (const [groep, filter, alleRijen, gekozen] of groepen) {
+    // Wat de beheerders uitzetten, verschijnt niet (zie optieZichtbaar()).
+    const rijen = alleRijen.filter(([sleutel]) => optieZichtbaar(filter, sleutel));
     /* Alfabetisch op het label zoals het er NU staat, dus in de getoonde taal. Op aantal
        sorteren zet de grootste groep vooraan, maar dan verspringt de volgorde bij elke
        nieuwe dump en moet je elke keer opnieuw zoeken waar iets staat. */
     rijen.sort((x, y) => x[1].localeCompare(y[1], taal));
-    const vak = $(vakId);
+    const vak = $("filter-" + filter);
     vak.innerHTML = "";
+    /* Niets meer te kiezen: dan ook geen kop. Alleen verbergen, het filter kan ook al uit
+       staan. Via de sleutel en niet via closest(): op een telefoon staat het vak niet meer
+       in zijn sectie (plaatsOpties()). */
+    if (!rijen.length) {
+      document.querySelector('#filters [data-filter="' + filter + '"]').style.display = "none";
+    }
     for (const [sleutel, label, n] of rijen) {
       const veld = keuzeVeld(groep, sleutel, label, n);
       const vakje = veld.querySelector("input");
@@ -1674,7 +1702,7 @@ function popupHtml(station, wagen) {
     }
 
     /* Alleen aanwezige toebehoren en afspraken. Nooit "trekhaak: nee". */
-    const labels = ALLE_VLAGGEN
+    const labels = alleVlaggen()
       .filter((sleutel) => w.toebehoren && w.toebehoren[sleutel])
       .map((sleutel) =>
         '<span class="label">' + pictogram("i-vink") + ontsnap(vlagLabel(sleutel)) + "</span>")

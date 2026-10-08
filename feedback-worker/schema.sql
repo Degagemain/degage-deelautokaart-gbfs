@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS contact (
 -- Instellingen van de kaart die een beheerder op /beheer wijzigt (instellingen.js).
 -- Opnieuw uitvoeren van dit bestand is veilig: bestaande tabellen blijven staan.
 CREATE TABLE IF NOT EXISTS instellingen (
-  sleutel   TEXT PRIMARY KEY,           -- bv. "verborgen_filters"
+  sleutel   TEXT PRIMARY KEY,           -- "verborgen_filters", "verborgen_opties"
   waarde    TEXT NOT NULL,              -- JSON
   gewijzigd TEXT NOT NULL,              -- ISO 8601, UTC
   door      TEXT NOT NULL               -- de GitHub-gebruikersnaam van wie het wijzigde

@@ -632,14 +632,16 @@ uit het Nederlands.
 
 **Een nieuwe brandstof (of carrosserie, of versnellingsbak) uit de feed.** Niets nodig om
 hem te tónen — hij verschijnt vanzelf in het filter. Voor het label: een rij in `waarden` in
-`fr.js` en `en.js`.
+`fr.js` en `en.js`. Om hem op `/beheer/kaartfilters` te kunnen verbergen: een rij bij zijn
+filter in `OPTIES` in `feedback-worker/instellingen.js`.
 
 **Een nieuwe toebehorenvlag.** De sleutel in `TOEBEHOREN` of `AFSPRAKEN` in `index.js` (dat
 verschil gaat over wat er ín de auto zit tegenover wat je met de eigenaar afspreekt), plus
 een rij in `vlaggen` in alle drie de taalbestanden. De feed moet de vlag natuurlijk al
 dragen: de sleutel in `TOEBEHOREN_SLEUTELS` in `scripts/genereer_gbfs.py` en in het eigen
 schema `gbfs/schema/degage_vehicles.json`, plus de koppeling met de bron in de interne
-repo.
+repo. Wil je hem op `/beheer/kaartfilters` kunnen verbergen, zet hem dan ook in `OPTIES` in
+`feedback-worker/instellingen.js`.
 
 **Een nieuwe filtergroep.** Vier plekken: een `<div class="keuzes">` met een kop in de
 opmaak, een regel in `vulKeuzes()`, een `Set` in `staat`, en een regel in `wagenPast()`.

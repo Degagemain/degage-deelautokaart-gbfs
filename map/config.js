@@ -6,19 +6,11 @@
    instelling, dan doet de kaart wat ze zonder deze instelling zou doen.
 */
 window.DEGAGE_CONFIG = {
-  /* Toebehoren en afspraken uit de feed die de kaart NIET toont: niet als filter en niet
-     in de popup van een wagen. De feed zelf blijft ongewijzigd. De sleutels zijn die uit
-     de feed (FEEDSPEC.md):
-
-       aanhanger, bed, fietsdrager, gps, kinderzitje, trekhaak,
-       huisdieren, leren_autorijden
-
-     Leeg maken (`[]`) toont ze weer allemaal. */
-  verborgenVlaggen: ["bed", "aanhanger"],
-
-  /* Welke filters de kaart toont, in te stellen door de beheerders op /beheer/kaartfilters
-     van de Worker hieronder (feedback-worker/README.md). De kaart leest dit adres bij het
-     laden. Leeg, of de Worker antwoordt niet: alle filters staan er. */
+  /* Welke filters de kaart toont, en welke keuzes erin staan, in te stellen door de
+     beheerders op /beheer/kaartfilters van de Worker hieronder (feedback-worker/README.md).
+     Een toebehoren of afspraak die daar uit staat, verdwijnt ook uit de popup van een
+     wagen. De kaart leest dit adres bij het laden. Leeg, of de Worker antwoordt niet:
+     alles staat er. */
   instellingen: {
     url: "https://degage-kaart-feedback.degage.workers.dev/instellingen",
   },

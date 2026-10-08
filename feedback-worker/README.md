@@ -22,7 +22,7 @@ De Worker doet drie dingen:
 - **`POST /`** — een melding van de kaart wordt een issue (`feedback.js`);
 - **`/beheer`** — de beheerders zien wie een antwoord per mail vroeg (`beheer.js`);
 - **elke nacht** — de mailadressen van afgehandelde meldingen wissen (`beheer.js`);
-- **`GET /instellingen`** — welke filters de kaart toont, zoals de beheerders dat op
+- **`GET /instellingen`** — welke filters en keuzes de kaart toont, zoals de beheerders dat op
   `/beheer/kaartfilters` instellen (`instellingen.js`).
 
 Met GitHub praten ze allemaal via `github.js`.
@@ -135,7 +135,8 @@ zonder spamcontrole. Dat is ongevaarlijk: zonder sleutel maakt hij geen enkel is
 hij antwoordt alleen met een fout.
 
 Staat de kaart ook op een ander domein, zet dat dan bij `TOEGESTANE_HERKOMST` in
-`wrangler.toml` en voer `deploy` opnieuw uit.
+`wrangler.toml` en voer `deploy` opnieuw uit. Verhuist de kaart, pas dan ook `KAART_URL`
+aan: daar wijst de knop "Naar de kaart" op de beheerpagina naartoe.
 
 ### 4. De kaart laten weten waar de Worker staat
 
@@ -247,8 +248,12 @@ schrijfopdrachten per dag, en een melding met mailadres is er één.
 ### 6. Filters op de kaart (optioneel)
 
 Op **`/beheer/kaartfilters`** kiezen de beheerders welke filters bezoekers in de
-filterlijst van de kaart zien: een vinkje per filter, en *Bewaren*. Wat uit staat,
-verdwijnt uit de lijst; de auto's blijven op de kaart. De keuze staat in dezelfde
+filterlijst van de kaart zien, en bij de filters met vakjes (soort, prijsklasse,
+brandstof, versnellingsbak, toebehoren, afspraken) ook welke keuzes: een vinkje per
+filter en per keuze, en *Bewaren*. Wat uit staat, verdwijnt uit de lijst; de auto's
+blijven op de kaart. Een toebehoren of afspraak die uit staat (zoals *bed*), verdwijnt
+ook uit de popup van elke auto. Staan alle keuzes van een filter uit, dan verdwijnt het
+filter zelf ook. De keuze staat in dezelfde
 databank, in de tabel `instellingen`. Bestond de databank al vóór deze pagina, voer dan
 `schema.sql` opnieuw uit; dat laat de bestaande tabel `contact` staan:
 
@@ -260,11 +265,12 @@ De kaart leest de keuze bij het laden op `GET /instellingen` (het adres staat bi
 `instellingen` in `map/config.js`). Dat adres is openbaar en mag van elke site gelezen
 worden: er staat niets geheims in. Het antwoord blijft een minuut in de cache, dus een
 wijziging is binnen de minuut zichtbaar. Antwoordt de Worker niet binnen drie seconden,
-of staat er geen adres in `config.js`, dan toont de kaart alle filters.
+of staat er geen adres in `config.js`, dan toont de kaart alle filters en keuzes.
 
 Een nieuw filter op de kaart instelbaar maken: geef zijn sectie in `map/index.html` een
 `data-filter`-sleutel, en zet dezelfde sleutel met een label in `FILTERS` in
-`instellingen.js`.
+`instellingen.js`. Een nieuwe keuze (een brandstof, een toebehoren) verbergbaar maken:
+zet ze bij haar filter in `OPTIES` in `instellingen.js`.
 
 ## Wat er in het issue komt
 

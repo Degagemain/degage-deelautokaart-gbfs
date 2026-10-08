@@ -64,3 +64,8 @@ voorbeeld-uit/
 # Uitzondering op *.sql hierboven: het lege schema van de Worker. Geen gegevens, alleen
 # de CREATE TABLE.
 !feedback-worker/schema.sql
+
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example

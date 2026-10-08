@@ -16,7 +16,8 @@
 */
 
 import { github, naarBase64url } from "./github.js";
-import { FILTERS, leesVerborgen, bewaarVerborgen, laatsteWijziging } from "./instellingen.js";
+import { FILTERS, OPTIES, leesVerborgen, leesVerborgenOpties, bewaarVerborgen, laatsteWijziging }
+  from "./instellingen.js";
 
 const SESSIE_DUUR = 8 * 60 * 60;        // seconden
 const RECHTEN = ["admin", "write"];     // GitHub geeft "write" ook voor maintain
@@ -88,8 +89,14 @@ export async function beheer(request, env) {
     }
     const formulier = await request.formData();
     const zichtbaar = formulier.getAll("zichtbaar").map(String);
+    const aan = new Set(formulier.getAll("optie").map(String));
+    const opties = {};
+    for (const [filter, keuzes] of Object.entries(OPTIES)) {
+      opties[filter] = Object.keys(keuzes).filter((k) => !aan.has(filter + "/" + k));
+    }
     try {
-      await bewaarVerborgen(env, Object.keys(FILTERS).filter((k) => !zichtbaar.includes(k)), wie);
+      await bewaarVerborgen(env, Object.keys(FILTERS).filter((k) => !zichtbaar.includes(k)),
+                            opties, wie);
     } catch (e) {
       console.error("Instellingen bewaren:", e.message);
       return pagina(500, "Niet bewaard",
@@ -319,7 +326,7 @@ async function overzicht(env, wie, url) {
         'data-taal="' + ontsnap(k.taal) + '" data-zoek="' + ontsnap(k.zoek) + '"' +
         (toon ? "" : " hidden") + ">" +
       '<td><a href="https://github.com/' + ontsnap(env.GITHUB_REPO) + "/issues/" + i.number +
-        '">#' + i.number + "</a> " + ontsnap(i.title) + "<br>" +
+        '" class="melding">#' + i.number + " " + ontsnap(i.title) + "</a><br>" +
         '<span class="zacht">' + herkomst(i) + "</span></td>" +
       "<td>" + toestand(i, dagen, !!m) + "</td>" +
       "<td>" + contact + "</td>" +
@@ -368,39 +375,64 @@ async function overzicht(env, wie, url) {
         '<p id="geen"' + (zichtbaar ? " hidden" : "") +
         "><em>Geen meldingen die aan deze filters voldoen.</em></p></div>"
       : '<p class="vlak leeg"><em>Er zijn nog geen meldingen.</em></p>') +
-    '<script src="/beheer/filters.js"></script>', kopregel(wie, "meldingen"));
+    '<script src="/beheer/filters.js"></script>', kopregel(env, wie, "meldingen"));
 }
 
-/* In de kopbalk van elke beheerpagina: de weg naar de andere pagina, en wie er aangemeld is. */
-function kopregel(wie, hier) {
+/* In de kopbalk van elke beheerpagina: de weg naar de andere pagina, naar de kaart zelf,
+   en wie er aangemeld is. De kaart opent in een nieuw tabblad, zodat de beheerpagina
+   blijft staan: wie een filter uitzet, wil meteen kijken en dan terug. */
+function kopregel(env, wie, hier) {
   const naar = (sleutel, href, tekst) => '<a class="tab" href="' + href + '"' +
     (sleutel === hier ? ' aria-current="page"' : "") + ">" + tekst + "</a>";
   return '<nav class="tabs">' + naar("meldingen", "/beheer", "Meldingen") +
       naar("kaartfilters", "/beheer/kaartfilters", "Filters op de kaart") + "</nav>" +
     '<p class="wie"><span>aangemeld als <strong>@' + ontsnap(wie) + "</strong></span>" +
+      kaartknop(env, "knop", "Naar de kaart") +
       '<a class="knop" href="/beheer/uit">Afmelden</a></p>';
 }
 
-/* Welke filters de kaart toont. Een vinkje per filter; wat uit staat, verdwijnt uit de
-   filterlijst van de kaart. De kaart leest dit bij het laden (GET /instellingen), met een
-   minuut cache. Werkt zonder JavaScript: een gewoon formulier. */
+/* Een link naar de kaart, in een nieuw tabblad; niets als KAART_URL niet ingesteld is. */
+function kaartknop(env, klasse, tekst) {
+  if (!env.KAART_URL) return "";
+  return '<a class="' + klasse + '" href="' + ontsnap(env.KAART_URL) +
+    '" target="_blank" rel="noopener">' + ontsnap(tekst) + " ↗</a>";
+}
+
+/* Welke filters de kaart toont, en per filter met vakjes welke keuzes. Een vinkje per
+   filter en per keuze; wat uit staat, verdwijnt van de kaart. De kaart leest dit bij het
+   laden (GET /instellingen), met een minuut cache. Werkt zonder JavaScript: een gewoon
+   formulier. Een keuze die uit staat, blijft uit als je het hele filter uit- en weer
+   aanzet: de twee staan los van elkaar. */
 async function kaartfilters(env, wie, url) {
-  const verborgen = await leesVerborgen(env);
-  const laatst = await laatsteWijziging(env);
-  const vakjes = Object.entries(FILTERS).map(([sleutel, label]) =>
-    '<label class="vakje"><input type="checkbox" name="zichtbaar" value="' + sleutel + '"' +
-    (verborgen.includes(sleutel) ? "" : " checked") + "> " + ontsnap(label) + "</label>").join("");
+  const [verborgen, verborgenOpties, laatst] = await Promise.all(
+    [leesVerborgen(env), leesVerborgenOpties(env), laatsteWijziging(env)]);
+  const vakje = (naam, waarde, aan, label) =>
+    '<label class="vakje"><input type="checkbox" name="' + naam + '" value="' + ontsnap(waarde) +
+    '"' + (aan ? " checked" : "") + "> " + ontsnap(label) + "</label>";
+  const vakjes = Object.entries(FILTERS).map(([sleutel, label]) => {
+    const uit = verborgenOpties[sleutel] || [];
+    const keuzes = OPTIES[sleutel]
+      ? '<div class="keuzes">' + Object.entries(OPTIES[sleutel]).map(([k, l]) =>
+          vakje("optie", sleutel + "/" + k, !uit.includes(k), l)).join("") + "</div>"
+      : "";
+    return '<div class="filter">' +
+      vakje("zichtbaar", sleutel, !verborgen.includes(sleutel), label) + keuzes + "</div>";
+  }).join("");
   return pagina(200, "Filters op de kaart",
-    "<p class=\"inleiding\">Welke filters bezoekers in de filterlijst van de kaart zien. Wat je uitvinkt, " +
-      "verdwijnt uit die lijst; de auto's blijven gewoon op de kaart. Een wijziging is " +
-      "binnen een minuut zichtbaar, zonder de kaart opnieuw te publiceren.</p>" +
-    (url.searchParams.get("bewaard") ? '<p class="bewaard">Bewaard.</p>' : "") +
+    "<p class=\"inleiding\">Welke filters bezoekers in de filterlijst van de kaart zien, en " +
+      "welke keuzes erin staan. Wat je uitvinkt, verdwijnt uit die lijst; de auto's blijven " +
+      "gewoon op de kaart. Een toebehoren of afspraak die uit staat, verdwijnt ook uit de " +
+      "popup van elke auto. Een wijziging is binnen een minuut zichtbaar, zonder de kaart " +
+      "opnieuw te publiceren.</p>" +
+    (url.searchParams.get("bewaard")
+      ? '<p class="bewaard">Bewaard. ' + kaartknop(env, "", "Bekijk het op de kaart") + "</p>"
+      : "") +
     '<form class="vlak" method="post" action="/beheer/kaartfilters">' +
       '<fieldset class="vakjes"><legend>Tonen op de kaart</legend>' + vakjes + "</fieldset>" +
       '<div class="voet"><button class="knop knop--hoofd">Bewaren</button>' +
       (laatst ? '<span class="zacht">Laatst gewijzigd op ' + ontsnap(laatst.gewijzigd.slice(0, 10)) +
         " door @" + ontsnap(laatst.door) + ".</span>" : "") + "</div>" +
-    "</form>", kopregel(wie, "kaartfilters"));
+    "</form>", kopregel(env, wie, "kaartfilters"));
 }
 
 /* Het script achter de filters: elke wijziging werkt meteen, zonder herladen. Het filtert
@@ -599,6 +631,9 @@ function pagina(status, titel, inhoud, nav = "") {
   tbody tr:hover { background: #fafbfa; }
   tbody tr:last-child td { border-bottom: 0; }
   td:first-child a { font-weight: 600; text-decoration: none; }
+  /* Het nummer én de titel zijn de link naar GitHub: alleen "#12" was te klein om te raken. */
+  .melding { display: inline-block; padding: 3px 0; }
+  .melding:hover { text-decoration: underline; }
   td:nth-child(3) { word-break: break-all; }
   td .zacht { font-size: 12.5px; }
   #geen { margin: 0; padding: 14px; color: var(--inkt-zacht); }
@@ -615,8 +650,12 @@ function pagina(status, titel, inhoud, nav = "") {
              border-left: 4px solid var(--groen); font-weight: 600; }
 
   /* de kaartfilters */
-  .vakjes { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 2px 16px;
-            margin: 0; padding: 0; border: 0; }
+  .vakjes { display: grid; gap: 2px; margin: 0; padding: 0; border: 0; }
+  .filter { padding: 2px 0 6px; border-bottom: 1px solid var(--lijn); }
+  .filter:last-child { border-bottom: 0; }
+  .filter > .vakje { font-weight: 600; }
+  .filter .keuzes { display: flex; flex-wrap: wrap; gap: 0 6px; padding-left: 25px; font-size: 14px; }
+  .filter:has(> .vakje input:not(:checked)) .keuzes { opacity: .5; }
   .vakjes legend { margin-bottom: 8px; padding: 0; font-weight: 600; }
   .vakje { display: flex; gap: 9px; align-items: center; padding: 6px 8px; border-radius: 8px; cursor: pointer; }
   .vakje:hover { background: var(--vlak-zacht); }
@@ -628,6 +667,11 @@ function pagina(status, titel, inhoud, nav = "") {
     .kop__binnen { padding: 10px 12px; }
     .tabs { order: 3; width: 100%; }
     .tab { flex: 1; text-align: center; }
+    /* Wie er aangemeld is op een eigen regel, de twee knoppen eronder naast elkaar: met
+       "Naar de kaart" erbij past het niet meer op één regel. */
+    .wie { width: 100%; flex-wrap: wrap; gap: 8px; }
+    .wie span { flex: 1 1 100%; }
+    .wie .knop { flex: 1; }
     main { padding: 16px 12px 32px; }
     .filters label { flex: 1 1 140px; }
     thead { display: none; }

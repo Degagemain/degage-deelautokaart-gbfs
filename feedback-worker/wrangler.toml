@@ -16,6 +16,9 @@ GITHUB_APP_ID = "5236302"
 # De Client ID van dezelfde GitHub App (begint met Iv23; niet het App ID hierboven), om
 # beheerders aan te melden op /beheer. Niet geheim. Leeg: geen beheerpagina.
 GITHUB_OAUTH_ID = "Iv23liGTSFxEhYMIMzXm"
+# Waar de kaart staat: de knop "Naar de kaart" op de beheerpagina wijst hierheen. Leeg:
+# geen knop.
+KAART_URL = "https://degagemain.github.io/degage-deelautokaart-gbfs/map/"
 # Hoeveel dagen na het sluiten van een issue het mailadres gewist wordt. Het formulier op
 # de kaart belooft dit getal (meldformulier.mailUitleg in map/taal/); verander ze samen.
 BEWAARTERMIJN_DAGEN = "30"

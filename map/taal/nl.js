@@ -41,8 +41,7 @@
                          "bijbehorende mogelijkheden tijdens je lidmaatschap hetzelfde blijven.",
     "voorbehoud.fotos": "<strong>De foto's zijn voorbeeldfoto's</strong> van het model, " +
                         "niet van de auto zelf.",
-    "voorbehoud.locatie": "<strong>De locaties zijn bij benadering</strong>, vanwege " +
-                          "privacy: elke stip staat {m} meter naast de echte standplaats.",
+    "voorbehoud.locatie": "<strong>De locaties zijn bij benadering</strong>, vanwege privacy.",
 
     "zoek.plaatshouder": "Autonaam, adres of gemeente…",
     "zoek.aria": "Zoek een autonaam, adres of gemeente; klikken toont ook de filters",

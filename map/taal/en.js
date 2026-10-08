@@ -41,8 +41,7 @@
                          "come with it will stay the same during your membership.",
     "voorbehoud.fotos": "<strong>The photos are example photos</strong> of the model, " +
                         "not of the car itself.",
-    "voorbehoud.locatie": "<strong>Locations are approximate</strong> for privacy " +
-                          "reasons: each dot is {m} metres away from the actual spot.",
+    "voorbehoud.locatie": "<strong>Locations are approximate</strong> for privacy reasons.",
 
     "zoek.plaatshouder": "Car name, address or town…",
     "zoek.aria": "Search for a car name, address or town; clicking also shows the filters",
