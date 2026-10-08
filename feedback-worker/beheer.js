@@ -36,6 +36,10 @@ export async function beheer(request, env) {
       "<p>De beheerpagina is nog niet ingesteld. Zie <code>feedback-worker/README.md</code>.</p>");
   }
 
+  if (pad === "/beheer/filters.js") {
+    return new Response(FILTERSCRIPT, { headers: {
+      "Content-Type": "text/javascript; charset=utf-8", "Cache-Control": "no-cache" } });
+  }
   if (pad === "/beheer/login") return naarGitHub(url, env);
   if (pad === "/beheer/terug") return terugVanGitHub(request, url, env);
   if (pad === "/beheer/uit") {
@@ -255,22 +259,33 @@ async function overzicht(env, wie, url) {
   }
   rijen.sort((a, b) => b.number - a.number);
 
-  const kleiner = zoek.toLowerCase();
-  const zichtbaar = rijen.filter((i) => {
+  /* Elke rij krijgt haar kenmerken mee als data-attributen; filters.js filtert daarop in
+     de browser, zonder de pagina te herladen. De server filtert hier op dezelfde manier,
+     zodat de eerste weergave (en de pagina zonder JavaScript) meteen klopt. */
+  const kenmerken = (i) => {
     const m = mails.get(i.number);
-    const t = (m && m.taal) || taalUitIssue(i);
-    if (status !== "alle" && !i.onbekend && (i.state === "closed") !== (status === "gesloten")) return false;
-    if (antwoord !== "alle" && !!m !== (antwoord === "ja")) return false;
-    if (taal !== "alle" && t !== taal) return false;
-    if (kleiner && !(i.title + " " + (m ? m.mail : "") + " #" + i.number +
-                     (i.user ? " @" + i.user.login : "")).toLowerCase().includes(kleiner)) return false;
-    return true;
-  });
+    return {
+      status: i.onbekend ? "" : i.state === "closed" ? "gesloten" : "open",
+      antwoord: m ? "ja" : "nee",
+      taal: (m && m.taal) || taalUitIssue(i),
+      zoek: (i.title + " " + (m ? m.mail : "") + " #" + i.number +
+             (i.user ? " @" + i.user.login : "")).toLowerCase()
+    };
+  };
+  const kleiner = zoek.toLowerCase();
+  const past = (k) =>
+    (status === "alle" || !k.status || k.status === status) &&
+    (antwoord === "alle" || k.antwoord === antwoord) &&
+    (taal === "alle" || k.taal === taal) &&
+    (!kleiner || k.zoek.includes(kleiner));
 
   const terug = "?" + new URLSearchParams({ status, antwoord, taal, zoek }).toString();
-  const html = zichtbaar.map((i) => {
+  let zichtbaar = 0;
+  const html = rijen.map((i) => {
     const m = mails.get(i.number);
-    const t = (m && m.taal) || taalUitIssue(i);
+    const k = kenmerken(i);
+    const toon = past(k);
+    if (toon) zichtbaar++;
     let contact = '<span class="zacht">—</span>';
     if (m) {
       const onderwerp = (ONDERWERP[m.taal] || ONDERWERP.nl) + " (#" + i.number + ")";
@@ -280,13 +295,15 @@ async function overzicht(env, wie, url) {
     } else if (i.user && i.user.type !== "Bot") {
       contact = '<span class="zacht">op GitHub, aan @' + ontsnap(i.user.login) + "</span>";
     }
-    return "<tr>" +
+    return '<tr data-status="' + k.status + '" data-antwoord="' + k.antwoord + '" ' +
+        'data-taal="' + ontsnap(k.taal) + '" data-zoek="' + ontsnap(k.zoek) + '"' +
+        (toon ? "" : " hidden") + ">" +
       '<td><a href="https://github.com/' + ontsnap(env.GITHUB_REPO) + "/issues/" + i.number +
         '">#' + i.number + "</a> " + ontsnap(i.title) + "<br>" +
         '<span class="zacht">' + herkomst(i) + "</span></td>" +
       "<td>" + toestand(i, dagen, !!m) + "</td>" +
       "<td>" + contact + "</td>" +
-      "<td>" + ontsnap(t || "?") + "</td>" +
+      "<td>" + ontsnap(k.taal || "?") + "</td>" +
       "<td>" + ontsnap(String(i.created_at).slice(0, 10)) + "</td>" +
       "<td>" + (m
         ? '<details><summary>Wissen</summary><form method="post" action="/beheer/wis">' +
@@ -317,19 +334,69 @@ async function overzicht(env, wie, url) {
       "<label>Taal " + keuze("taal", TALEN, taal) + "</label>" +
       '<label>Zoeken <input type="search" name="zoek" value="' + ontsnap(zoek) + '" ' +
         'placeholder="titel, mailadres, #nummer of @naam"></label>' +
-      "<button>Toon</button>" +
-      (gefilterd ? ' <a href="/beheer">Wis filters</a>' : "") +
+      // Alleen voor wie geen JavaScript heeft; filters.js verbergt hem.
+      '<button id="toon">Toon</button>' +
+      ' <a href="/beheer" id="wisfilters"' + (gefilterd ? "" : " hidden") + ">Wis filters</a>" +
     "</form>" +
     (storing
       ? '<p class="let-op">GitHub gaf de meldingen niet door. Hieronder staan alleen de ' +
         "meldingen met een mailadres, zonder hun toestand.</p>" : "") +
-    '<p class="telling">' + zichtbaar.length + " van " + rijen.length + " meldingen</p>" +
+    '<p class="telling"><span id="zichtbaar">' + zichtbaar + "</span> van " + rijen.length +
+      " meldingen</p>" +
     (html
       ? "<table><thead><tr><th>Melding</th><th>Op GitHub</th><th>Antwoord</th><th>Taal</th>" +
-        "<th>Gemeld</th><th></th></tr></thead><tbody>" + html + "</tbody></table>"
-      : "<p><em>" + (rijen.length ? "Geen meldingen die aan deze filters voldoen."
-                                  : "Er zijn nog geen meldingen.") + "</em></p>"));
+        "<th>Gemeld</th><th></th></tr></thead><tbody>" + html + "</tbody></table>" +
+        '<p id="geen"' + (zichtbaar ? " hidden" : "") +
+        "><em>Geen meldingen die aan deze filters voldoen.</em></p>"
+      : "<p><em>Er zijn nog geen meldingen.</em></p>") +
+    '<script src="/beheer/filters.js"></script>');
 }
+
+/* Het script achter de filters: elke wijziging werkt meteen, zonder herladen. Het filtert
+   op de data-attributen van de rijen, op dezelfde manier als overzicht() hierboven, en
+   houdt het adres en de terugweg van "Wissen" bij, zodat herladen dezelfde lijst geeft.
+   Een apart bestand, omdat de Content-Security-Policy geen script in de pagina toelaat. */
+const FILTERSCRIPT = `"use strict";
+const formulier = document.querySelector(".filters");
+const rijen = [...document.querySelectorAll("tbody tr")];
+const wis = document.getElementById("wisfilters");
+const STANDAARD = { status: "open", antwoord: "alle", taal: "alle", zoek: "" };
+document.getElementById("toon").hidden = true;
+
+function pas() {
+  const f = Object.fromEntries(new FormData(formulier));
+  f.zoek = f.zoek.trim();
+  const zoek = f.zoek.toLowerCase();
+  let zichtbaar = 0;
+  for (const rij of rijen) {
+    const d = rij.dataset;
+    const past = (f.status === "alle" || !d.status || d.status === f.status) &&
+      (f.antwoord === "alle" || d.antwoord === f.antwoord) &&
+      (f.taal === "alle" || d.taal === f.taal) &&
+      (!zoek || d.zoek.includes(zoek));
+    rij.hidden = !past;
+    if (past) zichtbaar++;
+  }
+  document.getElementById("zichtbaar").textContent = zichtbaar;
+  const geen = document.getElementById("geen");
+  if (geen) geen.hidden = zichtbaar > 0;
+
+  const standaard = Object.keys(STANDAARD).every((k) => f[k] === STANDAARD[k]);
+  const terug = "?" + new URLSearchParams(f);
+  for (const veld of document.querySelectorAll('input[name="terug"]')) veld.value = terug;
+  history.replaceState(null, "", standaard ? "/beheer" : "/beheer" + terug);
+  wis.hidden = standaard;
+}
+
+formulier.addEventListener("change", pas);
+formulier.addEventListener("input", pas);
+formulier.addEventListener("submit", (e) => { e.preventDefault(); pas(); });
+wis.addEventListener("click", (e) => {
+  e.preventDefault();
+  for (const k of Object.keys(STANDAARD)) formulier.elements[k].value = STANDAARD[k];
+  pas();
+});
+`;
 
 /* Langs welke weg de melding binnenkwam: via het formulier op de kaart maakt de app het
    issue aan (een "Bot"), via het formulier op GitHub de melder zelf. */
@@ -405,6 +472,7 @@ function pagina(status, titel, inhoud) {
            line-height: 20px; white-space: nowrap; color: #0a5a2c; background: #d6f5e0; border: 1px solid #9fd9b3; }
   @media (prefers-color-scheme: dark) { .label { color: #b8f0cb; background: #12391f; border-color: #2e7046; } }
   summary { cursor: pointer; }
+  [hidden] { display: none !important; }
   .zacht, .telling { color: GrayText; }
   .telling { font-size: 13px; margin: 8px 0 4px; }
   .let-op { padding: 6px 10px; border-left: 4px solid #c99a1e; }
@@ -429,7 +497,7 @@ ${inhoud}
       "Content-Type": "text/html; charset=utf-8",
       "Cache-Control": "no-store",
       "Content-Security-Policy":
-        "default-src 'none'; style-src 'unsafe-inline'; form-action 'self'; frame-ancestors 'none'",
+        "default-src 'none'; script-src 'self'; style-src 'unsafe-inline'; form-action 'self'; frame-ancestors 'none'",
       "Referrer-Policy": "no-referrer",
       "X-Content-Type-Options": "nosniff"
     }

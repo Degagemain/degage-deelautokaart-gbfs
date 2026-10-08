@@ -183,7 +183,10 @@ databank, en verdwijnt dus vanzelf met het adres.
 
 Bovenaan filter je op status (standaard: open), op antwoord (alle meldingen, antwoord
 gewenst, of zonder mailadres), op taal, of zoek je op titel, mailadres, `#nummer` of
-`@naam`. De lijst komt in één keer van GitHub, niet met één vraag per issue.
+`@naam`. Elke filter werkt meteen, zonder de pagina te herladen; het adres in de
+browser volgt mee, zodat herladen of een link dezelfde lijst geeft. Zonder JavaScript
+verschijnt er een knop *Toon*. De lijst komt in één keer van GitHub, niet met één vraag
+per issue.
 
 **Aanmelden met GitHub.** Op de beheerpagina meld je je aan met je GitHub-account. Wie
 **schrijfrechten (of meer) op deze repo** heeft, mag binnen; wie niet, krijgt "Geen
