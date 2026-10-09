@@ -882,11 +882,11 @@ body {
 }
 .pin--grijs::before { display: none; }   /* ook de bliksemschicht valt weg */
 
-/* ---------- naam naast de pin ----------------------------------------------------
+/* ---------- naam onder de pin ----------------------------------------------------
    Alleen als er ver genoeg ingezoomd is; JavaScript zet daarvoor `toont-namen` op de
-   kaart. Verder hoeven de labels niet tegen elkaar beschermd te worden: een pin die
-   te dicht bij zijn buur staat, zit dan nog in een cluster en staat dus niet als
-   losse marker op de kaart — en zonder marker geen label.
+   kaart. Een pin die te dicht bij zijn buur staat, zit nog in een cluster en heeft dus
+   geen label. Wat dan nog botst — twee losse pins net ver genoeg uit elkaar — verbergt
+   schikNamen() in index.js met `.naamlabel--botst`.
 
    Het is een Leaflet-tooltip, maar zonder het pijltje: het label plakt aan de pin en
    wijst nergens naar. `pointer-events: none` staat al in Leaflets eigen opmaak, zodat
@@ -903,6 +903,8 @@ body {
 }
 .naamlabel::before { display: none; }   /* het pijltje van de tooltip */
 #kaart.toont-namen .naamlabel { display: block; }
+/* Zou over een andere naam, pin of bol vallen: zie schikNamen() in index.js. */
+#kaart.toont-namen .naamlabel--botst { display: none; }
 
 .leaflet-marker-icon:focus-visible .pin { outline: 2px solid var(--inkt); outline-offset: 2px; }
 .cluster {

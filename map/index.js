@@ -437,10 +437,11 @@ const clusters = L.markerClusterGroup({
   /* Hoe dicht pins (26 px breed, zie teken()) bij elkaar moeten liggen voor ze één bol
      worden, in pixels. Was 48: dan groepeerde de kaart al pins die met ruimte ernaast
      los konden staan. Uitgezoomd wat ruimer, voor een rustig overzicht; ingezoomd krapper,
-     want daar wil je net de afzonderlijke standplaatsen zien. Niet veel krapper: een
-     clusterbol is ±38 px, en met 32 viel een losse pin al geregeld half over een bol, en
-     botsten de namen ernaast (nagekeken boven Gent, zoom 12 en 14). */
-  maxClusterRadius: (zoom) => (zoom >= 13 ? 38 : 44),
+     want daar wil je net de afzonderlijke standplaatsen zien. Dat kan omdat de naam onder
+     de pin staat en schikNamen() botsende namen weglaat. Niet veel krapper: een
+     clusterbol is ±38 px, en met 32 viel een losse pin al geregeld half over een bol
+     (nagekeken boven Gent, zoom 12 tot 15). */
+  maxClusterRadius: (zoom) => (zoom >= 13 ? 34 : 44),
   spiderfyOnMaxZoom: true,
   showCoverageOnHover: false,
   chunkedLoading: true,
@@ -480,7 +481,7 @@ const clusters = L.markerClusterGroup({
 });
 kaart.addLayer(clusters);
 
-/* Vanaf deze zoom staan de autonamen naast hun pin. Het clusteren houdt de drukte
+/* Vanaf deze zoom staan de autonamen onder hun pin. Het clusteren houdt de drukte
    vanzelf in de hand: pins die te dicht bij elkaar liggen zitten dan nog in een cluster
    en staan niet als losse marker op de kaart — en zonder marker geen label. Zelfs in het
    drukste stuk van Gent blijft het daardoor bij een veertigtal labels in beeld.
@@ -513,6 +514,36 @@ function toonNamen() {
     aan = n <= NAMEN_MAX_IN_BEELD;
   }
   document.getElementById("kaart").classList.toggle("toont-namen", aan);
+  schikNamen();
+}
+
+/* Een naam die over een andere naam, pin of clusterbol zou vallen, blijft weg. Het
+   clusteren kijkt alleen naar de pins, niet naar de namen eronder; zonder dit botsten
+   die waar twee losse pins net ver genoeg uit elkaar stonden om niet te clusteren. Van
+   boven naar onder: wie eerst komt, houdt zijn naam. De pin zelf blijft altijd staan,
+   en een klik erop toont alles. Eerst alles terug zichtbaar, dan alleen meten, dan pas
+   verbergen: zo rekent de browser de opmaak maar één keer uit. */
+const BOTST_MARGE = 2;   // px; een naam raakt de onderrand van zijn eigen pictogram
+function schikNamen() {
+  const kaartEl = document.getElementById("kaart");
+  const labels = [...kaartEl.querySelectorAll(".naamlabel")];
+  for (const l of labels) l.classList.remove("naamlabel--botst");
+  if (!kaartEl.classList.contains("toont-namen")) return;
+
+  const bezet = [...kaartEl.querySelectorAll(".leaflet-marker-icon")]
+    .map((e) => e.getBoundingClientRect());
+  const vakken = labels.map((l) => ({ l, r: l.getBoundingClientRect() }))
+    .filter(({ r }) => r.width > 0)
+    .sort((a, b) => a.r.top - b.r.top || a.r.left - b.r.left);
+  const raakt = (a, b) =>
+    a.left < b.right - BOTST_MARGE && b.left < a.right - BOTST_MARGE &&
+    a.top < b.bottom - BOTST_MARGE && b.top < a.bottom - BOTST_MARGE;
+  const weg = [];
+  for (const { l, r } of vakken) {
+    if (bezet.some((b) => raakt(r, b))) weg.push(l);
+    else bezet.push(r);
+  }
+  for (const l of weg) l.classList.add("naamlabel--botst");
 }
 
 /* Zoomt de kaart naar NAAM_ZOOM of verder, dan meteen aan bij het BEGIN van de animatie,
@@ -2208,14 +2239,18 @@ function teken() {
     });
     marker.bindPopup(() => popupHtml(station), { closeButton: true });
 
-    /* De naam naast de pin, zichtbaar vanaf NAAM_ZOOM (de opmaak beslist, zie
+    /* De naam onder de pin, zichtbaar vanaf NAAM_ZOOM (de opmaak beslist, zie
        `.naamlabel`). Alleen voor wat door de filters komt: een grijze pin is context,
        en zijn naam zou het beeld alleen voller maken. */
     if (actief) {
       marker.bindTooltip(passende.map((w) => w.naam).join(" + "), {
         permanent: true,
-        direction: "right",
-        offset: [14, 0],   // net naast de rand van een pin van 20 px
+        /* Onder de pin, gecentreerd, en niet ernaast: een naam is breed en laag, en
+           rechts van de pin botste hij met elke buur op dezelfde hoogte. Zo steekt hij
+           maar half zo ver opzij uit. 6 px plus de 6 px marge die Leaflet onder een
+           tooltip zet: net onder de rand van een pin van 20 px. */
+        direction: "bottom",
+        offset: [0, 6],
         className: "naamlabel"
       });
     }
@@ -3197,7 +3232,7 @@ const MAX_NAAMTREFFERS = 8;
    dichtbij?" het vaakst gesteld wordt. Vandaar de zoomondergrens ernaast: wie zo ver
    inzoomt, kijkt naar één buurt, en dan zijn de vijf dichtste opnieuw een antwoord, ook
    al staan er meer pins getekend dan we los zouden willen tellen. Dezelfde tweetrapsregel
-   als NAAM_ZOOM/NAMEN_MAX_IN_BEELD bij de namen naast de pins.
+   als NAAM_ZOOM/NAMEN_MAX_IN_BEELD bij de namen onder de pins.
 
    Het aantal kan bij inzoomen alleen maar dalen en de zoom alleen maar stijgen, dus de
    balk klapt nooit weer dicht terwijl je verder inzoomt. Filters tellen mee: wie op

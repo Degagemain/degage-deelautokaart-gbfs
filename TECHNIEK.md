@@ -338,13 +338,16 @@ reeks om nooit te botsen als er ooit een echte Euro 7 komt. Deze afspraak leeft
 bol het aantal *passende* standplaatsen toont en niet het aantal markers dat er toevallig
 in zit. Anders zou een cluster "47" zeggen terwijl het paneel "12 van 568" meldt.
 
-**Naamlabels.** De autonaam staat naast de pin zodra er hoogstens `NAMEN_MAX_IN_BEELD` (40)
+**Naamlabels.** De autonaam staat onder de pin zodra er hoogstens `NAMEN_MAX_IN_BEELD` (40)
 losse, passende pins in beeld staan, en altijd vanaf `NAAM_ZOOM` (14). `toonNamen()` telt
 met `clusters.getVisibleParent(m) === m` welke pins los staan, en draait na elke `moveend`,
 na de `animationend` van de clustergroep en na het (opnieuw) inladen (`chunkProgress`).
 De schakelaar is één klasse op de kaart (`.toont-namen`), niet honderden labels aan- en
 afkoppelen. Bij `zoomanim` naar `NAAM_ZOOM` of verder gaat ze meteen aan, zodat de namen
-mét de beweging meekomen.
+mét de beweging meekomen. Daarna verbergt `schikNamen()` elke naam die over een andere
+naam, pin of clusterbol zou vallen (klasse `.naamlabel--botst`), van boven naar onder: het
+clusteren kijkt alleen naar de pins, niet naar de namen. Daardoor kan de clusterstraal
+ingezoomd krap blijven (`maxClusterRadius`: 44 px, vanaf zoom 13 34 px).
 
 ## 8. Popups, de vrije ruimte en de balk onderaan
 
