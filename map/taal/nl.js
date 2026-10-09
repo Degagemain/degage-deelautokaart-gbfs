@@ -162,7 +162,7 @@
     "melden.sjabloon": "feedback-nl.yml",
     "meldformulier.titel": "Probleem of feedback",
     "meldformulier.publiek": "<strong>Je melding is publiek.</strong> Wat je in de beschrijving " +
-                             "schrijft, verschijnt als openbaar issue op GitHub, voor iedereen " +
+                             "schrijft, en de screenshot als je die meestuurt, verschijnt als openbaar issue op GitHub, voor iedereen " +
                              "zichtbaar. Laat er dus persoonlijke gegevens uit, zoals je naam, adres, " +
                              "telefoonnummer, e-mailadres, lidnummer of een nummerplaat. Moet je iets " +
                              "melden dat niet openbaar mag komen? Mail dan naar " +
@@ -183,7 +183,13 @@
     "meldformulier.mailMislukt": "Je melding staat op GitHub, maar je e-mailadres kon niet " +
                                  "bewaard worden. Wil je een antwoord? Mail dan naar " +
                                  "<a href=\"mailto:info@degage.be\">info@degage.be</a>.",
-    "meldformulier.akkoord":"Ik begrijp dat mijn beschrijving publiek wordt, en er staan geen persoonlijke gegevens in.",
+    "meldformulier.akkoord":"Ik begrijp dat mijn melding publiek wordt, en er staan geen persoonlijke gegevens in.",
+    "meldformulier.beeld": "Screenshot van de kaart meesturen",
+    "meldformulier.beeldBezig": "Screenshot wordt gemaakt…",
+    "meldformulier.beeldUitleg": "Zo zien we wat jij zag. Ook de screenshot wordt publiek. Je eigen locatie staat er niet op.",
+    "meldformulier.beeldLocatie": "Je gebruikte je locatie, dus de kaart staat rond je eigen plek. Daarom staat dit standaard uit.",
+    "meldformulier.beeldAlt": "Screenshot van de kaart die met de melding meegaat",
+    "meldformulier.beeldMislukt": "Je melding staat op GitHub, maar de screenshot kon niet bewaard worden.",
     "meldformulier.annuleren": "Annuleren",
     "meldformulier.versturen": "Versturen",
     "meldformulier.bezig": "Bezig met versturen…",

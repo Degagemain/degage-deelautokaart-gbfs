@@ -3069,6 +3069,125 @@ function laadTurnstile() {
   return turnstileGeladen;
 }
 
+/* De screenshot die met een melding mee kan.
+   ------------------------------------------------------------------------------------
+   Gemaakt bij het openen van het meldvenster, van wat de bezoeker op dat moment zag:
+   de kaart met alles erop, zonder het meldvenster zelf. html2canvas tekent de pagina na
+   in een canvas; het wordt pas geladen als iemand het formulier opent, zoals Turnstile,
+   en met een vaste versie en een integriteitscontrole, zoals Leaflet in index.html. De
+   kaarttegels komen van servers die CORS toelaten (`useCORS`); anders bleef de
+   achtergrond leeg.
+
+   Het punt van je eigen locatie (`.hierpunt`) gaat nooit mee. Gebruikte de bezoeker
+   "Auto's in mijn buurt", dan staat de kaart rond die plek, en dan staat het vakje
+   standaard uit, met de reden erbij. De screenshot komt openbaar in het issue (zie
+   feedback-worker/schermafbeelding.js); het voorbeeld in het venster toont wat er
+   precies meegaat. Lukt hij niet, dan verdwijnt het blok, en gaat de melding gewoon
+   zonder. */
+const HTML2CANVAS = {
+  src: "https://unpkg.com/html2canvas@1.4.1/dist/html2canvas.min.js",
+  integrity: "sha384-ZZ1pncU3bQe8y31yfZdMFdSpttDoPmOZg2wguVK9almUodir1PghgT0eY7Mrty8H"
+};
+const BEELD_MAX_BREED = 1600;        // px; een groter scherm wordt verkleind
+/* Tekens van de data-URL. De Worker aanvaardt er iets meer dan een miljoen
+   (MAX_BEELD_TEKST in feedback-worker/schermafbeelding.js); dit blijft eronder. */
+const BEELD_MAX_TEKST = 1000000;
+// De bliksemschicht van .pin--elektrisch::before in index.css, met dezelfde punten.
+const SCHICHT_SVG = '<svg viewBox="0 0 100 100" width="12" height="12" aria-hidden="true">' +
+  '<polygon points="58,0 22,55 45,55 38,100 78,42 52,42" fill="#fff"/></svg>';
+let html2canvasGeladen = null;
+let locatieGebruikt = false;        // gezet door "Auto's in mijn buurt"
+let meldbeeld = null;                // { klaar: belofte van de data-URL of null }
+
+function laadHtml2canvas() {
+  if (!html2canvasGeladen) {
+    html2canvasGeladen = new Promise((klaar, mislukt) => {
+      const script = document.createElement("script");
+      script.src = HTML2CANVAS.src;
+      script.integrity = HTML2CANVAS.integrity;
+      script.crossOrigin = "anonymous";
+      script.onload = () => klaar(window.html2canvas);
+      script.onerror = () => {
+        html2canvasGeladen = null;   // volgende keer opnieuw proberen
+        script.remove();
+        mislukt(new Error("html2canvas kon niet geladen worden"));
+      };
+      document.head.appendChild(script);
+    });
+  }
+  return html2canvasGeladen;
+}
+
+/* Wat er in beeld staat, als JPEG-data-URL; of null als het niet lukt. Eerst met goede
+   kwaliteit, dan minder, dan op halve grootte: een drukke kaart op een groot scherm
+   wordt anders te zwaar om te versturen. */
+async function maakSchermafbeelding() {
+  try {
+    const html2canvas = await laadHtml2canvas();
+    const canvas = await html2canvas(document.body, {
+      useCORS: true,
+      logging: false,
+      backgroundColor: "#ffffff",
+      x: window.scrollX, y: window.scrollY,
+      width: window.innerWidth, height: window.innerHeight,
+      scale: Math.min(1, BEELD_MAX_BREED / window.innerWidth),
+      /* "Goed om te weten" sluit zodra het meldvenster opengaat; anders stond het half
+         uitgevaagd op de screenshot. */
+      ignoreElements: (el) => el.id === "meldvenster" || el.id === "voorbehoud" ||
+                              el.classList.contains("hierpunt"),
+      /* html2canvas kent `clip-path` niet: de bliksemschicht van een elektrische pin
+         werd een wit vierkant. In de kopie die het tekent, dezelfde vorm als SVG. */
+      onclone: (kopie) => {
+        const stijl = kopie.createElement("style");
+        stijl.textContent = ".pin--elektrisch::before { display: none; }";
+        kopie.head.appendChild(stijl);
+        for (const pin of kopie.querySelectorAll(".pin--elektrisch")) pin.innerHTML = SCHICHT_SVG;
+      }
+    });
+    for (const [doek, kwaliteit] of [[canvas, 0.8], [canvas, 0.6], [verklein(canvas), 0.7]]) {
+      const url = doek.toDataURL("image/jpeg", kwaliteit);
+      if (url.startsWith("data:image/jpeg") && url.length <= BEELD_MAX_TEKST) return url;
+    }
+  } catch (fout) {
+    console.warn("Geen screenshot:", fout);
+  }
+  return null;
+}
+
+function verklein(canvas) {
+  const klein = document.createElement("canvas");
+  klein.width = Math.round(canvas.width / 2);
+  klein.height = Math.round(canvas.height / 2);
+  klein.getContext("2d").drawImage(canvas, 0, 0, klein.width, klein.height);
+  return klein;
+}
+
+/* Het blok in het venster klaarzetten en de screenshot beginnen. Een melding die al
+   loopt terwijl het venster opnieuw opent, mag het nieuwe voorbeeld niet overschrijven:
+   vandaar de vergelijking met `meldbeeld` voor het invullen. */
+function beginMeldbeeld() {
+  const blok = $("meldbeeld");
+  blok.hidden = false;
+  $("meldbeeld-aan").checked = !locatieGebruikt;
+  $("meldbeeld-locatie").hidden = !locatieGebruikt;
+  $("meldbeeld-bezig").hidden = false;
+  $("meldbeeld-voorbeeld").hidden = true;
+  const deze = { klaar: maakSchermafbeelding() };
+  meldbeeld = deze;
+  deze.klaar.then((url) => {
+    if (meldbeeld !== deze) return;
+    $("meldbeeld-bezig").hidden = true;
+    if (!url) {
+      blok.hidden = true;
+      return;
+    }
+    const voorbeeld = $("meldbeeld-voorbeeld");
+    voorbeeld.src = url;
+    voorbeeld.alt = t("meldformulier.beeldAlt");
+    voorbeeld.hidden = false;
+  });
+}
+
 function tekenControle() {
   if (!MELDEN.turnstileSitekey) return;
   laadTurnstile().then((turnstile) => {
@@ -3123,11 +3242,20 @@ function zetVeldfout(veld) {
    textContent in — nooit als HTML — want ze komt rechtstreeks van de bezoeker. Lange
    meldingen krijgen een schuifbalk in plaats van een afgekapte zin: wie wil nalezen wat
    er nu publiek staat, moet het volledig kunnen zien. */
-function toonMeldoverzicht(soortLabel, beschrijving) {
+function toonMeldoverzicht(soortLabel, beschrijving, beeld) {
   $("meldoverzicht-soort").textContent = soortLabel;
   $("meldoverzicht-soort").hidden = !soortLabel;
   $("meldoverzicht-tekst").textContent = beschrijving;
-  $("meldoverzicht").hidden = !(soortLabel || beschrijving);
+  // Ook de screenshot, als hij mee ging: die staat nu even goed publiek.
+  const img = $("meldoverzicht-beeld");
+  img.hidden = !beeld;
+  if (beeld) {
+    img.src = beeld;
+    img.alt = t("meldformulier.beeldAlt");
+  } else {
+    img.removeAttribute("src");
+  }
+  $("meldoverzicht").hidden = !(soortLabel || beschrijving || beeld);
 }
 
 function toonMeldfout(html) {
@@ -3145,6 +3273,9 @@ function openMeldvenster() {
   $("meldformulier").hidden = false;
   $("meldbedankt").hidden = true;
   $("meldfout").hidden = true;
+  /* Vóór het venster opengaat: wat er nu in beeld staat. Het venster zelf houdt
+     maakSchermafbeelding() er hoe dan ook buiten. */
+  beginMeldbeeld();
   sluitVoorbehoud();
   $("meldvenster").hidden = false;
   /* De focus op het venster zelf en niet op het eerste veld: zo leest een schermlezer
@@ -3182,7 +3313,11 @@ async function verstuurMelding(e) {
   knop.disabled = true;
   knop.textContent = t("meldformulier.bezig");
   try {
-    const antwoord = await fetch(MELDEN.url, {
+    /* Is de screenshot nog niet klaar, dan erop wachten: wie hem aangevinkt liet, rekent
+       erop dat hij meegaat. Mislukt hij, dan is het null en gaat de melding zonder. */
+    const beeld = !$("meldbeeld").hidden && $("meldbeeld-aan").checked && meldbeeld
+      ? await meldbeeld.klaar : null;
+    const stuur = (metBeeld) => fetch(MELDEN.url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -3191,12 +3326,24 @@ async function verstuurMelding(e) {
         website: velden.website.value,
         taal,
         token,
-        ...(mail ? { mail } : {})
+        ...(mail ? { mail } : {}),
+        ...(metBeeld ? { schermafbeelding: beeld } : {})
       })
     });
+    let antwoord = await stuur(!!beeld);
+    /* Te groot (413): een Worker die nog geen screenshots kent, of een strengere grens.
+       Dan de melding zonder screenshot: die is belangrijker dan het plaatje. De Worker
+       weegt de grootte nog vóór de spamcontrole, dus het token is nog niet verbruikt. */
+    let beeldWeg = false;
+    if (antwoord.status === 413 && beeld) {
+      antwoord = await stuur(false);
+      beeldWeg = true;
+    }
     const uitslag = await antwoord.json().catch(() => ({}));
     if (!antwoord.ok) throw new Error(uitslag.fout || "status " + antwoord.status);
-    toonMeldoverzicht(soortLabel, beschrijving);
+    toonMeldoverzicht(soortLabel, beschrijving, beeldWeg ? null : beeld);
+    $("meldbeeldregel").hidden =
+      !(beeld && (beeldWeg || uitslag.schermafbeeldingBewaard === false));
     /* Het mailadres staat niet in het overzicht, want het staat niet op GitHub. Dat zegt
        deze regel — of, als de Worker het niet kon bewaren, dat er geen antwoord komt. Het
        lokveld geeft geen `mailBewaard` terug; dan blijft de regel weg. */
@@ -4077,6 +4224,7 @@ $("knop-locatie").addEventListener("click", () => {
 
 kaart.on("locationfound", (e) => {
   zetLocatieBezig(false);
+  locatieGebruikt = true;   // zie maakSchermafbeelding(): dan geen screenshot vanzelf
 
   /* Het veld leegmaken: er zou anders een oude zoekterm blijven staan boven een lijst die
      over jouw locatie gaat. Programmatisch zetten stuurt geen `input`-gebeurtenis, dus

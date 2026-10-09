@@ -546,6 +546,13 @@ alleen de beheerders van de kaart zien het. In het issue staat alleen dat je een
 wil. Het adres wordt vanzelf gewist 30 dagen nadat je melding afgehandeld is. (Dit veld
 staat er pas als de beheerders het aanzetten.)
 
+**Een screenshot van de kaart** gaat standaard mee, zodat de beheerders zien wat jij zag.
+Het formulier toont een klein voorbeeld van precies wat er meegaat, en een vakje om het uit
+te zetten. Ook de screenshot wordt publiek: hij staat in het issue. Het formulier zelf staat
+er niet op, en het punt van je eigen locatie ook niet. Gebruikte je *Auto's in mijn buurt*,
+dan staat de kaart rond je eigen plek; dan staat het vakje standaard uit, en zegt het
+formulier waarom.
+
 Er gaat verder niets mee: geen IP-adres, geen browsergegevens, geen locatie. Na het
 versturen krijg je de link naar je eigen melding, zodat je kunt volgen wat ermee gebeurt.
 

@@ -571,7 +571,8 @@
 
     <form id="meldformulier">
       <p class="meldvenster__publiek" data-i18n-html="meldformulier.publiek"><strong>Je
-        melding is publiek.</strong> Wat je in de beschrijving schrijft, verschijnt als
+        melding is publiek.</strong> Wat je in de beschrijving schrijft, en de screenshot als je
+        die meestuurt, verschijnt als
         openbaar issue op GitHub, voor iedereen zichtbaar. Laat er dus persoonlijke gegevens
         uit, zoals je naam, adres, telefoonnummer, e-mailadres, lidnummer of een nummerplaat.
         Moet je iets melden dat niet openbaar mag komen? Mail dan naar
@@ -605,13 +606,33 @@
           als je een antwoord wil. Het blijft privé en wordt 30 dagen na afhandeling gewist.</small>
       </label>
 
+      <!-- De screenshot van de kaart, gemaakt bij het openen van dit venster (zonder het
+           venster zelf en zonder het punt van je eigen locatie). Standaard mee, behalve
+           na "Auto's in mijn buurt": dan staat de kaart rond de eigen plek. Het
+           voorbeeld toont wat er precies meegaat; het komt openbaar in het issue. Blijft
+           verborgen als de screenshot niet lukt. Zie maakSchermafbeelding() in het script. -->
+      <div class="meldbeeld" id="meldbeeld" hidden>
+        <label class="meldvenster__akkoord">
+          <input type="checkbox" name="schermafbeelding" id="meldbeeld-aan" checked
+                 aria-describedby="meldbeeld-uitleg">
+          <span data-i18n="meldformulier.beeld">Screenshot van de kaart meesturen</span>
+        </label>
+        <p class="meldbeeld__bezig" id="meldbeeld-bezig" data-i18n="meldformulier.beeldBezig">Screenshot wordt gemaakt…</p>
+        <img class="meldbeeld__voorbeeld" id="meldbeeld-voorbeeld" alt="" hidden>
+        <small class="meldvenster__uitleg" id="meldbeeld-uitleg" data-i18n="meldformulier.beeldUitleg">Zo
+          zien we wat jij zag. Ook de screenshot wordt publiek. Je eigen locatie staat er niet op.</small>
+        <small class="meldvenster__uitleg" id="meldbeeld-locatie" data-i18n="meldformulier.beeldLocatie"
+               hidden>Je gebruikte je locatie, dus de kaart staat rond je eigen plek. Daarom
+          staat dit standaard uit.</small>
+      </div>
+
       <!-- Een lokveld voor robots: een mens ziet het niet en vult het dus niet in. -->
       <input type="text" name="website" class="meldvenster__lok" tabindex="-1"
              autocomplete="off" aria-hidden="true">
 
       <label class="meldvenster__akkoord">
         <input type="checkbox" name="akkoord" required>
-        <span data-i18n="meldformulier.akkoord">Ik begrijp dat mijn beschrijving publiek wordt, en er staan geen persoonlijke gegevens in.</span>
+        <span data-i18n="meldformulier.akkoord">Ik begrijp dat mijn melding publiek wordt, en er staan geen persoonlijke gegevens in.</span>
       </label>
 
       <div class="meldvenster__controle" id="meldcontrole"></div>
@@ -634,7 +655,11 @@
       <div class="meldoverzicht" id="meldoverzicht" hidden>
         <p class="meldoverzicht__soort" id="meldoverzicht-soort"></p>
         <p class="meldoverzicht__tekst" id="meldoverzicht-tekst"></p>
+        <img class="meldbeeld__voorbeeld" id="meldoverzicht-beeld" alt="" hidden>
       </div>
+      <!-- Alleen als de screenshot mee moest maar niet bewaard kon worden. -->
+      <p id="meldbeeldregel" data-i18n="meldformulier.beeldMislukt" hidden>Je melding staat
+        op GitHub, maar de screenshot kon niet bewaard worden.</p>
       <!-- Verborgen zolang de Worker geen adres teruggaf: een link die naar het lege
            formulier op GitHub wijst, belooft iets wat hij niet toont. -->
       <!-- Alleen als de bezoeker een mailadres gaf: dat het niet in het overzicht hierboven

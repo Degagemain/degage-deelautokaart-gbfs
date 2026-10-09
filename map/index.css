@@ -1320,6 +1320,17 @@ body {
 }
 .meldvenster__akkoord input { flex: 0 0 auto; margin: 3px 0 0; accent-color: var(--groen); }
 .meldvenster__controle:not(:empty) { margin-bottom: 12px; }
+/* De screenshot: een klein voorbeeld, zodat de bezoeker ziet wat er openbaar meegaat. */
+.meldbeeld { margin-bottom: 12px; }
+.meldbeeld .meldvenster__akkoord { margin-bottom: 6px; }
+.meldbeeld__bezig { margin: 0; font-size: 12px; color: var(--inkt-zacht); }
+.meldbeeld__voorbeeld {
+  display: block; max-width: 100%; max-height: 150px;
+  border: 1px solid var(--lijn); border-radius: 6px;
+}
+.meldbeeld:has(#meldbeeld-aan:not(:checked)) .meldbeeld__voorbeeld { opacity: .35; }
+.meldbeeld__voorbeeld[hidden] { display: none; }   /* anders wint `display: block` hierboven */
+.meldoverzicht .meldbeeld__voorbeeld { margin-top: 8px; }
 .meldvenster__fout {
   padding: 8px 10px;
   color: #8a1f1f; background: #fdecec; border: 1px solid #f0c4c4; border-radius: 8px;

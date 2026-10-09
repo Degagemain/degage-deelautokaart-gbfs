@@ -16,9 +16,12 @@
      token         het antwoord van Turnstile, de spamcontrole van Cloudflare
      website       een lokveld dat een mens niet ziet; ingevuld = een robot
      mail          optioneel: een mailadres, voor wie een antwoord wil
+     schermafbeelding  optioneel: een screenshot van de kaart, als JPEG-data-URL
+                   (schermafbeelding.js); komt openbaar in het issue
 
    Wat ze terugkrijgt: `{ url, nummer }` van het nieuwe issue, of `{ fout }` met een
-   foutstatus. Gaf de bezoeker een mailadres, dan ook `mailBewaard`.
+   foutstatus. Gaf de bezoeker een mailadres, dan ook `mailBewaard`; stuurde ze een
+   screenshot mee, dan ook `schermafbeeldingBewaard`.
 
    Wat hier bewust NIET gebeurt: de tekst van de bezoeker wordt nergens als Markdown
    getoond. Hij gaat in een codeblok, zodat er geen @vermeldingen, afbeeldingen of
@@ -35,10 +38,13 @@ import { github } from "./github.js";
 import { voorDeKaart } from "./instellingen.js";
 import { werkBij, ontvangCorrecties } from "./datafouten.js";
 import { SOORTEN } from "./meldsoorten.js";
+import { MAX_BEELD_TEKST, leesBeeld, bewaarBeeld, koppelBeeld, vergeetBeeld, toonBeeld }
+  from "./schermafbeelding.js";
 
 const MIN_LENGTE = 5;
 const MAX_LENGTE = 5000;
-const MAX_VERZOEK = 20000;   // bytes; ruim genoeg voor MAX_LENGTE tekens in UTF-8
+// bytes: ruim genoeg voor MAX_LENGTE tekens in UTF-8, plus een screenshot
+const MAX_VERZOEK = 20000 + MAX_BEELD_TEKST;
 const MAX_MAIL = 254;
 // Geen volledige controle volgens de RFC, wel genoeg om tikfouten en rommel tegen te houden.
 const MAILVORM = /^[^\s@<>()",;:\\]+@[^\s@<>()",;:\\]+\.[^\s@<>()",;:\\]+$/;
@@ -48,6 +54,8 @@ export default {
     const pad = new URL(request.url).pathname;
     if (pad === "/beheer" || pad.startsWith("/beheer/")) return beheer(request, env);
     if (pad === "/instellingen") return voorDeKaart(request, env);
+    // Openbaar, zoals het issue waarin hij staat; een <img> stuurt geen Origin mee.
+    if (pad.startsWith("/schermafbeelding/")) return toonBeeld(request, env, pad);
     // Van de generator, niet van een browser: geen CORS, wel een token.
     if (pad === "/api/datacorrecties") return ontvangCorrecties(request, env);
 
@@ -106,6 +114,10 @@ export default {
     }
     // Zonder databank kan het adres nergens heen. Liever weigeren dan het stil laten vallen.
     if (mail && !env.DB) return antwoord(503, { fout: "Mailadressen worden niet bewaard." });
+    const beeld = gegevens.schermafbeelding ? leesBeeld(gegevens.schermafbeelding) : null;
+    if (gegevens.schermafbeelding && !beeld) {
+      return antwoord(400, { fout: "Ongeldige of te grote screenshot." });
+    }
 
     if (env.TURNSTILE_SECRET) {
       const echt = await controleerTurnstile(env.TURNSTILE_SECRET, gegevens.token,
@@ -113,14 +125,35 @@ export default {
       if (!echt) return antwoord(403, { fout: "Spamcontrole mislukt." });
     }
 
+    /* De screenshot vóór het issue bewaren: het issue moet zijn adres al kennen. Lukt het
+       bewaren niet, dan gaat de melding toch door, zonder screenshot; de kaart zegt dat. */
+    let beeldId = "";
+    if (beeld && env.DB) {
+      try {
+        beeldId = await bewaarBeeld(env, beeld);
+      } catch (e) {
+        console.error("Screenshot bewaren:", e.message);
+      }
+    }
+    const extra = beeld ? { schermafbeeldingBewaard: !!beeldId } : {};
+
     const beheerpagina = mail ? new URL("/beheer", request.url).href : "";
+    const beeldUrl = beeldId ? new URL("/schermafbeelding/" + beeldId + ".jpg", request.url).href : "";
     const issue = await maakIssue(env, {
       title: titel(soort, beschrijving),
-      body: inhoud(soort, beschrijving, taal, beheerpagina),
+      body: inhoud(soort, beschrijving, taal, beheerpagina, beeldUrl),
       labels: ["feedback"]
     });
-    if (!issue) return antwoord(502, { fout: "GitHub weigerde het issue." });
-    if (!mail) return antwoord(201, { url: issue.html_url, nummer: issue.number });
+    if (!issue) {
+      // Geen issue, dan ook geen screenshot: niets blijft hier hangen zonder melding.
+      if (beeldId) await vergeetBeeld(env, beeldId).catch(() => {});
+      return antwoord(502, { fout: "GitHub weigerde het issue." });
+    }
+    if (beeldId) {
+      await koppelBeeld(env, beeldId, issue.number)
+        .catch((e) => console.error("Screenshot koppelen:", e.message));
+    }
+    if (!mail) return antwoord(201, { url: issue.html_url, nummer: issue.number, ...extra });
 
     /* Het issue staat er al. Lukt het bewaren nu niet, dan zegt de kaart dat aan de
        bezoeker, zodat die niet op een antwoord blijft wachten dat nooit komt. */
@@ -133,7 +166,7 @@ export default {
       console.error("D1", issue.number, e);
       mailBewaard = false;
     }
-    return antwoord(201, { url: issue.html_url, nummer: issue.number, mailBewaard });
+    return antwoord(201, { url: issue.html_url, nummer: issue.number, mailBewaard, ...extra });
   },
 
   // Eén keer per dag; het tijdstip staat bij [triggers] in wrangler.toml.
@@ -174,7 +207,7 @@ function titel(soort, beschrijving) {
   return "[Feedback] " + kort;
 }
 
-function inhoud(soort, beschrijving, taal, beheerpagina) {
+function inhoud(soort, beschrijving, taal, beheerpagina, beeldUrl) {
   // Een omheining die langer is dan elke reeks backticks in de tekst zelf.
   const langste = Math.max(0, ...(beschrijving.match(/`+/g) || []).map((s) => s.length));
   const hek = "`".repeat(Math.max(3, langste + 1));
@@ -189,6 +222,10 @@ function inhoud(soort, beschrijving, taal, beheerpagina) {
     "",
     hek + "text",
     beschrijving,
-    hek
+    hek,
+    /* Het adres is van de Worker zelf, niet van de bezoeker: dit mag wel Markdown zijn.
+       Na de beschrijving, zodat uitIssue() in beheer.js die nog vindt. */
+    ...(beeldUrl ? ["", "### Screenshot", "",
+                    "![Screenshot van de kaart, gemaakt bij het melden](" + beeldUrl + ")"] : [])
   ].join("\n");
 }

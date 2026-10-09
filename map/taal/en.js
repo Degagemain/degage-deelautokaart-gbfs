@@ -161,7 +161,7 @@
     "melden.sjabloon": "feedback-en.yml",
     "meldformulier.titel": "Problem or feedback",
     "meldformulier.publiek": "<strong>Your report is public.</strong> What you write in the " +
-                             "description is posted as a public issue on GitHub, visible to everyone. " +
+                             "description, and the screenshot if you include it, is posted as a public issue on GitHub, visible to everyone. " +
                              "So leave out any personal details, such as your name, address, phone " +
                              "number, email address, membership number or a number plate. Do you need " +
                              "to report something that cannot be public? Then email " +
@@ -181,7 +181,13 @@
     "meldformulier.mailMislukt": "Your report is on GitHub, but your email address could not " +
                                  "be saved. Would you like a reply? Then email " +
                                  "<a href=\"mailto:info@degage.be\">info@degage.be</a>.",
-    "meldformulier.akkoord":"I understand that my description will be public, and it contains no personal details.",
+    "meldformulier.akkoord":"I understand that my report will be public, and it contains no personal details.",
+    "meldformulier.beeld": "Include a screenshot of the map",
+    "meldformulier.beeldBezig": "Taking a screenshot…",
+    "meldformulier.beeldUitleg": "That way we see what you saw. The screenshot will be public too. Your own location is not on it.",
+    "meldformulier.beeldLocatie": "You used your location, so the map is centred on where you are. That's why this is off by default.",
+    "meldformulier.beeldAlt": "Screenshot of the map included with the report",
+    "meldformulier.beeldMislukt": "Your report is on GitHub, but the screenshot could not be saved.",
     "meldformulier.annuleren": "Cancel",
     "meldformulier.versturen": "Send",
     "meldformulier.bezig": "Sending…",

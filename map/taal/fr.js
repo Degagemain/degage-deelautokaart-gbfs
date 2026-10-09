@@ -167,7 +167,7 @@
     "melden.sjabloon": "feedback-fr.yml",
     "meldformulier.titel": "Problème ou avis",
     "meldformulier.publiek": "<strong>Votre signalement est public.</strong> Ce que vous écrivez " +
-                             "dans la description est publié comme ticket public sur GitHub, visible " +
+                             "dans la description, et la capture d'écran si vous la joignez, est publié comme ticket public sur GitHub, visible " +
                              "par tout le monde. N'y mettez donc aucune donnée personnelle : nom, " +
                              "adresse, numéro de téléphone, adresse e-mail, numéro de membre ou plaque " +
                              "d'immatriculation. Vous devez signaler quelque chose qui ne peut pas être " +
@@ -188,7 +188,13 @@
     "meldformulier.mailMislukt": "Votre signalement est sur GitHub, mais votre adresse e-mail " +
                                  "n'a pas pu être enregistrée. Vous souhaitez une réponse ? " +
                                  "Écrivez alors à <a href=\"mailto:info@degage.be\">info@degage.be</a>.",
-    "meldformulier.akkoord":"Je comprends que ma description sera publique, et elle ne contient aucune donnée personnelle.",
+    "meldformulier.akkoord":"Je comprends que mon signalement sera public, et il ne contient aucune donnée personnelle.",
+    "meldformulier.beeld": "Joindre une capture d'écran de la carte",
+    "meldformulier.beeldBezig": "Capture d'écran en cours…",
+    "meldformulier.beeldUitleg": "Ainsi, nous voyons ce que vous avez vu. La capture d'écran sera publique, elle aussi. Votre propre position n'y figure pas.",
+    "meldformulier.beeldLocatie": "Vous avez utilisé votre position : la carte est donc centrée sur l'endroit où vous êtes. C'est pourquoi cette option est désactivée par défaut.",
+    "meldformulier.beeldAlt": "Capture d'écran de la carte jointe au signalement",
+    "meldformulier.beeldMislukt": "Votre signalement est sur GitHub, mais la capture d'écran n'a pas pu être enregistrée.",
     "meldformulier.annuleren": "Annuler",
     "meldformulier.versturen": "Envoyer",
     "meldformulier.bezig": "Envoi en cours…",

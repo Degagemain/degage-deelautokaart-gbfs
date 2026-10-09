@@ -53,3 +53,13 @@ CREATE TABLE IF NOT EXISTS beantwoord (
   door    TEXT NOT NULL,                -- de GitHub-gebruikersnaam van wie antwoordde
   wanneer TEXT NOT NULL                 -- ISO 8601, UTC
 );
+
+-- De screenshots die melders op de kaart meesturen (schermafbeelding.js). Openbaar: ze
+-- staan in het issue, via GET /schermafbeelding/<id>.jpg.
+CREATE TABLE IF NOT EXISTS schermafbeeldingen (
+  id         TEXT PRIMARY KEY,          -- lang en willekeurig, staat in het adres
+  issue      INTEGER,                   -- het issue waar hij bij hoort; NULL heel even,
+                                        -- tussen bewaren en het aanmaken van het issue
+  beeld      BLOB NOT NULL,             -- de JPEG, hoogstens MAX_BEELD bytes
+  aangemaakt TEXT NOT NULL              -- ISO 8601, UTC
+);

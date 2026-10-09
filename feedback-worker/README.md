@@ -342,9 +342,38 @@ de feed staat, verdwijnt vanzelf. Een nieuwe controle: een regel bij in `REGELS`
 - de soort melding, de taal van de kaart, en dat het via het formulier kwam;
 - als de melder een mailadres gaf: dat er een antwoord gevraagd is. Het adres zelf niet;
 - de beschrijving, in een codeblok. Zo verschijnen er geen @vermeldingen, links of
-  afbeeldingen die iemand anders lastigvallen of volgen.
+  afbeeldingen die iemand anders lastigvallen of volgen;
+- als de melder het vakje aan liet: een screenshot van de kaart (zie hieronder).
 
 Er komen **geen** IP-adres, browsergegevens of andere gegevens over de bezoeker in.
+
+## Screenshots
+
+Het formulier op de kaart maakt bij het openen een screenshot van wat de bezoeker ziet
+(html2canvas, zie `maakSchermafbeelding()` in `map/index.js`), zonder het formulier zelf en
+zonder het punt van de eigen locatie. Wie het vakje aan laat, stuurt hem mee als JPEG van
+hoogstens 800 kB. GitHub laat via de API geen bijlagen toe, dus de Worker bewaart hem in de
+D1-databank (tabel `schermafbeeldingen`) en serveert hem openbaar op
+`/schermafbeelding/<id>.jpg`; het issue toont hem van daar. Het id is lang en willekeurig.
+Een screenshot wordt alleen bewaard samen met een issue dat lukte. Zie
+`schermafbeelding.js`.
+
+Bestond de databank al, voer dan `schema.sql` opnieuw uit (zie stap 5). Zonder die tabel
+gaat een melding gewoon door, zonder screenshot, en zegt de kaart dat. Rol de Worker uit
+vóór de kaart: een oudere Worker weigert een melding met screenshot als te groot, en dan
+stuurt de kaart ze opnieuw zonder.
+
+### Een screenshot weghalen
+
+Staat er toch iets op wat er niet hoort: haal de afbeelding uit het issue (*Edit* op de
+eerste reactie) en wis ze ook bij de Worker, anders blijft ze op haar adres bereikbaar.
+Het id is het stuk tussen `/schermafbeelding/` en `.jpg`:
+
+```sh
+npx wrangler d1 execute degage-kaart-feedback --remote --command "DELETE FROM schermafbeeldingen WHERE id = '<id>'"
+```
+
+GitHub bewaart een kopie in zijn eigen beeldcache (camo); die verdwijnt na een tijd vanzelf.
 
 ## Een melding die er niet hoort
 
