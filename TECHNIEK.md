@@ -352,6 +352,16 @@ wijken de andere uit, telkens van boven naar onder. Dat is nodig omdat het clust
 naar de pins kijkt, niet naar de namen. Daardoor kan de clusterstraal
 ingezoomd krap blijven (`maxClusterRadius`: 44 px, vanaf zoom 13 34 px).
 
+**Klik op een clusterbol.** `klikOpBol()` vervangt wat Leaflet.markercluster zelf doet
+(`zoomToBoundsOnClick` en `spiderfyOnMaxZoom` staan uit). Liggen alle auto's van de bol
+binnen `SAMEN_BINNEN_M` (50 m) van elkaar, dan waaiert hij meteen open; de bibliotheek
+deed dat pas op de diepste zoom, zodat je voor twee auto's op één parking klik na klik tot
+op straatniveau moest. Staat de kaart nog onder `NAAM_ZOOM`, dan eerst één sprong
+daarheen, en daar openwaaieren (na de `animationend` van de clustergroep), zodat de namen
+erbij staan. Anders gewoon inzoomen (`zoomToBounds()`). Opengewaaid staan de pins wat
+verder uit elkaar dan standaard (`spiderfyDistanceMultiplier: 1.6`), en `schikNamen()`
+draait opnieuw bij `spiderfied` en `unspiderfied`.
+
 ## 8. Popups, de vrije ruimte en de balk onderaan
 
 ### Het vrije deel van de kaart

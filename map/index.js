@@ -442,7 +442,12 @@ const clusters = L.markerClusterGroup({
      clusterbol is ±38 px, en met 32 viel een losse pin al geregeld half over een bol
      (nagekeken boven Gent, zoom 12 tot 15). */
   maxClusterRadius: (zoom) => (zoom >= 13 ? 34 : 44),
-  spiderfyOnMaxZoom: true,
+  // Wat een klik op een bol doet, beslist klikOpBol() hieronder.
+  spiderfyOnMaxZoom: false,
+  zoomToBoundsOnClick: false,
+  /* Opengewaaid staan twee pins standaard maar ±32 px uit elkaar: krap voor pins van
+     26 px met een naam erbij. */
+  spiderfyDistanceMultiplier: 1.6,
   showCoverageOnHover: false,
   chunkedLoading: true,
   /* Klaar met (opnieuw) inladen: nu pas is te zien welke pins los staan. Zie toonNamen().
@@ -480,6 +485,43 @@ const clusters = L.markerClusterGroup({
   }
 });
 kaart.addLayer(clusters);
+
+/* Een klik op een bol. Gewoon inzoomen tot de auto's uit elkaar gaan — behalve als ze
+   bijna op dezelfde plek staan. Dan waaiert de bol meteen open (spiderfy): de
+   bibliotheek deed dat zelf pas op de diepste zoom, zodat je voor twee auto's op één
+   parking klik na klik tot op straatniveau moest inzoomen. Staat de kaart nog te ver
+   uit om namen te tonen, dan eerst één sprong naar NAAM_ZOOM, en daar openwaaieren:
+   anders waaiert er een bosje naamloze pins open. Enter op een bol doet hetzelfde. */
+const SAMEN_BINNEN_M = 50;   // hoogstens zo ver uit elkaar: "bijna dezelfde plek"
+function klikOpBol(e) {
+  if (e.type === "clusterkeypress" && e.originalEvent && e.originalEvent.key !== "Enter") return;
+  const bol = e.layer;
+  const vak = bol.getBounds();
+  const dichtbij = kaart.distance(vak.getSouthWest(), vak.getNorthEast()) <= SAMEN_BINNEN_M;
+  if (dichtbij || kaart.getZoom() >= kaart.getMaxZoom()) {
+    if (kaart.getZoom() >= NAAM_ZOOM) {
+      bol.spiderfy();
+    } else {
+      /* Na het zoomen is de bol een nieuw object: zoek hem terug via een van zijn auto's.
+         Binnen SAMEN_BINNEN_M zitten ze op NAAM_ZOOM nog zeker samen. `animationend`
+         komt bij inzoomen altijd, ook zonder animatie. Zoomde de bezoeker intussen zelf
+         verder, dan niets: geen bol openwaaieren waar niemand meer naar kijkt. */
+      const auto = bol.getAllChildMarkers()[0];
+      clusters.once("animationend", () => {
+        if (kaart.getZoom() !== NAAM_ZOOM) return;
+        const nu = clusters.getVisibleParent(auto);
+        if (nu && nu.spiderfy) nu.spiderfy();
+      });
+      kaart.setView(vak.getCenter(), NAAM_ZOOM);
+    }
+  } else {
+    bol.zoomToBounds();
+  }
+  if (e.type === "clusterkeypress") kaart.getContainer().focus();
+}
+clusters.on("clusterclick clusterkeypress", klikOpBol);
+// Opengewaaide pins staan elders dan daarnet: hun namen opnieuw schikken.
+clusters.on("spiderfied unspiderfied", schikNamen);
 
 /* Vanaf deze zoom staan de autonamen onder hun pin. Het clusteren houdt de drukte
    vanzelf in de hand: pins die te dicht bij elkaar liggen zitten dan nog in een cluster
