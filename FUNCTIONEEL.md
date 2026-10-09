@@ -559,6 +559,10 @@ er niet op, en het punt van je eigen locatie ook niet. Gebruikte je *Auto's in m
 dan staat de kaart rond je eigen plek; dan staat het vakje standaard uit, en zegt het
 formulier waarom.
 
+**De zoom en de filters** gaan altijd mee, en staan ook in het issue: zo weten de
+beheerders welke auto's je zag. Alleen de filters die iets wegfilteren, en of uitgefilterde
+auto's grijs of verborgen waren. Waar op de kaart je keek, gaat niet mee.
+
 Er gaat verder niets mee: geen IP-adres, geen browsergegevens, geen locatie. Na het
 versturen krijg je de link naar je eigen melding, zodat je kunt volgen wat ermee gebeurt.
 

@@ -3302,6 +3302,33 @@ function sluitMeldvenster() {
   $("knop-melden").focus();
 }
 
+/* Wat er op de kaart ingesteld staat: de zoom en alleen de filters die iets wegfilteren,
+   met de sleutels uit de feed en niet de vertaalde labels. Gaat mee met elke melding en
+   komt in het issue, zodat wie het leest weet welke auto's de melder zag. Geen plek,
+   alleen de zoom. De Worker kijkt het na en zet het om (feedback-worker/kaartstand.js). */
+function kaartstand() {
+  const filters = {};
+  const lijst = (naam, waarden) => { if (waarden.length) filters[naam] = waarden; };
+  lijst("soort", [...staat.gekozenSoort]);
+  lijst("klasse", [...staat.gekozenKlasse]);
+  lijst("brandstof", [...staat.gekozenBrandstof]);
+  lijst("bak", [...staat.gekozenBak]);
+  lijst("toebehoren", TOEBEHOREN.filter((k) => staat.gekozenVlaggen.has(k)));
+  lijst("afspraken", AFSPRAKEN.filter((k) => staat.gekozenVlaggen.has(k)));
+  if (staat.minZit !== null) filters.zitplaatsen = staat.minZit;
+  if (euronormFiltert()) filters.euronorm = { van: staat.minNorm, tot: staat.maxNorm };
+  if (staat.jaarVan !== null) filters.bouwjaar = staat.jaarVan;
+  if (staat.gekozenOvModi.size) {
+    filters.ov = {};
+    for (const modus of staat.gekozenOvModi) {
+      const m = staat.ovModus[modus];
+      filters.ov[modus] = { maxM: m.maxM, minFreq: m.minFreq };
+    }
+    if (staat.ovBeide) filters.ovAlle = true;
+  }
+  return { zoom: kaart.getZoom(), grijs: staat.grijsTonen, filters };
+}
+
 async function verstuurMelding(e) {
   e.preventDefault();
   const velden = e.target.elements;
@@ -3338,6 +3365,7 @@ async function verstuurMelding(e) {
         website: velden.website.value,
         taal,
         token,
+        kaartstand: kaartstand(),
         ...(mail ? { mail } : {}),
         ...(metBeeld ? { schermafbeelding: beeld } : {})
       })

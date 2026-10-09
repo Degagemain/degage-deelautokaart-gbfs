@@ -163,7 +163,7 @@
     "meldformulier.titel": "Probleem of feedback",
     "meldformulier.publiek": "<strong>Je melding is publiek.</strong> Wat je in de beschrijving " +
                              "schrijft, en de screenshot als je die meestuurt, verschijnt als openbaar issue op GitHub, voor iedereen " +
-                             "zichtbaar. Laat er dus persoonlijke gegevens uit, zoals je naam, adres, " +
+                             "zichtbaar, met de zoom en de filters die je gebruikt. Laat er dus persoonlijke gegevens uit, zoals je naam, adres, " +
                              "telefoonnummer, e-mailadres, lidnummer of een nummerplaat. Moet je iets " +
                              "melden dat niet openbaar mag komen? Mail dan naar " +
                              "<a href=\"mailto:info@degage.be\">info@degage.be</a>.",

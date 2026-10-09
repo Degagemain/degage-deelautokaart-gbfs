@@ -18,6 +18,8 @@
      mail          optioneel: een mailadres, voor wie een antwoord wil
      schermafbeelding  optioneel: een screenshot van de kaart, als JPEG-data-URL
                    (schermafbeelding.js); komt openbaar in het issue
+     kaartstand    optioneel: de zoom en de filters op de kaart (kaartstand.js); ook
+                   openbaar in het issue
 
    Wat ze terugkrijgt: `{ url, nummer }` van het nieuwe issue, of `{ fout }` met een
    foutstatus. Gaf de bezoeker een mailadres, dan ook `mailBewaard`; stuurde ze een
@@ -38,6 +40,7 @@ import { github } from "./github.js";
 import { voorDeKaart } from "./instellingen.js";
 import { werkBij, ontvangCorrecties } from "./datafouten.js";
 import { SOORTEN } from "./meldsoorten.js";
+import { leesKaartstand, kaartstandTekst } from "./kaartstand.js";
 import { MAX_BEELD_TEKST, leesBeeld, bewaarBeeld, koppelBeeld, vergeetBeeld, toonBeeld }
   from "./schermafbeelding.js";
 
@@ -143,9 +146,10 @@ export default {
 
     const beheerpagina = mail ? new URL("/beheer", request.url).href : "";
     const beeldUrl = beeldId ? new URL("/schermafbeelding/" + beeldId + ".jpg", request.url).href : "";
+    const stand = leesKaartstand(gegevens.kaartstand);
     const issue = await maakIssue(env, {
       title: titel(soort, beschrijving),
-      body: inhoud(soort, beschrijving, taal, beheerpagina, beeldUrl),
+      body: inhoud(soort, beschrijving, taal, beheerpagina, beeldUrl, stand),
       labels: ["feedback"]
     });
     if (!issue) {
@@ -211,7 +215,7 @@ function titel(soort, beschrijving) {
   return "[Feedback] " + kort;
 }
 
-function inhoud(soort, beschrijving, taal, beheerpagina, beeldUrl) {
+function inhoud(soort, beschrijving, taal, beheerpagina, beeldUrl, stand) {
   // Een omheining die langer is dan elke reeks backticks in de tekst zelf.
   const langste = Math.max(0, ...(beschrijving.match(/`+/g) || []).map((s) => s.length));
   const hek = "`".repeat(Math.max(3, langste + 1));
@@ -227,6 +231,8 @@ function inhoud(soort, beschrijving, taal, beheerpagina, beeldUrl) {
     hek + "text",
     beschrijving,
     hek,
+    // Ook na de beschrijving; zie kaartstand.js voor wat erin mag.
+    ...(stand ? ["", ...kaartstandTekst(stand)] : []),
     /* Het adres is van de Worker zelf, niet van de bezoeker: dit mag wel Markdown zijn.
        Na de beschrijving, zodat uitIssue() in beheer.js die nog vindt. */
     ...(beeldUrl ? ["", "### Screenshot", "",

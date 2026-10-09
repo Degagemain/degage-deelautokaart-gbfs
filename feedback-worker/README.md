@@ -345,6 +345,10 @@ de feed staat, verdwijnt vanzelf. Een nieuwe controle: een regel bij in `REGELS`
 - als de melder een mailadres gaf: dat er een antwoord gevraagd is. Het adres zelf niet;
 - de beschrijving, in een codeblok. Zo verschijnen er geen @vermeldingen, links of
   afbeeldingen die iemand anders lastigvallen of volgen;
+- onder "Kaart bij het melden": de zoom, de filters die iets wegfilteerden, en of
+  uitgefilterde auto's grijs of verborgen waren. De Worker laat alleen bekende sleutels,
+  getallen binnen hun bereik en korte woorden door (`kaartstand.js`); een kaart van vóór
+  deze functie stuurt niets, en dan valt het stuk weg;
 - als de melder het vakje aan liet: een screenshot van de kaart (zie hieronder).
 
 Er komen **geen** IP-adres, browsergegevens of andere gegevens over de bezoeker in.

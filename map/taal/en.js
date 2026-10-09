@@ -161,7 +161,7 @@
     "melden.sjabloon": "feedback-en.yml",
     "meldformulier.titel": "Problem or feedback",
     "meldformulier.publiek": "<strong>Your report is public.</strong> What you write in the " +
-                             "description, and the screenshot if you include it, is posted as a public issue on GitHub, visible to everyone. " +
+                             "description, and the screenshot if you include it, is posted as a public issue on GitHub, visible to everyone, along with the zoom and the filters you use. " +
                              "So leave out any personal details, such as your name, address, phone " +
                              "number, email address, membership number or a number plate. Do you need " +
                              "to report something that cannot be public? Then email " +

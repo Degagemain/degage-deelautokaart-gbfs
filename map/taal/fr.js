@@ -168,7 +168,7 @@
     "meldformulier.titel": "Problème ou avis",
     "meldformulier.publiek": "<strong>Votre signalement est public.</strong> Ce que vous écrivez " +
                              "dans la description, et la capture d'écran si vous la joignez, est publié comme ticket public sur GitHub, visible " +
-                             "par tout le monde. N'y mettez donc aucune donnée personnelle : nom, " +
+                             "par tout le monde, avec le zoom et les filtres que vous utilisez. N'y mettez donc aucune donnée personnelle : nom, " +
                              "adresse, numéro de téléphone, adresse e-mail, numéro de membre ou plaque " +
                              "d'immatriculation. Vous devez signaler quelque chose qui ne peut pas être " +
                              "public ? Écrivez alors à " +
