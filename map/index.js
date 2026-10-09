@@ -434,7 +434,13 @@ tegels.on("tileerror", () => {
 });
 
 const clusters = L.markerClusterGroup({
-  maxClusterRadius: 48,
+  /* Hoe dicht pins (26 px breed, zie teken()) bij elkaar moeten liggen voor ze één bol
+     worden, in pixels. Was 48: dan groepeerde de kaart al pins die met ruimte ernaast
+     los konden staan. Uitgezoomd wat ruimer, voor een rustig overzicht; ingezoomd krapper,
+     want daar wil je net de afzonderlijke standplaatsen zien. Niet veel krapper: een
+     clusterbol is ±38 px, en met 32 viel een losse pin al geregeld half over een bol, en
+     botsten de namen ernaast (nagekeken boven Gent, zoom 12 en 14). */
+  maxClusterRadius: (zoom) => (zoom >= 13 ? 38 : 44),
   spiderfyOnMaxZoom: true,
   showCoverageOnHover: false,
   chunkedLoading: true,
