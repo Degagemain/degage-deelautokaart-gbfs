@@ -24,7 +24,7 @@ import { FILTERS, OPTIES, leesVerborgen, leesVerborgenOpties, leesMeer, bewaarVe
 import { werkBij, leesOpen, markeerOpgelost, zetTerug, telOpen, vergelijkVloot, SOORTEN,
          soortVan }
   from "./datafouten.js";
-import { SOORTEN as MELDSOORTEN } from "./feedback.js";
+import { SOORTEN as MELDSOORTEN } from "./meldsoorten.js";
 
 const SESSIE_DUUR = 8 * 60 * 60;        // seconden
 const RECHTEN = ["admin", "write"];     // GitHub geeft "write" ook voor maintain
