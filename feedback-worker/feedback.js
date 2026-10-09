@@ -33,6 +33,7 @@
 import { beheer, ruimOp } from "./beheer.js";
 import { github } from "./github.js";
 import { voorDeKaart } from "./instellingen.js";
+import { werkBij, ontvangCorrecties } from "./datafouten.js";
 
 /* De soorten melding, met de kop zoals ze in het issue komt. De issues zelf staan in het
    Nederlands, de taal van de beheerders; de taal van de bezoeker staat erbij. */
@@ -55,6 +56,8 @@ export default {
     const pad = new URL(request.url).pathname;
     if (pad === "/beheer" || pad.startsWith("/beheer/")) return beheer(request, env);
     if (pad === "/instellingen") return voorDeKaart(request, env);
+    // Van de generator, niet van een browser: geen CORS, wel een token.
+    if (pad === "/api/datacorrecties") return ontvangCorrecties(request, env);
 
     const herkomst = request.headers.get("Origin") || "";
     const toegestaan = (env.TOEGESTANE_HERKOMST || "")
@@ -144,6 +147,8 @@ export default {
   // Eén keer per dag; het tijdstip staat bij [triggers] in wrangler.toml.
   async scheduled(event, env, ctx) {
     ctx.waitUntil(ruimOp(env));
+    // De feed nakijken voor /beheer/datafouten. Lukt het niet, dan morgen opnieuw.
+    ctx.waitUntil(werkBij(env).catch((e) => console.error("Datafouten:", e.message)));
   }
 };
 

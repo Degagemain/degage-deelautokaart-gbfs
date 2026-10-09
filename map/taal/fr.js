@@ -34,17 +34,11 @@
 
     "voorbehoud.titel": "Bon à savoir",
     "voorbehoud.sluiten": "Fermer",
-    "voorbehoud.live": "<strong>Ceci n'est pas la disponibilité en temps réel.</strong> La " +
-                       "carte indique uniquement où se trouvent les voitures, pas lesquelles " +
-                       "sont libres en ce moment.",
-    "voorbehoud.aanbod": "<strong>Notre offre peut changer</strong> après la souscription de " +
-                         "votre abonnement. Nous ne pouvons pas garantir que l'offre et les " +
-                         "possibilités qui y sont liées resteront les mêmes pendant votre " +
-                         "abonnement.",
-    "voorbehoud.fotos": "<strong>Les photos sont des photos d'exemple</strong> du modèle, " +
-                        "pas de la voiture elle-même.",
-    "voorbehoud.locatie": "<strong>Les positions sont approximatives</strong>, pour des " +
-                          "raisons de confidentialité.",
+    "voorbehoud.live": "<strong>Pas de disponibilité en temps réel :</strong> vous voyez " +
+                       "où sont les voitures, pas si elles sont libres.",
+    "voorbehoud.aanbod": "<strong>L'offre peut changer,</strong> même pendant votre abonnement.",
+    "voorbehoud.fotos": "<strong>Photos d'exemple</strong> du modèle, pas de la voiture elle-même.",
+    "voorbehoud.locatie": "<strong>Positions approximatives,</strong> pour des raisons de confidentialité.",
 
     "zoek.plaatshouder": "Nom de voiture, adresse ou commune…",
     "zoek.aria": "Rechercher un nom de voiture, une adresse ou une commune ; cliquer " +
@@ -89,6 +83,7 @@
     "filters.grijs": "Afficher en gris les voitures filtrées",
     "filters.scrollSluit": "Fermer les filtres en faisant défiler la carte",
     "filters.sluiten": "Fermer les filtres",
+    "filters.meer": "Plus de filtres",
     "kop.soort": "Type de véhicule",
     "kop.klasse": "Catégorie de prix",
     "filter.klasse": "Catégorie {klasse}",
@@ -128,19 +123,21 @@
     "jaar.enkel": "uniquement {jaar}",
     "jaar.aria": "Année de construction minimale",
 
-    "zit.alle": "toutes les voitures",
+    "zit.alle": "tout nombre de places",
     "zit.enkel": "uniquement {n} places",
     "zit.vanaf": "à partir de {n} places",
     "zit.aria": "Nombre minimum de places assises",
 
-    "euronorm.uitleg": "Chaque position affiche cette norme et toutes celles au-dessus. " +
-                       "Les voitures électriques et hybrides figurent en haut de " +
-                       "l'échelle ; elles ne portent pas de norme Euro.",
-    "norm.alle": "toutes les voitures",
+    "euronorm.uitleg": "Choisissez avec les deux curseurs de quelle norme à quelle norme. " +
+                       "Les voitures électriques figurent en haut de l'échelle ; elles " +
+                       "n'ont pas de norme Euro. Les hybrides comptent avec leur propre norme.",
+    "norm.alle": "peu importe",
     "norm.enkel": "uniquement {norm}",
     "norm.hoger": "{norm} et supérieur",
-    "norm.aria": "Norme Euro minimale",
-    "norm.elektrisch": "électrique et hybride",
+    "norm.tussen": "de {van} à {tot}",
+    "norm.ariaVan": "Norme Euro la plus basse",
+    "norm.ariaTot": "Norme Euro la plus haute",
+    "norm.elektrisch": "électrique",
 
     "dichtbij.titel": "Voitures les plus proches",
     "dichtbij.bij": "Au plus près de <b>{plek}</b>",

@@ -17,8 +17,7 @@ gegevens waarop deze kaart draait.
 
 Daarom staat er standaard een regel in beeld:
 
-> **Dit is géén live beschikbaarheid.** De kaart toont enkel de locatie van de auto's,
-> niet welke er op dit moment vrij zijn.
+> **Geen live beschikbaarheid:** je ziet waar de auto's staan, niet of ze vrij zijn.
 
 Wie ze gelezen heeft, kan ze wegklikken met het kruisje. De kaart vraagt eerst een
 bevestiging, en in de instellingen zet je ze terug. Je browser onthoudt die keuze.
@@ -180,10 +179,13 @@ standplaats met drie auto's, of een laag venster — dan wordt de hele popup eve
 kleiner tot hij past. Leesbaar blijft hij altijd: kleiner dan 60% gaat hij niet.
 
 **Dat de locatie bij benadering is**, staat niet in elke popup maar in *"Goed om te
-weten"* bij het openen: *"De locaties zijn bij benadering, vanwege privacy."* Hoe ver een
-stip verschoven is, zegt de kaart bewust niet. Dat venster gaat
-vanzelf dicht na vijftien seconden, met het kruisje of Escape, en zodra je de filters
-opent: wie begint te zoeken of te filteren, heeft het gelezen of wil verder.
+weten"* bij het openen: *"Locaties bij benadering, vanwege privacy."* Hoe ver een
+stip verschoven is, zegt de kaart bewust niet. Dat venster gaat na vijftien
+seconden vanzelf dicht, zonder balkje dat aftelt, zodat niemand zich opgejaagd voelt bij
+het lezen; staat je muis erop, dan wacht het. Eerder dicht kan met het kruisje of Escape,
+en het gaat ook dicht zodra je de filters opent: wie begint te zoeken of te
+filteren, heeft het gelezen of wil verder. Bij het sluiten krimpt het naar het
+ⓘ-knopje onder het tandwiel, dat één keer oplicht; met dat knopje haal je het terug.
 
 **Wat er níét in de popup staat:** niets over de eigenaar. Geen naam, geen e-mailadres,
 geen telefoonnummer. Het enige adres dat getoond wordt, is dat van de lokale groep.
@@ -212,7 +214,9 @@ Zevergem Zevergemdorp"*, *"Treinstation: Melsele"*. Met de muis erover zie je di
 tooltip, en een schermlezer leest ze voor. Zo blijft de popup rustig.
 
 Trams rijden alleen in Gent, Antwerpen en aan de kust. Ligt er geen tramhalte binnen tien
-kilometer, dan staat dat er: *"Geen tramhalte binnen 10 kilometer"*. De regel met het
+kilometer, dan staat er een streepje (—) waar de frequentie zou staan; de tooltip en de
+schermlezer zeggen *"Geen tramhalte binnen 10 kilometer"*. Voor een ontbrekende bushalte
+geldt hetzelfde. De regel met het
 station staat er alleen als er een binnen tien kilometer ligt — en dat is bij elke
 standplaats zo.
 
@@ -348,12 +352,19 @@ De filters staan onder het zoekveld en klappen open zodra je in dat veld klikt o
 te typen. Ze gaan weer dicht met een klik op de kaart, met Escape, en zodra je in de kaart
 scrollt of veegt — dat laatste is uit te zetten met de schakelaar boven de filters.
 
-Welke filters er staan, kiezen de beheerders op de beheerpagina (`/beheer/kaartfilters`
-op de Worker, zie `feedback-worker/README.md`), en ook welke keuzes erin staan — zo staan
+Onderaan de lijst staat **Meer filters**, een uitklapper met de filters waar de meeste
+bezoekers niet naar zoeken; standaard de euronorm en het bouwjaar. Zo duwen ze de rest
+niet uit beeld. Staat er in een filter onder *Meer filters* iets aan, dan zegt een
+groen bolletje met een getal naast *Meer filters* hoeveel, ook als de uitklapper dicht is.
+
+Welke filters er staan, en welke daarvan onder *Meer filters*, kiezen de beheerders op de
+beheerpagina (`/beheer/kaartfilters` op de Worker, zie `feedback-worker/README.md`), en
+ook welke keuzes erin staan — zo staan
 *bed* en *aanhangwagen* niet bij de toebehoren. Een uitgezet filter of keuze verdwijnt uit
 de lijst; de auto's blijven gewoon op de kaart. Een uitgezet toebehoren of afspraak staat
 ook niet in de popup van een auto. Een wijziging is binnen een minuut zichtbaar, zonder
-de kaart opnieuw te publiceren. Antwoordt de Worker niet, dan staan alle filters er.
+de kaart opnieuw te publiceren. Antwoordt de Worker niet, dan staan alle filters er, met
+euronorm en bouwjaar onder *Meer filters*.
 
 | filter | wat het doet |
 |---|---|
@@ -365,7 +376,7 @@ de kaart opnieuw te publiceren. Antwoordt de Worker niet, dan staan alle filters
 | **Toebehoren** | trekhaak, fietsdrager, kinderzitje, gps, bed, aanhangwagen |
 | **Afspraken** | huisdieren toegelaten, leren autorijden |
 | **Openbaar vervoer** | bus, tram en trein; per modus de afstand (bovengrens) en de frequentie (ondergrens). Geldt voor de standplaats, niet voor de auto |
-| **Euronorm** | een ondergrens, met elektrisch en hybride bovenaan (zie hieronder) |
+| **Euronorm** | een schuif met twee bolletjes: van welke tot welke norm, met elektrisch bovenaan (zie hieronder) |
 | **Bouwjaar** | een ondergrens: "vanaf 2018" toont 2018 en later |
 
 **Het filter Openbaar vervoer** hoort bij de standplaats en niet bij de auto: het is er
@@ -421,11 +432,24 @@ schaal van vuil naar schoon. Een elektrische auto hoort aan de schone kant, maar
 in de brongegevens vaak helemaal geen norm — die schaal is nu eenmaal voor
 verbrandingsmotoren gemaakt. Zonder ingreep zouden juist de schoonste auto's uit het
 filter vallen, en dat leest als een fout in de kaart. Ze krijgen daarom een eigen trede
-bovenaan, met een eigen naam: *"elektrisch en hybride"*. Nadrukkelijk geen verzonnen
+bovenaan, met een eigen naam: *"elektrisch"*. Nadrukkelijk geen verzonnen
 "Euro 7" — die norm bestaat echt en komt eraan.
 
-Van zestig auto's kennen we de euronorm niet. Die zie je alleen bij de stand "alle auto's":
-van een auto zonder gekende norm kun je niet volhouden dat hij er minstens één haalt.
+Hybrides en plug-in hybrides staan **niet** bovenaan: ze hebben een verbrandingsmotor en
+dus een echte euronorm, en die telt. Een hybride met Euro 4 is niet schoner dan een
+diesel met Euro 6. Een hybride zonder gekende norm is onbekend, zoals elke andere auto
+zonder norm. Bij een elektrische auto toont de popup geen euronorm: staat er toch een in
+de brongegevens, dan is dat een fout, en die staat op de beheerpagina bij de datafouten.
+
+De schuif heeft twee bolletjes: het linkse is de laagste norm, het rechtse de hoogste.
+Zo kies je *"Euro 5 en hoger"* (rechts helemaal rechts laten), maar ook *"enkel Euro 3"*
+(beide bolletjes op Euro 3) of *"Euro 3 tot en met Euro 5"*. De bolletjes kunnen elkaar
+niet voorbij. Elk bolletje is apart met het toetsenbord te bedienen (Tab, pijltjes, Home
+en End).
+
+Van zestig auto's kennen we de euronorm niet. Die zie je alleen bij de stand "maakt niet uit",
+met beide bolletjes aan de uiteinden: van een auto zonder gekende norm weet je niet of
+hij binnen de gekozen normen valt.
 
 ## Een schakelaar bij de filters
 
@@ -447,7 +471,7 @@ Achter het tandwiel bij de zoomknoppen:
   wie met de muis erover gaat, ziet per auto welke filters hem tegenhouden
   (*"Brandstof: benzine · Bouwjaar: 2012"*), en in de popup staat hetzelfde onder de naam
   van de auto. Een ontbrekend toebehoren heet daar "niet vermeld", nooit "nee".
-- **Melding over beschikbaarheid tonen** — zet de regel *"Dit is géén live
+- **Melding over beschikbaarheid tonen** — zet de regel *"Geen live
   beschikbaarheid"* terug nadat je hem weggeklikt hebt, of haalt hem weg.
 - **Taal** — Nederlands, Français of English.
 

@@ -34,13 +34,10 @@
 
     "voorbehoud.titel": "Good to know",
     "voorbehoud.sluiten": "Close",
-    "voorbehoud.live": "<strong>This is not live availability.</strong> The map only shows " +
-                       "where the cars are parked, not which ones are free right now.",
-    "voorbehoud.aanbod": "<strong>Our offer may change</strong> after you have taken out your " +
-                         "membership. We cannot guarantee that the offer and the options that " +
-                         "come with it will stay the same during your membership.",
-    "voorbehoud.fotos": "<strong>The photos are example photos</strong> of the model, " +
-                        "not of the car itself.",
+    "voorbehoud.live": "<strong>No live availability:</strong> you see where the cars " +
+                       "are, not whether they are free.",
+    "voorbehoud.aanbod": "<strong>The offer may change,</strong> even during your membership.",
+    "voorbehoud.fotos": "<strong>Example photos</strong> of the model, not of the car itself.",
     "voorbehoud.locatie": "<strong>Locations are approximate</strong> for privacy reasons.",
 
     "zoek.plaatshouder": "Car name, address or town…",
@@ -81,6 +78,7 @@
     "filters.grijs": "Show filtered-out cars in grey",
     "filters.scrollSluit": "Close filters when scrolling the map",
     "filters.sluiten": "Close filters",
+    "filters.meer": "More filters",
     "kop.soort": "Vehicle type",
     "kop.klasse": "Price class",
     "filter.klasse": "Class {klasse}",
@@ -119,19 +117,21 @@
     "jaar.enkel": "only {jaar}",
     "jaar.aria": "Minimum year built",
 
-    "zit.alle": "all cars",
+    "zit.alle": "any number of seats",
     "zit.enkel": "only {n} seats",
     "zit.vanaf": "{n} seats or more",
     "zit.aria": "Minimum number of seats",
 
-    "euronorm.uitleg": "Each step shows that standard and everything above it. Electric " +
-                       "and hybrid cars sit at the top of the scale; they carry no Euro " +
-                       "standard of their own.",
-    "norm.alle": "all cars",
+    "euronorm.uitleg": "Use the two handles to choose from which standard to which. Electric " +
+                       "cars sit at the top of the scale; they have no Euro standard. " +
+                       "Hybrids count with their own Euro standard.",
+    "norm.alle": "any",
     "norm.enkel": "only {norm}",
     "norm.hoger": "{norm} and higher",
-    "norm.aria": "Minimum Euro standard",
-    "norm.elektrisch": "electric and hybrid",
+    "norm.tussen": "{van} to {tot}",
+    "norm.ariaVan": "Lowest Euro standard",
+    "norm.ariaTot": "Highest Euro standard",
+    "norm.elektrisch": "electric",
 
     "dichtbij.titel": "Nearest cars",
     "dichtbij.bij": "Closest to <b>{plek}</b>",

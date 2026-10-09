@@ -440,24 +440,42 @@
          data-i18n="ov.filterUitleg">Stel een afstand of frequentie in voor bus, tram of trein.</p>
     </div>
 
-    <!-- Euronorm en bouwjaar staan dicht: het zijn details waar de meeste bezoekers niet
-         naar zoeken, en opengeklapt duwen ze de rest van de filters uit beeld. -->
-    <details class="vouw sectie sectie--schuif" id="vouw-euronorm" data-filter="euronorm">
-      <summary data-i18n="kop.euronorm">Euronorm</summary>
-      <div class="schuif">
-        <input type="range" id="euronorm-schuif" min="0" step="1" value="0">
-        <p class="schuif__waarde" id="euronorm-waarde"></p>
-        <p class="schuif__uitleg" data-i18n="euronorm.uitleg">Elke stand toont die norm én
-          alles daarboven. Elektrische en hybride auto's staan bovenaan op de schaal; zij
-          dragen zelf geen euronorm.</p>
-      </div>
-    </details>
+    <!-- "Meer filters": filters waar de meeste bezoekers niet naar zoeken, achter één
+         uitklapper, zodat ze de rest niet uit beeld duwen. WELKE filters hier staan,
+         kiezen de beheerders op /beheer/kaartfilters; plaatsMeerFilters() in het script
+         verhuist de secties bij het laden. Zonder die instelling staan euronorm en
+         bouwjaar hier, zoals in de opmaak hieronder. Staat er niets in, dan verdwijnt
+         de uitklapper. -->
+    <details class="meerfilters" id="meerfilters">
+      <summary data-i18n="filters.meer">Meer filters</summary>
+      <div class="meerfilters__lijst" id="meerfilters-lijst">
 
-    <details class="vouw sectie sectie--schuif" id="vouw-bouwjaar" data-filter="bouwjaar">
-      <summary data-i18n="kop.bouwjaar">Bouwjaar</summary>
+    <div class="sectie sectie--schuif" data-filter="euronorm">
+      <h2 data-i18n="kop.euronorm">Euronorm</h2>
+      <!-- Twee bolletjes op één balk: van welke tot welke norm. Twee gewone schuiven over
+           elkaar, zodat elk bolletje apart met het toetsenbord te bedienen is; zie
+           bouwEuronorm() in het script en `.dubbel` in de opmaak. -->
+      <div class="schuif">
+        <div class="dubbel" id="euronorm-dubbel">
+          <div class="dubbel__balk" aria-hidden="true"></div>
+          <input type="range" id="euronorm-van" min="0" step="1" value="0">
+          <input type="range" id="euronorm-tot" min="0" step="1" value="0">
+        </div>
+        <p class="schuif__waarde" id="euronorm-waarde"></p>
+        <p class="schuif__uitleg" data-i18n="euronorm.uitleg">Kies met de twee bolletjes van
+          welke tot welke norm. Elektrische auto's staan bovenaan op de schaal; zij hebben
+          geen euronorm. Hybrides tellen met hun eigen euronorm.</p>
+      </div>
+    </div>
+
+    <div class="sectie sectie--schuif" data-filter="bouwjaar">
+      <h2 data-i18n="kop.bouwjaar">Bouwjaar</h2>
       <div class="schuif">
         <input type="range" id="bouwjaar-schuif" min="0" step="1" value="0">
         <p class="schuif__waarde" id="bouwjaar-waarde"></p>
+      </div>
+    </div>
+
       </div>
     </details>
 
@@ -504,10 +522,9 @@
 </div>
 
 <!-- Het voorbehoud: wat de kaart níet belooft. Bij elke opening onderaan in beeld, over de
-     kaart maar zonder haar af te dekken; na 15 seconden gaat het vanzelf weg, en het
-     kruisje sluit het meteen. Het balkje onderaan telt die 15 seconden af — en staat stil
-     zolang de muis erop staat of de focus erin zit, zodat niemand halverwege een zin zijn
-     tekst kwijtraakt. Zie toonVoorbehoud() in het script. -->
+     kaart maar zonder haar af te dekken. Na 15 seconden gaat het vanzelf weg, zonder
+     balkje dat aftelt: dat jaagde mensen op terwijl ze lezen. Dicht krimpt het tot het
+     ⓘ-knopje onder het tandwiel, en dat knopje haalt het terug. Zie toonVoorbehoud() in het script. -->
 <aside class="voorbehoud" id="voorbehoud" aria-labelledby="voorbehoud-titel" hidden>
   <h2 id="voorbehoud-titel" data-i18n="voorbehoud.titel">Goed om te weten</h2>
   <button type="button" class="voorbehoud__sluit" id="voorbehoud-sluit"
@@ -519,18 +536,15 @@
     <span class="enkel-schermlezer" data-i18n="voorbehoud.sluiten">Sluiten</span>
   </button>
   <ul>
-    <li data-i18n-html="voorbehoud.live"><strong>Dit is géén live beschikbaarheid.</strong>
-      De kaart toont enkel de locatie van de auto's, niet welke er op dit moment vrij
-      zijn.</li>
-    <li data-i18n-html="voorbehoud.aanbod"><strong>Ons aanbod kan wijzigen</strong> nadat je
-      je lidmaatschap hebt afgesloten. We kunnen niet garanderen dat het aanbod en de
-      bijbehorende mogelijkheden tijdens je lidmaatschap hetzelfde blijven.</li>
-    <li data-i18n-html="voorbehoud.fotos"><strong>De foto's zijn voorbeeldfoto's</strong> van
-      het model, niet van de auto zelf.</li>
+    <li data-i18n-html="voorbehoud.live"><strong>Geen live beschikbaarheid:</strong> je
+      ziet waar de auto's staan, niet of ze vrij zijn.</li>
+    <li data-i18n-html="voorbehoud.aanbod"><strong>Het aanbod kan wijzigen,</strong> ook
+      tijdens je lidmaatschap.</li>
+    <li data-i18n-html="voorbehoud.fotos"><strong>Voorbeeldfoto's</strong> van het model,
+      niet van de auto zelf.</li>
     <!-- Gevuld door toonVoorbehoudLocatie(), met de afstand uit de feed. -->
     <li id="voorbehoud-locatie" hidden></li>
   </ul>
-  <div class="voorbehoud__tijd" id="voorbehoud-tijd" aria-hidden="true"></div>
 </aside>
 
 <!-- Het meldformulier, voor wie geen GitHub-account heeft. Alleen in gebruik als

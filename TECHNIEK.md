@@ -321,8 +321,14 @@ luisteraar zit **op `#filters`** en niet op elk vakje apart — anders zou elke 
 nieuwe laag luisteraars opleveren.
 
 De euronormschaal draait om `euronormRang()`: `"Euro 3"` t/m `"Euro 6"` leveren 3 t/m 6,
-elektrisch en hybride krijgen `ELEKTRISCH_HYBRIDE_RANG = 10`, en een onbekende norm levert
-`null` — die valt bij elke ingestelde ondergrens weg. Rang 10 staat ver genoeg van de echte
+volledig elektrisch krijgt `ELEKTRISCH_RANG = 10` (hybrides tellen met hun eigen norm), en
+een onbekende norm levert
+`null` — die valt weg zodra de schuif iets filtert (`euronormPast()`).
+In het telbolletje (`werkKoppenBij()`) telt zo'n schuif als één filter; het rechterbolletje
+draagt `data-rust` = de hoogste stand, want daar filtert het niets. De schuif met twee
+bolletjes is twee `<input type="range">` over elkaar (`#euronorm-van`, `#euronorm-tot`),
+met `pointer-events` alleen op de bolletjes; `staat.minNorm` en `staat.maxNorm` zijn de
+grenzen, `null` als er aan die kant geen is. Rang 10 staat ver genoeg van de echte
 reeks om nooit te botsen als er ooit een echte Euro 7 komt. Deze afspraak leeft
 **uitsluitend in de kaart**; in de feed staat er niets van.
 

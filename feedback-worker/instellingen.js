@@ -1,5 +1,6 @@
 /* Instellingen van de kaart die een beheerder op /beheer kan wijzigen, zonder de kaart
-   opnieuw te publiceren: welke filters de kaart toont, en per filter welke keuzes.
+   opnieuw te publiceren: welke filters de kaart toont, welke daarvan onder "Meer filters"
+   staan, en per filter welke keuzes.
    ------------------------------------------------------------------------------------
    De keuze staat in de D1-databank (tabel `instellingen`, zie schema.sql). De kaart leest
    ze bij het laden op `GET /instellingen`. Dat adres is openbaar en mag van overal
@@ -49,6 +50,12 @@ export const OPTIES = {
 
 const SLEUTEL_FILTERS = "verborgen_filters";
 const SLEUTEL_OPTIES = "verborgen_opties";
+const SLEUTEL_MEER = "meer_filters";
+
+/* Wat onder "Meer filters" staat zolang niemand het op /beheer/kaartfilters gekozen heeft.
+   Dezelfde lijst staat als MEER_FILTERS_STANDAARD in map/index.js, voor als de kaart
+   deze Worker niet bereikt. */
+export const MEER_STANDAARD = ["euronorm", "bouwjaar"];
 
 async function lees(env, sleutel) {
   if (!env.DB) return null;
@@ -79,6 +86,14 @@ export async function leesVerborgen(env) {
   return Array.isArray(lijst) ? lijst.filter((k) => Object.hasOwn(FILTERS, k)) : [];
 }
 
+/* De filters onder "Meer filters", als lijst sleutels uit FILTERS. Nog nooit bewaard:
+   MEER_STANDAARD. Een lege lijst is wél een keuze: dan staat alles in de gewone lijst. */
+export async function leesMeer(env) {
+  const lijst = await lees(env, SLEUTEL_MEER);
+  return (Array.isArray(lijst) ? lijst : MEER_STANDAARD)
+    .filter((k) => Object.hasOwn(FILTERS, k));
+}
+
 /* De verborgen keuzes, als { filter: [keuze, ...] }, met alleen de filters waar er iets
    uit staat. Wat niet (meer) in OPTIES staat, valt weg, net als hierboven. */
 export async function leesVerborgenOpties(env) {
@@ -100,20 +115,22 @@ function schoonOpties(opties) {
 export async function laatsteWijziging(env) {
   try {
     return await env.DB.prepare(
-      "SELECT gewijzigd, door FROM instellingen WHERE sleutel IN (?, ?) " +
+      "SELECT gewijzigd, door FROM instellingen WHERE sleutel IN (?, ?, ?) " +
       "ORDER BY gewijzigd DESC LIMIT 1"
-    ).bind(SLEUTEL_FILTERS, SLEUTEL_OPTIES).first();
+    ).bind(SLEUTEL_FILTERS, SLEUTEL_OPTIES, SLEUTEL_MEER).first();
   } catch (e) {
     return null;
   }
 }
 
-/* Beide in één keer, met hetzelfde tijdstip: de beheerpagina bewaart ze samen. */
-export async function bewaarVerborgen(env, filters, opties, wie) {
+/* Alles in één keer, met hetzelfde tijdstip: de beheerpagina bewaart het samen. */
+export async function bewaarVerborgen(env, filters, opties, meer, wie) {
   const wanneer = new Date().toISOString();
   await bewaar(env, SLEUTEL_FILTERS, Object.keys(FILTERS).filter((k) => filters.includes(k)),
                wie, wanneer);
   await bewaar(env, SLEUTEL_OPTIES, schoonOpties(opties), wie, wanneer);
+  await bewaar(env, SLEUTEL_MEER, Object.keys(FILTERS).filter((k) => meer.includes(k)),
+               wie, wanneer);
 }
 
 /* GET /instellingen — wat de kaart bij het laden leest. Een minuut in de cache: een
@@ -129,9 +146,9 @@ export async function voorDeKaart(request, env) {
   if (request.method !== "GET") {
     return new Response(JSON.stringify({ fout: "Alleen GET." }), { status: 405, headers: kop });
   }
-  const [verborgenFilters, verborgenOpties] =
-    await Promise.all([leesVerborgen(env), leesVerborgenOpties(env)]);
-  return new Response(JSON.stringify({ verborgenFilters, verborgenOpties }), {
+  const [verborgenFilters, verborgenOpties, meerFilters] =
+    await Promise.all([leesVerborgen(env), leesVerborgenOpties(env), leesMeer(env)]);
+  return new Response(JSON.stringify({ verborgenFilters, verborgenOpties, meerFilters }), {
     headers: {
       ...kop,
       "Content-Type": "application/json; charset=utf-8",

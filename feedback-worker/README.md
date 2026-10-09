@@ -17,11 +17,12 @@ kaart (formulier)  ──POST──▶  Cloudflare Worker  ──GitHub API─�
 Een statische site kan geen sleutel voor GitHub bewaren zonder hem aan iedereen te geven.
 Vandaar dit kleine tussenstuk. Het draait gratis op Cloudflare.
 
-De Worker doet drie dingen:
+De Worker doet vier dingen:
 
 - **`POST /`** — een melding van de kaart wordt een issue (`feedback.js`);
 - **`/beheer`** — de beheerders zien wie een antwoord per mail vroeg (`beheer.js`);
-- **elke nacht** — de mailadressen van afgehandelde meldingen wissen (`beheer.js`);
+- **elke nacht** — de mailadressen van afgehandelde meldingen wissen (`beheer.js`), en de
+  feed nakijken op datafouten voor `/beheer/datafouten` (`datafouten.js`);
 - **`GET /instellingen`** — welke filters en keuzes de kaart toont, zoals de beheerders dat op
   `/beheer/kaartfilters` instellen (`instellingen.js`).
 
@@ -248,9 +249,13 @@ schrijfopdrachten per dag, en een melding met mailadres is er één.
 ### 6. Filters op de kaart (optioneel)
 
 Op **`/beheer/kaartfilters`** kiezen de beheerders welke filters bezoekers in de
-filterlijst van de kaart zien, en bij de filters met vakjes (soort, prijsklasse,
-brandstof, versnellingsbak, toebehoren, afspraken) ook welke keuzes: een vinkje per
-filter en per keuze, en *Bewaren*. Wat uit staat, verdwijnt uit de lijst; de auto's
+filterlijst van de kaart zien, en waar: per filter *In de lijst*, *Onder Meer filters*
+(een uitklapper onderaan de lijst, voor filters waar de meeste bezoekers niet naar zoeken)
+of *Niet tonen*. Bij de filters met vakjes (soort, prijsklasse, brandstof,
+versnellingsbak, toebehoren, afspraken) kiezen ze ook welke keuzes erin staan: een vinkje
+per keuze. Dan *Bewaren*. Zolang niemand iets bewaard heeft, staan euronorm en bouwjaar
+onder *Meer filters* (`MEER_STANDAARD` in `instellingen.js`, en hetzelfde in
+`map/index.js` voor als de Worker niet antwoordt). Wat uit staat, verdwijnt uit de lijst; de auto's
 blijven op de kaart. Een toebehoren of afspraak die uit staat (zoals *bed*), verdwijnt
 ook uit de popup van elke auto. Staan alle keuzes van een filter uit, dan verdwijnt het
 filter zelf ook. De keuze staat in dezelfde
@@ -271,6 +276,51 @@ Een nieuw filter op de kaart instelbaar maken: geef zijn sectie in `map/index.ht
 `data-filter`-sleutel, en zet dezelfde sleutel met een label in `FILTERS` in
 `instellingen.js`. Een nieuwe keuze (een brandstof, een toebehoren) verbergbaar maken:
 zet ze bij haar filter in `OPTIES` in `instellingen.js`.
+
+### 7. Datafouten (optioneel)
+
+Op **`/beheer/datafouten`** staat wat er niet klopt aan de auto's in de feed: een
+elektrische auto met een euronorm, een euronorm die niet bij het bouwjaar past, een
+euronorm of ander veld dat ontbreekt, een model in het merkveld, een postcode of land in
+de gemeente. Daarbij komt wat de generator al rechtzette maar in de bron fout blijft
+staan: een merk of model in een andere schrijfwijze, een gemeente in hoofdletters, een
+onbruikbare euronorm ("nvt", "5 of 6") of een sterretje. Per fout de naam van de auto, wat
+er mis is, wanneer het gevonden werd, en een knop **Probleem opgelost, wissen**.
+
+De Worker leest de feed elke nacht (en meteen met *Nu controleren*) op het adres in
+`FEED_URL` in `wrangler.toml`. Wat de generator rechtzette, stuurt
+`scripts/genereer_gbfs.py` na elke kwartaalrun naar **`POST /api/datacorrecties`**; dat
+komt in de tabel `datacorrecties`, en elke run vervangt de vorige lijst. Daarvoor is één
+token nodig, aan beide kanten hetzelfde:
+
+- bij de Worker als geheim: `npx wrangler secret put CORRECTIES_TOKEN`;
+- voor de generator in het bestand `correcties-token.txt` in de **interne repo**
+  (`degage-deelautokaart-gbfs-private`, naast deze map). Het staat niet in deze repo,
+  want die is publiek.
+
+**Een bewust aanvaard risico.** Het token is eenvoudig gehouden. Wie het kent, kan niets
+anders dan deze werklijst met rechtzettingen overschrijven: geen mailadressen, meldingen,
+feed of GitHub. De volgende kwartaalrun zet de lijst weer goed. Dat kleine risico hebben we
+genomen in ruil voor een eenvoudige opzet; de afweging staat in de README van de interne
+repo. Een ander token kiezen: het geheim én het bestand opnieuw instellen.
+
+Zonder tokenbestand bouwt de generator de feed gewoon, en zegt hij dat de rechtzettingen
+niet gestuurd zijn. Alleen een run naar de echte `gbfs/`-map stuurt iets;
+een proefrun met `--uit` naar een andere map niet.
+
+Bovenaan de lijst filter je op **soort fout** en zoek je op auto, gemeente of tekst; de
+filters staan in het adres, dus een gefilterde lijst is een link.
+
+Onderaan staan de **nieuwe auto's zonder gegevens**: auto's in de live vloot (`VLOOT_URL`)
+die nog niet in de feed staan. Dat is geen fout en wordt niet bewaard; de lijst wordt bij
+elk bezoek opnieuw gemaakt. De fouten staan in de tabellen `datafouten` en
+`datacorrecties`; bestond de databank al, voer dan `schema.sql` opnieuw uit (zie stap 6).
+
+Omdat de feed maar per kwartaal ververst wordt, gooit *wissen* een fout niet weg: ze wordt
+als opgelost onthouden met de datum van de feed op dat moment, en blijft verborgen tot een
+nieuwere feed. Staat ze daar nog altijd in, dan komt ze terug. Een fout die niet meer in
+de feed staat, verdwijnt vanzelf. Een nieuwe controle: een regel bij in `REGELS` in
+`datafouten.js`.
 
 ## Wat er in het issue komt
 

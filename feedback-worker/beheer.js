@@ -16,8 +16,11 @@
 */
 
 import { github, naarBase64url } from "./github.js";
-import { FILTERS, OPTIES, leesVerborgen, leesVerborgenOpties, bewaarVerborgen, laatsteWijziging }
+import { FILTERS, OPTIES, leesVerborgen, leesVerborgenOpties, leesMeer, bewaarVerborgen,
+         laatsteWijziging }
   from "./instellingen.js";
+import { werkBij, leesOpen, markeerOpgelost, nieuweAutos, SOORTEN, soortVan }
+  from "./datafouten.js";
 
 const SESSIE_DUUR = 8 * 60 * 60;        // seconden
 const RECHTEN = ["admin", "write"];     // GitHub geeft "write" ook voor maintain
@@ -39,6 +42,10 @@ export async function beheer(request, env) {
       "<p>De beheerpagina is nog niet ingesteld. Zie <code>feedback-worker/README.md</code>.</p>");
   }
 
+  if (pad === "/beheer/datafouten.js") {
+    return new Response(DATAFOUTENSCRIPT, { headers: {
+      "Content-Type": "text/javascript; charset=utf-8", "Cache-Control": "no-cache" } });
+  }
   if (pad === "/beheer/filters.js") {
     return new Response(FILTERSCRIPT, { headers: {
       "Content-Type": "text/javascript; charset=utf-8", "Cache-Control": "no-cache" } });
@@ -88,15 +95,17 @@ export async function beheer(request, env) {
       return pagina(403, "Geweigerd", "<p>Dit verzoek kwam niet van deze pagina.</p>");
     }
     const formulier = await request.formData();
-    const zichtbaar = formulier.getAll("zichtbaar").map(String);
+    // Per filter één keuze: "lijst", "meer" of "uit". Ontbreekt ze, dan in de lijst.
+    const plek = (k) => String(formulier.get("plek/" + k) || "lijst");
     const aan = new Set(formulier.getAll("optie").map(String));
     const opties = {};
     for (const [filter, keuzes] of Object.entries(OPTIES)) {
       opties[filter] = Object.keys(keuzes).filter((k) => !aan.has(filter + "/" + k));
     }
     try {
-      await bewaarVerborgen(env, Object.keys(FILTERS).filter((k) => !zichtbaar.includes(k)),
-                            opties, wie);
+      await bewaarVerborgen(env, Object.keys(FILTERS).filter((k) => plek(k) === "uit"),
+                            opties, Object.keys(FILTERS).filter((k) => plek(k) === "meer"),
+                            wie);
     } catch (e) {
       console.error("Instellingen bewaren:", e.message);
       return pagina(500, "Niet bewaard",
@@ -107,6 +116,34 @@ export async function beheer(request, env) {
     return doorsturen(url.origin + "/beheer/kaartfilters?bewaard=1", [], 303);
   }
   if (pad === "/beheer/kaartfilters") return kaartfilters(env, wie, url);
+  if (pad === "/beheer/datafouten/opgelost" && request.method === "POST") {
+    if (!komtVanHier(request, url)) {
+      return pagina(403, "Geweigerd", "<p>Dit verzoek kwam niet van deze pagina.</p>");
+    }
+    const formulier = await request.formData();
+    const sleutel = String(formulier.get("sleutel") || "");
+    if (sleutel) await markeerOpgelost(env, sleutel, wie);
+    // Terug naar dezelfde gefilterde lijst. Alleen een zoekstring, nooit een adres.
+    const terug = String(formulier.get("terug") || "");
+    return doorsturen(url.origin + "/beheer/datafouten" + (terug.startsWith("?") ? terug : ""),
+                      [], 303);
+  }
+  if (pad === "/beheer/datafouten/controleer" && request.method === "POST") {
+    if (!komtVanHier(request, url)) {
+      return pagina(403, "Geweigerd", "<p>Dit verzoek kwam niet van deze pagina.</p>");
+    }
+    try {
+      await werkBij(env);
+    } catch (e) {
+      console.error("Datafouten:", e.message);
+      return pagina(500, "Niet gecontroleerd",
+        "<p>De feed kon niet nagekeken worden: " + ontsnap(e.message) + ". Staat de tabel " +
+        "<code>datafouten</code> al in de databank? Voer <code>schema.sql</code> opnieuw uit " +
+        "(README.md, stap 5).</p><p><a href=\"/beheer/datafouten\">Terug</a></p>");
+    }
+    return doorsturen(url.origin + "/beheer/datafouten?gecontroleerd=1", [], 303);
+  }
+  if (pad === "/beheer/datafouten") return datafouten(env, wie, url);
   if (pad === "/beheer") return overzicht(env, wie, url);
   return pagina(404, "Niet gevonden", '<p><a href="/beheer">Naar het overzicht</a></p>');
 }
@@ -385,10 +422,130 @@ function kopregel(env, wie, hier) {
   const naar = (sleutel, href, tekst) => '<a class="tab" href="' + href + '"' +
     (sleutel === hier ? ' aria-current="page"' : "") + ">" + tekst + "</a>";
   return '<nav class="tabs">' + naar("meldingen", "/beheer", "Meldingen") +
-      naar("kaartfilters", "/beheer/kaartfilters", "Filters op de kaart") + "</nav>" +
+      naar("kaartfilters", "/beheer/kaartfilters", "Filters op de kaart") +
+      naar("datafouten", "/beheer/datafouten", "Datafouten") + "</nav>" +
     '<p class="wie"><span>aangemeld als <strong>@' + ontsnap(wie) + "</strong></span>" +
       kaartknop(env, "knop", "Naar de kaart") +
       '<a class="knop" href="/beheer/uit">Afmelden</a></p>';
+}
+
+/* Wat er niet klopt aan de auto's in de feed (datafouten.js): per fout de auto, wat er
+   mis is en wanneer het gevonden werd, en een knop om het als opgelost te wissen. Een
+   gewiste fout komt terug als een nieuwere feed ze nog altijd bevat. */
+async function datafouten(env, wie, url) {
+  let gelezen;
+  try {
+    gelezen = await leesOpen(env);
+  } catch (e) {
+    console.error("Datafouten lezen:", e.message);
+    return pagina(500, "Datafouten",
+      "<p>De lijst kon niet gelezen worden. Staat de tabel <code>datafouten</code> al in de " +
+      "databank? Voer <code>schema.sql</code> opnieuw uit (README.md, stap 5).</p>",
+      kopregel(env, wie, "datafouten"));
+  }
+  const { fouten, laatst, ontvangen } = gelezen;
+  // Filters in de zoekstring, zoals bij de meldingen: een gefilterde lijst is een link.
+  const tellingen = {};
+  for (const f of fouten) {
+    const s = soortVan(f.regel);
+    tellingen[s] = (tellingen[s] || 0) + 1;
+  }
+  const soorten = { ...SOORTEN, andere: "Andere" };
+  const soort = Object.hasOwn(tellingen, url.searchParams.get("soort"))
+    ? url.searchParams.get("soort") : "alle";
+  const zoek = (url.searchParams.get("zoek") || "").trim().slice(0, 100);
+  const kleiner = zoek.toLowerCase();
+  // Zonder filters geen zoekstring: dan komt "Probleem opgelost" terug op /beheer/datafouten.
+  const terug = soort === "alle" && !zoek ? "" : "?" + new URLSearchParams({ soort, zoek });
+  // De live vloot: niet bewaard, bij elk bezoek opnieuw. Lukt het niet, dan zegt de pagina dat.
+  let nieuw = null, nieuwFout = "";
+  try {
+    nieuw = await nieuweAutos(env);
+  } catch (e) {
+    nieuwFout = e.message;
+  }
+  const nieuwHtml = nieuw === null
+    ? '<p class="let-op">De live vloot kon niet gelezen worden (' + ontsnap(nieuwFout) + ").</p>"
+    : nieuw.length
+      ? '<div class="vlak lijst"><table class="nieuw"><thead><tr><th>Auto</th><th>Brandstof</th>' +
+        "<th>Versnellingsbak</th></tr></thead><tbody>" + nieuw.map((a) =>
+          "<tr><td><strong>" + ontsnap(a.naam) + "</strong></td><td>" +
+          (ontsnap(a.brandstof) || '<span class="zacht">?</span>') + "</td><td>" +
+          (ontsnap(a.bak) || '<span class="zacht">?</span>') + "</td></tr>").join("") +
+        "</tbody></table></div>"
+      : '<p class="vlak leeg"><em>Elke auto in de live vloot staat ook in de feed.</em></p>';
+  const dag = (iso) => ontsnap(String(iso || "").slice(0, 10));
+  let zichtbaar = 0;
+  const rijen = fouten.map((f) => {
+    const s = soortVan(f.regel);
+    const zoekTekst = (f.auto + " " + f.plaats + " " + f.fout).toLowerCase();
+    const toon = (soort === "alle" || s === soort) && (!kleiner || zoekTekst.includes(kleiner));
+    if (toon) zichtbaar++;
+    return '<tr data-soort="' + s + '" data-zoek="' + ontsnap(zoekTekst) + '"' +
+      (toon ? "" : " hidden") + ">" +
+      "<td><strong>" + ontsnap(f.auto) + "</strong>" +
+        (f.plaats ? '<br><span class="zacht">' + ontsnap(f.plaats) + "</span>" : "") + "</td>" +
+      '<td><span class="soort">' + ontsnap(soorten[s]) + "</span><br>" + ontsnap(f.fout) + "</td>" +
+      '<td class="datum">' + dag(f.gevonden) + "</td>" +
+      '<td><form method="post" action="/beheer/datafouten/opgelost">' +
+        '<input type="hidden" name="sleutel" value="' + ontsnap(f.sleutel) + '">' +
+        '<input type="hidden" name="terug" value="' + ontsnap(terug) + '">' +
+        '<button class="knop">Probleem opgelost, wissen</button></form></td>' +
+    "</tr>";
+  }).join("");
+  const keuzes = '<select name="soort"><option value="alle">Alle soorten (' + fouten.length +
+    ")</option>" + Object.entries(soorten).filter(([k]) => tellingen[k]).map(([k, l]) =>
+      '<option value="' + k + '"' + (k === soort ? " selected" : "") + ">" + ontsnap(l) +
+      " (" + tellingen[k] + ")</option>").join("") + "</select>";
+  const gefilterd = soort !== "alle" || zoek;
+  return pagina(200, "Datafouten",
+    "<p class=\"inleiding\">Wat er niet klopt aan de auto's in de feed: een elektrische auto " +
+      "met een euronorm, een euronorm die niet bij het bouwjaar past, een veld dat " +
+      "ontbreekt. Daarbij wat de generator bij de kwartaalrun al rechtzette maar in de bron " +
+      "nog fout staat, zoals een merk in een andere schrijfwijze of een gemeente in " +
+      "hoofdletters. Elke nacht kijkt de Worker de feed na. Verbeter de fout in de bron en druk " +
+      "dan op <b>Probleem opgelost, wissen</b>. De feed wordt maar per kwartaal ververst: " +
+      "een gewiste fout blijft weg tot de volgende feed, en staat ze daar nog altijd in, dan " +
+      "komt ze terug. Een fout die uit de feed verdwijnt, gaat vanzelf van de lijst.</p>" +
+    (url.searchParams.get("gecontroleerd") ? '<p class="bewaard">Gecontroleerd.</p>' : "") +
+    '<form class="vlak controle" method="post" action="/beheer/datafouten/controleer">' +
+      '<span class="zacht">' + (laatst
+        ? "Laatst nagekeken op " + dag(laatst.wanneer) + ", in de feed van " +
+          dag(laatst.feed) + "."
+        : "Nog nooit nagekeken.") + " " + (ontvangen
+        ? "Rechtzettingen van de generator ontvangen op " + dag(ontvangen.wanneer) +
+          " (dump van " + dag(ontvangen.feed) + ")" +
+"."
+        : "Nog geen rechtzettingen van de generator ontvangen; die komen met de volgende " +
+          "kwartaalrun.") + "</span>" +
+      '<button class="knop">Nu controleren</button>' +
+    "</form>" +
+    (fouten.length
+      ? '<form class="vlak filters" id="foutfilters" method="get" action="/beheer/datafouten">' +
+          "<label>Soort fout " + keuzes + "</label>" +
+          '<label>Zoeken <input type="search" name="zoek" value="' + ontsnap(zoek) + '" ' +
+            'placeholder="auto, gemeente of tekst"></label>' +
+          // Alleen voor wie geen JavaScript heeft; datafouten.js verbergt hem.
+          '<button class="knop knop--hoofd" id="toon">Toon</button>' +
+          ' <a href="/beheer/datafouten" id="wisfilters"' + (gefilterd ? "" : " hidden") +
+          ">Wis filters</a>" +
+        "</form>" +
+        '<p class="telling"><span id="zichtbaar">' + zichtbaar + "</span> van " + fouten.length +
+          (fouten.length === 1 ? " fout" : " fouten") + "</p>" +
+        '<div class="vlak lijst"><table class="datafouten"><thead><tr><th>Auto</th>' +
+        "<th>Fout in de data</th><th>Gevonden</th><th></th></tr></thead><tbody>" + rijen +
+        "</tbody></table>" +
+        '<p id="geen"' + (zichtbaar ? " hidden" : "") +
+        "><em>Geen datafouten die aan deze filters voldoen.</em></p></div>" +
+        '<script src="/beheer/datafouten.js"></script>'
+      : '<p class="vlak leeg"><em>Geen datafouten gevonden.</em></p>') +
+    '<h2 id="nieuw">Nieuwe auto\'s zonder gegevens' +
+      (nieuw && nieuw.length ? ' <span class="zacht">(' + nieuw.length + ")</span>" : "") + "</h2>" +
+    '<p class="inleiding">Deze auto\'s staan in de live vloot van Dégage, maar nog niet in de ' +
+      "feed. De kaart toont ze met alleen hun naam, brandstof en versnellingsbak; merk, model, " +
+      "bouwjaar, zitplaatsen, euronorm en toebehoren volgen met de volgende feed. Geen fout: " +
+      "zo gaat het tussen twee kwartaalruns.</p>" + nieuwHtml,
+    kopregel(env, wie, "datafouten"));
 }
 
 /* Een link naar de kaart, in een nieuw tabblad; niets als KAART_URL niet ingesteld is. */
@@ -398,29 +555,38 @@ function kaartknop(env, klasse, tekst) {
     '" target="_blank" rel="noopener">' + ontsnap(tekst) + " ↗</a>";
 }
 
-/* Welke filters de kaart toont, en per filter met vakjes welke keuzes. Een vinkje per
-   filter en per keuze; wat uit staat, verdwijnt van de kaart. De kaart leest dit bij het
-   laden (GET /instellingen), met een minuut cache. Werkt zonder JavaScript: een gewoon
-   formulier. Een keuze die uit staat, blijft uit als je het hele filter uit- en weer
-   aanzet: de twee staan los van elkaar. */
+/* Welke filters de kaart toont en waar, en per filter met vakjes welke keuzes. Per
+   filter drie knoppen: in de gewone lijst, onder "Meer filters" (een uitklapper onderaan
+   de lijst), of niet. Per keuze een vinkje; wat uit staat, verdwijnt van de kaart. De
+   kaart leest dit bij het laden (GET /instellingen), met een minuut cache. Werkt zonder
+   JavaScript: een gewoon formulier. Een keuze die uit staat, blijft uit als je het hele
+   filter uit- en weer aanzet: de twee staan los van elkaar. */
+const PLEKKEN = { lijst: "In de lijst", meer: "Onder Meer filters", uit: "Niet tonen" };
+
 async function kaartfilters(env, wie, url) {
-  const [verborgen, verborgenOpties, laatst] = await Promise.all(
-    [leesVerborgen(env), leesVerborgenOpties(env), laatsteWijziging(env)]);
+  const [verborgen, verborgenOpties, meer, laatst] = await Promise.all(
+    [leesVerborgen(env), leesVerborgenOpties(env), leesMeer(env), laatsteWijziging(env)]);
   const vakje = (naam, waarde, aan, label) =>
     '<label class="vakje"><input type="checkbox" name="' + naam + '" value="' + ontsnap(waarde) +
     '"' + (aan ? " checked" : "") + "> " + ontsnap(label) + "</label>";
   const vakjes = Object.entries(FILTERS).map(([sleutel, label]) => {
     const uit = verborgenOpties[sleutel] || [];
+    const nu = verborgen.includes(sleutel) ? "uit" : meer.includes(sleutel) ? "meer" : "lijst";
+    const plekken = '<span class="plekken">' + Object.entries(PLEKKEN).map(([p, l]) =>
+      '<label class="plek"><input type="radio" name="plek/' + ontsnap(sleutel) + '" value="' + p +
+      '"' + (p === nu ? " checked" : "") + "> " + l + "</label>").join("") + "</span>";
     const keuzes = OPTIES[sleutel]
       ? '<div class="keuzes">' + Object.entries(OPTIES[sleutel]).map(([k, l]) =>
           vakje("optie", sleutel + "/" + k, !uit.includes(k), l)).join("") + "</div>"
       : "";
-    return '<div class="filter">' +
-      vakje("zichtbaar", sleutel, !verborgen.includes(sleutel), label) + keuzes + "</div>";
+    return '<div class="filter"><div class="filter__kop"><span class="filter__naam">' +
+      ontsnap(label) + "</span>" + plekken + "</div>" + keuzes + "</div>";
   }).join("");
   return pagina(200, "Filters op de kaart",
-    "<p class=\"inleiding\">Welke filters bezoekers in de filterlijst van de kaart zien, en " +
-      "welke keuzes erin staan. Wat je uitvinkt, verdwijnt uit die lijst; de auto's blijven " +
+    "<p class=\"inleiding\">Welke filters bezoekers in de filterlijst van de kaart zien, " +
+      "waar, en welke keuzes erin staan. Een filter staat in de gewone lijst, onder " +
+      "<b>Meer filters</b> (een uitklapper onderaan de lijst, voor wat de meeste bezoekers " +
+      "niet zoeken), of niet. Wat je verbergt, verdwijnt uit de lijst; de auto's blijven " +
       "gewoon op de kaart. Een toebehoren of afspraak die uit staat, verdwijnt ook uit de " +
       "popup van elke auto. Een wijziging is binnen een minuut zichtbaar, zonder de kaart " +
       "opnieuw te publiceren.</p>" +
@@ -434,6 +600,46 @@ async function kaartfilters(env, wie, url) {
         " door @" + ontsnap(laatst.door) + ".</span>" : "") + "</div>" +
     "</form>", kopregel(env, wie, "kaartfilters"));
 }
+
+/* Het script achter de filters van de datafouten, zoals FILTERSCRIPT hieronder voor de
+   meldingen: elke wijziging werkt meteen, en het adres en de terugweg van "Probleem
+   opgelost" houden de filters bij. */
+const DATAFOUTENSCRIPT = `"use strict";
+const formulier = document.getElementById("foutfilters");
+const rijen = [...document.querySelectorAll("table.datafouten tbody tr")];
+const wis = document.getElementById("wisfilters");
+document.getElementById("toon").hidden = true;
+
+function pas() {
+  const soort = formulier.elements.soort.value;
+  const zoek = formulier.elements.zoek.value.trim();
+  const kleiner = zoek.toLowerCase();
+  let zichtbaar = 0;
+  for (const rij of rijen) {
+    const past = (soort === "alle" || rij.dataset.soort === soort) &&
+      (!kleiner || rij.dataset.zoek.includes(kleiner));
+    rij.hidden = !past;
+    if (past) zichtbaar++;
+  }
+  document.getElementById("zichtbaar").textContent = zichtbaar;
+  document.getElementById("geen").hidden = zichtbaar > 0;
+  const standaard = soort === "alle" && !zoek;
+  const terug = standaard ? "" : "?" + new URLSearchParams({ soort, zoek });
+  for (const veld of document.querySelectorAll('input[name="terug"]')) veld.value = terug;
+  history.replaceState(null, "", "/beheer/datafouten" + terug);
+  wis.hidden = standaard;
+}
+
+formulier.addEventListener("change", pas);
+formulier.addEventListener("input", pas);
+formulier.addEventListener("submit", (e) => { e.preventDefault(); pas(); });
+wis.addEventListener("click", (e) => {
+  e.preventDefault();
+  formulier.elements.soort.value = "alle";
+  formulier.elements.zoek.value = "";
+  pas();
+});
+`;
 
 /* Het script achter de filters: elke wijziging werkt meteen, zonder herladen. Het filtert
    op de data-attributen van de rijen, op dezelfde manier als overzicht() hierboven, en
@@ -649,13 +855,33 @@ function pagina(status, titel, inhoud, nav = "") {
   .bewaard { color: var(--groen-diep); background: var(--groen-licht); border: 1px solid #b9d6cc;
              border-left: 4px solid var(--groen); font-weight: 600; }
 
+  /* de datafouten */
+  .controle { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+              gap: 8px 14px; font-size: 13.5px; }
+  .datafouten td:nth-child(2) { word-break: normal; max-width: 52ch; }
+  .datafouten td.datum { white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .datafouten .knop { min-height: 32px; white-space: nowrap; }
+  .datafouten .soort { font-size: 12px; font-weight: 600; color: var(--inkt-zacht);
+                       text-transform: uppercase; letter-spacing: .03em; }
+  main h2 { margin: 26px 0 6px; font-size: 17px; }
+
   /* de kaartfilters */
   .vakjes { display: grid; gap: 2px; margin: 0; padding: 0; border: 0; }
   .filter { padding: 2px 0 6px; border-bottom: 1px solid var(--lijn); }
   .filter:last-child { border-bottom: 0; }
-  .filter > .vakje { font-weight: 600; }
-  .filter .keuzes { display: flex; flex-wrap: wrap; gap: 0 6px; padding-left: 25px; font-size: 14px; }
-  .filter:has(> .vakje input:not(:checked)) .keuzes { opacity: .5; }
+  .filter__kop { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; padding: 6px 8px; }
+  .filter__naam { flex: 1 1 200px; font-weight: 600; }
+  .plekken { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--lijn); border-radius: 8px;
+             overflow: hidden; font-size: 13px; }
+  .plek { display: flex; align-items: center; gap: 6px; padding: 5px 10px; cursor: pointer; }
+  .plek + .plek { border-left: 1px solid var(--lijn); }
+  .plek:hover { background: var(--vlak-zacht); }
+  .plek:has(input:checked) { background: var(--groen); color: #fff; }
+  .plek:has(input[value="uit"]:checked) { background: var(--inkt-zacht); }
+  .plek input { margin: 0; accent-color: #fff; }
+  .plek:has(input:focus-visible) { outline: 2px solid var(--groen); outline-offset: -2px; }
+  .filter .keuzes { display: flex; flex-wrap: wrap; gap: 0 6px; padding-left: 8px; font-size: 14px; }
+  .filter:has(input[value="uit"]:checked) .keuzes { opacity: .5; }
   .vakjes legend { margin-bottom: 8px; padding: 0; font-weight: 600; }
   .vakje { display: flex; gap: 9px; align-items: center; padding: 6px 8px; border-radius: 8px; cursor: pointer; }
   .vakje:hover { background: var(--vlak-zacht); }

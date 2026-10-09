@@ -135,10 +135,8 @@ body {
    zonder haar af te dekken, en weg van het paneel en de knoppen bovenaan. Boven de
    overlays (1000), onder de laadmelding en de taalvraag.
 
-   Het groene balkje langs de onderrand telt de 15 seconden af; als het leeg is, sluit
-   het script het venster (`animationend`). Met een muis erop of de focus erin staat het
-   stil. Alleen voor een echte muis: op een aanraakscherm blijft `:hover` na een tik
-   hangen, en dan zou het voorbehoud nooit meer vanzelf weggaan. */
+   Na 15 seconden gaat het vanzelf weg (zonder zichtbare klok). Bij het sluiten vliegt het naar het ⓘ-knopje in de
+   kaartknoppen (sluitVoorbehoud() in het script); zie `.voorbehoud-knop` hieronder. */
 .voorbehoud {
   position: fixed; z-index: 1100;
   left: 16px; right: 16px;
@@ -175,29 +173,35 @@ body {
 .voorbehoud__sluit svg { width: 14px; height: 14px; }
 .voorbehoud__sluit:hover { background: var(--vlak-zacht); border-color: var(--lijn); color: var(--inkt); }
 .voorbehoud__sluit:focus-visible { outline: 2px solid var(--groen); outline-offset: 1px; }
-.voorbehoud__tijd {
-  position: absolute; left: 0; right: 0; bottom: 0;
-  height: 3px;
-  background: var(--groen);
-  transform-origin: left;
-  animation: voorbehoud-tijd 15s linear forwards;
-}
-.voorbehoud:focus-within .voorbehoud__tijd { animation-play-state: paused; }
-@media (hover: hover) {
-  .voorbehoud:hover .voorbehoud__tijd { animation-play-state: paused; }
-}
 @keyframes voorbehoud-in {
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: none; }
 }
-@keyframes voorbehoud-tijd {
-  from { transform: scaleX(1); }
-  to   { transform: scaleX(0); }
+/* Het ⓘ-knopje onder het tandwiel: het voorbehoud in het klein. Komt het venster er net
+   in terecht, dan tikt het knopje één keer aan (`is-nieuw`), zodat je ziet waar het
+   gebleven is. */
+.voorbehoud-knop {
+  display: flex !important; align-items: center; justify-content: center;
+  color: var(--inkt);
 }
-/* Zonder het binnenschuiven; het aftelbalkje blijft, want het is geen beweging maar een
-   klok — en zonder die animatie zou het venster nooit vanzelf sluiten. */
+.voorbehoud-knop svg { width: 16px; height: 16px; }
+.voorbehoud-knop[aria-expanded="true"] { color: var(--groen); }
+.voorbehoud-knop.is-nieuw { animation: voorbehoud-knop-tik .7s ease-out; }
+.voorbehoud-knop.is-nieuw svg { animation: voorbehoud-knop-wip .7s ease-out; }
+@keyframes voorbehoud-knop-tik {
+  0%, 100% { background-color: var(--vlak); color: var(--inkt); }
+  25%      { background-color: var(--groen); color: #fff; }
+}
+@keyframes voorbehoud-knop-wip {
+  0%, 100% { transform: none; }
+  25%      { transform: scale(1.3); }
+  55%      { transform: scale(.92); }
+}
+/* Zonder binnenschuiven en zonder tik; het wegvliegen slaat het script dan ook over. */
 @media (prefers-reduced-motion: reduce) {
-  .voorbehoud { animation: none; }
+  .voorbehoud,
+  .voorbehoud-knop.is-nieuw,
+  .voorbehoud-knop.is-nieuw svg { animation: none; }
 }
 
 /* ---------- knoppen -------------------------------------------------------------- */
@@ -321,11 +325,12 @@ body {
 }
 
 /* Het wolkje na de taalvraag: "hier kan je de taal altijd aanpassen". Het staat naast
-   het tandwiel, dat onderaan de knoppenbalk hangt, en het pijltje wijst er recht naar.
+   het tandwiel, net boven het ⓘ-knopje onderaan de knoppenbalk, en het pijltje wijst er
+   recht naar.
    Groen, zodat het opvalt tussen de witte kaartknoppen; het gaat na 7 s vanzelf weg. */
 .tandwielhint {
   position: absolute;
-  bottom: 0; right: calc(100% + 10px);
+  bottom: 31px; right: calc(100% + 10px);   /* één knop (30 px) en zijn rand hoger */
   width: max-content; max-width: 220px;
   margin: 0; padding: 7px 10px;
   font-family: var(--font); font-size: 13px; line-height: 1.4; color: #fff;
@@ -636,6 +641,62 @@ body {
   font-size: 11.5px; line-height: 1.35; color: var(--inkt-zacht);
 }
 
+/* Twee bolletjes op één balk (de euronorm): twee schuiven exact over elkaar, allebei
+   doorzichtig. Alleen hun bolletjes vangen de muis of de vinger (`pointer-events`), zodat
+   je altijd het bolletje pakt waar je op drukt, ook dat van de onderste schuif. Het groene
+   stuk tussen de twee is een eigen balk eronder; het script zet --van en --tot (0 tot 1).
+
+   `--duim` is de breedte van een bolletje: een schuif zet het midden van zijn bolletje
+   niet op 0% en 100% maar een halve duim naar binnen, en de groene balk moet daar
+   precies tussen lopen. */
+.dubbel {
+  --duim: 18px; --van: 0; --tot: 1;
+  position: relative; height: 24px;
+}
+.dubbel__balk {
+  position: absolute; left: 0; right: 0; top: 50%;
+  height: 6px; margin-top: -3px;
+  background: var(--lijn); border-radius: 3px;
+}
+.dubbel__balk::after {
+  content: ""; position: absolute; top: 0; bottom: 0;
+  left: calc(var(--duim) / 2 + var(--van) * (100% - var(--duim)));
+  right: calc(var(--duim) / 2 + (1 - var(--tot)) * (100% - var(--duim)));
+  background: var(--groen); border-radius: 3px;
+}
+.dubbel input[type="range"] {
+  -webkit-appearance: none; appearance: none;
+  position: absolute; inset: 0;
+  width: 100%; height: 24px; margin: 0;
+  background: transparent;
+  pointer-events: none;
+}
+.dubbel input[type="range"]::-webkit-slider-runnable-track { height: 24px; background: transparent; }
+.dubbel input[type="range"]::-moz-range-track { height: 24px; background: transparent; }
+.dubbel input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: var(--duim); height: var(--duim); margin-top: calc((24px - var(--duim)) / 2);
+  background: var(--groen); border: 2px solid #fff; border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0,0,0,.3);
+  pointer-events: auto; cursor: grab;
+}
+.dubbel input[type="range"]::-moz-range-thumb {
+  width: calc(var(--duim) - 4px); height: calc(var(--duim) - 4px);
+  background: var(--groen); border: 2px solid #fff; border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0,0,0,.3);
+  pointer-events: auto; cursor: grab;
+}
+.dubbel input[type="range"]:active::-webkit-slider-thumb { cursor: grabbing; }
+.dubbel input[type="range"]:active::-moz-range-thumb { cursor: grabbing; }
+/* Het omlijnde bolletje bij toetsenbordbediening, niet de hele (onzichtbare) schuif. */
+.dubbel input[type="range"]:focus-visible { outline: none; }
+.dubbel input[type="range"]:focus-visible::-webkit-slider-thumb { outline: 2px solid var(--groen); outline-offset: 2px; }
+.dubbel input[type="range"]:focus-visible::-moz-range-thumb { outline: 2px solid var(--groen); outline-offset: 2px; }
+/* Op een aanraakscherm een groter bolletje: een vinger is geen muispijl. */
+@media (pointer: coarse) {
+  .dubbel { --duim: 24px; }
+}
+
 /* ---------- het OV-filter -----------------------------------------------------------
    Per modus een blokje: de naam en de twee schuiven eronder. Het streepje links is
    grijs, en groen zodra een schuif van die modus verzet is: zo zie je in één oogopslag
@@ -703,25 +764,41 @@ body {
 .ovbeide { margin-top: 10px; }
 .ovbeide[hidden] { display: none; }
 
-/* ---------- inklapbare filtersectie ---------------------------------------------- */
-.vouw { margin-top: 13px; }
-.vouw > summary {
-  display: flex; align-items: center; gap: 5px;
-  padding: 2px 0;
-  font-size: 11.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
-  color: var(--inkt-zacht);
-  cursor: pointer; list-style: none;
+/* ---------- meer filters -----------------------------------------------------------
+   Eén uitklapper onderaan de lijst, met de filters die de beheerders daar zetten (zie
+   plaatsMeerFilters() in het script). Een streep erboven scheidt hem van de gewone
+   filters; het label is groen en iets groter dan een filterkop, want het is geen filter
+   maar een knop die er meer toont. Het telbolletje zegt hoeveel filters erin aanstaan,
+   zodat een dichte uitklapper niet verzwijgt dat de kaart uitgedund wordt. */
+.meerfilters {
+  margin-top: 14px; padding-top: 8px;
+  border-top: 1px solid var(--lijn);
 }
-.vouw > summary::-webkit-details-marker { display: none; }
-.vouw > summary::before {
+.meerfilters[hidden] { display: none; }
+.meerfilters > summary {
+  display: flex; align-items: center; gap: 6px;
+  padding: 4px 0;
+  font-size: 13px; font-weight: 600; color: var(--groen);
+  cursor: pointer; list-style: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.meerfilters > summary::-webkit-details-marker { display: none; }
+.meerfilters > summary::before {
   content: "";
   width: 0; height: 0;
   border-left: 5px solid currentColor;
   border-top: 4px solid transparent; border-bottom: 4px solid transparent;
   transition: transform .12s;
 }
-.vouw[open] > summary::before { transform: rotate(90deg); }
-.vouw > summary:focus-visible { outline: 2px solid var(--groen); outline-offset: 2px; }
+.meerfilters[open] > summary::before { transform: rotate(90deg); }
+.meerfilters > summary:focus-visible { outline: 2px solid var(--groen); outline-offset: 2px; }
+.meerfilters > summary[data-aantal]::after {
+  content: attr(data-aantal);
+  min-width: 16px; padding: 0 5px; box-sizing: border-box;
+  font-size: 10px; font-weight: 600; line-height: 16px;
+  text-align: center;
+  color: #fff; background: var(--groen); border-radius: 8px;
+}
 
 /* ---------- filters wissen ---------------------------------------------------------
    Een pictogram rechts op de tellerregel, recht onder de minimaliseerknop en even breed:
@@ -1000,7 +1077,7 @@ body {
   font-size: 18px; font-weight: 700; color: var(--inkt);
   font-variant-numeric: tabular-nums;
 }
-.ov__geen { flex: 1 1 auto; min-width: 0; color: var(--inkt); }
+.ov__geen { flex: 1 1 auto; min-width: 0; font-size: 18px; font-weight: 700; color: var(--inkt-zacht); }
 .ov__afstand {
   flex: none;
   font-size: 16px; font-weight: 700; color: var(--groen);
@@ -1127,7 +1204,7 @@ body {
   }
   .ov__icoon { grid-area: icoon; }
   .ov__freq, .ov__geen { grid-area: freq; }
-  .ov__geen { grid-row: 1 / span 2; white-space: normal; font-size: 11.5px; }
+  .ov__geen { grid-row: 1 / span 2; }
   .ov__afstand { grid-area: afstand; }
   .ov__rij + .ov__rij {
     margin-top: 0; padding-top: 0; border-top: 0;
@@ -1330,8 +1407,7 @@ body {
     column-gap: 12px;
     align-content: start;
   }
-  .filters h2,
-  .vouw > summary {
+  .filters h2 {
     position: relative;
     display: flex; align-items: center; gap: 5px;
     margin: 0; padding: 7px 24px 7px 0;
@@ -1346,13 +1422,20 @@ body {
     border-top: 4px solid transparent; border-bottom: 4px solid transparent;
     transition: transform .12s;
   }
-  .sectie.is-open > h2,
-  .sectie.is-open > summary { color: var(--groen); }
-  .sectie.is-open > h2::before,
-  .sectie.is-open > summary::before { transform: rotate(90deg); }
+  .sectie.is-open > h2 { color: var(--groen); }
+  .sectie.is-open > h2::before { transform: rotate(90deg); }
   .filters h2:focus-visible { outline: 2px solid var(--groen); outline-offset: 2px; }
   .sectie { min-width: 0; }
   .sectie--schuif, .sectie--ov { order: 1; }
+  /* "Meer filters" over de volle breedte onder de gewone labels, met zijn eigen labels
+     in hetzelfde raster van twee kolommen. */
+  .meerfilters { grid-column: 1 / -1; order: 2; margin-top: 2px; padding-top: 2px; }
+  .meerfilters > summary { padding: 7px 0; font-size: 12px; }
+  .meerfilters__lijst {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 12px;
+  }
   /* De opties van het open label: een zwevend kaartje net onder het paneel, over de
      kaart. In de filterlijst zelf vielen ze vaak onder de scrollrand. `fixed` ontsnapt
      aan de `overflow: hidden` van het paneel (dat geen transform draagt); top en
@@ -1374,8 +1457,7 @@ body {
   .sectie__opties--chips .keuzes { display: contents; }
   .filters__voet { grid-column: 1 / -1; order: 3; }
   /* Telbolletje: zoveel filters staan er achter dit label aan; zie werkKoppenBij(). */
-  .filters h2[data-aantal]::after,
-  .vouw > summary[data-aantal]::after {
+  .filters h2[data-aantal]::after {
     content: attr(data-aantal);
     position: absolute; right: 0; top: 50%; transform: translateY(-50%);
     min-width: 16px; padding: 0 5px; box-sizing: border-box;
@@ -1389,9 +1471,6 @@ body {
   .schuif { margin-top: 4px; }
   .schuif__waarde { margin-top: 2px; font-size: 12px; }
   .schuif__uitleg { margin-top: 2px; font-size: 11px; }
-  /* Euronorm en bouwjaar: hun label krijgt hierboven dezelfde opmaak als de andere, en
-     hun opties staan net als de rest in het vak onder de labels. */
-  .vouw { margin-top: 0; }
   .uitleg-knop { width: 20px; height: 20px; }
   /* Plakt onderaan de scrollende lijst. De negatieve marges heffen de padding van
      `.filters` op, zodat de witte strook de volle breedte neemt en er geen chips onder
@@ -1429,6 +1508,7 @@ body {
     bottom: calc(26px + var(--dichtbij-hoogte, 0px));
   }
   .leaflet-touch .leaflet-bar a { width: 34px; height: 34px; line-height: 34px; }
+  .leaflet-touch .tandwielhint { bottom: 35px; }
   /* De knoppen staan hier linksonder, dus schuift de meldknop mee naar onderen en komt
      hij er rechts van te staan — 10 px marge plus de 34 px brede balk. De onderkant is
      dezelfde als die van de knoppen, balk of geen balk. */

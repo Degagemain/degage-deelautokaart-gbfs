@@ -34,14 +34,11 @@
 
     "voorbehoud.titel": "Goed om te weten",
     "voorbehoud.sluiten": "Sluiten",
-    "voorbehoud.live": "<strong>Dit is géén live beschikbaarheid.</strong> De kaart toont " +
-                       "enkel de locatie van de auto's, niet welke er op dit moment vrij zijn.",
-    "voorbehoud.aanbod": "<strong>Ons aanbod kan wijzigen</strong> nadat je je lidmaatschap " +
-                         "hebt afgesloten. We kunnen niet garanderen dat het aanbod en de " +
-                         "bijbehorende mogelijkheden tijdens je lidmaatschap hetzelfde blijven.",
-    "voorbehoud.fotos": "<strong>De foto's zijn voorbeeldfoto's</strong> van het model, " +
-                        "niet van de auto zelf.",
-    "voorbehoud.locatie": "<strong>De locaties zijn bij benadering</strong>, vanwege privacy.",
+    "voorbehoud.live": "<strong>Geen live beschikbaarheid:</strong> je ziet waar de " +
+                       "auto's staan, niet of ze vrij zijn.",
+    "voorbehoud.aanbod": "<strong>Het aanbod kan wijzigen,</strong> ook tijdens je lidmaatschap.",
+    "voorbehoud.fotos": "<strong>Voorbeeldfoto's</strong> van het model, niet van de auto zelf.",
+    "voorbehoud.locatie": "<strong>Locaties bij benadering,</strong> vanwege privacy.",
 
     "zoek.plaatshouder": "Autonaam, adres of gemeente…",
     "zoek.aria": "Zoek een autonaam, adres of gemeente; klikken toont ook de filters",
@@ -81,6 +78,7 @@
     "filters.grijs": "Gefilterde auto's grijs tonen",
     "filters.scrollSluit": "Filters sluiten bij scrollen in de kaart",
     "filters.sluiten": "Filters sluiten",
+    "filters.meer": "Meer filters",
     "kop.soort": "Soort auto",
     "kop.klasse": "Prijsklasse",
     "filter.klasse": "Klasse {klasse}",
@@ -120,19 +118,21 @@
     "jaar.enkel": "enkel {jaar}",
     "jaar.aria": "Minimaal bouwjaar",
 
-    "zit.alle": "alle auto's",
+    "zit.alle": "elk aantal plaatsen",
     "zit.enkel": "enkel {n} plaatsen",
     "zit.vanaf": "vanaf {n} plaatsen",
     "zit.aria": "Minimum aantal zitplaatsen",
 
-    "euronorm.uitleg": "Elke stand toont die norm én alles daarboven. Elektrische en " +
-                       "hybride auto's staan bovenaan op de schaal; zij dragen zelf " +
-                       "geen euronorm.",
-    "norm.alle": "alle auto's",
+    "euronorm.uitleg": "Kies met de twee bolletjes van welke tot welke norm. Elektrische " +
+                       "auto's staan bovenaan op de schaal; zij hebben geen euronorm. " +
+                       "Hybrides tellen met hun eigen euronorm.",
+    "norm.alle": "maakt niet uit",
     "norm.enkel": "enkel {norm}",
     "norm.hoger": "{norm} en hoger",
-    "norm.aria": "Minimale euronorm",
-    "norm.elektrisch": "elektrisch en hybride",
+    "norm.tussen": "{van} tot en met {tot}",
+    "norm.ariaVan": "Laagste euronorm",
+    "norm.ariaTot": "Hoogste euronorm",
+    "norm.elektrisch": "elektrisch",
 
     "dichtbij.titel": "Dichtstbijzijnde auto's",
     "dichtbij.bij": "Dichtst bij <b>{plek}</b>",

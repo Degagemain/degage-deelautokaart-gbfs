@@ -46,6 +46,11 @@ wat er gebeurd is.
    ...\Degage\degage-deelautokaart-gbfs-private\  <- de interne repo
    ```
 
+   Daarin staat ook `correcties-token.txt`: het token waarmee de feedstap na het bouwen
+   naar de beheerpagina stuurt wat hij in de bron rechtzette (zie
+   `feedback-worker/README.md`, stap 7). Ontbreekt het, dan wordt de feed gewoon gebouwd;
+   alleen mist `/beheer/datafouten` dan die lijst.
+
 Het script kijkt dit allemaal na **vóór** het begint, en zegt in gewone taal wat er
 ontbreekt en hoe je het oplost. Klopt er iets niet, dan draait er niets en verandert er
 niets.
@@ -176,8 +181,16 @@ beschermt de pagina. Na acht uur meld je je opnieuw aan.
   opent een mail met het issuenummer als onderwerp. Dat adres staat alleen hier, nooit op
   GitHub, en verdwijnt vanzelf dertig dagen nadat het issue gesloten is. Wissen kan ook
   meteen.
-- **Filters op de kaart** — welke filters bezoekers zien, en per filter welke keuzes. Een
-  toebehoren dat uit staat (zoals *bed*), verdwijnt ook uit de popup. Een wijziging is
+- **Filters op de kaart** — welke filters bezoekers zien, en waar: in de gewone lijst,
+  onder *Meer filters* (een uitklapper onderaan de lijst), of niet. Per filter ook welke
+  keuzes erin staan. Een toebehoren dat uit staat (zoals *bed*), verdwijnt ook uit de popup.
+- **Datafouten** — wat er niet klopt aan de auto's in de feed, zoals een elektrische auto
+  met een euronorm of een euronorm die niet bij het bouwjaar past: per fout de auto, wat
+  er mis is en wanneer het gevonden werd. Ook wat de generator bij de kwartaalrun al
+  rechtzette (schrijfwijze, hoofdletters, een onbruikbare euronorm) staat erbij, want in
+  de bron is het nog fout. Verbeter de bron en druk op *Probleem opgelost, wissen*. Een
+  gewiste fout komt terug als de volgende feed ze nog altijd bevat. Onderaan: de nieuwe
+  auto's die al in de live vloot staan maar nog niet in de feed. Een wijziging is
   binnen een minuut op de kaart te zien.
 
 Hoe je de pagina opzet, staat in [`feedback-worker/README.md`](feedback-worker/README.md).
@@ -227,9 +240,9 @@ Overrulen kan, maar hoeft niet. Al deze vlaggen kun je ook aan `bijwerken.py` me
 
 | vlag | in plaats van |
 |---|---|
-| `--replica <pad>` | `DEGAGE_REPLICA`, anders naast de repo gezocht |
+| `--replica <pad>` | naast de repo gezocht |
 | `--dump-datum <datum>` | de datum die in de replica staat |
-| `--basis-url <url>` | `DEGAGE_BASIS_URL`, anders `CNAME` of de git-remote |
+| `--basis-url <url>` | `CNAME` of de git-remote |
 | `--no-interactive` | gebeurt vanzelf zonder terminal |
 
 De generator valideert tegen de officiële GBFS-schema's en draait een privacyscan over

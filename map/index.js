@@ -273,21 +273,30 @@ function alleVlaggen() {
 }
 
 /* ==========================================================================
-   EURONORM — een schaal, en waar elektrisch en hybride daarop staan
+   EURONORM — een schaal, en waar elektrisch daarop staat
    ==========================================================================
    De euronorm staat als "Euro 3".."Euro 6" in het bestand, of hij ontbreekt. Ontbreken
    betekent "onbekend", niet "geen norm": van 60 van de 568 wagens is de bronwaarde leeg,
    'nvt' of dubbelzinnig ('5 of 6'), en de generator raadt daar niet.
 
-   ELEKTRISCH EN HYBRIDE STAAN HIER BOVENAAN OP DE SCHAAL, boven de hoogste euronorm.
-   Dat verdient uitleg, want het is een keuze van deze kaart en geen feit uit de data:
+   VOLLEDIG ELEKTRISCHE WAGENS STAAN HIER BOVENAAN OP DE SCHAAL, boven de hoogste
+   euronorm. Dat verdient uitleg, want het is een keuze van deze kaart en geen feit uit
+   de data:
 
    · Waarom? De euronorm is voor de bezoeker een schaal van "vuil" naar "schoon". Een
      elektrische wagen hoort aan de schone kant, maar heeft in de bron vaak geen
      bruikbare norm — 44 van de 65 elektrische wagens staan er leeg, op 'nvt' of op '*'.
      Zonder deze afspraak zouden net de schoonste wagens uit het filter vallen, en dat
      leest als een fout in de kaart.
-   · Ze krijgen daarom een eigen trede met een EIGEN NAAM, "elektrisch en hybride", en
+   · Hybrides en plug-in hybrides horen er NIET bij: ze hebben een verbrandingsmotor en
+     dus een echte euronorm, en die tellen we. Een hybride met Euro 4 is niet schoner dan
+     een diesel met Euro 6, en wie op de lage-emissiezones let, moet dat ook zo zien.
+     (Tot 10-2026 stonden ze wel bovenaan.) Een hybride zonder norm is onbekend, zoals
+     elke andere wagen zonder norm.
+   · Een elektrische wagen met een norm in de bron (21 met "Euro 6") negeren we: dat is
+     een fout in de bron. De beheerpagina zet hem bij de datafouten (datafouten.js in
+     feedback-worker), en de popup toont geen euronorm bij een elektrische wagen.
+   · Ze krijgen daarom een eigen trede met een EIGEN NAAM, "elektrisch", en
      uitdrukkelijk NIET een verzonnen euronorm. Euro 7 bestaat echt en komt eraan; die
      naam hier gebruiken zou botsen zodra er een échte Euro 7-wagen in de vloot komt,
      en zou bovendien een keuring beweren die deze wagens niet hebben.
@@ -301,20 +310,20 @@ function alleVlaggen() {
    De schuif toont dit ook letterlijk aan de bezoeker, zodat niemand denkt dat er een
    keuringsbewijs achter zit. */
 const ELEKTRISCH_HYBRIDE = new Set(["elektrisch", "hybride", "plug-in hybride"]);
-const ELEKTRISCH_HYBRIDE_RANG = 10;
+const ELEKTRISCH_RANG = 10;
 
 /* De rang van een wagen op die schaal, of null als we het niet weten. Alleen wagens met
    een gekende rang kunnen door een ondergrens: "minstens Euro 5" kan niet waar zijn van
    een wagen waarvan we de norm niet kennen. */
 function euronormRang(w) {
-  if (ELEKTRISCH_HYBRIDE.has(w.brandstof)) return ELEKTRISCH_HYBRIDE_RANG;
+  if (w.brandstof === "elektrisch") return ELEKTRISCH_RANG;
   const m = /^Euro (\d)$/.exec(w.euronorm || "");
   return m ? Number(m[1]) : null;
 }
 
 /* De naam van een trede. De bovenste trede draagt geen normnummer, want ze ís er geen. */
 function rangNaam(rang) {
-  return rang === ELEKTRISCH_HYBRIDE_RANG ? t("norm.elektrisch") : "Euro " + rang;
+  return rang === ELEKTRISCH_RANG ? t("norm.elektrisch") : "Euro " + rang;
 }
 
 const $ = (id) => document.getElementById(id);
@@ -550,7 +559,8 @@ const staat = {
   minZit: null,           // gekozen ondergrens; null = geen zitplaatsfilter
   bakken: [],             // manueel / automatisch, gesorteerd op aantal
   normRangen: [],         // de rangen die voorkomen, oplopend (bv. [3,4,5,6,7])
-  minNorm: null,          // gekozen ondergrens; null = geen euronormfilter
+  minNorm: null,          // gekozen ondergrens; null = geen ondergrens
+  maxNorm: null,          // gekozen bovengrens; null = geen bovengrens
   jaren: [],              // alle bouwjaren die in de data voorkomen, oplopend
   fotos: {},              // "merk|model" -> { bestand, licentie, auteur, bronpagina }
   bereik: {},             // "merk|model|bouwjaar" (of "merk|model") -> { km: [van, tot], ... }
@@ -759,9 +769,13 @@ const API_BRANDSTOF = {
 const API_BAK = { manual: "manueel", automatic: "automatisch" };
 
 /* Wat de beheerders uitzetten: `filters` als Set van `data-filter`-sleutels uit
-   index.html, `opties` als { filter: Set(keuze) }. Lukt het niet: niets staat uit. */
+   index.html, `opties` als { filter: Set(keuze) }, en `meer` als Set van de filters die
+   onder "Meer filters" staan. Lukt het niet: niets staat uit, en onder "Meer filters"
+   staat wat er zonder instelling staat (MEER_FILTERS_STANDAARD). */
+const MEER_FILTERS_STANDAARD = ["euronorm", "bouwjaar"];
+
 async function laadInstellingen() {
-  const niets = { filters: new Set(), opties: {} };
+  const niets = { filters: new Set(), opties: {}, meer: new Set(MEER_FILTERS_STANDAARD) };
   if (!INSTELLINGEN_URL) return niets;
   const stop = new AbortController();
   const wekker = setTimeout(() => stop.abort(), INSTELLINGEN_WACHTTIJD_MS);
@@ -776,7 +790,9 @@ async function laadInstellingen() {
     }
     return {
       filters: new Set(Array.isArray(verborgenFilters) ? verborgenFilters : []),
-      opties
+      opties,
+      // Een Worker van vóór "Meer filters" stuurt dit niet mee: dan de standaard.
+      meer: new Set(Array.isArray(json.meerFilters) ? json.meerFilters : MEER_FILTERS_STANDAARD)
     };
   } catch (e) {
     console.warn("instellingen niet geladen (" + INSTELLINGEN_URL + "): " + e.message +
@@ -948,6 +964,7 @@ async function laden() {
   for (const sectie of document.querySelectorAll("#filters [data-filter]")) {
     sectie.style.display = verborgen.filters.has(sectie.dataset.filter) ? "none" : "";
   }
+  plaatsMeerFilters(verborgen.meer);
 
   locatieVaagheid = wagenBestand.locatie_nauwkeurigheid_m || null;
   toonVoorbehoudLocatie();
@@ -1060,6 +1077,7 @@ async function laden() {
   toonDatum();
 
   bouwFilters();
+  toonMeerFilters();
   teken();   // roept ook bijwerkenAutoDichtbij() aan — staat de kaart al ver genoeg
              // ingezoomd (of de vloot klein genoeg), dan verschijnt de balk meteen
   // Staat er een publicatiefout in beeld, dan blijft die staan: die gaat niet over laden.
@@ -1237,39 +1255,90 @@ function toonZitplaatsen() {
   schuif.setAttribute("aria-valuetext", tekst);
 }
 
-/* De schuif loopt van "alle" (stand 0) tot de hoogste rang die in de data voorkomt.
-   Elke stand betekent een ONDERGRENS: staat hij op Euro 5, dan tonen we Euro 5, 6 en 7.
-   Stand 0 filtert niets weg en is daarmee de enige stand die de 60 wagens zonder
-   gekende norm nog toont — bij elke andere stand vallen die weg, want van een wagen
-   zonder norm kun je niet volhouden dat hij er minstens één haalt. */
+/* Een schuif met twee bolletjes over de rangen die in de data voorkomen: van welke tot
+   welke norm. Elke stand is een rang; "Euro 3 tot en met Euro 3" is dus "enkel Euro 3",
+   en het rechterbolletje helemaal rechts laat de bovengrens weg ("Euro 5 en hoger").
+
+   Staan beide bolletjes aan de uiteinden, dan filtert de schuif niets weg. Dat is de
+   enige stand die de 60 wagens zonder gekende norm nog toont — bij elke andere vallen
+   die weg, want van een wagen zonder norm weet je niet of hij erbinnen valt.
+
+   De bolletjes kunnen elkaar niet voorbij: het ene schuift tot op het andere en stopt
+   daar. Staan ze op dezelfde plek, dan ligt het bolletje bovenop dat nog een kant op kan
+   — rechts het linkse, links het rechtse — anders zit je vast. */
 function bouwEuronorm() {
-  const schuif = $("euronorm-schuif");
-  schuif.max = String(staat.normRangen.length);
-  schuif.value = "0";
-  schuif.addEventListener("input", () => {
-    const i = Number(schuif.value);
-    staat.minNorm = i === 0 ? null : staat.normRangen[i - 1];
-    toonEuronorm();
-    teken();
+  const van = $("euronorm-van"), tot = $("euronorm-tot");
+  const laatste = String(Math.max(staat.normRangen.length - 1, 0));
+  van.max = tot.max = laatste;
+  van.value = "0";
+  tot.value = laatste;
+  tot.dataset.rust = laatste;   // in rust staat het rechterbolletje rechts; zie werkKoppenBij()
+  van.addEventListener("input", () => {
+    if (Number(van.value) > Number(tot.value)) van.value = tot.value;
+    zetEuronorm();
+  });
+  tot.addEventListener("input", () => {
+    if (Number(tot.value) < Number(van.value)) tot.value = van.value;
+    zetEuronorm();
   });
   toonEuronorm();
 }
 
+function zetEuronorm() {
+  const i = Number($("euronorm-van").value), j = Number($("euronorm-tot").value);
+  const laatste = staat.normRangen.length - 1;
+  const alles = i === 0 && j === laatste;
+  staat.minNorm = alles ? null : staat.normRangen[i];
+  staat.maxNorm = alles || j === laatste ? null : staat.normRangen[j];
+  toonEuronorm();
+  teken();
+}
+
+function euronormFiltert() {
+  return staat.minNorm !== null || staat.maxNorm !== null;
+}
+
+function euronormPast(w) {
+  if (!euronormFiltert()) return true;
+  if (w.normRang === null) return false;
+  if (staat.minNorm !== null && w.normRang < staat.minNorm) return false;
+  if (staat.maxNorm !== null && w.normRang > staat.maxNorm) return false;
+  return true;
+}
+
 function toonEuronorm() {
-  const schuif = $("euronorm-schuif");
-  const hoogste = staat.normRangen[staat.normRangen.length - 1];
+  const van = $("euronorm-van"), tot = $("euronorm-tot");
+  const i = Number(van.value), j = Number(tot.value);
+  const laatste = Math.max(staat.normRangen.length - 1, 0);
+  const rv = staat.normRangen[i], rt = staat.normRangen[j];
   let tekst;
-  if (staat.minNorm === null) {
+  if (!euronormFiltert()) {
     tekst = t("norm.alle");
-  } else if (staat.minNorm === hoogste) {
-    tekst = t("norm.enkel", { norm: rangNaam(staat.minNorm) });
+  } else if (i === j) {
+    tekst = t("norm.enkel", { norm: rangNaam(rv) });
+  } else if (j === laatste) {
+    tekst = t("norm.hoger", { norm: rangNaam(rv) });
   } else {
-    tekst = t("norm.hoger", { norm: rangNaam(staat.minNorm) });
+    tekst = t("norm.tussen", { van: rangNaam(rv), tot: rangNaam(rt) });
   }
   $("euronorm-waarde").textContent = tekst;
-  // De schuif draagt getallen; een schermlezer moet de betekenis horen, niet "3".
-  schuif.setAttribute("aria-label", t("norm.aria"));
-  schuif.setAttribute("aria-valuetext", tekst);
+
+  const balk = $("euronorm-dubbel");
+  balk.style.setProperty("--van", laatste ? i / laatste : 0);
+  balk.style.setProperty("--tot", laatste ? j / laatste : 1);
+  // Zie hierboven: bij dezelfde stand het bolletje bovenop dat nog weg kan.
+  const linksBoven = i === j && i > laatste / 2;
+  van.style.zIndex = linksBoven ? "2" : "1";
+  tot.style.zIndex = linksBoven ? "1" : "2";
+
+  /* De schuiven dragen getallen; een schermlezer moet de norm horen, niet "3". Elk
+     bolletje zegt zijn eigen grens, en de beschrijving het geheel. */
+  van.setAttribute("aria-label", t("norm.ariaVan"));
+  tot.setAttribute("aria-label", t("norm.ariaTot"));
+  if (rv !== undefined) van.setAttribute("aria-valuetext", rangNaam(rv));
+  if (rt !== undefined) tot.setAttribute("aria-valuetext", rangNaam(rt));
+  van.setAttribute("aria-describedby", "euronorm-waarde");
+  tot.setAttribute("aria-describedby", "euronorm-waarde");
 }
 
 /* Bouwjaar als ondergrens, net als zitplaatsen en euronorm: "vanaf 2018" toont 2018 en later.
@@ -1527,9 +1596,7 @@ function wagenPast(w) {
   if (staat.gekozenKlasse.size && !staat.gekozenKlasse.has(klasseVan(w))) return false;
   if (staat.minZit !== null && !(w.zitplaatsen >= staat.minZit)) return false;
   if (staat.gekozenBak.size && !staat.gekozenBak.has(w.versnellingsbak)) return false;
-  if (staat.minNorm !== null && (w.normRang === null || w.normRang < staat.minNorm)) {
-    return false;
-  }
+  if (!euronormPast(w)) return false;
   if (staat.jaarVan !== null && !(w.bouwjaar >= staat.jaarVan)) return false;
   if (!ovPast(w)) return false;
   for (const sleutel of staat.gekozenVlaggen) {
@@ -1570,7 +1637,7 @@ function redenen(w) {
                 t("reden.nietVermeld", { vlag: vlagLabel(sleutel) })));
   }
   if (!ovPast(w)) r.push(paar("kop.ov", ovSamenvatting(w)));
-  if (staat.minNorm !== null && (w.normRang === null || w.normRang < staat.minNorm)) {
+  if (!euronormPast(w)) {
     r.push(paar("kop.euronorm", w.euronorm || onbekend));
   }
   if (staat.jaarVan !== null && !(w.bouwjaar >= staat.jaarVan)) {
@@ -1598,7 +1665,9 @@ function herstelFilters() {
   $("zit-schuif").value = "0";
   toonZitplaatsen();
   staat.minNorm = null;
-  $("euronorm-schuif").value = "0";
+  staat.maxNorm = null;
+  $("euronorm-van").value = "0";
+  $("euronorm-tot").value = $("euronorm-tot").max;
   toonEuronorm();
   staat.jaarVan = null;
   $("bouwjaar-schuif").value = "0";
@@ -1674,8 +1743,10 @@ function popupHtml(station, wagen) {
     if (w.versnellingsbak) feiten.push(feit("i-bak", waarde(w.versnellingsbak)));
     // Een nieuwe auto uit de live vloot kent zijn klasse nog niet; dan zwijgen we erover.
     if (w.klasse) feiten.push(feit("i-klasse", klasseLabel(w.klasse)));
-    // Ontbreekt de euronorm, dan zwijgen we erover — "onbekend" is geen feit om te tonen.
-    if (w.euronorm) feiten.push(feit("i-norm", w.euronorm));
+    /* Ontbreekt de euronorm, dan zwijgen we erover — "onbekend" is geen feit om te tonen.
+       Bij een volledig elektrische wagen ook: zo'n norm in de bron is een fout (zie
+       euronormRang()). */
+    if (w.euronorm && w.brandstof !== "elektrisch") feiten.push(feit("i-norm", w.euronorm));
 
     /* Het rijbereik, alleen voor volledig elektrische wagens en alleen als het bekend is.
        Een marge waar de batterijversie niet vaststaat; één getal waar ze wel vaststaat.
@@ -1987,8 +2058,13 @@ function ovHtml(station, district) {
   /* `halte_ver` is de straal waarbinnen `haal_ov.py` doorzoekt; `halte_zoek` is de oudere,
      kleinere naam en blijft als terugval staan voor een ov.json van vóór die verruiming. */
   const straal = ovAfstand(staat.ov.stralen_m.halte_ver || staat.ov.stralen_m.halte_zoek);
-  const geen = (icoon, soort, sleutel) =>
-    rij(icoon, soort, '<span class="ov__geen">' + ontsnap(t(sleutel, { straal })) + "</span>");
+  /* Geen halte in de buurt: een streepje waar de frequentie zou staan. De zin zelf
+     ("Geen tramhalte binnen 10 kilometer") staat in de tooltip en voor de schermlezer. */
+  const geen = (icoon, soort, sleutel) => {
+    const zin = ontsnap(t(sleutel, { straal }));
+    return rij(icoon, soort, '<span class="ov__geen" role="img" aria-label="' + zin +
+      '" title="' + zin + '">—</span>');
+  };
   const halte = (icoon, soort, h) =>
     rij(icoon, alt(soort, h.naam), frequentie(freqPerRichting(h)), h.m);
 
@@ -2149,7 +2225,7 @@ function teken() {
                     staat.gekozenKlasse.size +
                     staat.gekozenBak.size + staat.gekozenVlaggen.size +
                     (staat.minZit !== null ? 1 : 0) +
-                    (staat.minNorm !== null ? 1 : 0) +
+                    (euronormFiltert() ? 1 : 0) +
                     (bouwjaarFiltert() ? 1 : 0) +
                     staat.gekozenOvModi.size;
   /* Niets gefilterd, niets te wissen: dan is de knop alleen maar ruis. `hidden` maakt hem
@@ -2237,6 +2313,29 @@ const AllesInBeeld = L.Control.extend({
       ontsnap(t("knop.instellingen")) + "</span>";
     L.DomEvent.on(tandwiel, "click", L.DomEvent.stop);
     L.DomEvent.on(tandwiel, "click", () => zetInstellingen(!instellingenOpen()));
+
+    /* Het voorbehoud in het klein, onderaan de balk. Het venster gaat niet vanzelf weg,
+       maar wie het sluit, ziet het hierin verdwijnen en kan het hier terughalen. */
+    const ik = L.DomUtil.create("a", "voorbehoud-knop", doos);
+    ik.href = "#";
+    ik.title = t("voorbehoud.titel");
+    ik.setAttribute("data-i18n-title", "voorbehoud.titel");
+    ik.setAttribute("role", "button");
+    ik.setAttribute("aria-expanded", "false");
+    ik.setAttribute("aria-controls", "voorbehoud");
+    ik.innerHTML =
+      '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" ' +
+      'stroke-width="2" stroke-linecap="round">' +
+      '<circle cx="12" cy="12" r="9"/><path d="M12 11v5.5"/>' +
+      '<circle cx="12" cy="7.6" r="1.1" fill="currentColor" stroke="none"/></svg>' +
+      '<span class="enkel-schermlezer" data-i18n="voorbehoud.titel">' +
+      ontsnap(t("voorbehoud.titel")) + "</span>";
+    L.DomEvent.on(ik, "click", L.DomEvent.stop);
+    L.DomEvent.on(ik, "click", () => {
+      if ($("voorbehoud").hidden) { zetInstellingen(false); toonVoorbehoud(); }
+      else sluitVoorbehoud();
+    });
+    ik.addEventListener("animationend", () => ik.classList.remove("is-nieuw"));
 
     /* Het doosje hangt onder de knop, binnen dezelfde control. Zo verhuist het mee naar
        onderaan op een telefoon, zonder een tweede plaatsberekening. */
@@ -2512,6 +2611,29 @@ function plaatsOptieVak() {
   optieVak.style.maxHeight = Math.max(120, window.innerHeight - onder - 70) + "px";
 }
 
+/* ---------- meer filters ---------------------------------------------------------------
+   De filters die de beheerders onder "Meer filters" zetten, verhuizen bij het laden naar
+   die uitklapper; de rest blijft in de gewone lijst, erboven. Echt verhuizen, net als
+   plaatsOpties(): de luisteraars en ids gaan mee. De volgorde blijft die van index.html,
+   in beide lijsten — `FILTER_VOLGORDE` legt ze vast vóór er iets verhuist. */
+const FILTER_VOLGORDE = [...document.querySelectorAll("#filters [data-filter]")];
+
+function plaatsMeerFilters(meer) {
+  const uitklapper = $("meerfilters"), lijst = $("meerfilters-lijst");
+  for (const sectie of FILTER_VOLGORDE) {
+    if (meer.has(sectie.dataset.filter)) lijst.appendChild(sectie);
+    else uitklapper.parentNode.insertBefore(sectie, uitklapper);
+  }
+}
+
+/* Staat er niets (zichtbaars) onder "Meer filters", dan verdwijnt de uitklapper. Na
+   bouwFilters(): een filter zonder keuzes of zonder gegevens verbergt zichzelf pas daar. */
+function toonMeerFilters() {
+  const iets = [...$("meerfilters-lijst").querySelectorAll(":scope > [data-filter]")]
+    .some((s) => !s.hidden && s.style.display !== "none");
+  $("meerfilters").hidden = !iets;
+}
+
 /* Het telbolletje op een label: zoveel filters staan er in die sectie aan, zodat een dicht
    label niet verzwijgt dat de kaart uitgedund wordt. Schuiven tellen als één filter zodra
    ze niet op stand 0 staan; chips per aangevinkte keuze. Aangeroepen vanuit teken(). De
@@ -2526,15 +2648,27 @@ function werkKoppenBij() {
     for (const bereik of [sectie, optiesVan.get(sectie)]) {
       if (!bereik) continue;
       chips += bereik.querySelectorAll(".keuze input:checked").length;
+      /* `data-rust` is de stand die niets filtert; zonder dat attribuut is dat het begin.
+         Een schuif met twee bolletjes (`.dubbel`) is één filter, hoeveel bolletjes er ook
+         verzet zijn. */
+      const verzet = new Set();
       for (const schuif of bereik.querySelectorAll('input[type="range"]')) {
-        // `data-rust` is de stand die niets filtert; zonder dat attribuut is dat het begin.
-        if (schuif.value !== (schuif.dataset.rust || "0")) schuiven += 1;
+        if (schuif.value !== (schuif.dataset.rust || "0")) verzet.add(schuif.closest(".dubbel") || schuif);
       }
+      schuiven += verzet.size;
     }
     const n = chips || schuiven;
     if (n > 0) kop.dataset.aantal = String(n);
     else delete kop.dataset.aantal;
   }
+  // "Meer filters": de som van zijn filters, zodat een dichte uitklapper niets verzwijgt.
+  let meer = 0;
+  for (const kop of $("meerfilters-lijst").querySelectorAll(".sectie > h2[data-aantal]")) {
+    meer += Number(kop.dataset.aantal);
+  }
+  const samen = $("meerfilters").querySelector(":scope > summary");
+  if (meer > 0) samen.dataset.aantal = String(meer);
+  else delete samen.dataset.aantal;
 }
 
 plaatsOpties();
@@ -2679,25 +2813,87 @@ $("knop-scrollsluit").addEventListener("change", (e) => {
    blijft — komt bij elke opening onderaan in beeld. Elke keer, en niet één keer per
    browser: wie de kaart vorige maand opende, weet dat vandaag niet meer zeker.
 
-   De 15 seconden telt de opmaak af, niet een setTimeout: het balkje onderaan krimpt met
-   een CSS-animatie en `animationend` sluit het venster. Zo loopt de tijd die je ziet
-   altijd gelijk met de tijd die overblijft, en pauzeren bij muis of focus (zie de
-   opmaak) is één regel CSS in plaats van een klok die je moet stilzetten en herrekenen.
-   Een tabblad op de achtergrond pauzeert zijn animaties ook: wie de kaart in een ander
-   tabblad opende, krijgt het voorbehoud nog te zien bij terugkomst.
+   Na VOORBEHOUD_MS gaat het vanzelf dicht, of eerder met het kruisje, Escape, het
+   ⓘ-knopje, of door de filters of het meldformulier te openen. Er staat geen balkje bij
+   dat aftelt: daar voelden mensen zich door opgejaagd. Staat de muis erop of de focus
+   erin, dan wacht het nog even.
+
+   Bij het sluiten vliegt het venster naar het ⓘ-knopje onder het tandwiel en krimpt het
+   daarin weg; het knopje tikt dan één keer aan. Zo zie je waar het gebleven is, en daar
+   haal je het terug. Wie minder beweging wil (prefers-reduced-motion), krijgt alleen het
+   sluiten.
 
    Komt eerst de taalvraag, dan wacht het voorbehoud tot die beantwoord is — anders
    staat het er in een taal die de bezoeker misschien niet wil. */
+const VOORBEHOUD_MS = 15000;
+const VOORBEHOUD_VLUCHT_MS = 450;
+let voorbehoudKlok = null;
+
+function sluitVoorbehoudVanzelf() {
+  const venster = $("voorbehoud");
+  if (venster.matches(":hover") || venster.contains(document.activeElement)) {
+    voorbehoudKlok = setTimeout(sluitVoorbehoudVanzelf, 8000);
+  } else {
+    sluitVoorbehoud();
+  }
+}
+
+function voorbehoudKnop() {
+  return document.querySelector(".voorbehoud-knop");
+}
+
 function toonVoorbehoud() {
-  $("voorbehoud").hidden = false;
+  const venster = $("voorbehoud");
+  // Gaat het net dicht, dan blijft het nu toch staan.
+  if (venster.getAnimations) venster.getAnimations().forEach((a) => a.cancel());
+  venster.hidden = false;
+  const knop = voorbehoudKnop();
+  if (knop) knop.setAttribute("aria-expanded", "true");
+  clearTimeout(voorbehoudKlok);
+  voorbehoudKlok = setTimeout(sluitVoorbehoudVanzelf, VOORBEHOUD_MS);
 }
 
 function sluitVoorbehoud() {
-  $("voorbehoud").hidden = true;
+  const venster = $("voorbehoud");
+  clearTimeout(voorbehoudKlok);
+  if (venster.hidden || venster.classList.contains("is-dicht")) return;
+  const knop = voorbehoudKnop();
+  if (knop) knop.setAttribute("aria-expanded", "false");
+  // Stond de focus in het venster (op het kruisje), dan gaat ze naar het knopje.
+  if (knop && venster.contains(document.activeElement)) knop.focus();
+
+  const klaar = () => {
+    venster.classList.remove("is-dicht");
+    venster.hidden = true;
+  };
+  const zichtbaar = knop && knop.getClientRects().length > 0;
+  if (!zichtbaar || !venster.animate ||
+      matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    klaar();
+    return;
+  }
+  /* Van het midden van het venster naar het midden van het knopje, en krimpen tot de
+     breedte van het knopje. */
+  const van = venster.getBoundingClientRect();
+  const naar = knop.getBoundingClientRect();
+  const dx = naar.left + naar.width / 2 - (van.left + van.width / 2);
+  const dy = naar.top + naar.height / 2 - (van.top + van.height / 2);
+  const schaal = naar.width / van.width;
+  venster.classList.add("is-dicht");
+  const vlucht = venster.animate([
+    { transform: "none", opacity: 1 },
+    { transform: "translate(" + dx + "px," + dy + "px) scale(" + schaal + ")", opacity: .2 }
+  ], { duration: VOORBEHOUD_VLUCHT_MS, easing: "cubic-bezier(.55,0,.75,.2)" });
+  vlucht.onfinish = () => {
+    klaar();
+    knop.classList.remove("is-nieuw");
+    void knop.offsetWidth;   // opnieuw beginnen, ook als het knopje nog aan het tikken was
+    knop.classList.add("is-nieuw");
+  };
+  vlucht.oncancel = () => venster.classList.remove("is-dicht");
 }
 
 $("voorbehoud-sluit").addEventListener("click", sluitVoorbehoud);
-$("voorbehoud-tijd").addEventListener("animationend", sluitVoorbehoud);
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && !$("voorbehoud").hidden && $("taalvraag").hidden &&
       $("meldvenster").hidden) sluitVoorbehoud();
