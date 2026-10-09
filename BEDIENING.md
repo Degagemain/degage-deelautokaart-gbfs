@@ -176,22 +176,34 @@ voor de anderen blijft de pagina dicht. Toegang geven doe je dus op GitHub, onde
 *Settings → Collaborators*, niet op de pagina zelf. Het adres is geen geheim: de aanmelding
 beschermt de pagina. Na acht uur meld je je opnieuw aan.
 
-- **Meldingen** — alles wat op de kaart gemeld werd, met een link naar het issue op GitHub.
-  Wie een mailadres achterliet, krijgt het label *antwoord gewenst*; een klik op het adres
-  opent een mail met het issuenummer als onderwerp. Dat adres staat alleen hier, nooit op
-  GitHub, en verdwijnt vanzelf dertig dagen nadat het issue gesloten is. Wissen kan ook
-  meteen.
+De tabs tonen wat er te doen is: bij *Meldingen* hoeveel meldingen op een antwoord
+wachten, bij *Datafouten* hoeveel fouten er open staan.
+
+- **Meldingen** — alles wat op de kaart gemeld werd: de soort (*klopt niet op de kaart*,
+  *werkt niet*, *idee*, *anders*) en de beschrijving staan erbij, dus je hoeft niet elk
+  issue op GitHub te openen. Wie een mailadres achterliet, krijgt het label *antwoord
+  gewenst*. Een klik op het adres opent een mail in de taal van de melder, met de melding
+  erin geciteerd. Gemaild? Druk dan op *Markeer als beantwoord*, zodat de andere
+  beheerders het weten. Het filter *Antwoord → Wacht op antwoord* toont wat nog open
+  staat. Het adres staat alleen hier, nooit op GitHub, en verdwijnt vanzelf dertig dagen
+  nadat het issue gesloten is; een onbeantwoorde melding valt de laatste week op. Wissen
+  kan ook meteen.
 - **Filters op de kaart** — welke filters bezoekers zien, en waar: in de gewone lijst,
   onder *Meer filters* (een uitklapper onderaan de lijst), of niet. Per filter ook welke
-  keuzes erin staan. Een toebehoren dat uit staat (zoals *bed*), verdwijnt ook uit de popup.
-- **Datafouten** — wat er niet klopt aan de auto's in de feed, zoals een elektrische auto
-  met een euronorm of een euronorm die niet bij het bouwjaar past: per fout de auto, wat
-  er mis is en wanneer het gevonden werd. Ook wat de generator bij de kwartaalrun al
-  rechtzette (schrijfwijze, hoofdletters, een onbruikbare euronorm) staat erbij, want in
-  de bron is het nog fout. Verbeter de bron en druk op *Probleem opgelost, wissen*. Een
-  gewiste fout komt terug als de volgende feed ze nog altijd bevat. Onderaan: de nieuwe
-  auto's die al in de live vloot staan maar nog niet in de feed. Een wijziging is
-  binnen een minuut op de kaart te zien.
+  keuzes erin staan, met achter elke keuze hoeveel auto's in de feed ze hebben. Een
+  toebehoren dat uit staat (zoals *bed*), verdwijnt ook uit de popup. Een filter waarvan
+  alle keuzes uit staan, verdwijnt van de kaart. Een wijziging is binnen een minuut op de
+  kaart te zien.
+- **Datafouten** — wat er niet klopt aan de auto's in de feed, per auto bij elkaar, zoals
+  een elektrische auto met een euronorm of een euronorm die niet bij het bouwjaar past.
+  Ook wat de generator bij de kwartaalrun al rechtzette (schrijfwijze, hoofdletters, een
+  onbruikbare euronorm) staat erbij, want in de bron is het nog fout. Verbeter de bron en
+  druk op *Opgelost, wissen*. Een gewiste fout komt terug als de volgende feed ze nog
+  altijd bevat; tot dan staat ze onderaan bij *Als opgelost gewist*, met wie ze wiste, en
+  kun je ze terugzetten. Fouten bij auto's die niet meer in de live vloot staan, zijn
+  standaard verborgen: de kaart toont die auto's niet. *Alles als CSV* geeft de lijst
+  voor wie de bron beheert maar niet op deze pagina kan. Onderaan: de nieuwe auto's die
+  al in de live vloot staan maar nog niet in de feed.
 
 Hoe je de pagina opzet, staat in [`feedback-worker/README.md`](feedback-worker/README.md).
 

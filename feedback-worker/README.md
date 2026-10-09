@@ -174,20 +174,27 @@ maak dan de tabel aan:
 npx wrangler d1 execute degage-kaart-feedback --remote --file=schema.sql
 ```
 
+Bestond de databank al vóór de knop *Markeer als beantwoord*, voer `schema.sql` dan
+opnieuw uit: dat maakt de tabel `beantwoord` aan en laat de rest staan. Tot dan werkt de
+pagina gewoon, alleen kan niemand een melding als beantwoord markeren.
+
 **Wat de beheerpagina toont.** Alle meldingen: de issues met het label `feedback`, open
 en gesloten, zowel die via de kaart als die via het formulier op GitHub. Per melding:
-het issue en langs welke weg het binnenkwam, de toestand op GitHub (open of gesloten,
-het aantal reacties), de taal en de datum.
+het issue en langs welke weg het binnenkwam, de soort en de beschrijving (uit het issue
+zelf), de toestand op GitHub (open of gesloten, het aantal reacties), de taal en de datum.
 
 Liet de melder op de kaart een mailadres achter, dan krijgt de melding het label
-**antwoord gewenst**, met het adres als `mailto:`-link (het onderwerp staat in de taal
-van de melder). Bij een gesloten issue staat erbij wanneer het adres gewist wordt. Dat
-label bestaat alleen op deze pagina, niet op GitHub: het volgt rechtstreeks uit de
-databank, en verdwijnt dus vanzelf met het adres.
+**antwoord gewenst**, met het adres als `mailto:`-link: onderwerp en aanspreking in de
+taal van de melder, de melding geciteerd. Na het mailen markeert een beheerder de melding
+als **beantwoord** (tabel `beantwoord`; wie en wanneer staan erbij, en het kan terug).
+Bij een gesloten issue dat nog op antwoord wacht, staat erbij wanneer het adres gewist
+wordt, de laatste zeven dagen in een opvallende kleur. Die labels bestaan alleen op deze
+pagina, niet op GitHub: ze volgen rechtstreeks uit de databank, en verdwijnen vanzelf met
+het adres. In de tab staat hoeveel meldingen op antwoord wachten.
 
-Bovenaan filter je op status (standaard: open), op antwoord (alle meldingen, antwoord
-gewenst, of zonder mailadres), op taal, of zoek je op titel, mailadres, `#nummer` of
-`@naam`. Elke filter werkt meteen, zonder de pagina te herladen; het adres in de
+Bovenaan filter je op status (standaard: open), op antwoord (alle meldingen, wacht op
+antwoord, beantwoord, met of zonder mailadres), op soort, op taal, of zoek je op titel,
+tekst, mailadres, `#nummer` of `@naam`. Elke filter werkt meteen, zonder de pagina te herladen; het adres in de
 browser volgt mee, zodat herladen of een link dezelfde lijst geeft. Zonder JavaScript
 verschijnt er een knop *Toon*. De lijst komt in één keer van GitHub, niet met één vraag
 per issue.
@@ -253,7 +260,8 @@ filterlijst van de kaart zien, en waar: per filter *In de lijst*, *Onder Meer fi
 (een uitklapper onderaan de lijst, voor filters waar de meeste bezoekers niet naar zoeken)
 of *Niet tonen*. Bij de filters met vakjes (soort, prijsklasse, brandstof,
 versnellingsbak, toebehoren, afspraken) kiezen ze ook welke keuzes erin staan: een vinkje
-per keuze. Dan *Bewaren*. Zolang niemand iets bewaard heeft, staan euronorm en bouwjaar
+per keuze, met erachter hoeveel auto's in de feed (`FEED_URL`) die keuze hebben
+(`telKeuzes()` in `instellingen.js`). Dan *Bewaren*. Zolang niemand iets bewaard heeft, staan euronorm en bouwjaar
 onder *Meer filters* (`MEER_STANDAARD` in `instellingen.js`, en hetzelfde in
 `map/index.js` voor als de Worker niet antwoordt). Wat uit staat, verdwijnt uit de lijst; de auto's
 blijven op de kaart. Een toebehoren of afspraak die uit staat (zoals *bed*), verdwijnt
@@ -285,8 +293,11 @@ euronorm of ander veld dat ontbreekt, een model in het merkveld, een postcode of
 de gemeente. Daarbij komt wat de generator al rechtzette maar in de bron fout blijft
 staan: een merk of model in een andere schrijfwijze, een gemeente in hoofdletters, een
 lege of onbruikbare euronorm ("nvt", "5 of 6", een los "*"). Een sterretje naast een cijfer
-("6*") is geen fout: dat negeren we. Per fout de naam van de auto, wat
-er mis is, wanneer het gevonden werd, en een knop **Probleem opgelost, wissen**.
+("6*") is geen fout: dat negeren we. De fouten staan per auto bij elkaar: per fout wat
+er mis is, wanneer het gevonden werd, en een knop **Opgelost, wissen**. Wat gewist is,
+staat onderaan onder *Als opgelost gewist*, met wie het wiste, en kan teruggezet worden.
+**Alles als CSV** (`/beheer/datafouten.csv`, achter dezelfde aanmelding) geeft de lijst
+voor wie de bron beheert.
 
 De Worker leest de feed elke nacht (en meteen met *Nu controleren*) op het adres in
 `FEED_URL` in `wrangler.toml`. Wat de generator rechtzette, stuurt
@@ -312,9 +323,11 @@ een proefrun met `--uit` naar een andere map niet.
 Bovenaan de lijst filter je op **soort fout** en zoek je op auto, gemeente of tekst; de
 filters staan in het adres, dus een gefilterde lijst is een link.
 
-Onderaan staan de **nieuwe auto's zonder gegevens**: auto's in de live vloot (`VLOOT_URL`)
-die nog niet in de feed staan. Dat is geen fout en wordt niet bewaard; de lijst wordt bij
-elk bezoek opnieuw gemaakt. De fouten staan in de tabellen `datafouten` en
+De pagina legt de feed naast de live vloot (`VLOOT_URL`). Een auto die in de feed staat
+maar niet meer in de live vloot, toont de kaart niet; zijn fouten zijn standaard verborgen
+(filter **Vloot**). Onderaan staan omgekeerd de **nieuwe auto's zonder gegevens**: auto's
+in de live vloot die nog niet in de feed staan. Dat is geen fout. Geen van beide wordt
+bewaard; het wordt bij elk bezoek opnieuw gemaakt. De fouten staan in de tabellen `datafouten` en
 `datacorrecties`; bestond de databank al, voer dan `schema.sql` opnieuw uit (zie stap 6).
 
 Omdat de feed maar per kwartaal ververst wordt, gooit *wissen* een fout niet weg: ze wordt

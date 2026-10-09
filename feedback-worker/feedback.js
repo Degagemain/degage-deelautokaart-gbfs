@@ -37,7 +37,7 @@ import { werkBij, ontvangCorrecties } from "./datafouten.js";
 
 /* De soorten melding, met de kop zoals ze in het issue komt. De issues zelf staan in het
    Nederlands, de taal van de beheerders; de taal van de bezoeker staat erbij. */
-const SOORTEN = {
+export const SOORTEN = {
   kaart: "Er klopt iets niet op de kaart",
   werking: "De kaart werkt niet goed",
   idee: "Idee of suggestie",

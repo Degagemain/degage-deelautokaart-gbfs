@@ -1,5 +1,7 @@
-/* De beheerpagina (/beheer) en de opruimtaak: de mailadressen van wie een antwoord vroeg,
-   en op /beheer/kaartfilters welke filters de kaart toont (instellingen.js).
+/* De beheerpagina (/beheer) en de opruimtaak: de meldingen, met de mailadressen van wie
+   een antwoord vroeg en wie al antwoordde; op /beheer/kaartfilters welke filters de kaart
+   toont (instellingen.js); op /beheer/datafouten wat er niet klopt aan de feed
+   (datafouten.js), ook als CSV.
    ------------------------------------------------------------------------------------
    Wie mag kijken, beslist GitHub, niet een eigen lijst. Je logt in met je GitHub-account
    (via de GitHub App van de Worker, met haar Client ID en client secret), en de Worker
@@ -17,10 +19,12 @@
 
 import { github, naarBase64url } from "./github.js";
 import { FILTERS, OPTIES, leesVerborgen, leesVerborgenOpties, leesMeer, bewaarVerborgen,
-         laatsteWijziging }
+         laatsteWijziging, telKeuzes }
   from "./instellingen.js";
-import { werkBij, leesOpen, markeerOpgelost, nieuweAutos, SOORTEN, soortVan }
+import { werkBij, leesOpen, markeerOpgelost, zetTerug, telOpen, vergelijkVloot, SOORTEN,
+         soortVan }
   from "./datafouten.js";
+import { SOORTEN as MELDSOORTEN } from "./feedback.js";
 
 const SESSIE_DUUR = 8 * 60 * 60;        // seconden
 const RECHTEN = ["admin", "write"];     // GitHub geeft "write" ook voor maintain
@@ -85,9 +89,35 @@ export async function beheer(request, env) {
     const issue = Number(formulier.get("issue"));
     if (Number.isInteger(issue)) {
       await env.DB.prepare("DELETE FROM contact WHERE issue = ?").bind(issue).run();
+      await vergeetBeantwoord(env);
     }
     // Terug naar het overzicht met dezelfde filters. Alleen een zoekstring, nooit een adres.
     const terug = String(formulier.get("terug") || "");
+    return doorsturen(url.origin + "/beheer" + (terug.startsWith("?") ? terug : ""), [], 303);
+  }
+  if (pad === "/beheer/beantwoord" && request.method === "POST") {
+    if (!komtVanHier(request, url)) {
+      return pagina(403, "Geweigerd", "<p>Dit verzoek kwam niet van deze pagina.</p>");
+    }
+    const formulier = await request.formData();
+    const issue = Number(formulier.get("issue"));
+    const terug = String(formulier.get("terug") || "");
+    if (Number.isInteger(issue)) {
+      try {
+        await (formulier.get("aan") === "1"
+          ? env.DB.prepare("INSERT OR REPLACE INTO beantwoord (issue, door, wanneer) " +
+              "SELECT issue, ?, ? FROM contact WHERE issue = ?")
+              .bind(wie, new Date().toISOString(), issue)
+          : env.DB.prepare("DELETE FROM beantwoord WHERE issue = ?").bind(issue)).run();
+      } catch (e) {
+        console.error("Beantwoord bewaren:", e.message);
+        return pagina(500, "Niet bewaard",
+          "<p>Dat de melding beantwoord is, kon niet bewaard worden. Staat de tabel " +
+          "<code>beantwoord</code> al in de databank? Voer <code>schema.sql</code> opnieuw " +
+          "uit (README.md, stap 5).</p>" +
+          '<p><a href="/beheer' + ontsnap(terug.startsWith("?") ? terug : "") + '">Terug</a></p>');
+      }
+    }
     return doorsturen(url.origin + "/beheer" + (terug.startsWith("?") ? terug : ""), [], 303);
   }
   if (pad === "/beheer/kaartfilters" && request.method === "POST") {
@@ -128,6 +158,16 @@ export async function beheer(request, env) {
     return doorsturen(url.origin + "/beheer/datafouten" + (terug.startsWith("?") ? terug : ""),
                       [], 303);
   }
+  if (pad === "/beheer/datafouten/terugzetten" && request.method === "POST") {
+    if (!komtVanHier(request, url)) {
+      return pagina(403, "Geweigerd", "<p>Dit verzoek kwam niet van deze pagina.</p>");
+    }
+    const formulier = await request.formData();
+    const sleutel = String(formulier.get("sleutel") || "");
+    if (sleutel) await zetTerug(env, sleutel);
+    return doorsturen(url.origin + "/beheer/datafouten?teruggezet=1", [], 303);
+  }
+  if (pad === "/beheer/datafouten.csv") return datafoutenCsv(env);
   if (pad === "/beheer/datafouten/controleer" && request.method === "POST") {
     if (!komtVanHier(request, url)) {
       return pagina(403, "Geweigerd", "<p>Dit verzoek kwam niet van deze pagina.</p>");
@@ -137,10 +177,14 @@ export async function beheer(request, env) {
       uitslag = await werkBij(env);
     } catch (e) {
       console.error("Datafouten:", e.message);
+      // Alleen bij een ontbrekende tabel de raad om schema.sql uit te voeren.
+      const tabel = /no such table/i.test(e.message)
+        ? " Staat de tabel <code>datafouten</code> al in de databank? Voer " +
+          "<code>schema.sql</code> opnieuw uit (README.md, stap 5)."
+        : "";
       return pagina(500, "Niet gecontroleerd",
-        "<p>De feed kon niet nagekeken worden: " + ontsnap(e.message) + ". Staat de tabel " +
-        "<code>datafouten</code> al in de databank? Voer <code>schema.sql</code> opnieuw uit " +
-        "(README.md, stap 5).</p><p><a href=\"/beheer/datafouten\">Terug</a></p>");
+        "<p>De feed kon niet nagekeken worden: " + ontsnap(e.message) + ". De lijst is niet " +
+        "gewijzigd." + tabel + '</p><p><a href="/beheer/datafouten">Terug</a></p>');
     }
     // Wat de controle vond, in de zoekstring: de pagina zegt het dan na het doorsturen.
     const { aantal, nieuw, weg, verborgen } = uitslag;
@@ -185,6 +229,19 @@ export async function ruimOp(env) {
       : env.DB.prepare("UPDATE contact SET gecontroleerd = ? WHERE issue = ?").bind(nu, issue));
   }
   if (opdrachten.length) await env.DB.batch(opdrachten);
+  await vergeetBeantwoord(env);
+}
+
+/* Wat er in `beantwoord` staat over een melding waarvan het adres weg is, gaat mee weg.
+   Apart van het wissen zelf, en zonder fout als de tabel er (nog) niet is: dat het wissen
+   van een mailadres lukt, mag daar nooit van afhangen. */
+async function vergeetBeantwoord(env) {
+  try {
+    await env.DB.prepare(
+      "DELETE FROM beantwoord WHERE issue NOT IN (SELECT issue FROM contact)").run();
+  } catch (e) {
+    console.error("Beantwoord opruimen:", e.message);
+  }
 }
 
 
@@ -292,22 +349,32 @@ async function magBeheren(env, login) {
 
 const STATUSSEN = { open: "Open", gesloten: "Gesloten", alle: "Alle" };
 const TALEN = { alle: "Alle talen", nl: "Nederlands", fr: "Frans", en: "Engels" };
-const ANTWOORD = { alle: "Alle meldingen", ja: "Antwoord gewenst", nee: "Zonder mailadres" };
+const ANTWOORD = {
+  alle: "Alle meldingen", wacht: "Wacht op antwoord", beantwoord: "Beantwoord",
+  ja: "Met mailadres", nee: "Zonder mailadres"
+};
+const SOORT = { alle: "Alle soorten", ...MELDSOORTEN, onbekend: "Soort onbekend" };
+/* Zoveel dagen vóór het adres gewist wordt, valt een onbeantwoorde melding op. */
+const DRINGEND_DAGEN = 7;
 
 /* Het overzicht: alle meldingen (issues met het label "feedback") van GitHub, aangevuld met
-   wat alleen in de databank staat, het mailadres. Een melding met een mailadres krijgt
-   het label "antwoord gewenst". Dat label bestaat alleen op deze pagina, niet op GitHub:
-   het volgt rechtstreeks uit de databank, dus niemand hoeft het bij te houden, en het
-   verdwijnt vanzelf met het mailadres.
+   wat alleen in de databank staat: het mailadres, en of iemand al antwoordde. Een melding
+   met een mailadres krijgt het label "antwoord gewenst", tot een beheerder ze als
+   beantwoord markeert. Die labels bestaan alleen op deze pagina, niet op GitHub: ze volgen
+   rechtstreeks uit de databank, en verdwijnen vanzelf met het mailadres.
 
-   De filters staan in de zoekstring (?status=…&antwoord=…&taal=…&zoek=…), zodat een
-   gefilterde lijst een gewone link is en "Wissen" naar dezelfde lijst terugkeert. */
+   Per melding ook wat er gemeld werd (soort en beschrijving, uit het issue zelf), zodat
+   je niet elk issue op GitHub hoeft te openen om te weten waarover het gaat.
+
+   De filters staan in de zoekstring (?status=…&antwoord=…&soort=…&taal=…&zoek=…), zodat
+   een gefilterde lijst een gewone link is en "Wissen" naar dezelfde lijst terugkeert. */
 async function overzicht(env, wie, url) {
   const vraag = url.searchParams;
   const kies = (naam, opties, standaard) =>
     Object.hasOwn(opties, vraag.get(naam)) ? vraag.get(naam) : standaard;
   const status = kies("status", STATUSSEN, "open");
   const antwoord = kies("antwoord", ANTWOORD, "alle");
+  const soort = kies("soort", SOORT, "alle");
   const taal = kies("taal", TALEN, "alle");
   const zoek = (vraag.get("zoek") || "").trim().slice(0, 100);
 
@@ -315,6 +382,7 @@ async function overzicht(env, wie, url) {
     "SELECT issue, titel, mail, taal, aangemaakt FROM contact"
   ).all();
   const mails = new Map(results.map((r) => [r.issue, r]));
+  const beantwoord = await leesBeantwoord(env);
   const dagen = Number(env.BEWAARTERMIJN_DAGEN) || 30;
   const { issues, storing } = await meldingenOpGitHub(env, [...mails.keys()]);
 
@@ -330,51 +398,75 @@ async function overzicht(env, wie, url) {
   /* Elke rij krijgt haar kenmerken mee als data-attributen; filters.js filtert daarop in
      de browser, zonder de pagina te herladen. De server filtert hier op dezelfde manier,
      zodat de eerste weergave (en de pagina zonder JavaScript) meteen klopt. */
-  const kenmerken = (i) => {
+  const kenmerken = (i, inhoud) => {
     const m = mails.get(i.number);
     return {
       status: i.onbekend ? "" : i.state === "closed" ? "gesloten" : "open",
-      antwoord: m ? "ja" : "nee",
-      taal: (m && m.taal) || taalUitIssue(i),
-      zoek: (i.title + " " + (m ? m.mail : "") + " #" + i.number +
+      antwoord: !m ? "nee" : beantwoord.has(i.number) ? "beantwoord" : "wacht",
+      soort: inhoud.soort,
+      taal: (m && m.taal) || inhoud.taal,
+      zoek: (i.title + " " + inhoud.tekst + " " + (m ? m.mail : "") + " #" + i.number +
              (i.user ? " @" + i.user.login : "")).toLowerCase()
     };
   };
   const kleiner = zoek.toLowerCase();
   const past = (k) =>
     (status === "alle" || !k.status || k.status === status) &&
-    (antwoord === "alle" || k.antwoord === antwoord) &&
+    (antwoord === "alle" || k.antwoord === antwoord || (antwoord === "ja" && k.antwoord !== "nee")) &&
+    (soort === "alle" || k.soort === soort) &&
     (taal === "alle" || k.taal === taal) &&
     (!kleiner || k.zoek.includes(kleiner));
 
-  const terug = "?" + new URLSearchParams({ status, antwoord, taal, zoek }).toString();
+  const terug = "?" + new URLSearchParams({ status, antwoord, soort, taal, zoek }).toString();
+  // Per keuze in de filters: hoeveel meldingen er zo zijn, los van de andere filters.
+  const tel = { status: {}, antwoord: {}, soort: {}, taal: {} };
+  const plus = (filter, waarde) => { tel[filter][waarde] = (tel[filter][waarde] || 0) + 1; };
   let zichtbaar = 0;
   const html = rijen.map((i) => {
     const m = mails.get(i.number);
-    const k = kenmerken(i);
+    const inhoud = uitIssue(i);
+    const k = kenmerken(i, inhoud);
+    if (k.status) plus("status", k.status);
+    plus("antwoord", k.antwoord);
+    if (k.antwoord !== "nee") plus("antwoord", "ja");
+    plus("soort", k.soort);
+    if (k.taal) plus("taal", k.taal);
     const toon = past(k);
     if (toon) zichtbaar++;
+    const klaar = beantwoord.get(i.number);
     let contact = '<span class="zacht">—</span>';
     if (m) {
       const onderwerp = (ONDERWERP[m.taal] || ONDERWERP.nl) + " (#" + i.number + ")";
-      const mailto = "mailto:" + m.mail + "?subject=" + encodeURIComponent(onderwerp);
-      contact = '<span class="label">antwoord gewenst</span><br>' +
-        '<a href="' + ontsnap(mailto) + '">' + ontsnap(m.mail) + "</a>";
+      const mailto = "mailto:" + m.mail + "?subject=" + encodeURIComponent(onderwerp) +
+        "&body=" + encodeURIComponent(mailtekst(m.taal, inhoud.tekst));
+      contact = (klaar
+          ? '<span class="label label--klaar">beantwoord</span><br><span class="zacht">door @' +
+            ontsnap(klaar.door) + ', op <span class="datum">' + ontsnap(klaar.wanneer.slice(0, 10)) +
+            "</span></span><br>"
+          : '<span class="label">antwoord gewenst</span><br>') +
+        '<a href="' + ontsnap(mailto) + '">' + ontsnap(m.mail) + "</a>" +
+        '<form method="post" action="/beheer/beantwoord">' +
+          '<input type="hidden" name="issue" value="' + i.number + '">' +
+          '<input type="hidden" name="aan" value="' + (klaar ? "0" : "1") + '">' +
+          '<input type="hidden" name="terug" value="' + ontsnap(terug) + '">' +
+          '<button class="knop knop--klein">' +
+            (klaar ? "Toch niet beantwoord" : "Markeer als beantwoord") + "</button></form>";
     } else if (i.user && i.user.type !== "Bot") {
       contact = '<span class="zacht">op GitHub, aan @' + ontsnap(i.user.login) + "</span>";
     }
     return '<tr data-status="' + k.status + '" data-antwoord="' + k.antwoord + '" ' +
-        'data-taal="' + ontsnap(k.taal) + '" data-zoek="' + ontsnap(k.zoek) + '"' +
-        (toon ? "" : " hidden") + ">" +
+        'data-soort="' + k.soort + '" data-taal="' + ontsnap(k.taal) + '" ' +
+        'data-zoek="' + ontsnap(k.zoek) + '"' + (toon ? "" : " hidden") + ">" +
       '<td><a href="https://github.com/' + ontsnap(env.GITHUB_REPO) + "/issues/" + i.number +
-        '" class="melding">#' + i.number + " " + ontsnap(i.title) + "</a><br>" +
-        '<span class="zacht">' + herkomst(i) + "</span></td>" +
-      "<td>" + toestand(i, dagen, !!m) + "</td>" +
+        '" class="melding">#' + i.number + " " + ontsnap(korteTitel(i.title)) + "</a><br>" +
+        (k.soort !== "onbekend" ? '<span class="soort">' + ontsnap(SOORT[k.soort]) + "</span> · " : "") +
+        '<span class="zacht">' + herkomst(i) + "</span>" + beschrijving(inhoud.tekst) + "</td>" +
+      "<td>" + toestand(i, dagen, !!m && !klaar) + "</td>" +
       "<td>" + contact + "</td>" +
-      "<td>" + ontsnap(k.taal || "?") + "</td>" +
-      "<td>" + ontsnap(String(i.created_at).slice(0, 10)) + "</td>" +
+      "<td>" + ontsnap(TALEN[k.taal] || "?") + "</td>" +
+      '<td class="datum">' + ontsnap(String(i.created_at).slice(0, 10)) + "</td>" +
       "<td>" + (m
-        ? '<details><summary>Wissen</summary><form method="post" action="/beheer/wis">' +
+        ? '<details><summary>Adres wissen</summary><form method="post" action="/beheer/wis">' +
           '<input type="hidden" name="issue" value="' + i.number + '">' +
           '<input type="hidden" name="terug" value="' + ontsnap(terug) + '">' +
           '<button class="knop knop--gevaar">Ja, wis dit adres</button></form></details>'
@@ -385,57 +477,134 @@ async function overzicht(env, wie, url) {
   const keuze = (naam, opties, gekozen) =>
     '<select name="' + naam + '">' + Object.entries(opties).map(([waarde, label]) =>
       '<option value="' + waarde + '"' + (waarde === gekozen ? " selected" : "") + ">" +
-      label + "</option>").join("") + "</select>";
-  const gefilterd = status !== "open" || antwoord !== "alle" || taal !== "alle" || zoek;
+      ontsnap(label) + (waarde === "alle" ? "" : " (" + (tel[naam][waarde] || 0) + ")") +
+      "</option>").join("") + "</select>";
+  const gefilterd = status !== "open" || antwoord !== "alle" || soort !== "alle" ||
+    taal !== "alle" || zoek;
 
   return pagina(200, "Meldingen",
     "<p class=\"inleiding\">Alle meldingen over de kaart: de issues met het label <code>feedback</code>. Wie op " +
       'de kaart een mailadres achterliet, krijgt hier het label <span class="label">antwoord ' +
-      "gewenst</span>. Dat adres staat niet op GitHub, alleen hier, en verdwijnt vanzelf " +
-      dagen + " dagen nadat het issue gesloten is. Heb je het niet meer nodig, dan kun je " +
-      "het ook meteen wissen.</p>" +
+      "gewenst</span>: klik op het adres, en je mail staat klaar in de taal van de melder, " +
+      "met de melding erin. Gemaild? Markeer de melding dan als beantwoord, zodat de andere " +
+      "beheerders het weten. Het adres staat niet op GitHub, alleen hier, en verdwijnt " +
+      "vanzelf " + dagen + " dagen nadat het issue gesloten is.</p>" +
     '<form class="vlak filters" method="get" action="/beheer">' +
       "<label>Status " + keuze("status", STATUSSEN, status) + "</label>" +
       "<label>Antwoord " + keuze("antwoord", ANTWOORD, antwoord) + "</label>" +
+      "<label>Soort " + keuze("soort", SOORT, soort) + "</label>" +
       "<label>Taal " + keuze("taal", TALEN, taal) + "</label>" +
       '<label>Zoeken <input type="search" name="zoek" value="' + ontsnap(zoek) + '" ' +
-        'placeholder="titel, mailadres, #nummer of @naam"></label>' +
+        'placeholder="titel, tekst, mailadres, #nummer of @naam"></label>' +
       // Alleen voor wie geen JavaScript heeft; filters.js verbergt hem.
       '<button class="knop knop--hoofd" id="toon">Toon</button>' +
       ' <a href="/beheer" id="wisfilters"' + (gefilterd ? "" : " hidden") + ">Wis filters</a>" +
     "</form>" +
     (storing
       ? '<p class="let-op">GitHub gaf de meldingen niet door. Hieronder staan alleen de ' +
-        "meldingen met een mailadres, zonder hun toestand.</p>" : "") +
+        "meldingen met een mailadres, zonder hun toestand en inhoud.</p>" : "") +
     '<p class="telling"><span id="zichtbaar">' + zichtbaar + "</span> van " + rijen.length +
       " meldingen</p>" +
     (html
-      ? '<div class="vlak lijst"><table><thead><tr><th>Melding</th><th>Op GitHub</th>' +
-        "<th>Antwoord</th><th>Taal</th><th>Gemeld</th><th></th></tr></thead><tbody>" + html +
-        "</tbody></table>" +
+      ? '<div class="vlak lijst"><table class="meldingen"><thead><tr><th>Melding</th>' +
+        "<th>Op GitHub</th><th>Antwoord</th><th>Taal</th><th>Gemeld</th><th></th></tr></thead>" +
+        "<tbody>" + html + "</tbody></table>" +
         '<p id="geen"' + (zichtbaar ? " hidden" : "") +
         "><em>Geen meldingen die aan deze filters voldoen.</em></p></div>"
       : '<p class="vlak leeg"><em>Er zijn nog geen meldingen.</em></p>') +
-    '<script src="/beheer/filters.js"></script>', kopregel(env, wie, "meldingen"));
+    '<script src="/beheer/filters.js"></script>', await kopregel(env, wie, "meldingen"));
+}
+
+/* Wie welke melding beantwoordde, als Map issue → { door, wanneer }. Leeg als de tabel
+   er (nog) niet is: dan is gewoon niets beantwoord, en werkt de rest van de pagina. */
+async function leesBeantwoord(env) {
+  try {
+    const { results } = await env.DB.prepare("SELECT issue, door, wanneer FROM beantwoord").all();
+    return new Map(results.map((r) => [r.issue, r]));
+  } catch (e) {
+    console.error("Beantwoord lezen:", e.message);
+    return new Map();
+  }
+}
+
+/* De tekst van een antwoordmail, klaar om verder te schrijven: een aanspreking, de melding
+   geciteerd, en ruimte voor het antwoord. Het citaat is ingekort: een mailto-link van
+   meer dan een paar duizend tekens opent niet in elk mailprogramma. */
+const MAILTEKST = {
+  nl: ["Hallo,", "Bedankt voor je melding over de deelautokaart van Dégage:", "Groeten,"],
+  fr: ["Bonjour,", "Merci pour votre signalement sur la carte des voitures partagées de Dégage :",
+       "Cordialement,"],
+  en: ["Hello,", "Thank you for your report about the Dégage car-sharing map:", "Kind regards,"]
+};
+
+function mailtekst(taal, tekst) {
+  const [aanspreking, inleiding, groet] = MAILTEKST[taal] || MAILTEKST.nl;
+  const kort = tekst.length > 500 ? tekst.slice(0, 499).trimEnd() + "…" : tekst;
+  const citaat = kort ? "\n\n" + kort.split("\n").map((r) => "> " + r).join("\n") : "";
+  return aanspreking + "\n\n" + inleiding + citaat + "\n\n\n\n" + groet + "\n";
+}
+
+/* De beschrijving in de rij: is ze kort, dan helemaal; anders het begin, en de rest open
+   te klappen. */
+function beschrijving(tekst) {
+  if (!tekst) return "";
+  if (tekst.length <= 180) return '<p class="tekst">' + ontsnap(tekst) + "</p>";
+  return '<details class="tekst"><summary>' + ontsnap(tekst.slice(0, 160).trimEnd()) +
+    "…</summary>" + ontsnap(tekst) + "</details>";
+}
+
+/* De titel zonder "[Feedback] ": dat staat voor elke melding, en zegt hier dus niets. */
+function korteTitel(titel) {
+  return String(titel).replace(/^\s*\[feedback\]\s*/i, "") || String(titel);
 }
 
 /* In de kopbalk van elke beheerpagina: de weg naar de andere pagina, naar de kaart zelf,
    en wie er aangemeld is. De kaart opent in een nieuw tabblad, zodat de beheerpagina
-   blijft staan: wie een filter uitzet, wil meteen kijken en dan terug. */
-function kopregel(env, wie, hier) {
-  const naar = (sleutel, href, tekst) => '<a class="tab" href="' + href + '"' +
-    (sleutel === hier ? ' aria-current="page"' : "") + ">" + tekst + "</a>";
-  return '<nav class="tabs">' + naar("meldingen", "/beheer", "Meldingen") +
+   blijft staan: wie een filter uitzet, wil meteen kijken en dan terug.
+
+   Bij Meldingen en Datafouten een teller met wat er te doen is: de meldingen die op een
+   antwoord wachten, de open datafouten. Alleen uit de databank, zonder GitHub te vragen;
+   lukt het niet, dan geen teller. */
+async function kopregel(env, wie, hier) {
+  const [wacht, fouten] = await Promise.all([telWacht(env), telOpen(env).catch(() => 0)]);
+  const naar = (sleutel, href, tekst, aantal, uitleg) => '<a class="tab" href="' + href + '"' +
+    (sleutel === hier ? ' aria-current="page"' : "") + ">" + tekst +
+    (aantal ? ' <span class="teller" title="' + uitleg + '">' + aantal + "</span>" : "") +
+    "</a>";
+  return '<nav class="tabs">' +
+      naar("meldingen", "/beheer", "Meldingen", wacht, wacht === 1
+        ? "1 melding wacht op antwoord" : wacht + " meldingen wachten op antwoord") +
       naar("kaartfilters", "/beheer/kaartfilters", "Filters op de kaart") +
-      naar("datafouten", "/beheer/datafouten", "Datafouten") + "</nav>" +
+      naar("datafouten", "/beheer/datafouten", "Datafouten", fouten,
+        fouten === 1 ? "1 datafout open" : fouten + " datafouten open") + "</nav>" +
     '<p class="wie"><span>aangemeld als <strong>@' + ontsnap(wie) + "</strong></span>" +
       kaartknop(env, "knop", "Naar de kaart") +
       '<a class="knop" href="/beheer/uit">Afmelden</a></p>';
 }
 
-/* Wat er niet klopt aan de auto's in de feed (datafouten.js): per fout de auto, wat er
-   mis is en wanneer het gevonden werd, en een knop om het als opgelost te wissen. Een
-   gewiste fout komt terug als een nieuwere feed ze nog altijd bevat. */
+/* Hoeveel meldingen met een mailadres nog niet als beantwoord gemarkeerd zijn. Zonder
+   tabel `beantwoord`: alle meldingen met een mailadres. */
+async function telWacht(env) {
+  try {
+    const rij = await env.DB.prepare("SELECT COUNT(*) AS n FROM contact " +
+      "WHERE issue NOT IN (SELECT issue FROM beantwoord)").first();
+    return rij ? rij.n : 0;
+  } catch (e) {
+    const rij = await env.DB.prepare("SELECT COUNT(*) AS n FROM contact").first().catch(() => null);
+    return rij ? rij.n : 0;
+  }
+}
+
+/* Wat er niet klopt aan de auto's in de feed (datafouten.js), per auto bij elkaar: wie de
+   bron verbetert, opent een auto één keer en ziet zo alles wat eraan schort. Per fout wat
+   er mis is, wanneer het gevonden werd, en een knop om het als opgelost te wissen. Een
+   gewiste fout komt terug als een nieuwere feed ze nog altijd bevat, en staat tot dan
+   onderaan, terug te zetten.
+
+   Een auto die niet meer in de live vloot staat, toont de kaart niet; zijn fouten staan
+   standaard verborgen (filter "Vloot"). */
+const VLOOT = { in: "Alleen in de vloot", alle: "Ook niet meer in de vloot" };
+
 async function datafouten(env, wie, url) {
   let gelezen;
   try {
@@ -445,9 +614,19 @@ async function datafouten(env, wie, url) {
     return pagina(500, "Datafouten",
       "<p>De lijst kon niet gelezen worden. Staat de tabel <code>datafouten</code> al in de " +
       "databank? Voer <code>schema.sql</code> opnieuw uit (README.md, stap 5).</p>",
-      kopregel(env, wie, "datafouten"));
+      await kopregel(env, wie, "datafouten"));
   }
-  const { fouten, laatst, ontvangen } = gelezen;
+  const { fouten, gewist, laatst, ontvangen } = gelezen;
+  // De live vloot: niet bewaard, bij elk bezoek opnieuw. Lukt het niet, dan zegt de pagina
+  // dat, en verbergt ze niets.
+  let vloot = null, vlootFout = "";
+  try {
+    vloot = await vergelijkVloot(env);
+  } catch (e) {
+    vlootFout = e.message;
+  }
+  const uitDienst = vloot ? vloot.nietMeerInVloot : new Set();
+
   // Filters in de zoekstring, zoals bij de meldingen: een gefilterde lijst is een link.
   const tellingen = {};
   for (const f of fouten) {
@@ -455,21 +634,66 @@ async function datafouten(env, wie, url) {
     tellingen[s] = (tellingen[s] || 0) + 1;
   }
   const soorten = { ...SOORTEN, andere: "Andere" };
-  const soort = Object.hasOwn(tellingen, url.searchParams.get("soort"))
-    ? url.searchParams.get("soort") : "alle";
-  const zoek = (url.searchParams.get("zoek") || "").trim().slice(0, 100);
+  const vraag = url.searchParams;
+  const soort = Object.hasOwn(tellingen, vraag.get("soort")) ? vraag.get("soort") : "alle";
+  const welke = Object.hasOwn(VLOOT, vraag.get("vloot")) ? vraag.get("vloot") : "in";
+  const zoek = (vraag.get("zoek") || "").trim().slice(0, 100);
   const kleiner = zoek.toLowerCase();
-  // Zonder filters geen zoekstring: dan komt "Probleem opgelost" terug op /beheer/datafouten.
-  const terug = soort === "alle" && !zoek ? "" : "?" + new URLSearchParams({ soort, zoek });
-  // De live vloot: niet bewaard, bij elk bezoek opnieuw. Lukt het niet, dan zegt de pagina dat.
-  let nieuw = null, nieuwFout = "";
-  try {
-    nieuw = await nieuweAutos(env);
-  } catch (e) {
-    nieuwFout = e.message;
+  const standaard = soort === "alle" && welke === "in" && !zoek;
+  // Zonder filters geen zoekstring: dan komt "Opgelost, wissen" terug op /beheer/datafouten.
+  const terug = standaard ? "" : "?" + new URLSearchParams({ soort, vloot: welke, zoek });
+
+  const dag = (iso) => ontsnap(String(iso || "").slice(0, 10));
+  // Per auto bij elkaar; leesOpen() gaf ze al op naam gesorteerd.
+  const perAuto = new Map();
+  for (const f of fouten) {
+    if (!perAuto.has(f.auto)) perAuto.set(f.auto, []);
+    perAuto.get(f.auto).push(f);
   }
-  const nieuwHtml = nieuw === null
-    ? '<p class="let-op">De live vloot kon niet gelezen worden (' + ontsnap(nieuwFout) + ").</p>"
+  let zichtbaar = 0, autos = 0, uitDienstFouten = 0;
+  const rijen = [...perAuto].map(([auto, lijst]) => {
+    const weg = uitDienst.has(auto);
+    if (weg) uitDienstFouten += lijst.length;
+    const autoTekst = (auto + " " + lijst[0].plaats).toLowerCase();
+    let hier = 0;
+    const items = lijst.map((f) => {
+      const s = soortVan(f.regel);
+      const zoekTekst = autoTekst + " " + f.fout.toLowerCase();
+      const toon = (welke === "alle" || !weg) && (soort === "alle" || s === soort) &&
+        (!kleiner || zoekTekst.includes(kleiner));
+      if (toon) hier++;
+      return '<li data-soort="' + s + '" data-zoek="' + ontsnap(zoekTekst) + '"' +
+        (toon ? "" : " hidden") + ">" +
+        '<div><span class="soort">' + ontsnap(soorten[s]) + "</span> " +
+          '<span class="zacht">gevonden ' + dag(f.gevonden) + "</span><br>" +
+          ontsnap(f.fout) + "</div>" +
+        '<form method="post" action="/beheer/datafouten/opgelost">' +
+          '<input type="hidden" name="sleutel" value="' + ontsnap(f.sleutel) + '">' +
+          '<input type="hidden" name="terug" value="' + ontsnap(terug) + '">' +
+          '<button class="knop knop--klein">Opgelost, wissen</button></form>' +
+      "</li>";
+    }).join("");
+    zichtbaar += hier;
+    if (hier) autos++;
+    return '<tr data-vloot="' + (weg ? "uit" : "in") + '"' + (hier ? "" : " hidden") + ">" +
+      "<td><strong>" + ontsnap(auto) + "</strong>" +
+        (lijst[0].plaats ? '<br><span class="zacht">' + ontsnap(lijst[0].plaats) + "</span>" : "") +
+        (weg ? '<br><span class="label label--uit">niet meer in de vloot</span>' : "") + "</td>" +
+      '<td><ul class="fouten">' + items + "</ul></td>" +
+    "</tr>";
+  }).join("");
+
+  const keuzes = '<select name="soort"><option value="alle">Alle soorten (' + fouten.length +
+    ")</option>" + Object.entries(soorten).filter(([k]) => tellingen[k]).map(([k, l]) =>
+      '<option value="' + k + '"' + (k === soort ? " selected" : "") + ">" + ontsnap(l) +
+      " (" + tellingen[k] + ")</option>").join("") + "</select>";
+  const vlootKeuze = '<select name="vloot">' + Object.entries(VLOOT).map(([k, l]) =>
+    '<option value="' + k + '"' + (k === welke ? " selected" : "") + ">" + ontsnap(l) +
+    (k === "alle" ? " (+" + uitDienstFouten + ")" : "") + "</option>").join("") + "</select>";
+
+  const nieuw = vloot && vloot.nieuw;
+  const nieuwHtml = !vloot
+    ? '<p class="let-op">De live vloot kon niet gelezen worden (' + ontsnap(vlootFout) + ").</p>"
     : nieuw.length
       ? '<div class="vlak lijst"><table class="nieuw"><thead><tr><th>Auto</th><th>Brandstof</th>' +
         "<th>Versnellingsbak</th></tr></thead><tbody>" + nieuw.map((a) =>
@@ -478,48 +702,45 @@ async function datafouten(env, wie, url) {
           (ontsnap(a.bak) || '<span class="zacht">?</span>') + "</td></tr>").join("") +
         "</tbody></table></div>"
       : '<p class="vlak leeg"><em>Elke auto in de live vloot staat ook in de feed.</em></p>';
-  const dag = (iso) => ontsnap(String(iso || "").slice(0, 10));
-  let zichtbaar = 0;
-  const rijen = fouten.map((f) => {
-    const s = soortVan(f.regel);
-    const zoekTekst = (f.auto + " " + f.plaats + " " + f.fout).toLowerCase();
-    const toon = (soort === "alle" || s === soort) && (!kleiner || zoekTekst.includes(kleiner));
-    if (toon) zichtbaar++;
-    return '<tr data-soort="' + s + '" data-zoek="' + ontsnap(zoekTekst) + '"' +
-      (toon ? "" : " hidden") + ">" +
-      "<td><strong>" + ontsnap(f.auto) + "</strong>" +
-        (f.plaats ? '<br><span class="zacht">' + ontsnap(f.plaats) + "</span>" : "") + "</td>" +
-      '<td><span class="soort">' + ontsnap(soorten[s]) + "</span><br>" + ontsnap(f.fout) + "</td>" +
-      '<td class="datum">' + dag(f.gevonden) + "</td>" +
-      '<td><form method="post" action="/beheer/datafouten/opgelost">' +
-        '<input type="hidden" name="sleutel" value="' + ontsnap(f.sleutel) + '">' +
-        '<input type="hidden" name="terug" value="' + ontsnap(terug) + '">' +
-        '<button class="knop">Probleem opgelost, wissen</button></form></td>' +
-    "</tr>";
-  }).join("");
-  const keuzes = '<select name="soort"><option value="alle">Alle soorten (' + fouten.length +
-    ")</option>" + Object.entries(soorten).filter(([k]) => tellingen[k]).map(([k, l]) =>
-      '<option value="' + k + '"' + (k === soort ? " selected" : "") + ">" + ontsnap(l) +
-      " (" + tellingen[k] + ")</option>").join("") + "</select>";
-  const gefilterd = soort !== "alle" || zoek;
+
+  const gewistHtml = gewist.length
+    ? '<details class="vlak gewist"><summary>Als opgelost gewist (' + gewist.length + ")</summary>" +
+      '<p class="zacht">Verborgen tot een nieuwere feed; staat de fout daar nog in, dan komt ze ' +
+        "vanzelf terug. Per vergissing gewist? Zet ze terug.</p>" +
+      '<table><thead><tr><th>Auto</th><th>Fout</th><th>Gewist</th><th></th></tr></thead><tbody>' +
+      gewist.map((f) =>
+        "<tr><td><strong>" + ontsnap(f.auto) + "</strong></td>" +
+        "<td>" + ontsnap(f.fout) + "</td>" +
+        '<td class="datum">' + dag(f.opgelost) +
+          (f.opgelost_door ? '<br><span class="zacht">door @' + ontsnap(f.opgelost_door) + "</span>" : "") +
+        "</td>" +
+        '<td><form method="post" action="/beheer/datafouten/terugzetten">' +
+          '<input type="hidden" name="sleutel" value="' + ontsnap(f.sleutel) + '">' +
+          '<button class="knop knop--klein">Terugzetten</button></form></td></tr>').join("") +
+      "</tbody></table></details>"
+    : "";
+
   return pagina(200, "Datafouten",
-    "<p class=\"inleiding\">Wat er niet klopt aan de auto's in de feed: een elektrische auto " +
-      "met een euronorm, een euronorm die niet bij het bouwjaar past, een veld dat " +
-      "ontbreekt. Daarbij wat de generator bij de kwartaalrun al rechtzette maar in de bron " +
-      "nog fout staat, zoals een merk in een andere schrijfwijze of een gemeente in " +
-      "hoofdletters. Elke nacht kijkt de Worker de feed na. Verbeter de fout in de bron en druk " +
-      "dan op <b>Probleem opgelost, wissen</b>. De feed wordt maar per kwartaal ververst: " +
-      "een gewiste fout blijft weg tot de volgende feed, en staat ze daar nog altijd in, dan " +
-      "komt ze terug. Een fout die uit de feed verdwijnt, gaat vanzelf van de lijst.</p>" +
-    controleUitslag(url.searchParams) +
+    "<p class=\"inleiding\">Wat er niet klopt aan de auto's in de feed, per auto. Verbeter het " +
+      "in de bron en druk dan op <b>Opgelost, wissen</b>. Auto's die niet meer in de live " +
+      "vloot staan, toont de kaart niet: hun fouten staan standaard verborgen.</p>" +
+    '<details class="uitleg"><summary>Hoe dit werkt</summary>' +
+      "<p>Elke nacht kijkt de Worker de feed na: een elektrische auto met een euronorm, een " +
+      "euronorm die niet bij het bouwjaar past, een veld dat ontbreekt. Daarbij komt wat de " +
+      "generator bij de kwartaalrun al rechtzette maar in de bron nog fout staat, zoals een " +
+      "merk in een andere schrijfwijze of een gemeente in hoofdletters.</p>" +
+      "<p>De feed wordt maar per kwartaal ververst. Een gewiste fout blijft weg tot de " +
+      "volgende feed; staat ze daar nog altijd in, dan komt ze terug. Een fout die uit de " +
+      "feed verdwijnt, gaat vanzelf van de lijst.</p></details>" +
+    controleUitslag(vraag) +
+    (vraag.get("teruggezet") ? '<p class="bewaard">Teruggezet: de fout staat weer open.</p>' : "") +
     '<form class="vlak controle" method="post" action="/beheer/datafouten/controleer">' +
       '<span class="zacht">' + (laatst
         ? "Laatst nagekeken op " + dag(laatst.wanneer) + ", in de feed van " +
           dag(laatst.feed) + "."
         : "Nog nooit nagekeken.") + " " + (ontvangen
         ? "Rechtzettingen van de generator ontvangen op " + dag(ontvangen.wanneer) +
-          " (dump van " + dag(ontvangen.feed) + ")" +
-"."
+          " (dump van " + dag(ontvangen.feed) + ")."
         : "Nog geen rechtzettingen van de generator ontvangen; die komen met de volgende " +
           "kwartaalrun.") + "</span>" +
       '<button class="knop">Nu controleren</button>' +
@@ -527,29 +748,64 @@ async function datafouten(env, wie, url) {
     (fouten.length
       ? '<form class="vlak filters" id="foutfilters" method="get" action="/beheer/datafouten">' +
           "<label>Soort fout " + keuzes + "</label>" +
+          (uitDienstFouten ? "<label>Vloot " + vlootKeuze + "</label>"
+                           : '<input type="hidden" name="vloot" value="' + welke + '">') +
           '<label>Zoeken <input type="search" name="zoek" value="' + ontsnap(zoek) + '" ' +
             'placeholder="auto, gemeente of tekst"></label>' +
           // Alleen voor wie geen JavaScript heeft; datafouten.js verbergt hem.
           '<button class="knop knop--hoofd" id="toon">Toon</button>' +
-          ' <a href="/beheer/datafouten" id="wisfilters"' + (gefilterd ? "" : " hidden") +
+          ' <a href="/beheer/datafouten" id="wisfilters"' + (standaard ? " hidden" : "") +
           ">Wis filters</a>" +
         "</form>" +
         '<p class="telling"><span id="zichtbaar">' + zichtbaar + "</span> van " + fouten.length +
-          (fouten.length === 1 ? " fout" : " fouten") + "</p>" +
+          (fouten.length === 1 ? " fout" : " fouten") + ', bij <span id="autos">' + autos +
+          "</span> auto's · " +
+          '<a href="/beheer/datafouten.csv" download>Alles als CSV, voor wie de bron beheert</a></p>' +
         '<div class="vlak lijst"><table class="datafouten"><thead><tr><th>Auto</th>' +
-        "<th>Fout in de data</th><th>Gevonden</th><th></th></tr></thead><tbody>" + rijen +
+        "<th>Fouten in de data</th></tr></thead><tbody>" + rijen +
         "</tbody></table>" +
         '<p id="geen"' + (zichtbaar ? " hidden" : "") +
         "><em>Geen datafouten die aan deze filters voldoen.</em></p></div>" +
         '<script src="/beheer/datafouten.js"></script>'
       : '<p class="vlak leeg"><em>Geen datafouten gevonden.</em></p>') +
+    gewistHtml +
     '<h2 id="nieuw">Nieuwe auto\'s zonder gegevens' +
       (nieuw && nieuw.length ? ' <span class="zacht">(' + nieuw.length + ")</span>" : "") + "</h2>" +
     '<p class="inleiding">Deze auto\'s staan in de live vloot van Dégage, maar nog niet in de ' +
       "feed. De kaart toont ze met alleen hun naam, brandstof en versnellingsbak; merk, model, " +
       "bouwjaar, zitplaatsen, euronorm en toebehoren volgen met de volgende feed. Geen fout: " +
       "zo gaat het tussen twee kwartaalruns.</p>" + nieuwHtml,
-    kopregel(env, wie, "datafouten"));
+    await kopregel(env, wie, "datafouten"));
+}
+
+/* De open datafouten als CSV, om door te geven aan wie de bron beheert en geen toegang
+   tot deze pagina heeft. Puntkomma's en een BOM vooraan: zo opent Excel het met een
+   Belgische of Nederlandse instelling meteen in kolommen, met de accenten goed. */
+async function datafoutenCsv(env) {
+  let fouten;
+  try {
+    ({ fouten } = await leesOpen(env));
+  } catch (e) {
+    return pagina(500, "Datafouten", "<p>De lijst kon niet gelezen worden.</p>");
+  }
+  let uitDienst = null;
+  try {
+    uitDienst = (await vergelijkVloot(env)).nietMeerInVloot;
+  } catch (e) { /* dan weten we het niet: de kolom blijft leeg */ }
+  const soorten = { ...SOORTEN, andere: "Andere" };
+  const cel = (v) => '"' + String(v ?? "").replace(/"/g, '""') + '"';
+  const regels = [["Auto", "Gemeente", "Soort fout", "Fout", "Gevonden", "In de live vloot"]]
+    .concat(fouten.map((f) => [f.auto, f.plaats, soorten[soortVan(f.regel)], f.fout,
+      String(f.gevonden).slice(0, 10), uitDienst ? (uitDienst.has(f.auto) ? "nee" : "ja") : ""]));
+  const datum = new Date().toISOString().slice(0, 10);
+  return new Response("﻿" + regels.map((r) => r.map(cel).join(";")).join("\r\n") + "\r\n", {
+    headers: {
+      "Content-Type": "text/csv; charset=utf-8",
+      "Content-Disposition": 'attachment; filename="datafouten-' + datum + '.csv"',
+      "Cache-Control": "no-store",
+      "X-Content-Type-Options": "nosniff"
+    }
+  });
 }
 
 /* Na "Nu controleren": wat er gevonden werd, in een zin. Leest de aantallen uit de
@@ -590,20 +846,28 @@ function kaartknop(env, klasse, tekst) {
 const PLEKKEN = { lijst: "In de lijst", meer: "Onder Meer filters", uit: "Niet tonen" };
 
 async function kaartfilters(env, wie, url) {
-  const [verborgen, verborgenOpties, meer, laatst] = await Promise.all(
-    [leesVerborgen(env), leesVerborgenOpties(env), leesMeer(env), laatsteWijziging(env)]);
-  const vakje = (naam, waarde, aan, label) =>
+  const [verborgen, verborgenOpties, meer, laatst, aantallen] = await Promise.all(
+    [leesVerborgen(env), leesVerborgenOpties(env), leesMeer(env), laatsteWijziging(env),
+     aantallenInFeed(env)]);
+  const vakje = (naam, waarde, aan, label, aantal) =>
     '<label class="vakje"><input type="checkbox" name="' + naam + '" value="' + ontsnap(waarde) +
-    '"' + (aan ? " checked" : "") + "> " + ontsnap(label) + "</label>";
+    '"' + (aan ? " checked" : "") + "> " + ontsnap(label) +
+    (aantal === undefined ? ""
+      : aantal ? ' <span class="zacht">(' + aantal + ")</span>"
+      : ' <span class="zacht">(komt niet voor)</span>') + "</label>";
   const vakjes = Object.entries(FILTERS).map(([sleutel, label]) => {
     const uit = verborgenOpties[sleutel] || [];
     const nu = verborgen.includes(sleutel) ? "uit" : meer.includes(sleutel) ? "meer" : "lijst";
     const plekken = '<span class="plekken">' + Object.entries(PLEKKEN).map(([p, l]) =>
       '<label class="plek"><input type="radio" name="plek/' + ontsnap(sleutel) + '" value="' + p +
       '"' + (p === nu ? " checked" : "") + "> " + l + "</label>").join("") + "</span>";
+    // De kaart laat een filter waarvan elke keuze uit staat, zelf weg (vulKeuzes() in
+    // map/index.js). De zin hieronder zegt dat; CSS toont hem zodra het laatste vinkje weg is.
     const keuzes = OPTIES[sleutel]
       ? '<div class="keuzes">' + Object.entries(OPTIES[sleutel]).map(([k, l]) =>
-          vakje("optie", sleutel + "/" + k, !uit.includes(k), l)).join("") + "</div>"
+          vakje("optie", sleutel + "/" + k, !uit.includes(k), l,
+                aantallen && aantallen[sleutel][k])).join("") + "</div>" +
+        '<p class="alles-uit">Alle keuzes staan uit: dit filter verdwijnt dan van de kaart.</p>'
       : "";
     return '<div class="filter"><div class="filter__kop"><span class="filter__naam">' +
       ontsnap(label) + "</span>" + plekken + "</div>" + keuzes + "</div>";
@@ -615,7 +879,9 @@ async function kaartfilters(env, wie, url) {
       "niet zoeken), of niet. Wat je verbergt, verdwijnt uit de lijst; de auto's blijven " +
       "gewoon op de kaart. Een toebehoren of afspraak die uit staat, verdwijnt ook uit de " +
       "popup van elke auto. Een wijziging is binnen een minuut zichtbaar, zonder de kaart " +
-      "opnieuw te publiceren.</p>" +
+      "opnieuw te publiceren. Achter elke keuze staat hoeveel auto's in de feed ze hebben.</p>" +
+    (aantallen ? "" : '<p class="let-op">De feed kon niet gelezen worden: zonder aantallen ' +
+      "per keuze.</p>") +
     (url.searchParams.get("bewaard")
       ? '<p class="bewaard">Bewaard. ' + kaartknop(env, "", "Bekijk het op de kaart") + "</p>"
       : "") +
@@ -624,12 +890,26 @@ async function kaartfilters(env, wie, url) {
       '<div class="voet"><button class="knop knop--hoofd">Bewaren</button>' +
       (laatst ? '<span class="zacht">Laatst gewijzigd op ' + ontsnap(laatst.gewijzigd.slice(0, 10)) +
         " door @" + ontsnap(laatst.door) + ".</span>" : "") + "</div>" +
-    "</form>", kopregel(env, wie, "kaartfilters"));
+    "</form>", await kopregel(env, wie, "kaartfilters"));
+}
+
+/* Per keuze hoeveel auto's in de feed ze hebben (telKeuzes() in instellingen.js), of null
+   als de feed niet te lezen is. */
+async function aantallenInFeed(env) {
+  if (!env.FEED_URL) return null;
+  try {
+    const r = await fetch(env.FEED_URL, { cf: { cacheTtl: 300 } });
+    return r.ok ? telKeuzes(await r.json()) : null;
+  } catch (e) {
+    console.error("Feed voor de aantallen:", e.message);
+    return null;
+  }
 }
 
 /* Het script achter de filters van de datafouten, zoals FILTERSCRIPT hieronder voor de
-   meldingen: elke wijziging werkt meteen, en het adres en de terugweg van "Probleem
-   opgelost" houden de filters bij. */
+   meldingen: elke wijziging werkt meteen, en het adres en de terugweg van "Opgelost,
+   wissen" houden de filters bij. Er wordt per fout gefilterd; een auto zonder zichtbare
+   fout verdwijnt mee. */
 const DATAFOUTENSCRIPT = `"use strict";
 const formulier = document.getElementById("foutfilters");
 const rijen = [...document.querySelectorAll("table.datafouten tbody tr")];
@@ -638,19 +918,28 @@ document.getElementById("toon").hidden = true;
 
 function pas() {
   const soort = formulier.elements.soort.value;
+  const vloot = formulier.elements.vloot.value;
   const zoek = formulier.elements.zoek.value.trim();
   const kleiner = zoek.toLowerCase();
-  let zichtbaar = 0;
+  let zichtbaar = 0, autos = 0;
   for (const rij of rijen) {
-    const past = (soort === "alle" || rij.dataset.soort === soort) &&
-      (!kleiner || rij.dataset.zoek.includes(kleiner));
-    rij.hidden = !past;
-    if (past) zichtbaar++;
+    let hier = 0;
+    for (const fout of rij.querySelectorAll("li")) {
+      const past = (vloot === "alle" || rij.dataset.vloot === "in") &&
+        (soort === "alle" || fout.dataset.soort === soort) &&
+        (!kleiner || fout.dataset.zoek.includes(kleiner));
+      fout.hidden = !past;
+      if (past) hier++;
+    }
+    rij.hidden = !hier;
+    zichtbaar += hier;
+    if (hier) autos++;
   }
   document.getElementById("zichtbaar").textContent = zichtbaar;
+  document.getElementById("autos").textContent = autos;
   document.getElementById("geen").hidden = zichtbaar > 0;
-  const standaard = soort === "alle" && !zoek;
-  const terug = standaard ? "" : "?" + new URLSearchParams({ soort, zoek });
+  const standaard = soort === "alle" && vloot === "in" && !zoek;
+  const terug = standaard ? "" : "?" + new URLSearchParams({ soort, vloot, zoek });
   for (const veld of document.querySelectorAll('input[name="terug"]')) veld.value = terug;
   history.replaceState(null, "", "/beheer/datafouten" + terug);
   wis.hidden = standaard;
@@ -662,6 +951,7 @@ formulier.addEventListener("submit", (e) => { e.preventDefault(); pas(); });
 wis.addEventListener("click", (e) => {
   e.preventDefault();
   formulier.elements.soort.value = "alle";
+  formulier.elements.vloot.value = "in";
   formulier.elements.zoek.value = "";
   pas();
 });
@@ -669,13 +959,14 @@ wis.addEventListener("click", (e) => {
 
 /* Het script achter de filters: elke wijziging werkt meteen, zonder herladen. Het filtert
    op de data-attributen van de rijen, op dezelfde manier als overzicht() hierboven, en
-   houdt het adres en de terugweg van "Wissen" bij, zodat herladen dezelfde lijst geeft.
-   Een apart bestand, omdat de Content-Security-Policy geen script in de pagina toelaat. */
+   houdt het adres en de terugweg van "Wissen" en "Beantwoord" bij, zodat herladen
+   dezelfde lijst geeft. Een apart bestand, omdat de Content-Security-Policy geen script
+   in de pagina toelaat. */
 const FILTERSCRIPT = `"use strict";
 const formulier = document.querySelector(".filters");
 const rijen = [...document.querySelectorAll("tbody tr")];
 const wis = document.getElementById("wisfilters");
-const STANDAARD = { status: "open", antwoord: "alle", taal: "alle", zoek: "" };
+const STANDAARD = { status: "open", antwoord: "alle", soort: "alle", taal: "alle", zoek: "" };
 document.getElementById("toon").hidden = true;
 
 function pas() {
@@ -686,7 +977,9 @@ function pas() {
   for (const rij of rijen) {
     const d = rij.dataset;
     const past = (f.status === "alle" || !d.status || d.status === f.status) &&
-      (f.antwoord === "alle" || d.antwoord === f.antwoord) &&
+      (f.antwoord === "alle" || d.antwoord === f.antwoord ||
+       (f.antwoord === "ja" && d.antwoord !== "nee")) &&
+      (f.soort === "alle" || d.soort === f.soort) &&
       (f.taal === "alle" || d.taal === f.taal) &&
       (!zoek || d.zoek.includes(zoek));
     rij.hidden = !past;
@@ -721,26 +1014,68 @@ function herkomst(i) {
 }
 
 /* De toestand van een issue op GitHub, in een paar woorden. Bij een gesloten issue met een
-   mailadres ook wanneer de opruimtaak dat adres wist. */
-function toestand(i, dagen, metMail) {
+   mailadres dat nog op antwoord wacht, ook wanneer de opruimtaak dat adres wist — en valt
+   dat binnen DRINGEND_DAGEN, dan in de kleur van een waarschuwing. */
+function toestand(i, dagen, wacht) {
   if (i.onbekend) return '<span class="zacht">onbekend</span>';
   const reacties = i.comments === 1 ? "1 reactie" : i.comments + " reacties";
   if (i.state !== "closed") return "open · " + reacties;
   const hoe = i.state_reason === "not_planned" ? "gesloten, niet opgepakt" : "gesloten";
   let tekst = hoe + " op " + i.closed_at.slice(0, 10) + " · " + reacties;
-  if (metMail) {
-    const gewist = new Date(Date.parse(i.closed_at) + dagen * 24 * 60 * 60 * 1000);
-    tekst += '<br><span class="zacht">adres gewist rond ' + gewist.toISOString().slice(0, 10) + "</span>";
+  if (wacht) {
+    const gewist = Date.parse(i.closed_at) + dagen * 24 * 60 * 60 * 1000;
+    const dringend = gewist - Date.now() < DRINGEND_DAGEN * 24 * 60 * 60 * 1000;
+    tekst += '<br><span class="' + (dringend ? "dringend" : "zacht") + '">' +
+      (dringend ? "nog niet beantwoord, " : "") + "adres gewist rond " +
+      new Date(gewist).toISOString().slice(0, 10) + "</span>";
   }
   return tekst;
 }
 
-/* De taal van een melding zonder mailadres: die staat in het issue zelf, in de regel die
-   feedback.js schrijft ("**Taal van de kaart:** fr"). Een melding via GitHub zelf heeft
-   die regel niet; dan is de taal onbekend. */
-function taalUitIssue(i) {
-  const m = /\*\*Taal van de kaart:\*\* ([a-z]{2})\b/.exec(i.body || "");
-  return m ? m[1] : "";
+/* Wat er in een melding staat: de soort (een sleutel uit MELDSOORTEN, of "onbekend"), de
+   beschrijving en de taal. Twee vormen:
+   · via de kaart (feedback.js, inhoud()): "**Soort:** …", "**Taal van de kaart:** fr", en
+     de beschrijving in een omheind blok onder "### Beschrijving";
+   · via het formulier op GitHub (.github/ISSUE_TEMPLATE/feedback-*.yml): per veld een kop
+     "### …" met de waarde eronder. De taal volgt uit welk formulier het was. */
+const FORMULIER = {
+  "Waarover gaat het?": "nl", "De quoi s'agit-il ?": "fr", "What is it about?": "en"
+};
+const FORMULIERSOORT = {
+  "Er klopt iets niet op de kaart": "kaart", "De kaart werkt niet goed": "werking",
+  "Idee of suggestie": "idee", "Iets anders": "anders",
+  "Quelque chose est incorrect sur la carte": "kaart", "La carte ne fonctionne pas bien": "werking",
+  "Idée ou suggestion": "idee", "Autre chose": "anders",
+  "Something on the map is wrong": "kaart", "The map doesn't work properly": "werking",
+  "Idea or suggestion": "idee", "Something else": "anders"
+};
+
+function uitIssue(i) {
+  const body = String(i.body || "").replace(/\r\n/g, "\n");
+  const uit = { soort: "onbekend", tekst: "", taal: "" };
+  const soort = /^\*\*Soort:\*\* (.+)$/m.exec(body);
+  if (soort) {
+    uit.soort = Object.keys(MELDSOORTEN).find((k) => MELDSOORTEN[k] === soort[1].trim()) || "onbekend";
+    const taal = /\*\*Taal van de kaart:\*\* ([a-z]{2})\b/.exec(body);
+    uit.taal = taal ? taal[1] : "";
+    const blok = /### Beschrijving\s*\n+(`{3,})[^\n]*\n([\s\S]*?)\n\1/.exec(body);
+    uit.tekst = blok ? blok[2].trim() : "";
+    return uit;
+  }
+  // Het formulier op GitHub: de velden als { kop: waarde }.
+  const velden = {};
+  for (const deel of body.split(/^### /m).slice(1)) {
+    const [kop, ...rest] = deel.split("\n");
+    velden[kop.trim()] = rest.join("\n").trim();
+  }
+  for (const [kop, taal] of Object.entries(FORMULIER)) {
+    if (Object.hasOwn(velden, kop)) {
+      uit.taal = taal;
+      uit.soort = FORMULIERSOORT[velden[kop]] || "onbekend";
+    }
+  }
+  uit.tekst = velden.Beschrijving || velden.Description || (i.onbekend ? "" : body.trim());
+  return uit;
 }
 
 /* Alle issues met het label "feedback", open en gesloten, in hooguit vijf vragen van
@@ -866,12 +1201,28 @@ function pagina(status, titel, inhoud, nav = "") {
   /* Het nummer én de titel zijn de link naar GitHub: alleen "#12" was te klein om te raken. */
   .melding { display: inline-block; padding: 3px 0; }
   .melding:hover { text-decoration: underline; }
-  td:nth-child(3) { word-break: break-all; }
+  .meldingen td:nth-child(3) a { word-break: break-all; }
+  .meldingen td:first-child { max-width: 46ch; }
   td .zacht { font-size: 12.5px; }
+  .soort { font-size: 12px; font-weight: 600; color: var(--inkt-zacht);
+           text-transform: uppercase; letter-spacing: .03em; }
+  .tekst { margin: 6px 0 0; padding: 6px 10px; font-size: 13.5px; white-space: pre-wrap;
+           overflow-wrap: anywhere; background: var(--vlak-zacht); border-radius: 6px; }
+  details.tekst summary { color: var(--inkt); font-size: 13.5px; }
+  details.tekst[open] summary { display: none; }
+  .dringend { font-size: 12.5px; font-weight: 600; color: #7a5a00; background: #fff7e0;
+              padding: 0 4px; border-radius: 4px; }
+  .knop--klein { min-height: 30px; margin-top: 6px; padding: 4px 10px; font-size: 12.5px; }
+  .teller { display: inline-block; min-width: 20px; margin-left: 4px; padding: 0 6px;
+            font-size: 11.5px; font-weight: 700; line-height: 18px; text-align: center;
+            color: var(--groen-diep); background: var(--groen-licht); border-radius: 999px; }
+  .tab[aria-current="page"] .teller { color: var(--groen-diep); background: #fff; }
   #geen { margin: 0; padding: 14px; color: var(--inkt-zacht); }
   .label { display: inline-block; padding: 0 9px; border-radius: 999px; font-size: 12px; font-weight: 600;
            line-height: 20px; white-space: nowrap; color: var(--groen-diep); background: var(--groen-licht);
            border: 1px solid #b9d6cc; }
+  .label--klaar { color: var(--inkt-zacht); background: var(--vlak-zacht); border-color: var(--lijn); }
+  .label--uit { color: #7a5a00; background: #fff7e0; border-color: #ecd9a0; }
   summary { cursor: pointer; font-size: 13px; color: var(--inkt-zacht); }
   summary:hover { color: var(--inkt); }
 
@@ -884,11 +1235,21 @@ function pagina(status, titel, inhoud, nav = "") {
   /* de datafouten */
   .controle { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
               gap: 8px 14px; font-size: 13.5px; }
-  .datafouten td:nth-child(2) { word-break: normal; max-width: 52ch; }
-  .datafouten td.datum { white-space: nowrap; font-variant-numeric: tabular-nums; }
-  .datafouten .knop { min-height: 32px; white-space: nowrap; }
-  .datafouten .soort { font-size: 12px; font-weight: 600; color: var(--inkt-zacht);
-                       text-transform: uppercase; letter-spacing: .03em; }
+  .datafouten td:first-child { width: 26%; }
+  .fouten { margin: 0; padding: 0; list-style: none; }
+  .fouten li { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between;
+               gap: 4px 14px; padding: 8px 0; border-top: 1px dashed var(--lijn); }
+  .fouten li:first-child { padding-top: 0; border-top: 0; }
+  .fouten li:last-child { padding-bottom: 0; }
+  .fouten li > div { flex: 1 1 36ch; max-width: 64ch; }
+  .fouten .knop, .gewist .knop { margin-top: 0; white-space: nowrap; }
+  .datum { white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .uitleg { margin: -8px 0 14px; max-width: 72ch; font-size: 13.5px; color: var(--inkt-zacht); }
+  .uitleg p { margin: 6px 0 0; }
+  .gewist summary { font-weight: 600; color: var(--inkt); }
+  .gewist[open] { padding-bottom: 6px; }
+  .gewist table { margin-top: 10px; font-size: 13.5px; }
+  .gewist td, .gewist th { padding-left: 0; }
   main h2 { margin: 26px 0 6px; font-size: 17px; }
 
   /* de kaartfilters */
@@ -908,6 +1269,8 @@ function pagina(status, titel, inhoud, nav = "") {
   .plek:has(input:focus-visible) { outline: 2px solid var(--groen); outline-offset: -2px; }
   .filter .keuzes { display: flex; flex-wrap: wrap; gap: 0 6px; padding-left: 8px; font-size: 14px; }
   .filter:has(input[value="uit"]:checked) .keuzes { opacity: .5; }
+  .alles-uit { display: none; margin: 4px 8px 0; font-size: 13px; font-weight: 600; color: #7a5a00; }
+  .filter:not(:has(input[value="uit"]:checked)):not(:has(.keuzes input:checked)) .alles-uit { display: block; }
   .vakjes legend { margin-bottom: 8px; padding: 0; font-weight: 600; }
   .vakje { display: flex; gap: 9px; align-items: center; padding: 6px 8px; border-radius: 8px; cursor: pointer; }
   .vakje:hover { background: var(--vlak-zacht); }

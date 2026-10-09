@@ -48,6 +48,27 @@ export const OPTIES = {
   afspraken: { huisdieren: "huisdieren toegelaten", leren_autorijden: "leren autorijden" }
 };
 
+/* Hoeveel auto's in de feed elke keuze uit OPTIES hebben, als { filter: { keuze: n } }:
+   voor de beheerpagina, zodat wie een keuze verbergt ziet hoeveel auto's ze raakt. De
+   afspraken staan in de feed onder `toebehoren`, net als de toebehoren zelf. */
+const VELD = { soort: "carrosserie", klasse: "klasse", brandstof: "brandstof",
+               bak: "versnellingsbak" };
+
+export function telKeuzes(feed) {
+  const tel = Object.fromEntries(Object.entries(OPTIES).map(([filter, keuzes]) =>
+    [filter, Object.fromEntries(Object.keys(keuzes).map((k) => [k, 0]))]));
+  for (const w of (feed && feed.data && feed.data.vehicles) || []) {
+    for (const [filter, veld] of Object.entries(VELD)) {
+      const waarde = filter === "klasse" && !w.klasse ? "onbekend" : w[veld];
+      if (Object.hasOwn(tel[filter], waarde)) tel[filter][waarde]++;
+    }
+    for (const filter of ["toebehoren", "afspraken"]) {
+      for (const k of Object.keys(tel[filter])) if (w.toebehoren && w.toebehoren[k]) tel[filter][k]++;
+    }
+  }
+  return tel;
+}
+
 const SLEUTEL_FILTERS = "verborgen_filters";
 const SLEUTEL_OPTIES = "verborgen_opties";
 const SLEUTEL_MEER = "meer_filters";

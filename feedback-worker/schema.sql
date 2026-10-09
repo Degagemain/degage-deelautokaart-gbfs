@@ -45,3 +45,11 @@ CREATE TABLE IF NOT EXISTS datacorrecties (
   feed  TEXT,                           -- de waarde in de feed, of NULL
   PRIMARY KEY (naam, veld)
 );
+
+-- Welke meldingen met een mailadres al beantwoord zijn (/beheer, "Gemarkeerd als
+-- beantwoord"). Verdwijnt samen met het adres in `contact`.
+CREATE TABLE IF NOT EXISTS beantwoord (
+  issue   INTEGER PRIMARY KEY,          -- het nummer van het issue op GitHub
+  door    TEXT NOT NULL,                -- de GitHub-gebruikersnaam van wie antwoordde
+  wanneer TEXT NOT NULL                 -- ISO 8601, UTC
+);

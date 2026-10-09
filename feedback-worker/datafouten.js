@@ -11,13 +11,17 @@
    met de dag waarop het voor het eerst gevonden werd. Op de beheerpagina kan het ook
    meteen, met "Nu controleren".
 
-   Los daarvan toont de pagina de auto's die in de live vloot staan (VLOOT_URL) maar nog
-   niet in de feed: nieuwe auto's, waarvan de kaart tot de volgende feed alleen de naam,
-   de brandstof en de versnellingsbak kent. Dat is geen fout en wordt niet bewaard; de
-   lijst wordt bij elk bezoek opnieuw gemaakt (nieuweAutos()).
+   Los daarvan legt de pagina de feed naast de live vloot (VLOOT_URL, vergelijkVloot()):
+   de auto's die er nog niet in de feed staan — nieuwe auto's, waarvan de kaart tot de
+   volgende feed alleen de naam, de brandstof en de versnellingsbak kent — en de auto's
+   die niet meer in de vloot staan, waarvan de fouten dus niet voorgaan. Dat wordt niet
+   bewaard; het wordt bij elk bezoek opnieuw gemaakt.
+
+   Een fout die als opgelost gewist is, kan op de pagina ook weer teruggezet worden
+   (zetTerug()), voor als het een vergissing was.
 
    Een fout verdwijnt op twee manieren:
-   · de beheerder drukt "Probleem opgelost, wissen", nadat hij de bron verbeterd heeft;
+   · de beheerder drukt "Opgelost, wissen", nadat hij de bron verbeterd heeft;
    · de fout staat niet meer in de feed — dan is ze verbeterd en gaat de rij vanzelf weg.
 
    Het eerste vraagt een kleine omweg. De feed wordt maar per kwartaal ververst: wie
@@ -310,32 +314,39 @@ async function bewaarCorrecties(env, json) {
   return { status: 200, inhoud: { bewaard: uniek.size, gecontroleerd } };
 }
 
-/* De auto's in de live vloot die (nog) niet in de feed staan, op naam gekoppeld zoals de
-   kaart dat doet (metLiveVloot() in map/index.js). Alleen naam, brandstof en
-   versnellingsbak: de API geeft ook een exacte plek, maar die heeft hier niets te zoeken. */
+/* De feed naast de live vloot, op naam gekoppeld zoals de kaart dat doet (metLiveVloot()
+   in map/index.js). Twee lijsten:
+   · `nieuw`: in de live vloot, nog niet in de feed. Alleen naam, brandstof en
+     versnellingsbak: de API geeft ook een exacte plek, maar die heeft hier niets te zoeken.
+   · `nietMeerInVloot`: in de feed, niet meer in de live vloot — uit dienst, of hernoemd.
+     De kaart toont die auto niet; zijn fouten in de bron verbeteren is dus geen werk dat
+     voorgaat. */
 const API_BRANDSTOF = {
   gasoline: "benzine", diesel: "diesel", electric: "elektrisch", hybrid: "hybride",
   pluginhybrid: "plug-in hybride", cng: "CNG", lpg: "LPG"
 };
 const API_BAK = { manual: "manueel", automatic: "automatisch" };
 
-export async function nieuweAutos(env) {
+export async function vergelijkVloot(env) {
   if (!env.VLOOT_URL || !env.FEED_URL) throw new Error("VLOOT_URL of FEED_URL ontbreekt");
   const [api, feed] = await Promise.all([env.VLOOT_URL, env.FEED_URL].map(async (u) => {
     const r = await fetch(u, { cf: { cacheTtl: 0 } });
     if (!r.ok) throw new Error(new URL(u).hostname + " gaf status " + r.status);
     return r.json();
   }));
-  if (!Array.isArray(api)) throw new Error("de vloot is geen lijst");
+  if (!Array.isArray(api) || !api.length) throw new Error("de vloot is leeg of geen lijst");
   const inFeed = new Set(((feed.data && feed.data.vehicles) || []).map((w) => String(w.naam)));
-  return api
-    .map((v) => ({ v, naam: String((v && v.displayName) || "").trim() }))
-    .filter(({ naam }) => naam && !inFeed.has(naam))
+  const live = api.map((v) => ({ v, naam: String((v && v.displayName) || "").trim() }))
+    .filter(({ naam }) => naam);
+  const inVloot = new Set(live.map(({ naam }) => naam));
+  const nieuw = live
+    .filter(({ naam }) => !inFeed.has(naam))
     .map(({ v, naam }) => {
       const info = (v && v.vehicleInformation) || {};
       return { naam, brandstof: API_BRANDSTOF[info.fuelType] || "", bak: API_BAK[info.type] || "" };
     })
     .sort((a, b) => a.naam.localeCompare(b.naam, "nl"));
+  return { nieuw, nietMeerInVloot: new Set([...inFeed].filter((n) => !inVloot.has(n))) };
 }
 
 const SLEUTEL_CONTROLE = "datafouten_controle";
@@ -350,6 +361,12 @@ export async function werkBij(env) {
   const r = await fetch(env.FEED_URL, { cf: { cacheTtl: 0 } });
   if (!r.ok) throw new Error("de feed gaf status " + r.status);
   const feed = await r.json();
+  /* Een feed zonder één auto is stuk, niet foutloos. Zonder deze weigering zou de controle
+     elke fout als verbeterd lezen en de hele lijst wissen, ook wat als opgelost gewist was. */
+  const wagens = feed && feed.data && feed.data.vehicles;
+  if (!Array.isArray(wagens) || !wagens.length) {
+    throw new Error("de feed bevat geen enkele auto");
+  }
   const feedDatum = String(feed.last_updated || "");
   const gevonden = controleer(feed, await leesCorrecties(env));
   const nu = new Date().toISOString();
@@ -403,11 +420,13 @@ function nieuwer(a, b) {
   return Number.isFinite(x) && (!Number.isFinite(y) || x > y);
 }
 
-/* De open fouten, voor de beheerpagina, en wanneer er laatst gecontroleerd werd. */
+/* De open fouten, voor de beheerpagina, per auto bij elkaar; de als opgelost gewiste (nog
+   verborgen tot een nieuwere feed), met wie en wanneer; en wanneer er laatst gecontroleerd
+   werd. */
 export async function leesOpen(env) {
   const { results } = await env.DB.prepare(
-    "SELECT sleutel, auto, plaats, regel, fout, gevonden FROM datafouten " +
-    "WHERE opgelost = '' ORDER BY gevonden DESC, auto"
+    "SELECT sleutel, auto, plaats, regel, fout, gevonden, opgelost, opgelost_door " +
+    "FROM datafouten ORDER BY auto COLLATE NOCASE, regel"
   ).all();
   const status = async (sleutel) => {
     const rij = await env.DB.prepare(
@@ -418,11 +437,29 @@ export async function leesOpen(env) {
       return null;   // een kapotte rij: dan weten we het niet
     }
   };
-  return { fouten: results, laatst: await status(SLEUTEL_CONTROLE),
+  return { fouten: results.filter((f) => !f.opgelost),
+           gewist: results.filter((f) => f.opgelost)
+             .sort((a, b) => b.opgelost.localeCompare(a.opgelost)),
+           laatst: await status(SLEUTEL_CONTROLE),
            ontvangen: await status(SLEUTEL_ONTVANGEN) };
 }
 
-/* "Probleem opgelost, wissen": verborgen tot een nieuwere feed dezelfde fout nog heeft. */
+/* Hoeveel fouten er open staan, voor de teller in de tab. */
+export async function telOpen(env) {
+  const rij = await env.DB.prepare(
+    "SELECT COUNT(*) AS n FROM datafouten WHERE opgelost = ''").first();
+  return rij ? rij.n : 0;
+}
+
+/* "Terugzetten": een als opgelost gewiste fout staat weer open, bv. na een vergissing. */
+export async function zetTerug(env, sleutel) {
+  await env.DB.prepare(
+    "UPDATE datafouten SET opgelost = '', opgelost_door = '', feed_bij_opgelost = '' " +
+    "WHERE sleutel = ?"
+  ).bind(sleutel).run();
+}
+
+/* "Opgelost, wissen": verborgen tot een nieuwere feed dezelfde fout nog heeft. */
 export async function markeerOpgelost(env, sleutel, wie) {
   const controle = await env.DB.prepare(
     "SELECT waarde FROM instellingen WHERE sleutel = ?").bind(SLEUTEL_CONTROLE).first();
