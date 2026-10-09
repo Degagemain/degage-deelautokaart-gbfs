@@ -517,17 +517,30 @@ function toonNamen() {
   schikNamen();
 }
 
-/* Een naam die over een andere naam, pin of clusterbol zou vallen, blijft weg. Het
-   clusteren kijkt alleen naar de pins, niet naar de namen eronder; zonder dit botsten
-   die waar twee losse pins net ver genoeg uit elkaar stonden om niet te clusteren. Van
-   boven naar onder: wie eerst komt, houdt zijn naam. De pin zelf blijft altijd staan,
-   en een klik erop toont alles. Eerst alles terug zichtbaar, dan alleen meten, dan pas
-   verbergen: zo rekent de browser de opmaak maar één keer uit. */
-const BOTST_MARGE = 2;   // px; een naam raakt de onderrand van zijn eigen pictogram
+/* Waar de naam van elke losse pin komt. Het clusteren kijkt alleen naar de pins, niet
+   naar de namen; zonder dit botsten die waar twee losse pins net ver genoeg uit elkaar
+   stonden om niet te clusteren. Per naam de eerste plek die niets raakt — geen andere
+   naam, pin of clusterbol: onder de pin (de gewone plek, zie teken()), anders rechts,
+   links of erboven. Past hij nergens, dan blijft hij weg; de pin zelf blijft altijd
+   staan, en een klik erop toont alles.
+
+   Twee rondes: eerst krijgt elke naam die onder zijn pin past die plek, pas daarna
+   zoeken de andere een uitwijkplek. Anders kon een naam die rechts uitweek, de gewone
+   plek van een volgende afnemen. Binnen een ronde van boven naar onder.
+
+   Leaflet zet de tooltip op zijn plek met `transform`; het uitwijken gebeurt dus met
+   een marge, die Leaflet laat staan. Eerst alles terug naar de gewone plek, dan alleen
+   meten, dan pas verschuiven: zo rekent de browser de opmaak maar één keer uit. */
+const BOTST_MARGE = 2;   // px; een naam mag de rand van zijn eigen pictogram net raken
+const NAAM_AFSTAND = 12; // px van het midden van de pin tot de naam: 6 offset + 6 marge
+const NAAM_OPZIJ = 14;   // px van het midden van de pin tot een naam rechts of links
 function schikNamen() {
   const kaartEl = document.getElementById("kaart");
   const labels = [...kaartEl.querySelectorAll(".naamlabel")];
-  for (const l of labels) l.classList.remove("naamlabel--botst");
+  for (const l of labels) {
+    l.classList.remove("naamlabel--botst");
+    l.style.marginLeft = l.style.marginTop = "";
+  }
   if (!kaartEl.classList.contains("toont-namen")) return;
 
   const bezet = [...kaartEl.querySelectorAll(".leaflet-marker-icon")]
@@ -538,10 +551,33 @@ function schikNamen() {
   const raakt = (a, b) =>
     a.left < b.right - BOTST_MARGE && b.left < a.right - BOTST_MARGE &&
     a.top < b.bottom - BOTST_MARGE && b.top < a.bottom - BOTST_MARGE;
-  const weg = [];
-  for (const { l, r } of vakken) {
-    if (bezet.some((b) => raakt(r, b))) weg.push(l);
-    else bezet.push(r);
+  const vrij = (r) => !bezet.some((b) => raakt(r, b));
+  // Verschuiving [dx, dy] ten opzichte van de gewone plek onder de pin.
+  const uitwijken = (r) => {
+    const opzij = NAAM_OPZIJ + r.width / 2, hoog = -(NAAM_AFSTAND + r.height / 2);
+    return [[opzij, hoog], [-opzij, hoog], [0, -(2 * NAAM_AFSTAND + r.height)]];
+  };
+  const verschoven = (r, [dx, dy]) =>
+    ({ left: r.left + dx, right: r.right + dx, top: r.top + dy, bottom: r.bottom + dy });
+
+  const nog = [];
+  for (const v of vakken) {
+    if (vrij(v.r)) bezet.push(v.r);
+    else nog.push(v);
+  }
+  const plaats = [], weg = [];
+  for (const { l, r } of nog) {
+    const zet = uitwijken(r).find((d) => vrij(verschoven(r, d)));
+    if (zet) {
+      bezet.push(verschoven(r, zet));
+      plaats.push([l, zet]);
+    } else {
+      weg.push(l);
+    }
+  }
+  for (const [l, [dx, dy]] of plaats) {
+    l.style.marginLeft = dx + "px";
+    l.style.marginTop = "calc(6px + " + dy + "px)";   // de 6 px van .leaflet-tooltip-bottom
   }
   for (const l of weg) l.classList.add("naamlabel--botst");
 }

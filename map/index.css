@@ -885,8 +885,9 @@ body {
 /* ---------- naam onder de pin ----------------------------------------------------
    Alleen als er ver genoeg ingezoomd is; JavaScript zet daarvoor `toont-namen` op de
    kaart. Een pin die te dicht bij zijn buur staat, zit nog in een cluster en heeft dus
-   geen label. Wat dan nog botst — twee losse pins net ver genoeg uit elkaar — verbergt
-   schikNamen() in index.js met `.naamlabel--botst`.
+   geen label. Wat dan nog botst — twee losse pins net ver genoeg uit elkaar — schuift
+   schikNamen() in index.js naar rechts, links of boven de pin, of verbergt het met
+   `.naamlabel--botst` als er nergens plaats is.
 
    Het is een Leaflet-tooltip, maar zonder het pijltje: het label plakt aan de pin en
    wijst nergens naar. `pointer-events: none` staat al in Leaflets eigen opmaak, zodat

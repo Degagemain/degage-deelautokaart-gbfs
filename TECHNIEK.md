@@ -344,9 +344,12 @@ met `clusters.getVisibleParent(m) === m` welke pins los staan, en draait na elke
 na de `animationend` van de clustergroep en na het (opnieuw) inladen (`chunkProgress`).
 De schakelaar is één klasse op de kaart (`.toont-namen`), niet honderden labels aan- en
 afkoppelen. Bij `zoomanim` naar `NAAM_ZOOM` of verder gaat ze meteen aan, zodat de namen
-mét de beweging meekomen. Daarna verbergt `schikNamen()` elke naam die over een andere
-naam, pin of clusterbol zou vallen (klasse `.naamlabel--botst`), van boven naar onder: het
-clusteren kijkt alleen naar de pins, niet naar de namen. Daardoor kan de clusterstraal
+mét de beweging meekomen. Daarna zoekt `schikNamen()` voor elke naam een plek die geen andere
+naam, pin of clusterbol raakt: onder de pin, anders rechts, links of erboven (met een
+marge, want Leaflet zet de tooltip zelf met `transform`). Past hij nergens, dan blijft hij
+weg (klasse `.naamlabel--botst`). Eerst krijgt elke naam die onder past die plek, pas dan
+wijken de andere uit, telkens van boven naar onder. Dat is nodig omdat het clusteren alleen
+naar de pins kijkt, niet naar de namen. Daardoor kan de clusterstraal
 ingezoomd krap blijven (`maxClusterRadius`: 44 px, vanaf zoom 13 34 px).
 
 ## 8. Popups, de vrije ruimte en de balk onderaan
