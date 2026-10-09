@@ -187,7 +187,8 @@ wachten, bij *Datafouten* hoeveel fouten er open staan.
   beheerders het weten. Het filter *Antwoord → Wacht op antwoord* toont wat nog open
   staat. Het adres staat alleen hier, nooit op GitHub, en verdwijnt vanzelf dertig dagen
   nadat het issue gesloten is; een onbeantwoorde melding valt de laatste week op. Wissen
-  kan ook meteen.
+  kan ook meteen. Onderaan staat wie een nieuwe melding toegekend krijgt, en dus een
+  bericht van GitHub (zie [Wie krijgt de meldingen](#wie-krijgt-de-meldingen)).
 - **Filters op de kaart** — welke filters bezoekers zien, en waar: in de gewone lijst,
   onder *Meer filters* (een uitklapper onderaan de lijst), of niet. Per filter ook welke
   keuzes erin staan, met achter elke keuze hoeveel auto's in de feed ze hebben. Een
@@ -206,6 +207,28 @@ wachten, bij *Datafouten* hoeveel fouten er open staan.
   al in de live vloot staan maar nog niet in de feed.
 
 Hoe je de pagina opzet, staat in [`feedback-worker/README.md`](feedback-worker/README.md).
+
+### Wie krijgt de meldingen
+
+Een nieuwe melding wordt op GitHub toegekend aan de mensen in
+[`.github/workflows/assign-issues.yml`](.github/workflows/assign-issues.yml), en wie een
+melding toegekend krijgt, krijgt er een bericht van GitHub over. De beheerpagina toont die
+lijst onderaan bij *Meldingen*, en zegt erbij wie GitHub overslaat omdat die persoon geen
+toegang heeft tot de repo.
+
+Iemand erbij zetten of weghalen:
+
+1. Pas in dat bestand de regel `assignees: ['Smile4ever', 'pieter-degage', 'lienlouwagie']`
+   aan: GitHub-gebruikersnamen tussen enkele aanhalingstekens, met komma's ertussen,
+   hooguit tien. Dat kan rechtstreeks op GitHub (het potlood, *Edit this file*).
+2. Commit op `main`. Binnen enkele minuten toont de beheerpagina de nieuwe lijst.
+3. Geef een nieuwe naam toegang tot de repo, minstens de rol *Triage*, onder *Settings →
+   Collaborators*. Anders slaat GitHub de naam over zonder foutmelding.
+
+De lijst geldt alleen voor nieuwe meldingen. Een bestaande melding geef je door op het
+issue zelf, rechts bij *Assignees*. Of het bericht ook als mail komt, kiest ieder zelf op
+GitHub onder *Settings → Notifications*. Wie alleen wil meelezen, zet op de repo *Watch →
+Custom → Issues* aan.
 
 ---
 

@@ -384,7 +384,8 @@ async function overzicht(env, wie, url) {
   const mails = new Map(results.map((r) => [r.issue, r]));
   const beantwoord = await leesBeantwoord(env);
   const dagen = Number(env.BEWAARTERMIJN_DAGEN) || 30;
-  const { issues, storing } = await meldingenOpGitHub(env, [...mails.keys()]);
+  const [{ issues, storing }, wieKrijgt] =
+    await Promise.all([meldingenOpGitHub(env, [...mails.keys()]), ontvangers(env)]);
 
   // Een mailadres waarvan het issue niet (meer) op GitHub te vinden is, toch tonen.
   const rijen = [...issues.values()];
@@ -512,7 +513,73 @@ async function overzicht(env, wie, url) {
         '<p id="geen"' + (zichtbaar ? " hidden" : "") +
         "><em>Geen meldingen die aan deze filters voldoen.</em></p></div>"
       : '<p class="vlak leeg"><em>Er zijn nog geen meldingen.</em></p>') +
+    ontvangersBlok(env, wieKrijgt) +
     '<script src="/beheer/filters.js"></script>', await kopregel(env, wie, "meldingen"));
+}
+
+/* Wie een nieuwe melding toegekend krijgt, en daardoor een bericht van GitHub. Dat staat in
+   de workflow .github/workflows/assign-issues.yml, niet bij de Worker: die lijst wordt hier
+   gelezen zoals ze nu op de standaardtak staat. De repo is publiek, dus dat kan zonder
+   token (de app mag geen bestanden lezen). Per naam vraagt de Worker GitHub ook of die
+   persoon wel toegekend kán worden: wie geen toegang heeft tot de repo, slaat GitHub
+   zonder foutmelding over. Geeft null als de lijst niet te lezen of te vinden is. */
+const WORKFLOW = ".github/workflows/assign-issues.yml";
+
+async function ontvangers(env) {
+  try {
+    const r = await fetch("https://raw.githubusercontent.com/" + env.GITHUB_REPO + "/HEAD/" +
+      WORKFLOW, { cf: { cacheTtl: 300 } });
+    if (!r.ok) return null;
+    const lijst = (await r.text()).match(/assignees:\s*\[([^\]]*)\]/);
+    if (!lijst) return null;
+    const namen = [...lijst[1].matchAll(/['"]([^'"]+)['"]/g)].map((m) => m[1].trim());
+    return Promise.all(namen.map(async (login) => {
+      const c = await github(env, "/repos/" + env.GITHUB_REPO + "/assignees/" +
+        encodeURIComponent(login));
+      return { login, kan: c.status === 204 ? true : c.status === 404 ? false : null };
+    }));
+  } catch (e) {
+    console.error("Ontvangers lezen mislukt:", e.message);
+    return null;
+  }
+}
+
+function ontvangersBlok(env, wieKrijgt) {
+  const bestand = "https://github.com/" + ontsnap(env.GITHUB_REPO) + "/blob/HEAD/" + WORKFLOW;
+  const namen = !wieKrijgt
+    ? '<p class="let-op">De lijst kon niet gelezen worden. Bekijk ze rechtstreeks in ' +
+      '<a href="' + bestand + '"><code>' + WORKFLOW + "</code></a>.</p>"
+    : !wieKrijgt.length
+    ? '<p class="let-op">Er staat niemand in de lijst: een nieuwe melding gaat naar niemand.</p>'
+    : "<ul>" + wieKrijgt.map((o) =>
+        '<li><a href="https://github.com/' + ontsnap(o.login) + '">@' + ontsnap(o.login) + "</a>" +
+        (o.kan === false
+          ? ' — <span class="label">krijgt niets</span> <span class="zacht">heeft geen toegang ' +
+            "tot de repo, dus GitHub slaat deze naam over</span>"
+          : o.kan === null ? ' <span class="zacht">(niet na te gaan)</span>' : "") +
+        "</li>").join("") + "</ul>";
+  return '<h2 id="ontvangers">Wie krijgt een bericht bij een nieuwe melding</h2>' +
+    '<div class="vlak">' +
+      "<p>Elke nieuwe melding wordt op GitHub toegekend aan:</p>" + namen +
+      '<p class="zacht">Wie een melding toegekend krijgt, krijgt er een bericht van GitHub ' +
+        "over. Of dat ook een mail is, kiest ieder zelf op GitHub onder <em>Settings → " +
+        "Notifications</em>.</p>" +
+      "<details><summary>Zo pas je deze lijst aan</summary><ol>" +
+        '<li>Open <a href="' + bestand + '"><code>' + WORKFLOW + "</code></a> op GitHub " +
+          "en klik op het potlood (<em>Edit this file</em>).</li>" +
+        "<li>Pas de regel <code>assignees: ['Smile4ever', 'pieter-degage']</code> aan: " +
+          "GitHub-gebruikersnamen, elk tussen enkele aanhalingstekens, met komma's ertussen. " +
+          "Hooguit tien namen.</li>" +
+        "<li>Klik op <em>Commit changes…</em> en bewaar rechtstreeks op <code>main</code>. " +
+          "Binnen enkele minuten staat de nieuwe lijst hier.</li>" +
+        "<li>Iemand die erbij komt, moet toegang hebben tot de repo (minstens de rol " +
+          "<em>Triage</em>, onder <em>Settings → Collaborators</em>). Anders slaat GitHub de " +
+          "naam over, en staat hier <em>krijgt niets</em>.</li>" +
+      "</ol><p>De lijst geldt voor nieuwe meldingen. Een bestaande melding geef je aan " +
+        "iemand anders door op het issue zelf, rechts bij <em>Assignees</em>. Wie alleen wil " +
+        "meelezen zonder meldingen toegekend te krijgen, zet op de repo " +
+        "<em>Watch → Custom → Issues</em> aan.</p></details>" +
+    "</div>";
 }
 
 /* Wie welke melding beantwoordde, als Map issue → { door, wanneer }. Leeg als de tabel
