@@ -19,6 +19,14 @@ GITHUB_OAUTH_ID = "Iv23liGTSFxEhYMIMzXm"
 # Waar de kaart staat: de knop "Naar de kaart" op de beheerpagina wijst hierheen. Leeg:
 # geen knop.
 KAART_URL = "https://degagemain.github.io/degage-deelautokaart-gbfs/map/"
+# De knop "GBFS" op de beheerpagina: de instappagina van de feed (gbfs/index.html). Leeg:
+# geen knop.
+GBFS_URL = "https://degagemain.github.io/degage-deelautokaart-gbfs/gbfs/"
+# De knop "Cloudflare" op de beheerpagina: deze Worker in het dashboard. `:account` vult
+# Cloudflare zelf in met het account waarmee je aangemeld bent, zodat het account-ID hier
+# niet hoeft te staan. Hernoem je de Worker (`name` hierboven), pas dit dan mee aan. Leeg:
+# geen knop.
+CLOUDFLARE_URL = "https://dash.cloudflare.com/?to=/:account/workers/services/view/degage-kaart-feedback/production"
 # Hoeveel dagen na het sluiten van een issue het mailadres gewist wordt. Het formulier op
 # de kaart belooft dit getal (meldformulier.mailUitleg in map/taal/); verander ze samen.
 BEWAARTERMIJN_DAGEN = "30"

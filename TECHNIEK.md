@@ -614,9 +614,9 @@ hij in de plaats daarvan het venster `#meldvenster` op de kaart zelf. Wat daar v
 wordt, gaat naar een Cloudflare Worker, en die maakt het issue aan:
 
 ```
-formulier op de kaart  ──POST──▶  Worker  ──GitHub API──▶  issue met label "feedback"
-                                  (meldt zich aan als GitHub App,
-                                   controleert Turnstile)
+formulier op de kaart  ──POST /api/melding──▶  Worker  ──GitHub API──▶  issue met label "feedback"
+                                               (meldt zich aan als GitHub App,
+                                                controleert Turnstile)
 ```
 
 Het tussenstuk is nodig omdat een statische site geen sleutel voor GitHub kan bewaren

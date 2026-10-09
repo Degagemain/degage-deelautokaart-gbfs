@@ -8,7 +8,7 @@
    namens de bezoeker een issue aan — zo kan ook wie geen GitHub-account heeft iets
    melden. Installeren en instellen: zie README.md in deze map.
 
-   Wat de kaart stuurt (POST, JSON):
+   Wat de kaart stuurt (POST /api/melding, JSON):
 
      soort         één van de sleutels in SOORTEN hieronder
      beschrijving  de tekst van de bezoeker
@@ -53,11 +53,15 @@ export default {
   async fetch(request, env) {
     const pad = new URL(request.url).pathname;
     if (pad === "/beheer" || pad.startsWith("/beheer/")) return beheer(request, env);
+    // Wie het adres van de Worker in de browser intikt, zoekt de beheerpagina.
+    if (pad === "/") return Response.redirect(new URL("/beheer", request.url).href, 302);
     if (pad === "/instellingen") return voorDeKaart(request, env);
     // Openbaar, zoals het issue waarin hij staat; een <img> stuurt geen Origin mee.
     if (pad.startsWith("/schermafbeelding/")) return toonBeeld(request, env, pad);
     // Van de generator, niet van een browser: geen CORS, wel een token.
     if (pad === "/api/datacorrecties") return ontvangCorrecties(request, env);
+    // Al de rest hieronder is het meldformulier, en dat heeft maar één adres.
+    if (pad !== "/api/melding") return new Response("Niet gevonden.", { status: 404 });
 
     const herkomst = request.headers.get("Origin") || "";
     const toegestaan = (env.TOEGESTANE_HERKOMST || "")

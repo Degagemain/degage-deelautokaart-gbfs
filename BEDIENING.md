@@ -171,13 +171,17 @@ via relatieve paden leest — als `file://` blokkeert de browser dat.
 
 **<https://degage-kaart-feedback.degage.workers.dev/beheer>**
 
+Het kale adres van de Worker (zonder `/beheer`) stuurt je hierheen.
+
 Je meldt je aan met je GitHub-account. Binnen mag wie schrijfrechten heeft op deze repo;
 voor de anderen blijft de pagina dicht. Toegang geven doe je dus op GitHub, onder
 *Settings → Collaborators*, niet op de pagina zelf. Het adres is geen geheim: de aanmelding
 beschermt de pagina. Na acht uur meld je je opnieuw aan.
 
 De tabs tonen wat er te doen is: bij *Meldingen* hoeveel meldingen op een antwoord
-wachten, bij *Datafouten* hoeveel fouten er open staan.
+wachten, bij *Datafouten* hoeveel fouten er open staan. Rechtsboven opent *GBFS* de instappagina
+van de feed, en *Cloudflare* de Worker in het dashboard van Cloudflare (logboek, databank, geheimen), in een nieuw
+tabblad. Daar meld je je apart aan, met een account dat toegang heeft tot Cloudflare.
 
 - **Meldingen** — alles wat op de kaart gemeld werd: de soort (*klopt niet op de kaart*,
   *werkt niet*, *idee*, *anders*) en de beschrijving staan erbij, dus je hoeft niet elk

@@ -19,7 +19,7 @@ Vandaar dit kleine tussenstuk. Het draait gratis op Cloudflare.
 
 De Worker doet vier dingen:
 
-- **`POST /`** — een melding van de kaart wordt een issue (`feedback.js`);
+- **`POST /api/melding`** — een melding van de kaart wordt een issue (`feedback.js`);
 - **`/beheer`** — de beheerders zien wie een antwoord per mail vroeg (`beheer.js`);
 - **elke nacht** — de mailadressen van afgehandelde meldingen wissen (`beheer.js`), en de
   feed nakijken op datafouten voor `/beheer/datafouten` (`datafouten.js`);
@@ -137,7 +137,9 @@ hij antwoordt alleen met een fout.
 
 Staat de kaart ook op een ander domein, zet dat dan bij `TOEGESTANE_HERKOMST` in
 `wrangler.toml` en voer `deploy` opnieuw uit. Verhuist de kaart, pas dan ook `KAART_URL`
-aan: daar wijst de knop "Naar de kaart" op de beheerpagina naartoe.
+en `GBFS_URL` aan: daar wijzen de knoppen "Naar de kaart" en "GBFS" op de beheerpagina
+naartoe. De knop "Cloudflare" ernaast opent de Worker in het dashboard van Cloudflare
+(`CLOUDFLARE_URL`); hernoem je de Worker, pas dan ook die aan.
 
 ### 4. De kaart laten weten waar de Worker staat
 
@@ -145,7 +147,7 @@ In `map/config.js`:
 
 ```js
 melden: {
-  url: "https://degage-kaart-feedback.<jouw-naam>.workers.dev",
+  url: "https://degage-kaart-feedback.<jouw-naam>.workers.dev/api/melding",
   turnstileSitekey: "0x4AAAA…",
   antwoordPerMail: false     // true pas na stap 5
 },

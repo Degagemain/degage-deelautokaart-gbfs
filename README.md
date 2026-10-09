@@ -44,7 +44,7 @@ De GBFS-feed voor aggregatoren verandert daar niet door.
 **4. De Worker — `feedback-worker/`, op Cloudflare.** Een statische site kan geen sleutel
 voor GitHub bewaren, vandaar dit tussenstuk:
 
-- `POST /` — een melding uit het formulier op de kaart wordt, na een Turnstile-controle, een
+- `POST /api/melding` — een melding uit het formulier op de kaart wordt, na een Turnstile-controle, een
   publiek issue op GitHub. De Worker meldt zich aan als GitHub App, dus de melder heeft geen
   GitHub-account nodig.
 - Een mailadres voor een antwoord komt níet in het issue maar in een D1-databank. Een

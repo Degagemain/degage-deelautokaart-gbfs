@@ -626,8 +626,9 @@ function korteTitel(titel) {
 }
 
 /* In de kopbalk van elke beheerpagina: de weg naar de andere pagina, naar de kaart zelf,
-   en wie er aangemeld is. De kaart opent in een nieuw tabblad, zodat de beheerpagina
-   blijft staan: wie een filter uitzet, wil meteen kijken en dan terug.
+   naar de GBFS-pagina, naar de Worker op Cloudflare, en wie er aangemeld is. Die drie
+   openen in een nieuw tabblad, zodat de beheerpagina blijft staan: wie een filter uitzet, wil
+   meteen kijken en dan terug.
 
    Bij Meldingen en Datafouten een teller met wat er te doen is: de meldingen die op een
    antwoord wachten, de open datafouten. Alleen uit de databank, zonder GitHub te vragen;
@@ -646,6 +647,8 @@ async function kopregel(env, wie, hier) {
         fouten === 1 ? "1 datafout open" : fouten + " datafouten open") + "</nav>" +
     '<p class="wie"><span>aangemeld als <strong>@' + ontsnap(wie) + "</strong></span>" +
       kaartknop(env, "knop", "Naar de kaart") +
+      buitenknop(env.GBFS_URL, "GBFS") +
+      buitenknop(env.CLOUDFLARE_URL, "Cloudflare") +
       '<a class="knop" href="/beheer/uit">Afmelden</a></p>';
 }
 
@@ -901,6 +904,16 @@ function controleUitslag(vraag) {
 function kaartknop(env, klasse, tekst) {
   if (!env.KAART_URL) return "";
   return '<a class="' + klasse + '" href="' + ontsnap(env.KAART_URL) +
+    '" target="_blank" rel="noopener">' + ontsnap(tekst) + " ↗</a>";
+}
+
+/* Een knop naar een pagina buiten de beheerpagina, in een nieuw tabblad; niets als het
+   adres niet ingesteld is. Voor GBFS_URL (de instappagina van de feed) en CLOUDFLARE_URL
+   (de Worker in het dashboard: logboek, databank, geheimen). Cloudflare vraagt zelf om
+   aan te melden: wie hier binnen mag, mag daarom nog niet op Cloudflare. */
+function buitenknop(url, tekst) {
+  if (!url) return "";
+  return '<a class="knop" href="' + ontsnap(url) +
     '" target="_blank" rel="noopener">' + ontsnap(tekst) + " ↗</a>";
 }
 

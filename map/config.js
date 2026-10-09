@@ -19,7 +19,7 @@ window.DEGAGE_CONFIG = {
      GitHub-account heeft iets melden. Het gaat via een Cloudflare Worker naar GitHub;
      hoe je die opzet, staat in `feedback-worker/README.md`.
 
-       url               het adres van de Worker. Leeg: de knop opent dan het formulier
+       url               het adres van de Worker, met /api/melding erachter. Leeg: de knop opent dan het formulier
                          op github.com zelf, waarvoor je wél een account nodig hebt.
        turnstileSitekey  de publieke sleutel van Turnstile, de spamcontrole. Leeg: geen
                          controle in het formulier (dan moet de Worker ook zonder).
@@ -28,7 +28,7 @@ window.DEGAGE_CONFIG = {
                          Worker. Zet het pas aan als die databank ingesteld is (README.md
                          van de Worker, stap 5); anders weigert de Worker zulke meldingen. */
   melden: {
-    url: "https://degage-kaart-feedback.degage.workers.dev",
+    url: "https://degage-kaart-feedback.degage.workers.dev/api/melding",
     turnstileSitekey: "0x4AAAAAAFOUUs1zrXUf92iY",
     antwoordPerMail: true,
   },
