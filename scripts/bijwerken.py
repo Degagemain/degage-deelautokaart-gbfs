@@ -319,7 +319,7 @@ def main() -> int:
     ap.add_argument("--opnieuw-fotos", action="store_true",
                     help="AF TE RADEN: gooit alle met de hand gekozen modelfoto's weg en "
                          "zoekt ze opnieuw zonder bouwjaar, dus vaak in de verkeerde "
-                         "generatie. Vraagt eerst bevestiging. Zie README.md.")
+                         "generatie. Vraagt eerst bevestiging. Zie BEDIENING.md.")
     ap.add_argument("--vernieuw-ov", action="store_true",
                     help="haal de dienstregelingen opnieuw op in plaats van uit de cache.")
     ap.add_argument("--publiceer", action="store_true",

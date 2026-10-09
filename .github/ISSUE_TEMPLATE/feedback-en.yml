@@ -1,0 +1,57 @@
+# The English version of the report form on GitHub. There is one per language
+# (feedback-nl / feedback-fr / feedback-en); the map links to the version in whichever
+# language it is showing at the time — see zetMeldlink() in map/index.js.
+#
+# The texts come from map/taal/en.js, so this form says the same thing as the form on
+# the map. If a sentence changes there, change it here too. Two differences are
+# deliberate. Here your GitHub username ends up in the issue, which is not the case for
+# the form on the map. Conversely, the form on the map can ask for an email address for
+# a reply (which stays out of the issue); here, replies simply happen on GitHub.
+name: Feedback on the car-sharing map (English)
+description: Report a problem or suggest an idea for the map of Dégage's cars.
+title: "[Feedback] "
+labels: ["feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        > [!WARNING]
+        > **Your report is public.** It is posted as a public issue on GitHub, visible to
+        > everyone, along with your GitHub username. So please don't include any personal
+        > details, such as your name, address, phone number, email address, membership number
+        > or a number plate. Do you need to report something that cannot be public? Then email
+        > info@degage.be.
+
+  - type: dropdown
+    id: soort
+    attributes:
+      label: What is it about?
+      options:
+        - Something on the map is wrong
+        - The map doesn't work properly
+        - Idea or suggestion
+        - Something else
+    validations:
+      required: true
+
+  - type: textarea
+    id: beschrijving
+    attributes:
+      label: Description
+      description: What did you see, and what did you expect? Which car or place is it about?
+    validations:
+      required: true
+
+  - type: input
+    id: toestel
+    attributes:
+      label: Device and browser (optional)
+      placeholder: e.g. iPhone with Safari, laptop with Firefox
+
+  - type: checkboxes
+    id: publiek
+    attributes:
+      label: Confirmation
+      options:
+        - label: I understand that my report is public, and it contains no personal details.
+          required: true

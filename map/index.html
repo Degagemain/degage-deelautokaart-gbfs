@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Deelauto's van Dégage</title>
+<title>Deelautokaart Dégage</title>
 
 <!-- Het pictogram in het tabblad. Twee maten: 32 px voor het tabblad zelf, de
      512 voor wie de pagina aan zijn beginscherm hangt. Naamsvermelding staat in
@@ -89,6 +89,11 @@
           stroke-linecap="round" stroke-linejoin="round">
     <path d="M6 4v16M12 4v16M18 4v8M6 12h12M4.4 4h3.2M10.4 4h3.2M16.4 4h3.2"/>
   </symbol>
+  <symbol id="i-klasse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3.5 12.6V4.5a1 1 0 0 1 1-1h8.1l8 8a1.4 1.4 0 0 1 0 2l-7.1 7.1a1.4 1.4 0 0 1-2 0z"/>
+    <circle cx="8" cy="8" r="1.4"/>
+  </symbol>
   <symbol id="i-norm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
           stroke-linecap="round" stroke-linejoin="round">
     <path d="M5 19c0-7 4.5-12 14-12 0 8-4.5 12-10 12H5zM7 17c1.5-4 4-6.5 7.5-8"/>
@@ -119,6 +124,15 @@
     <rect x="5" y="3" width="14" height="14.5" rx="2.5"/><path d="M5 10.5h14M8 17.5V20M16 17.5V20"/>
     <circle cx="8.5" cy="14" r=".9" fill="currentColor"/><circle cx="15.5" cy="14" r=".9" fill="currentColor"/>
   </symbol>
+  <!-- Tram: een tram VAN OPZIJ, met de stroomafnemer aan de bovenleiding en twee wielen.
+       Bus en trein staan van voren; een liggende vorm met een draad erboven valt in de
+       popup en in het filter meteen op als iets anders, ook op 16 px. -->
+  <symbol id="i-tram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round">
+    <path d="M2.5 2.5h19M9.5 8 12 2.5 14.5 8"/>
+    <rect x="2.5" y="8" width="19" height="9.5" rx="2"/><path d="M2.5 12.5h19M8.5 8v4.5M15.5 8v4.5"/>
+    <circle cx="7" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/>
+  </symbol>
   <!-- Station: een trein van voren, met een ronde neus en schuine sporen eronder — anders
        dan de bus hierboven, zodat de twee regels in de popup meteen te onderscheiden zijn. -->
   <symbol id="i-trein" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
@@ -143,15 +157,22 @@
 
 <div id="kaart" role="application" data-i18n-aria="app.kaartLabel"
      aria-label="Kaart met de auto's van Dégage"></div>
+<!-- Probleem melden of feedback geven. Staat er in config.js een `melden.url`, dan opent
+     het script hier het meldformulier op de kaart (zie #meldvenster hieronder), zodat je
+     geen GitHub-account nodig hebt. Anders, en zonder JavaScript, gaat de link naar het
+     issueformulier op GitHub, in een nieuw tabblad: de kaart met al je filters blijft
+     staan. Hij hangt aan de pagina en niet aan de kaart, net als het paneel — Leaflet
+     hoeft er niets van te weten, want er valt niets te pannen of te zoomen aan een link.
 
-<!-- Probleem melden of feedback geven. Gaat naar het formulier voor een nieuw issue op
-     GitHub, in een nieuw tabblad: de kaart met al je filters blijft staan. Hij hangt aan
-     de pagina en niet aan de kaart, net als het paneel — Leaflet hoeft er niets van te
-     weten, want er valt niets te pannen of te zoomen aan een link. -->
+     Dat issueformulier staat er in drie talen (.github/ISSUE_TEMPLATE/feedback-nl.yml en
+     zijn broers). De `href` hieronder is de Nederlandse, als vangnet voor wie geen
+     JavaScript heeft; zetMeldlink() in het script zet er meteen de taal van de kaart
+     voor in de plaats. Wijzig je de repo, wijzig dan alleen deze href: het script leest
+     het deel vóór het vraagteken hiervandaan. -->
 <a class="melden" id="knop-melden"
-   href="https://github.com/Degagemain/degage-deelautokaart-gbfs/issues/new"
+   href="https://github.com/Degagemain/degage-deelautokaart-gbfs/issues/new?template=feedback-nl.yml"
    target="_blank" rel="noopener"
-   title="Probleem melden of feedback geven — opent github.com in een nieuw tabblad"
+   title="Probleem melden of feedback geven — opent github.com in een nieuw tabblad; je feedback is publiek zichtbaar"
    data-i18n-title="melden.titel">
   <!-- Een tekstballon met een uitroepteken: je zegt iets, en het gaat over iets dat
        misloopt. -->
@@ -161,13 +182,13 @@
     <path d="M13 8.2v4"/>
     <circle cx="13" cy="15.2" r=".9" fill="currentColor" stroke="none"/>
   </svg>
-  <span data-i18n="melden.knop">Probleem melden</span>
+  <span data-i18n="melden.knop">Probleem of feedback</span>
 </a>
 
 <!-- Weergavekeuzes en de taalkeuze, geen filters: ze veranderen niets aan wélke wagens
      passen. Daarom niet in het paneel maar bij de kaartknoppen, achter het tandwiel onder
      de uitzoomknop — je zet ze één keer en kijkt er daarna niet meer naar om. De
-     schakelaars staan standaard aan. JavaScript hangt dit doosje onder die knop; het
+     schakelaars staan standaard aan, behalve "samen tonen". JavaScript hangt dit doosje onder die knop; het
      staat hier alleen omdat de vakjes zich beter in opmaak dan in JavaScript laten lezen.
 
      De teksten dragen `data-i18n`-sleutels; zie vertaalPagina() in het script. -->
@@ -180,6 +201,18 @@
   <label class="schakel">
     <input type="checkbox" id="knop-dichtbij" checked>
     <span data-i18n="instellingen.dichtbij">Lijst dichtstbijzijnde auto's tonen</span>
+  </label>
+  <!-- Wat er met de weggefilterde auto's gebeurt: een weergavekeuze die je één keer zet,
+       dus hier en niet bij de filters. -->
+  <label class="schakel">
+    <input type="checkbox" id="knop-grijs" checked>
+    <span data-i18n="filters.grijs">Gefilterde auto's grijs tonen</span>
+  </label>
+  <!-- Uit: elke auto zijn eigen popup, met de andere auto's op dezelfde plek als knop
+       eronder. Aan: alle auto's van de standplaats samen. Zie popupWagens(). -->
+  <label class="schakel">
+    <input type="checkbox" id="knop-samen">
+    <span data-i18n="instellingen.samen">Auto's op dezelfde plek samen tonen</span>
   </label>
   <label class="schakel schakel--taal">
     <span data-i18n="instellingen.taal">Taal</span>
@@ -213,7 +246,7 @@
 <div class="paneel" id="paneel">
   <!-- Alleen voor schermlezers: de kaart hoort een kop te hebben, maar in beeld doet de
        titel niets wat de omringende pagina niet al zegt. -->
-  <h1 class="enkel-schermlezer" data-i18n="app.titel">Auto's van Dégage</h1>
+  <h1 class="enkel-schermlezer" data-i18n="app.titel">Deelautokaart Dégage</h1>
 
   <div class="paneel__kop">
     <div class="kopregel">
@@ -281,14 +314,10 @@
   </div>
 
   <div class="filters" id="filters" hidden>
-    <!-- De twee schakelaars die over het filteren zelf gaan, staan bij de filters en niet
-         bij de weergavekeuzes achter het tandwiel: wie filtert, beslist hier meteen wat er
-         met de weggefilterde auto's gebeurt en of de lijst bij scrollen dichtklapt. -->
+    <!-- De schakelaar die over de filterlijst zelf gaat, staat bij de filters en niet bij
+         de weergavekeuzes achter het tandwiel: wie filtert, beslist hier of de lijst bij
+         scrollen dichtklapt. -->
     <div class="filterschakels">
-      <label class="schakel">
-        <input type="checkbox" id="knop-grijs" checked>
-        <span data-i18n="filters.grijs">Gefilterde auto's grijs tonen</span>
-      </label>
       <!-- `schakel--breed`: op een telefoon verborgen en dus altijd aan — daar laat een
            open filterlijst zo weinig kaart over dat ze bij het vegen hoort weg te gaan. -->
       <label class="schakel schakel--breed">
@@ -300,19 +329,26 @@
     <!-- Elke kop staat met zijn keuzes in een eigen blokje. Op een breed scherm doet dat
          niets; op een telefoon komen chips op dezelfde regel als hun kop en staan de
          schuiven per twee naast elkaar — zie `.sectie--chips` en `.sectie--schuif`. -->
-    <!-- Auto's die al in de live vloot staan maar nog niet in de feed, en dus nog zonder
-         details. Verborgen zolang er geen zijn; zie bouwFilters(). -->
-    <div class="sectie sectie--chips" id="sectie-nieuw" hidden>
-      <h2 data-i18n="kop.nieuw">Nieuw in de vloot</h2>
-      <div class="keuzes" id="filter-nieuw"></div>
-    </div>
-
-    <div class="sectie sectie--chips">
+    <div class="sectie sectie--chips" data-filter="soort">
       <h2 data-i18n="kop.soort">Soort auto</h2>
       <div class="keuzes" id="filter-soort"></div>
     </div>
 
-    <div class="sectie sectie--schuif">
+    <!-- De prijsklasse van Dégage. Wat A en B betekenen staat achter de ⓘ, zonder
+         bedragen: die veranderen per kwartaal en staan op degage.be. -->
+    <div class="sectie sectie--chips" data-filter="klasse">
+      <h2><span data-i18n="kop.klasse">Prijsklasse</span><button type="button"
+          class="uitleg-knop" aria-expanded="false" aria-controls="klasse-uitleg"
+          title="Uitleg" data-i18n-title="popup.uitleg"><svg class="ico" aria-hidden="true"><use
+          href="#i-info"/></svg><span class="enkel-schermlezer"
+          data-i18n="popup.uitleg">Uitleg</span></button></h2>
+      <div class="keuzes" id="filter-klasse"></div>
+      <p class="schuif__uitleg" id="klasse-uitleg" hidden
+         data-i18n="klasse.uitleg">Elke auto rijdt aan de kilometerprijs van zijn
+        prijsklasse. Prijsklasse B kost meer per kilometer dan prijsklasse A.</p>
+    </div>
+
+    <div class="sectie sectie--schuif" data-filter="zitplaatsen">
       <h2 data-i18n="kop.zitplaatsen">Zitplaatsen</h2>
       <div class="schuif">
         <input type="range" id="zit-schuif" min="0" step="1" value="0">
@@ -320,84 +356,126 @@
       </div>
     </div>
 
-    <div class="sectie sectie--chips">
+    <div class="sectie sectie--chips" data-filter="brandstof">
       <h2 data-i18n="kop.brandstof">Brandstof</h2>
       <div class="keuzes" id="filter-brandstof"></div>
     </div>
 
-    <div class="sectie sectie--chips">
+    <div class="sectie sectie--chips" data-filter="bak">
       <h2 data-i18n="kop.bak">Versnellingsbak</h2>
       <div class="keuzes" id="filter-bak"></div>
     </div>
 
-    <div class="sectie sectie--chips">
+    <div class="sectie sectie--chips" data-filter="toebehoren">
       <h2 data-i18n="kop.toebehoren">Toebehoren</h2>
       <div class="keuzes" id="filter-toebehoren"></div>
     </div>
 
-    <div class="sectie sectie--chips">
+    <div class="sectie sectie--chips" data-filter="afspraken">
       <h2 data-i18n="kop.afspraken">Afspraken</h2>
       <div class="keuzes" id="filter-afspraken"></div>
     </div>
 
-    <!-- Openbaar vervoer. Deze twee horen bij de STANDPLAATS, niet bij de wagen: wie hier
-         filtert, zoekt een auto die hij kan combineren met bus of trein — heen met de auto,
-         terug met de trein, of omgekeerd. Een blok verdwijnt als er geen OV-gegevens bij
-         deze feed horen, of als alle standplaatsen even ver van zo'n halte liggen; dan valt
-         er niets te kiezen. -->
-    <div class="sectie sectie--schuif" id="filter-bushalte">
+    <!-- Openbaar vervoer. Hoort bij de STANDPLAATS, niet bij de wagen: wie hier filtert,
+         zoekt een auto die hij kan combineren met bus, tram of trein — heen met de auto,
+         terug met de trein, of omgekeerd. Per soort twee schuiven, zonder aanvinkvakje: de
+         afstand tot de dichtste halte of het dichtste station (van klein naar groot, met
+         "elke afstand" rechts), en hoeveel er daar per uur vertrekt. Een soort filtert
+         zodra één van zijn schuiven verzet is. Stel je er meer in, dan volstaat er één,
+         tenzij "aan alle ingestelde voldoen" aanstaat. Zie bouwOv() in het script. Een
+         soort zonder gegevens verdwijnt, en het hele blok als er geen OV-gegevens bij deze
+         feed horen. De stand staat IN de schuifbalk (`schuif--in`), niet eronder: zes regels
+         tekst onder zes schuiven maakten het blok onleesbaar lang. -->
+    <div class="sectie sectie--ov" id="filter-ov" data-filter="ov">
       <!-- De uitleg staat achter een ⓘ, zoals in de popups: wie weet wat er staat, hoeft er
            niet telkens overheen te lezen. Zie de klikafhandeling bij de filters. -->
-      <h2><span data-i18n="kop.bushalte">Afstand tot een bushalte</span><button type="button"
-          class="uitleg-knop" aria-expanded="false" aria-controls="bus-uitleg"
+      <h2><span data-i18n="kop.ov">Openbaar vervoer</span><button type="button"
+          class="uitleg-knop" aria-expanded="false" aria-controls="ov-uitleg"
           title="Uitleg" data-i18n-title="popup.uitleg"><svg class="ico" aria-hidden="true"><use
           href="#i-info"/></svg><span class="enkel-schermlezer"
           data-i18n="popup.uitleg">Uitleg</span></button></h2>
-      <div class="schuif">
-        <input type="range" id="bus-schuif" min="0" step="1" value="0">
-        <p class="schuif__waarde" id="bus-waarde"></p>
-        <p class="schuif__uitleg" id="bus-uitleg" hidden
-           data-i18n="bushalte.uitleg">De hemelsbrede afstand van de standplaats tot de
-          dichtstbijzijnde bus- of tramhalte waar vaste lijnen stoppen. Elke stand toont die
-          afstand en alles daaronder. Te voet is de weg altijd wat langer.</p>
+      <div class="ovmodus" id="ovmodus-bus">
+        <p class="ovmodus__kop"><svg class="ico" aria-hidden="true"><use href="#i-ov"/></svg><span
+           data-i18n="filter.ovBus">Bus</span></p>
+        <div class="schuif schuif--in">
+          <input type="range" id="bus-schuif" min="0" step="1" value="0">
+          <p class="schuif__waarde" id="bus-waarde"></p>
+        </div>
+        <div class="schuif schuif--in">
+          <input type="range" id="busfreq-schuif" min="0" step="1" value="0">
+          <p class="schuif__waarde" id="busfreq-waarde"></p>
+        </div>
       </div>
+      <div class="ovmodus" id="ovmodus-tram">
+        <p class="ovmodus__kop"><svg class="ico" aria-hidden="true"><use href="#i-tram"/></svg><span
+           data-i18n="filter.ovTram">Tram</span></p>
+        <div class="schuif schuif--in">
+          <input type="range" id="tram-schuif" min="0" step="1" value="0">
+          <p class="schuif__waarde" id="tram-waarde"></p>
+        </div>
+        <div class="schuif schuif--in">
+          <input type="range" id="tramfreq-schuif" min="0" step="1" value="0">
+          <p class="schuif__waarde" id="tramfreq-waarde"></p>
+        </div>
+      </div>
+      <div class="ovmodus" id="ovmodus-trein">
+        <p class="ovmodus__kop"><svg class="ico" aria-hidden="true"><use href="#i-trein"/></svg><span
+           data-i18n="filter.ovTrein">Trein</span></p>
+        <div class="schuif schuif--in">
+          <input type="range" id="trein-schuif" min="0" step="1" value="0">
+          <p class="schuif__waarde" id="trein-waarde"></p>
+        </div>
+        <div class="schuif schuif--in">
+          <input type="range" id="treinfreq-schuif" min="0" step="1" value="0">
+          <p class="schuif__waarde" id="treinfreq-waarde"></p>
+        </div>
+      </div>
+      <!-- Alleen als er twee of meer soorten ingesteld zijn: dan beslis je of er één
+           volstaat (uit, de standaard) of dat de standplaats aan allemaal moet voldoen. -->
+      <label class="schakel ovbeide" id="ovbeide-blok" hidden>
+        <input type="checkbox" id="ovbeide">
+        <span data-i18n="filter.ovBeide">Aan alle ingestelde voldoen</span>
+      </label>
+      <p class="schuif__uitleg" id="ov-uitleg" hidden
+         data-i18n="ov.filterUitleg">Stel een afstand of frequentie in voor bus, tram of trein.</p>
     </div>
 
-    <div class="sectie sectie--schuif" id="filter-station">
-      <h2><span data-i18n="kop.station">Afstand tot een treinstation</span><button type="button"
-          class="uitleg-knop" aria-expanded="false" aria-controls="trein-uitleg"
-          title="Uitleg" data-i18n-title="popup.uitleg"><svg class="ico" aria-hidden="true"><use
-          href="#i-info"/></svg><span class="enkel-schermlezer"
-          data-i18n="popup.uitleg">Uitleg</span></button></h2>
-      <div class="schuif">
-        <input type="range" id="trein-schuif" min="0" step="1" value="0">
-        <p class="schuif__waarde" id="trein-waarde"></p>
-        <p class="schuif__uitleg" id="trein-uitleg" hidden
-           data-i18n="station.uitleg">De hemelsbrede afstand van de standplaats tot het
-          dichtstbijzijnde treinstation. Elke stand toont die afstand en alles daaronder.
-          Naar een station fietst of rijdt men; vandaar dat de schaal verder reikt dan bij
-          een halte.</p>
-      </div>
-    </div>
+    <!-- "Meer filters": filters waar de meeste bezoekers niet naar zoeken, achter één
+         uitklapper, zodat ze de rest niet uit beeld duwen. WELKE filters hier staan,
+         kiezen de beheerders op /beheer/kaartfilters; plaatsMeerFilters() in het script
+         verhuist de secties bij het laden. Zonder die instelling staan euronorm en
+         bouwjaar hier, zoals in de opmaak hieronder. Staat er niets in, dan verdwijnt
+         de uitklapper. -->
+    <details class="meerfilters" id="meerfilters">
+      <summary data-i18n="filters.meer">Meer filters</summary>
+      <div class="meerfilters__lijst" id="meerfilters-lijst">
 
-    <!-- Euronorm en bouwjaar staan dicht: het zijn details waar de meeste bezoekers niet
-         naar zoeken, en opengeklapt duwen ze de rest van de filters uit beeld. -->
-    <details class="vouw sectie sectie--schuif" id="vouw-euronorm">
-      <summary data-i18n="kop.euronorm">Euronorm</summary>
+    <div class="sectie sectie--schuif" data-filter="euronorm">
+      <h2 data-i18n="kop.euronorm">Euronorm</h2>
+      <!-- Twee bolletjes op één balk: van welke tot welke norm. Twee gewone schuiven over
+           elkaar, zodat elk bolletje apart met het toetsenbord te bedienen is; zie
+           bouwEuronorm() in het script en `.dubbel` in de opmaak. -->
       <div class="schuif">
-        <input type="range" id="euronorm-schuif" min="0" step="1" value="0">
+        <div class="dubbel" id="euronorm-dubbel">
+          <div class="dubbel__balk" aria-hidden="true"></div>
+          <input type="range" id="euronorm-van" min="0" step="1" value="0">
+          <input type="range" id="euronorm-tot" min="0" step="1" value="0">
+        </div>
         <p class="schuif__waarde" id="euronorm-waarde"></p>
-        <p class="schuif__uitleg" data-i18n="euronorm.uitleg">Elke stand toont die norm én
-          alles daarboven. Elektrische en hybride auto's staan bovenaan op de schaal; zij
-          dragen zelf geen euronorm.</p>
+        <p class="schuif__uitleg" data-i18n="euronorm.uitleg">Kies met de twee bolletjes van
+          welke tot welke norm. Elektrische auto's staan bovenaan op de schaal; zij hebben
+          geen euronorm. Hybrides tellen met hun eigen euronorm.</p>
       </div>
-    </details>
+    </div>
 
-    <details class="vouw sectie sectie--schuif" id="vouw-bouwjaar">
-      <summary data-i18n="kop.bouwjaar">Bouwjaar</summary>
+    <div class="sectie sectie--schuif" data-filter="bouwjaar">
+      <h2 data-i18n="kop.bouwjaar">Bouwjaar</h2>
       <div class="schuif">
         <input type="range" id="bouwjaar-schuif" min="0" step="1" value="0">
         <p class="schuif__waarde" id="bouwjaar-waarde"></p>
+      </div>
+    </div>
+
       </div>
     </details>
 
@@ -444,10 +522,9 @@
 </div>
 
 <!-- Het voorbehoud: wat de kaart níet belooft. Bij elke opening onderaan in beeld, over de
-     kaart maar zonder haar af te dekken; na 15 seconden gaat het vanzelf weg, en het
-     kruisje sluit het meteen. Het balkje onderaan telt die 15 seconden af — en staat stil
-     zolang de muis erop staat of de focus erin zit, zodat niemand halverwege een zin zijn
-     tekst kwijtraakt. Zie toonVoorbehoud() in het script. -->
+     kaart maar zonder haar af te dekken. Na 15 seconden gaat het vanzelf weg, zonder
+     balkje dat aftelt: dat jaagde mensen op terwijl ze lezen. Dicht krimpt het tot het
+     ⓘ-knopje onder het tandwiel, en dat knopje haalt het terug. Zie toonVoorbehoud() in het script. -->
 <aside class="voorbehoud" id="voorbehoud" aria-labelledby="voorbehoud-titel" hidden>
   <h2 id="voorbehoud-titel" data-i18n="voorbehoud.titel">Goed om te weten</h2>
   <button type="button" class="voorbehoud__sluit" id="voorbehoud-sluit"
@@ -459,13 +536,144 @@
     <span class="enkel-schermlezer" data-i18n="voorbehoud.sluiten">Sluiten</span>
   </button>
   <ul>
-    <li data-i18n-html="voorbehoud.live"><strong>Geen live beschikbaarheid:</strong> je ziet waar de auto's staan, niet of ze vrij zijn.</li>
-    <li data-i18n-html="voorbehoud.aanbod"><strong>Het aanbod kan wijzigen</strong>, ook tijdens je lidmaatschap.</li>
-    <li data-i18n-html="voorbehoud.fotos"><strong>Voorbeeldfoto's</strong> van het model, niet van de auto zelf.</li>
-    <li data-i18n-html="voorbehoud.locatie"><strong>Locaties zijn bij benadering.</strong></li>
+    <li data-i18n-html="voorbehoud.live"><strong>Geen live beschikbaarheid:</strong> je
+      ziet waar de auto's staan, niet of ze vrij zijn.</li>
+    <li data-i18n-html="voorbehoud.aanbod"><strong>Het aanbod kan wijzigen,</strong> ook
+      tijdens je lidmaatschap.</li>
+    <li data-i18n-html="voorbehoud.fotos"><strong>Voorbeeldfoto's</strong> van het model,
+      niet van de auto zelf.</li>
+    <!-- Gevuld door toonVoorbehoudLocatie(), met de afstand uit de feed. -->
+    <li id="voorbehoud-locatie" hidden></li>
   </ul>
-  <div class="voorbehoud__tijd" id="voorbehoud-tijd" aria-hidden="true"></div>
 </aside>
+
+<!-- Het meldformulier, voor wie geen GitHub-account heeft. Alleen in gebruik als
+     `melden.url` in config.js ingevuld is; anders blijft de meldknop gewoon naar GitHub
+     linken. Wat hier verstuurd wordt, wordt een openbaar issue — dat staat bovenaan, en
+     het vinkje onderaan is verplicht. Zie openMeldvenster() in het script en
+     feedback-worker/README.md voor de kant van de server. -->
+<div class="meldvenster" id="meldvenster" hidden>
+  <!-- `tabindex="-1"` zodat het script de focus hierheen kan zetten bij het openen: dan
+       begint een schermlezer bovenaan, bij de titel en de waarschuwing dat de melding
+       publiek is, en niet halverwege bij de eerste keuzelijst. -->
+  <div class="meldvenster__kader" role="dialog" aria-modal="true" tabindex="-1"
+       aria-labelledby="meldvenster-titel">
+    <h2 id="meldvenster-titel" data-i18n="meldformulier.titel">Probleem of feedback</h2>
+    <!-- Hetzelfde kruisje als bij het voorbehoud, dus ook dezelfde klasse. -->
+    <button type="button" class="voorbehoud__sluit" id="meldvenster-sluit"
+            title="Sluiten" data-i18n-title="voorbehoud.sluiten">
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor"
+           stroke-width="2.2" stroke-linecap="round">
+        <path d="M6 6l12 12M18 6L6 18"/>
+      </svg>
+      <span class="enkel-schermlezer" data-i18n="voorbehoud.sluiten">Sluiten</span>
+    </button>
+
+    <form id="meldformulier">
+      <p class="meldvenster__publiek" data-i18n-html="meldformulier.publiek"><strong>Je
+        melding is publiek.</strong> Wat je in de beschrijving schrijft, en de screenshot als je
+        die meestuurt, verschijnt als
+        openbaar issue op GitHub, voor iedereen zichtbaar. Laat er dus persoonlijke gegevens
+        uit, zoals je naam, adres, telefoonnummer, e-mailadres, lidnummer of een nummerplaat.
+        Moet je iets melden dat niet openbaar mag komen? Mail dan naar
+        <a href="mailto:info@degage.be">info@degage.be</a>.</p>
+
+      <label class="meldvenster__veld">
+        <span data-i18n="meldformulier.soort">Waarover gaat het?</span>
+        <select name="soort" required>
+          <option value="kaart" data-i18n="meldformulier.soortKaart">Er klopt iets niet op de kaart</option>
+          <option value="werking" data-i18n="meldformulier.soortWerking">De kaart werkt niet goed</option>
+          <option value="idee" data-i18n="meldformulier.soortIdee">Idee of suggestie</option>
+          <option value="anders" data-i18n="meldformulier.soortAnders">Iets anders</option>
+        </select>
+      </label>
+
+      <label class="meldvenster__veld">
+        <span data-i18n="meldformulier.beschrijving">Beschrijving</span>
+        <textarea name="beschrijving" rows="5" minlength="5" maxlength="3000" required
+                  data-i18n-plh="meldformulier.beschrijvingPlh"
+                  placeholder="Wat zag je, en wat had je verwacht? Over welke auto of welke plaats gaat het?"></textarea>
+      </label>
+
+      <!-- Voor wie een antwoord wil. Het enige veld dat NIET in het issue komt: de Worker
+           bewaart het apart, zie feedback-worker/beheer.js. Alleen zichtbaar als
+           `melden.antwoordPerMail` in config.js aan staat. -->
+      <label class="meldvenster__veld" id="meldmailveld" hidden>
+        <span data-i18n="meldformulier.mail">E-mailadres (optioneel)</span>
+        <input type="email" name="mail" maxlength="254" autocomplete="email"
+               aria-describedby="meldmailuitleg">
+        <small class="meldvenster__uitleg" id="meldmailuitleg" data-i18n="meldformulier.mailUitleg">Alleen
+          als je een antwoord wil. Het blijft privé en wordt 30 dagen na afhandeling gewist.</small>
+      </label>
+
+      <!-- De screenshot van de kaart, gemaakt bij het openen van dit venster (zonder het
+           venster zelf en zonder het punt van je eigen locatie). Standaard mee, behalve
+           na "Auto's in mijn buurt": dan staat de kaart rond de eigen plek. Het
+           voorbeeld toont wat er precies meegaat; het komt openbaar in het issue. Blijft
+           verborgen als de screenshot niet lukt. Zie maakSchermafbeelding() in het script. -->
+      <div class="meldbeeld" id="meldbeeld" hidden>
+        <label class="meldvenster__akkoord">
+          <input type="checkbox" name="schermafbeelding" id="meldbeeld-aan" checked
+                 aria-describedby="meldbeeld-uitleg">
+          <span data-i18n="meldformulier.beeld">Screenshot van de kaart meesturen</span>
+        </label>
+        <p class="meldbeeld__bezig" id="meldbeeld-bezig" data-i18n="meldformulier.beeldBezig">Screenshot wordt gemaakt…</p>
+        <img class="meldbeeld__voorbeeld" id="meldbeeld-voorbeeld" alt="" hidden>
+        <small class="meldvenster__uitleg" id="meldbeeld-uitleg" data-i18n="meldformulier.beeldUitleg">Zo
+          zien we wat jij zag. Ook de screenshot wordt publiek. Je eigen locatie staat er niet op.</small>
+        <small class="meldvenster__uitleg" id="meldbeeld-locatie" data-i18n="meldformulier.beeldLocatie"
+               hidden>Je gebruikte je locatie, dus de kaart staat rond je eigen plek. Daarom
+          staat dit standaard uit.</small>
+      </div>
+
+      <!-- Een lokveld voor robots: een mens ziet het niet en vult het dus niet in. -->
+      <input type="text" name="website" class="meldvenster__lok" tabindex="-1"
+             autocomplete="off" aria-hidden="true">
+
+      <label class="meldvenster__akkoord">
+        <input type="checkbox" name="akkoord" required>
+        <span data-i18n="meldformulier.akkoord">Ik begrijp dat mijn melding publiek wordt, en er staan geen persoonlijke gegevens in.</span>
+      </label>
+
+      <div class="meldvenster__controle" id="meldcontrole"></div>
+      <p class="meldvenster__fout" id="meldfout" role="alert" hidden></p>
+
+      <div class="meldvenster__knoppen">
+        <button type="button" id="meldannuleer" data-i18n="meldformulier.annuleren">Annuleren</button>
+        <button type="submit" class="is-hoofd" id="meldverstuur"
+                data-i18n="meldformulier.versturen">Versturen</button>
+      </div>
+    </form>
+
+    <div id="meldbedankt" role="status" hidden>
+      <p class="meldbedankt__kop" data-i18n="meldformulier.bedankt">Bedankt! Je melding staat nu op GitHub.</p>
+      <!-- Wat er zonet verstuurd is, zoals de bezoeker het schreef. Twee redenen: het
+           bewijst dat het echt weg is, en het is de laatste kans om te zien wat er nu
+           publiek staat — belangrijk bij een formulier dat uitdrukkelijk waarschuwt voor
+           persoonlijke gegevens. Het script vult dit met textContent, dus wat iemand
+           intikte wordt nooit als opmaak gelezen. -->
+      <div class="meldoverzicht" id="meldoverzicht" hidden>
+        <p class="meldoverzicht__soort" id="meldoverzicht-soort"></p>
+        <p class="meldoverzicht__tekst" id="meldoverzicht-tekst"></p>
+        <img class="meldbeeld__voorbeeld" id="meldoverzicht-beeld" alt="" hidden>
+      </div>
+      <!-- Alleen als de screenshot mee moest maar niet bewaard kon worden. -->
+      <p id="meldbeeldregel" data-i18n="meldformulier.beeldMislukt" hidden>Je melding staat
+        op GitHub, maar de screenshot kon niet bewaard worden.</p>
+      <!-- Verborgen zolang de Worker geen adres teruggaf: een link die naar het lege
+           formulier op GitHub wijst, belooft iets wat hij niet toont. -->
+      <!-- Alleen als de bezoeker een mailadres gaf: dat het niet in het overzicht hierboven
+           staat, is geen vergissing. De tekst hangt af van of het bewaren lukte. -->
+      <p id="meldmailregel" hidden></p>
+      <p id="meldlinkregel" hidden><a id="meldlink" target="_blank" rel="noopener"
+            data-i18n="meldformulier.bekijk">Bekijk je melding</a></p>
+      <div class="meldvenster__knoppen">
+        <button type="button" class="is-hoofd" id="meldklaar"
+                data-i18n="voorbehoud.sluiten">Sluiten</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Het wolkje naast het tandwiel na de taalvraag hieronder. Net als het
      instellingendoosje hangt JavaScript het in de kaartbediening; zie toonTandwielhint(). -->

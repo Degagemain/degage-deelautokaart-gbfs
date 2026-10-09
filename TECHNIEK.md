@@ -8,7 +8,7 @@ waarom, staat in [`FUNCTIONEEL.md`](FUNCTIONEEL.md) — de regels achter de filt
 en de talen worden daar uitgelegd en hier niet herhaald. Het gaat ook niet over de feed:
 wat daarin staat leest een partner op `gbfs/index.html` en in de
 [GBFS-specificatie](https://github.com/MobilityData/gbfs). Voor het bedienen van het
-gereedschap is `README.md` de plek.
+gereedschap is `BEDIENING.md` de plek; hoe alle onderdelen samenhangen staat in `README.md`.
 
 ---
 
@@ -64,6 +64,8 @@ laden vaststelt. Alles wat met afmetingen te maken heeft, houdt daar rekening me
 | tile.openstreetmap.fr | de kaarttegels in het Frans (Franse plaatsnamen) | eigen naamsvermelding; bij storing terug naar de standaardtegels (`TEGELS_PER_TAAL`) |
 | nominatim.openstreetmap.org | adres → coördinaat | alleen bij verzenden, zie "Zoeken" |
 | degapp.be/api/v1/car/stands | de live vloot: welke auto's er zijn en waar | `VLOOT_API`; bij fout of na `VLOOT_WACHTTIJD_MS` terug naar de feed, zie "De live vloot" |
+| de Cloudflare Worker | het meldformulier → een issue op GitHub | `melden.url` in `config.js`; leeg = de knop linkt gewoon naar GitHub, zie "Melden" |
+| challenges.cloudflare.com | Turnstile, de spamcontrole in het meldformulier | pas geladen als iemand het formulier opent; `melden.turnstileSitekey` |
 
 De SRI-hashes (`integrity=`) zijn geen sier: verandert het bestand op de CDN, dan weigert
 de browser het uit te voeren. Wie een versie opwaardeert, moet dus **ook de hash
@@ -79,7 +81,7 @@ De kaart haalt **twee** bestanden op uit `../gbfs` (`GBFS_BASIS`, bovenaan `inde
   juiste) schrijfwijzen kunnen dragen.
 - `degage_vehicles.json` — de Dégage-uitbreiding op GBFS, met per auto: `station_id`,
   `naam`, `merk`, `model`, `carrosserie`, `brandstof`, `zitplaatsen`, `bouwjaar`,
-  `versnellingsbak`, `euronorm`, `toebehoren`, `plaats`, `postcode`, `district`, `contact`.
+  `versnellingsbak`, `klasse`, `euronorm`, `toebehoren`, `plaats`, `postcode`, `district`, `contact`.
   `plaats` is de gemeente met rechtgezette hoofdletters ("GENTBRUGGE" en "gent"
   worden "Gentbrugge" en "Gent"); dat gebeurt in `plaatsnaam()` in de generator, die
   alleen hoofdletters verandert en nooit letters. De kaart toont wat de feed draagt.
@@ -157,12 +159,6 @@ de wagen vallen (`wagenPast()`, dezelfde regel als voor een onbekende euronorm).
 toont het label `popup.nieuw` op de plaats van merk en model, met `popup.nieuwUitleg`
 eronder; de balk met dichtstbijzijnde auto's toont hetzelfde label. De stijl is
 `.wagen__nieuw` in `index.css`.
-
-Om ze te vinden is er een eigen filtergroep, `nieuw`: de sectie `#sectie-nieuw` bovenaan
-de filters, met één keuze (`filter.nieuw`) in `#filter-nieuw`, de set
-`staat.gekozenNieuw` en een regel in `wagenPast()` en `redenen()`
-(`reden.nietNieuw`). `staat.aantalNieuw` telt ze in `laden()`; bij 0 verbergt
-`bouwFilters()` de hele sectie.
 
 Een API-auto zonder bruikbare `geoPosition` (ontbrekend, geen getal, of 0) wordt
 overgeslagen: een auto zonder plek kan niet op een kaart.
@@ -244,7 +240,8 @@ laden()
 
 Alles wat de kaart weet, staat in het object **`staat`**. De gekozen filters leven daar als
 `Set`'s (`gekozenBrandstof`, `gekozenSoort`, `gekozenBak`, `gekozenVlaggen`) en als losse
-ondergrenzen (`minZit`, `minNorm`, `jaarVan`) en bovengrenzen (`maxBus`, `maxTrein`). De
+ondergrenzen (`minZit`, `minNorm`, `jaarVan`), en voor het OV-filter als `gekozenOvModi`,
+`ovBeide` en per modus de grenzen in `ovModus` (`maxM`, `minFreq`). De
 aangevinkte vakjes in de
 opmaak zijn daar een afspiegeling van, nooit de bron — daarom kan de filterlijst opnieuw
 getekend worden (bij een taalwissel) zonder dat er een keuze sneuvelt.
@@ -270,17 +267,63 @@ tussen haakjes achter zijn naam (op hetzelfde punt dus "Ledeberg" bij de ene en 
 bij de andere), en het merkteken op de pin volgt `passende` en niet `station.wagens`. De postcode
 wordt niet meer getoond.
 
+**Eén popup per auto, niet per stip.** Een stip blijft één standplaats, maar de popup toont
+standaard één wagen: `popupHtml(station, wagen)` vraagt `popupWagens()` welke. Uit de balk
+en na een zoekopdracht is dat de aangeklikte wagen. Bij een klik op de stip is het de eerste
+die door de filters komt. De andere wagens op die plek staan eronder als `.ook-knop`
+(`ookHierHtml()`). Die knop draagt het `station_id` en de plaats van de wagen in
+`station.wagens`, want de popup is HTML-tekst. `wisselWagen()` zet de andere wagen met
+`setContent()` in dezelfde popup.
+
+Drie dingen die je daarbij niet mag vergeten:
+
+- **De klik op `.ook-knop` stopt bij de popup** (`stopPropagation`). Leaflet beslist pas bij
+  de kaart of een klik binnen een popup viel, door vanaf het doel omhoog te lopen. Na
+  `setContent()` hangt de knop nergens meer, dus zonder die stop sloot de popup zich meteen.
+- **`setContent()` vervangt bij een stip de inhoudsfunctie van `bindPopup`.** De
+  `click`-afhandelaar in `teken()` zet die functie daarom bij elke klik terug, anders opent
+  de stip de volgende keer met de wagen van daarnet.
+- **De balk onthoudt naast `balkPopupStation` ook `balkPopupWagen`.** Een tweede klik op
+  hetzelfde kaartje sluit de popup, en een klik op de buurwagen wisselt hem.
+
+Met `staat.samenTonen` (de schakelaar `#knop-samen` in de instellingen, standaard uit) geeft
+`popupWagens()` gewoon `station.wagens` terug, zoals vroeger. Omzetten sluit een
+openstaande popup, want die draagt afgewerkte tekst volgens de oude keuze.
+
 ## 6. Filters
 
 `wagenPast(w)` is de enige plek waar beslist wordt of een auto door de filters komt.
-De twee OV-bovengrenzen (`maxBus` en `maxTrein`) zijn de enige die niet naar de auto kijken
-maar naar zijn standplaats (`haltAfstandVan()`, `stationAfstandVan()`); horen er geen
-OV-gegevens bij de feed, dan verdwijnen die schuiven (`bouwAfstanden()`).
+Het OV-filter is het enige dat niet naar de auto kijkt maar naar zijn standplaats
+(`ovPast()`, `ovModusPast()`). Elke modus (`OV_MODI`: bus, tram, trein) is een blok in de
+opmaak met twee schuiven, zonder aanvinkvakje. `staat.gekozenOvModi` wordt afgeleid uit de
+schuiven (`ovModiBijwerken()`): een modus filtert zodra `maxM` of `minFreq` niet `null` is.
+`wisOvModus()` zet beide schuiven terug op "alles". Bij twee of meer modi is het "of",
+tenzij `ovBeide` aanstaat. Een modus zonder gegevens verdwijnt, en het hele blok als er
+geen OV-gegevens bij de feed horen (`bouwOv()`).
 
-Hun standen komen uit `AFSTAND_LADDER` — ronde afstanden van 250 m tot 10 km — waarvan
-`afstandDrempels()` alles wegsnijdt wat op of boven de verste standplaats ligt: een stand die
-niets wegfiltert, doet de schuif over haar bereik liegen. De ladder staat **aflopend**, zodat
-verder naar rechts strenger is, net als bij elke andere schuif hier. Dat de filters op iets
+**De afstandsschuif** begint links met "elke afstand", en daar staat hij in rust; daarna
+volgen de afstanden van klein naar groot (250 m eerst). Welke stand "alles" is, draagt
+elke OV-schuif als `data-rust` (nu overal `0`). `wisOvModus()` en het telbolletje op
+de kop (`werkKoppenBij()`) kijken daarnaar; wie een nieuwe schuif toevoegt, hoeft niets te
+doen zolang 0 zijn ruststand is.
+
+**De stand staat ín de balk** bij de zes OV-schuiven (`.schuif--in`), niet eronder: de balk
+is een pil van 26 px met de tekst erin. `zetSchuifIn()`, aangeroepen vanuit
+`zetSchuiftekst()`, zet `duim-links` als het bolletje op de linkerhelft staat (dan gaat de
+tekst naar rechts) en `is-gezet` als de schuif niet in rust staat. De balk is getekend met
+pseudo-elementen voor zowel WebKit als Firefox; wie hem aanpast, test in beide.
+
+`ovDeel()` leest per modus `bus`, `tram` of `trein` uit `ov.json`. Bus en tram zijn elk de
+dichtste halte met alleen die soort ritten. De gemengde `halte`, de dichtste met bus óf
+tram, dient alleen nog als terugval in de popup (`ovHtml()`) voor zo'n ouder bestand. Een `ov.json` van vóór 08-10-2026 heeft geen `bus` en
+`tram`; dan verdwijnen die twee blokken tot `haal_ov.py` opnieuw gedraaid heeft.
+
+De afstanden komen uit `AFSTAND_LADDER` — ronde afstanden van 250 m tot 10 km — waarvan
+`ovStanden()` alles wegsnijdt wat op of boven de verste standplaats ligt: een stand die
+niets wegfiltert, doet de schuif over haar bereik liegen. Die ladder staat **oplopend**,
+met "elke afstand" er links voor. De frequenties komen uit `FREQ_LADDER` (per modus),
+oplopend, met alleen de standen boven de rustigste en tot de drukste halte; ze rekenen
+per richting, net als de popup (`freqPerRichting()`). Dat de filters op iets
 kunnen staan, hangt aan `haal_ov.py`: dat zoekt tot 10 km door, zodat er bij élke standplaats
 een gemeten afstand staat in plaats van een gat.
 Tussen groepen geldt EN, binnen een groep OF — behalve bij de vlaggen, waar ook binnen de
@@ -293,8 +336,14 @@ luisteraar zit **op `#filters`** en niet op elk vakje apart — anders zou elke 
 nieuwe laag luisteraars opleveren.
 
 De euronormschaal draait om `euronormRang()`: `"Euro 3"` t/m `"Euro 6"` leveren 3 t/m 6,
-elektrisch en hybride krijgen `ELEKTRISCH_HYBRIDE_RANG = 10`, en een onbekende norm levert
-`null` — die valt bij elke ingestelde ondergrens weg. Rang 10 staat ver genoeg van de echte
+volledig elektrisch krijgt `ELEKTRISCH_RANG = 10` (hybrides tellen met hun eigen norm), en
+een onbekende norm levert
+`null` — die valt weg zodra de schuif iets filtert (`euronormPast()`).
+In het telbolletje (`werkKoppenBij()`) telt zo'n schuif als één filter; het rechterbolletje
+draagt `data-rust` = de hoogste stand, want daar filtert het niets. De schuif met twee
+bolletjes is twee `<input type="range">` over elkaar (`#euronorm-van`, `#euronorm-tot`),
+met `pointer-events` alleen op de bolletjes; `staat.minNorm` en `staat.maxNorm` zijn de
+grenzen, `null` als er aan die kant geen is. Rang 10 staat ver genoeg van de echte
 reeks om nooit te botsen als er ooit een echte Euro 7 komt. Deze afspraak leeft
 **uitsluitend in de kaart**; in de feed staat er niets van.
 
@@ -304,13 +353,29 @@ reeks om nooit te botsen als er ooit een echte Euro 7 komt. Deze afspraak leeft
 bol het aantal *passende* standplaatsen toont en niet het aantal markers dat er toevallig
 in zit. Anders zou een cluster "47" zeggen terwijl het paneel "12 van 568" meldt.
 
-**Naamlabels.** De autonaam staat naast de pin zodra er hoogstens `NAMEN_MAX_IN_BEELD` (40)
+**Naamlabels.** De autonaam staat onder de pin zodra er hoogstens `NAMEN_MAX_IN_BEELD` (40)
 losse, passende pins in beeld staan, en altijd vanaf `NAAM_ZOOM` (14). `toonNamen()` telt
 met `clusters.getVisibleParent(m) === m` welke pins los staan, en draait na elke `moveend`,
 na de `animationend` van de clustergroep en na het (opnieuw) inladen (`chunkProgress`).
 De schakelaar is één klasse op de kaart (`.toont-namen`), niet honderden labels aan- en
 afkoppelen. Bij `zoomanim` naar `NAAM_ZOOM` of verder gaat ze meteen aan, zodat de namen
-mét de beweging meekomen.
+mét de beweging meekomen. Daarna zoekt `schikNamen()` voor elke naam een plek die geen andere
+naam, pin of clusterbol raakt: onder de pin, anders rechts, links of erboven (met een
+marge, want Leaflet zet de tooltip zelf met `transform`). Past hij nergens, dan blijft hij
+weg (klasse `.naamlabel--botst`). Eerst krijgt elke naam die onder past die plek, pas dan
+wijken de andere uit, telkens van boven naar onder. Dat is nodig omdat het clusteren alleen
+naar de pins kijkt, niet naar de namen. Daardoor kan de clusterstraal
+ingezoomd krap blijven (`maxClusterRadius`: 44 px, vanaf zoom 13 34 px).
+
+**Klik op een clusterbol.** `klikOpBol()` vervangt wat Leaflet.markercluster zelf doet
+(`zoomToBoundsOnClick` en `spiderfyOnMaxZoom` staan uit). Liggen alle auto's van de bol
+binnen `SAMEN_BINNEN_M` (50 m) van elkaar, dan waaiert hij meteen open; de bibliotheek
+deed dat pas op de diepste zoom, zodat je voor twee auto's op één parking klik na klik tot
+op straatniveau moest. Staat de kaart nog onder `NAAM_ZOOM`, dan eerst één sprong
+daarheen, en daar openwaaieren (na de `animationend` van de clustergroep), zodat de namen
+erbij staan. Anders gewoon inzoomen (`zoomToBounds()`). Opengewaaid staan de pins wat
+verder uit elkaar dan standaard (`spiderfyDistanceMultiplier: 1.6`), en `schikNamen()`
+draait opnieuw bij `spiderfied` en `unspiderfied`.
 
 ## 8. Popups, de vrije ruimte en de balk onderaan
 
@@ -331,8 +396,15 @@ popup kwam dan half boven het scherm uit. Eerst stilstaan, dan openen.
 
 ### Een popup die niet past
 
+Een popup krijgt **nooit een scrollbalk**. `popupRanden()` geeft Leaflet daarom geen
+`maxHeight` meer (dan scrolt Leaflet de inhoud), maar de vrije hoogte als `pasHoogte`. Na
+het openen, en na het openklappen van een uitleg, meet `pasPopupIn()` de popup; is hij
+hoger, dan krijgt de inhoud een CSS-`zoom` tot hij past, nooit onder `MIN_ZOOM` (0,6).
+`zoom` en geen `transform: scale`, zodat Leaflet de verkleinde maat meet en de punt op de
+stip blijft.
+
 Op een telefoon is wat er tussen het paneel en de balk overblijft soms kleiner dan de popup
-zelf. Een `maxHeight` alleen lost dat niet op: onder een leesbare hoogte duwt Leaflet de
+zelf. Een kleinere popup alleen lost dat niet op: onder een leesbare hoogte duwt Leaflet de
 popup tegen de bovenrand en valt de onderkant van het scherm. `popupRanden()` geeft daarom
 bij plaatsgebrek de plaats **onderaan** terug — daar liggen de meldknop en de balk — en pas
 als het dan nog steeds te krap is, die bovenaan.
@@ -527,7 +599,65 @@ zolang de balk er niet staat. Meten gebeurt via `balkInBeeld()` en niet via `hid
 alleen — een doos die `display: none` is, geeft een rechthoek van nul terug op positie
 nul, en `--dichtbij-ruimte` zou daar het hele venster van maken.
 
-## 12. Iets wijzigen
+## 12. Melden
+
+De knop **"Probleem of feedback"** rechtsboven is in de opmaak een gewone link naar het
+issueformulier op GitHub. Dat staat er in drie talen — `feedback-nl.yml`, `-fr` en `-en`
+in `.github/ISSUE_TEMPLATE/` — en `zetMeldlink()` zet bij het opstarten en bij elke
+taalwissel het juiste sjabloon achter `?template=`. De `href` in `index.html` wijst naar
+de Nederlandse, als vangnet voor wie geen JavaScript heeft; daar staat ook als enige het
+adres van de repo. Dat werkt zonder JavaScript, maar het vraagt wel een GitHub-account —
+en dat hebben de meeste leden niet.
+
+Staat er in `config.js` een `melden.url`, dan hangt `index.js` zich aan die link en opent
+hij in de plaats daarvan het venster `#meldvenster` op de kaart zelf. Wat daar verstuurd
+wordt, gaat naar een Cloudflare Worker, en die maakt het issue aan:
+
+```
+formulier op de kaart  ──POST──▶  Worker  ──GitHub API──▶  issue met label "feedback"
+                                  (meldt zich aan als GitHub App,
+                                   controleert Turnstile)
+```
+
+Het tussenstuk is nodig omdat een statische site geen sleutel voor GitHub kan bewaren
+zonder hem aan iedereen te geven. De Worker meldt zich aan als **GitHub App** van de
+organisatie: met de privésleutel van de app maakt hij zelf een token aan die een uur
+geldig is. Er is dus geen token die verloopt en die iemand moet vernieuwen, en de issues
+staan op naam van de app (`…[bot]`), niet van een persoon. Opzetten doe je één keer; dat
+staat in [`feedback-worker/README.md`](feedback-worker/README.md). Zonder `melden.url`
+verandert er niets en blijft de knop een link.
+
+**Wat de bezoeker te zien krijgt**, in alle drie de talen: bovenaan in een gele kader dat
+de melding publiek wordt, en onderaan een verplicht vinkje dat hij dat begrepen heeft en er
+geen persoonlijke gegevens in gezet heeft. Het `required`-attribuut doet dat werk; er is
+geen scriptcontrole die ernaast kan gaan staan.
+
+**Wat de Worker tegenhoudt:** een `Origin` die niet in `TOEGESTANE_HERKOMST` staat, een
+onbekende soort, een beschrijving die te kort of te lang is, een ingevuld lokveld (dat
+alleen een robot ziet), en een Turnstile-token dat niet klopt. De tekst van de bezoeker
+komt in een **codeblok** in het issue terecht, met een omheining die langer is dan de
+langste reeks backticks in die tekst zelf: zo kan er geen @vermelding, afbeelding of link
+uit een melding ontsnappen. Er gaat geen IP-adres en geen browsergegeven mee.
+
+**Een mailadres voor een antwoord** (alleen met `melden.antwoordPerMail` in `config.js`):
+het enige veld dat niet in het issue komt. De Worker bewaart het in zijn D1-databank,
+bij het nummer van het issue, en zet in het issue alleen *Antwoord gevraagd: ja*. De
+beheerders zien de adressen op `/beheer` van de Worker. Daar meld je je aan met GitHub, en
+binnen mag wie schrijfrechten op de repo heeft. Een nachtelijke taak wist een adres 30
+dagen nadat zijn issue gesloten is. Lukt het bewaren niet, dan staat het issue er wel, en
+zegt het bedankscherm dat er geen antwoord per mail komt. Alles over de opzet staat in
+[`feedback-worker/README.md`](feedback-worker/README.md), stap 5.
+
+**Als het misloopt** — Worker plat, netwerk weg, Turnstile stuk — dan staat in de
+foutmelding de link naar GitHub. Dat is de uitweg die altijd blijft werken.
+
+Het venster is `aria-modal`: bij het openen krijgt het kader zelf de focus, zodat een
+schermlezer bij de titel en de waarschuwing begint en niet halverwege bij een keuzelijst,
+en Tab loopt rond binnen het venster in plaats van de kaart erachter in te stappen. Een
+klik naast het venster sluit het **niet**, alleen het kruisje, "Annuleren" en Escape: wie
+al een halve tekst getypt heeft, mag die niet kwijtspelen door mis te tikken.
+
+## 13. Iets wijzigen
 
 **Een tekst.** Nooit in de opmaak: zoek de sleutel in `map/taal/nl.js` en pas hem in alle
 drie de bestanden aan. Staat er een `{haakje}` in, laat dat staan — de kaart vult het in.
@@ -539,14 +669,16 @@ uit het Nederlands.
 
 **Een nieuwe brandstof (of carrosserie, of versnellingsbak) uit de feed.** Niets nodig om
 hem te tónen — hij verschijnt vanzelf in het filter. Voor het label: een rij in `waarden` in
-`fr.js` en `en.js`.
+`fr.js` en `en.js`. Om hem op `/beheer/kaartfilters` te kunnen verbergen: een rij bij zijn
+filter in `OPTIES` in `feedback-worker/instellingen.js`.
 
 **Een nieuwe toebehorenvlag.** De sleutel in `TOEBEHOREN` of `AFSPRAKEN` in `index.js` (dat
 verschil gaat over wat er ín de auto zit tegenover wat je met de eigenaar afspreekt), plus
 een rij in `vlaggen` in alle drie de taalbestanden. De feed moet de vlag natuurlijk al
 dragen: de sleutel in `TOEBEHOREN_SLEUTELS` in `scripts/genereer_gbfs.py` en in het eigen
 schema `gbfs/schema/degage_vehicles.json`, plus de koppeling met de bron in de interne
-repo.
+repo. Wil je hem op `/beheer/kaartfilters` kunnen verbergen, zet hem dan ook in `OPTIES` in
+`feedback-worker/instellingen.js`.
 
 **Een nieuwe filtergroep.** Vier plekken: een `<div class="keuzes">` met een kop in de
 opmaak, een regel in `vulKeuzes()`, een `Set` in `staat`, en een regel in `wagenPast()`.
@@ -565,7 +697,7 @@ Vergeet je de hash, dan laadt de kaart niet meer en staat de reden alleen in de 
 op een rij wat waar staat. `index.html` draagt alleen nog structuur en pictogrammen, en
 `index.css` alleen nog opmaak.
 
-## 13. Bekende beperkingen
+## 14. Bekende beperkingen
 
 - **`alt` op de markers bereikt de DOM niet.** De markers gebruiken `divIcon`, en Leaflet zet
   `alt` alleen op een `<img>`-pictogram. De beschrijving wordt dus wel opgebouwd en vertaald,
@@ -584,7 +716,7 @@ op een rij wat waar staat. `index.html` draagt alleen nog structuur en pictogram
   benadering is. Afstanden in de balk zijn dus tot op tientallen meters juist, niet preciezer.
   Het getal hoort nergens hardgecodeerd te staan — één bron, in de feed.
 
-## 14. Lokaal draaien
+## 15. Lokaal draaien
 
 De pagina leest de feed, `index.js` en de taalbestanden via relatieve paden, dus
 `file://` werkt niet — de browser blokkeert dan het inlezen. Start een webserver in de

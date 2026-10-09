@@ -1,0 +1,50 @@
+# De Cloudflare Worker achter het meldformulier van de kaart. Zie README.md.
+name = "degage-kaart-feedback"
+main = "feedback.js"
+compatibility_date = "2026-10-01"
+
+[vars]
+# Waar de issues terechtkomen: eigenaar/repo.
+GITHUB_REPO = "Degagemain/degage-deelautokaart-gbfs"
+# Van welke sites het formulier mag versturen, gescheiden door komma's. Zonder pad of
+# slash op het einde. localhost staat erbij om lokaal te kunnen testen; gebruik je een
+# andere poort dan 8000, pas die dan aan.
+TOEGESTANE_HERKOMST = "https://degagemain.github.io,http://localhost:8000"
+# Het App ID van de GitHub App waarmee de Worker issues aanmaakt (niet geheim). Leeg: de
+# Worker gebruikt de vaste token GITHUB_TOKEN. Zie github.js en README.md, stap 1.
+GITHUB_APP_ID = "5236302"
+# De Client ID van dezelfde GitHub App (begint met Iv23; niet het App ID hierboven), om
+# beheerders aan te melden op /beheer. Niet geheim. Leeg: geen beheerpagina.
+GITHUB_OAUTH_ID = "Iv23liGTSFxEhYMIMzXm"
+# Waar de kaart staat: de knop "Naar de kaart" op de beheerpagina wijst hierheen. Leeg:
+# geen knop.
+KAART_URL = "https://degagemain.github.io/degage-deelautokaart-gbfs/map/"
+# Hoeveel dagen na het sluiten van een issue het mailadres gewist wordt. Het formulier op
+# de kaart belooft dit getal (meldformulier.mailUitleg in map/taal/); verander ze samen.
+BEWAARTERMIJN_DAGEN = "30"
+# De feed die de Worker elke nacht nakijkt op datafouten (datafouten.js, /beheer/datafouten).
+FEED_URL = "https://degagemain.github.io/degage-deelautokaart-gbfs/gbfs/degage_vehicles.json"
+# De live vloot, zoals de kaart ze leest (VLOOT_API in map/index.js): voor de lijst met
+# nieuwe auto's zonder gegevens op /beheer/datafouten.
+VLOOT_URL = "https://degapp.be/api/v1/car/stands"
+
+# De mailadressen van wie een antwoord wil. Maak de databank aan met
+#   npx wrangler d1 create degage-kaart-feedback
+# en zet het database_id dat je dan krijgt hieronder.
+[[d1_databases]]
+binding = "DB"
+database_name = "degage-kaart-feedback"
+database_id = "c73b835d-0266-4e22-b9a8-e85e0f0ec854"
+
+# De nachtelijke taak, om 3.17 u (UTC): de mailadressen van gesloten issues wissen, en de
+# feed nakijken op datafouten.
+[triggers]
+crons = ["17 3 * * *"]
+
+# Geheimen staan NIET hier, maar worden ingesteld met:
+#   npx wrangler secret put GITHUB_APP_SLEUTEL   (of, zonder GitHub App: GITHUB_TOKEN)
+#   npx wrangler secret put TURNSTILE_SECRET
+#   npx wrangler secret put GITHUB_OAUTH_GEHEIM
+#   npx wrangler secret put SESSIE_GEHEIM
+#   npx wrangler secret put CORRECTIES_TOKEN     (de generator stuurt hiermee zijn
+#                                                 rechtzettingen; zie README.md, stap 7)

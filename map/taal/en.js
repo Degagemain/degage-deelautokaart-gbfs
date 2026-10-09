@@ -29,15 +29,16 @@
   locale: "en-GB",
 
   teksten: {
-    "app.titel": "Dégage vehicles",
+    "app.titel": "Dégage car-sharing map",
     "app.kaartLabel": "Map of Dégage vehicles",
 
     "voorbehoud.titel": "Good to know",
     "voorbehoud.sluiten": "Close",
-    "voorbehoud.live": "<strong>No live availability:</strong> you see where the cars are, not whether they are free.",
-    "voorbehoud.aanbod": "<strong>The offer may change</strong>, also during your membership.",
+    "voorbehoud.live": "<strong>No live availability:</strong> you see where the cars " +
+                       "are, not whether they are free.",
+    "voorbehoud.aanbod": "<strong>The offer may change,</strong> even during your membership.",
     "voorbehoud.fotos": "<strong>Example photos</strong> of the model, not of the car itself.",
-    "voorbehoud.locatie": "<strong>Locations are approximate.</strong>",
+    "voorbehoud.locatie": "<strong>Locations are approximate</strong> for privacy reasons.",
 
     "zoek.plaatshouder": "Car name, address or town…",
     "zoek.aria": "Search for a car name, address or town; clicking also shows the filters",
@@ -77,9 +78,13 @@
     "filters.grijs": "Show filtered-out cars in grey",
     "filters.scrollSluit": "Close filters when scrolling the map",
     "filters.sluiten": "Close filters",
-    "kop.nieuw": "New in the fleet",
-    "filter.nieuw": "New cars, no details yet",
+    "filters.meer": "More filters",
     "kop.soort": "Vehicle type",
+    "kop.klasse": "Price class",
+    "filter.klasse": "Class {klasse}",
+    "filter.klasseOnbekend": "Class unknown",
+    "klasse.uitleg": "Each car is charged at the per-kilometre rate of its price " +
+                     "class. Price class B costs more per kilometre than price class A.",
     "kop.zitplaatsen": "Seats",
     "kop.brandstof": "Fuel",
     "kop.bak": "Transmission",
@@ -87,37 +92,46 @@
     "kop.afspraken": "Arrangements",
     "kop.euronorm": "Euro standard",
     "kop.bouwjaar": "Year built",
-    "kop.bushalte": "Distance to a bus stop",
-    "kop.station": "Distance to a train station",
-    "bushalte.uitleg": "The straight-line distance from the parking spot to the nearest bus or " +
-                       "tram stop served by scheduled lines. Each step shows that distance and " +
-                       "everything below it. On foot the walk is always a bit longer.",
-    "station.uitleg": "The straight-line distance from the parking spot to the nearest railway " +
-                      "station. Each step shows that distance and everything below it. People " +
-                      "cycle or drive to a station, which is why this scale reaches further " +
-                      "than the one for a stop.",
-    "afstand.alle": "all parking spots",
+    "kop.ov": "Public transport",
+    "filter.ovBus": "Bus",
+    "filter.ovTram": "Tram",
+    "filter.ovTrein": "Train",
+    "filter.ovBeide": "Must meet all set modes",
+    "ov.filterUitleg": "Set a distance or frequency for bus, tram or train; a slider on \"any\" does not " +
+                       "filter. The distance is a straight line from the parking spot to the nearest stop " +
+                       "or station; on foot the walk is a bit longer. The frequency is the number of " +
+                       "departures per hour, per direction, on an ordinary weekday. If you set more than " +
+                       "one, any one of them will do, unless \"Must meet all set modes\" is switched on.",
+    "ov.elkeAfstand": "any distance",
+    "ov.elkeFrequentie": "any frequency",
+    "ov.minstensFreq": "at least {n}× per hour",
     "afstand.hoogstens": "{afstand} or less",
-    "bus.aria": "Maximum distance to a bus or tram stop",
+    "bus.aria": "Maximum distance to a bus stop",
+    "tram.aria": "Maximum distance to a tram stop",
     "trein.aria": "Maximum distance to a railway station",
+    "busfreq.aria": "Minimum frequency at the bus stop, per direction",
+    "tramfreq.aria": "Minimum frequency at the tram stop, per direction",
+    "treinfreq.aria": "Minimum frequency at the railway station, per direction",
     "jaar.alle": "all years",
     "jaar.vanaf": "{jaar} or newer",
     "jaar.enkel": "only {jaar}",
     "jaar.aria": "Minimum year built",
 
-    "zit.alle": "all cars",
+    "zit.alle": "any number of seats",
     "zit.enkel": "only {n} seats",
     "zit.vanaf": "{n} seats or more",
     "zit.aria": "Minimum number of seats",
 
-    "euronorm.uitleg": "Each step shows that standard and everything above it. Electric " +
-                       "and hybrid cars sit at the top of the scale; they carry no Euro " +
-                       "standard of their own.",
-    "norm.alle": "all cars",
+    "euronorm.uitleg": "Use the two handles to choose from which standard to which. Electric " +
+                       "cars sit at the top of the scale; they have no Euro standard. " +
+                       "Hybrids count with their own Euro standard.",
+    "norm.alle": "any",
     "norm.enkel": "only {norm}",
     "norm.hoger": "{norm} and higher",
-    "norm.aria": "Minimum Euro standard",
-    "norm.elektrisch": "electric and hybrid",
+    "norm.tussen": "{van} to {tot}",
+    "norm.ariaVan": "Lowest Euro standard",
+    "norm.ariaTot": "Highest Euro standard",
+    "norm.elektrisch": "electric",
 
     "dichtbij.titel": "Nearest cars",
     "dichtbij.bij": "Closest to <b>{plek}</b>",
@@ -133,14 +147,59 @@
 
     "instellingen.volgmuis": "Nearest-cars list follows the mouse",
     "instellingen.dichtbij": "Show the nearest-cars list",
+    "instellingen.samen": "Show cars at the same spot together",
     "instellingen.taal": "Language",
     "instellingen.taalOnthouden": "Language remembered in this browser.",
     "instellingen.taalVergeten": "Forget",
     "instellingen.bronLive": "The cars and their locations are up to date. Make, model and equipment were last updated on {datum}.",
     "instellingen.bronDump": "Data as of {datum}.",
     "instellingen.pictogram": "Tab icon:",
-    "melden.knop": "Report a problem",
-    "melden.titel": "Report a problem or give feedback — opens github.com in a new tab",
+    "melden.knop": "Problem or feedback",
+    "melden.titel": "Report a problem or give feedback — opens github.com in a new tab; your feedback will be public",
+    "melden.titelFormulier": "Report a problem or give feedback — your report will be public",
+    /* Het issueformulier op GitHub in deze taal; zie .github/ISSUE_TEMPLATE/. */
+    "melden.sjabloon": "feedback-en.yml",
+    "meldformulier.titel": "Problem or feedback",
+    "meldformulier.publiek": "<strong>Your report is public.</strong> What you write in the " +
+                             "description, and the screenshot if you include it, is posted as a public issue on GitHub, visible to everyone. " +
+                             "So leave out any personal details, such as your name, address, phone " +
+                             "number, email address, membership number or a number plate. Do you need " +
+                             "to report something that cannot be public? Then email " +
+                             "<a href=\"mailto:info@degage.be\">info@degage.be</a>.",
+    "meldformulier.soort": "What is it about?",
+    "meldformulier.soortKaart": "Something on the map is wrong",
+    "meldformulier.soortWerking": "The map doesn't work properly",
+    "meldformulier.soortIdee": "Idea or suggestion",
+    "meldformulier.soortAnders": "Something else",
+    "meldformulier.beschrijving": "Description",
+    "meldformulier.beschrijvingPlh": "What did you see, and what did you expect? Which car or place is it about?",
+    "meldformulier.mail": "Email address (optional)",
+    "meldformulier.mailUitleg": "Only if you'd like a reply. It stays private and is deleted 30 days after your report is dealt with.",
+    "meldformulier.veldMail": "This doesn't look like an email address. Please check it, or leave the field empty.",
+    "meldformulier.bedanktMail": "Your email address is not in the report on GitHub. We only " +
+                                 "use it to reply to you.",
+    "meldformulier.mailMislukt": "Your report is on GitHub, but your email address could not " +
+                                 "be saved. Would you like a reply? Then email " +
+                                 "<a href=\"mailto:info@degage.be\">info@degage.be</a>.",
+    "meldformulier.akkoord":"I understand that my report will be public, and it contains no personal details.",
+    "meldformulier.beeld": "Include a screenshot of the map",
+    "meldformulier.beeldBezig": "Taking a screenshot…",
+    "meldformulier.beeldUitleg": "That way we see what you saw. The screenshot will be public too. Your own location is not on it.",
+    "meldformulier.beeldLocatie": "You used your location, so the map is centred on where you are. That's why this is off by default.",
+    "meldformulier.beeldAlt": "Screenshot of the map included with the report",
+    "meldformulier.beeldMislukt": "Your report is on GitHub, but the screenshot could not be saved.",
+    "meldformulier.annuleren": "Cancel",
+    "meldformulier.versturen": "Send",
+    "meldformulier.bezig": "Sending…",
+    "meldformulier.bedankt": "Thank you! Your report is now on GitHub.",
+    "meldformulier.bekijk": "View your report",
+    "meldformulier.veldSoort": "Choose what your report is about.",
+    "meldformulier.veldBeschrijving": "Please enter a description.",
+    "meldformulier.veldTeKort": "Write a little more: at least {min} characters.",
+    "meldformulier.veldAkkoord": "Tick the box to confirm you understand your report is public.",
+    "meldformulier.foutControle": "The spam check isn't ready yet. Wait until the box shows a tick, then try again.",
+    "meldformulier.fout": "Your report could not be sent. Please try again later, or report it " +
+                          "directly on {link} (you will need an account there).",
 
     "knop.alles": "Show everything — zoom out to the whole map",
     "knop.allesKort": "Show everything",
@@ -156,13 +215,15 @@
     "popup.geenFoto": "No example photo available for this model",
     "popup.fotoAlt": "Example photo of a {model}",
     "popup.nieuw": "New car",
-    "popup.nieuwUitleg": "Not yet in the map data. Make, model and other details will follow with the next map update.",
-    "popup.lidWorden": "Feel like sharing too? Check out {tarieven} and the {faq}, and join Dégage! 🚗",
-    "popup.tarieven": "our rates",
+    "popup.nieuwUitleg": "Make, model and other details will follow with the next map update.",
+    "popup.ookHier": "Also at this spot:",
+    "popup.lidVraag": "Feel like sharing too?",
+    "popup.lidOproep": "Join Dégage! 🚗",
+    "popup.tarieven": "Our rates",
     "popup.faq": "FAQ",
     "popup.uitleg": "Explanation",
-    "popup.bereikEen": "± {km} km range",
-    "popup.bereikMarge": "{van}–{tot} km range",
+    "popup.bereikEen": "± {km} km",
+    "popup.bereikMarge": "{van}–{tot} km",
     "popup.bereikUitleg": "Range: estimate for mixed use, not WLTP. A spread means it " +
                           "depends on the battery. Source:",
     "popup.bereikUitlegHandmatig": "Range: estimate for mixed use, not WLTP. Supplied by " +
@@ -172,14 +233,18 @@
     "ov.bushalte": "Bus stop",
     "ov.tramhalte": "Tram stop",
     "ov.geenHalte": "No bus or tram stop within {straal}",
+    "ov.geenBushalte": "No bus stop within {straal}",
+    "ov.geenTramhalte": "No tram stop within {straal}",
     "ov.station": "Train station",
-    "ov.perUur": "{n}/h",
-    "ov.minderDanEen": "<1/h",
     "ov.meter": "{n} metres",
     "ov.kilometer": "{n} kilometres",
     "ov.kilometerEen": "1 kilometre",
     "ov.kmKort": "{n} km",
-    "ov.bron": "After the name: departures per hour, per direction. " +
+    "ov.keer": "{n}×",
+    "ov.minderDanEenKeer": "<1×",
+    "ov.perUurLabel": "per hour",
+    "ov.bron": "Next to the icon: departures per hour, per direction. The name of " +
+              "the stop is on the icon. " +
               "Mobiscore: Flemish government (Departement Omgeving) — shops, schools, care, " +
               "leisure and public transport within walking and cycling distance. Buses and " +
               "trams: De Lijn, per direction, on the busier side of the stop. Trains: NMBS, all " +
@@ -192,7 +257,6 @@
     "reden.buiten": "Outside the filters — {redenen}",
     "reden.paar": "{kop}: {waarde}",
     "reden.onbekend": "unknown",
-    "reden.nietNieuw": "not a new car",
     "reden.nietVermeld": "{vlag} not listed",
 
     "fout.titel": "The parking spots could not be loaded",

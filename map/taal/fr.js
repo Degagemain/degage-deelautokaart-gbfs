@@ -29,15 +29,16 @@
   locale: "fr-BE",
 
   teksten: {
-    "app.titel": "Véhicules de Dégage",
+    "app.titel": "Carte des voitures partagées Dégage",
     "app.kaartLabel": "Carte des véhicules de Dégage",
 
     "voorbehoud.titel": "Bon à savoir",
     "voorbehoud.sluiten": "Fermer",
-    "voorbehoud.live": "<strong>Pas de disponibilité en temps réel :</strong> vous voyez où sont les voitures, pas si elles sont libres.",
-    "voorbehoud.aanbod": "<strong>L'offre peut changer</strong>, même pendant votre abonnement.",
+    "voorbehoud.live": "<strong>Pas de disponibilité en temps réel :</strong> vous voyez " +
+                       "où sont les voitures, pas si elles sont libres.",
+    "voorbehoud.aanbod": "<strong>L'offre peut changer,</strong> même pendant votre abonnement.",
     "voorbehoud.fotos": "<strong>Photos d'exemple</strong> du modèle, pas de la voiture elle-même.",
-    "voorbehoud.locatie": "<strong>Les emplacements sont approximatifs.</strong>",
+    "voorbehoud.locatie": "<strong>Positions approximatives,</strong> pour des raisons de confidentialité.",
 
     "zoek.plaatshouder": "Nom de voiture, adresse ou commune…",
     "zoek.aria": "Rechercher un nom de voiture, une adresse ou une commune ; cliquer " +
@@ -82,9 +83,13 @@
     "filters.grijs": "Afficher en gris les voitures filtrées",
     "filters.scrollSluit": "Fermer les filtres en faisant défiler la carte",
     "filters.sluiten": "Fermer les filtres",
-    "kop.nieuw": "Nouveau dans la flotte",
-    "filter.nieuw": "Nouvelles voitures, sans détails pour l'instant",
+    "filters.meer": "Plus de filtres",
     "kop.soort": "Type de véhicule",
+    "kop.klasse": "Catégorie de prix",
+    "filter.klasse": "Catégorie {klasse}",
+    "filter.klasseOnbekend": "Catégorie inconnue",
+    "klasse.uitleg": "Chaque voiture roule au prix kilométrique de sa catégorie de " +
+                     "prix. La catégorie B coûte plus cher au kilomètre que la catégorie A.",
     "kop.zitplaatsen": "Places assises",
     "kop.brandstof": "Carburant",
     "kop.bak": "Boîte de vitesses",
@@ -92,38 +97,47 @@
     "kop.afspraken": "Conditions",
     "kop.euronorm": "Norme Euro",
     "kop.bouwjaar": "Année de construction",
-    "kop.bushalte": "Distance d'un arrêt de bus",
-    "kop.station": "Distance d'une gare de train",
-    "bushalte.uitleg": "La distance à vol d'oiseau entre l'emplacement et l'arrêt de bus ou de " +
-                       "tram desservi par des lignes régulières le plus proche. Chaque position " +
-                       "affiche cette distance et toutes celles en dessous. À pied, le trajet " +
-                       "est toujours un peu plus long.",
-    "station.uitleg": "La distance à vol d'oiseau entre l'emplacement et la gare la plus " +
-                      "proche. Chaque position affiche cette distance et toutes celles en " +
-                      "dessous. On rejoint une gare à vélo ou en voiture ; l'échelle va donc " +
-                      "plus loin que celle d'un arrêt.",
-    "afstand.alle": "tous les emplacements",
+    "kop.ov": "Transports en commun",
+    "filter.ovBus": "Bus",
+    "filter.ovTram": "Tram",
+    "filter.ovTrein": "Train",
+    "filter.ovBeide": "Satisfaire à tous les modes réglés",
+    "ov.filterUitleg": "Réglez une distance ou une fréquence pour le bus, le tram ou le train ; un curseur " +
+                       "sur « toute » ne filtre rien. La distance est mesurée à vol d'oiseau, de " +
+                       "l'emplacement à l'arrêt ou à la gare le plus proche ; à pied, le trajet est un peu " +
+                       "plus long. La fréquence est le nombre de départs par heure et par sens, un jour de " +
+                       "semaine ordinaire. Si vous en réglez plusieurs, un seul suffit, sauf si « Satisfaire " +
+                       "à tous les modes réglés » est activé.",
+    "ov.elkeAfstand": "toute distance",
+    "ov.elkeFrequentie": "toute fréquence",
+    "ov.minstensFreq": "au moins {n}× par heure",
     "afstand.hoogstens": "{afstand} au maximum",
-    "bus.aria": "Distance maximale d'un arrêt de bus ou de tram",
+    "bus.aria": "Distance maximale d'un arrêt de bus",
+    "tram.aria": "Distance maximale d'un arrêt de tram",
     "trein.aria": "Distance maximale d'une gare",
+    "busfreq.aria": "Fréquence minimale à l'arrêt de bus, par sens",
+    "tramfreq.aria": "Fréquence minimale à l'arrêt de tram, par sens",
+    "treinfreq.aria": "Fréquence minimale à la gare, par sens",
     "jaar.alle": "toutes les années",
     "jaar.vanaf": "à partir de {jaar}",
     "jaar.enkel": "uniquement {jaar}",
     "jaar.aria": "Année de construction minimale",
 
-    "zit.alle": "toutes les voitures",
+    "zit.alle": "tout nombre de places",
     "zit.enkel": "uniquement {n} places",
     "zit.vanaf": "à partir de {n} places",
     "zit.aria": "Nombre minimum de places assises",
 
-    "euronorm.uitleg": "Chaque position affiche cette norme et toutes celles au-dessus. " +
-                       "Les voitures électriques et hybrides figurent en haut de " +
-                       "l'échelle ; elles ne portent pas de norme Euro.",
-    "norm.alle": "toutes les voitures",
+    "euronorm.uitleg": "Choisissez avec les deux curseurs de quelle norme à quelle norme. " +
+                       "Les voitures électriques figurent en haut de l'échelle ; elles " +
+                       "n'ont pas de norme Euro. Les hybrides comptent avec leur propre norme.",
+    "norm.alle": "peu importe",
     "norm.enkel": "uniquement {norm}",
     "norm.hoger": "{norm} et supérieur",
-    "norm.aria": "Norme Euro minimale",
-    "norm.elektrisch": "électrique et hybride",
+    "norm.tussen": "de {van} à {tot}",
+    "norm.ariaVan": "Norme Euro la plus basse",
+    "norm.ariaTot": "Norme Euro la plus haute",
+    "norm.elektrisch": "électrique",
 
     "dichtbij.titel": "Voitures les plus proches",
     "dichtbij.bij": "Au plus près de <b>{plek}</b>",
@@ -139,14 +153,60 @@
 
     "instellingen.volgmuis": "La liste des voitures les plus proches suit la souris",
     "instellingen.dichtbij": "Afficher la liste des voitures les plus proches",
+    "instellingen.samen": "Afficher ensemble les voitures d'un même emplacement",
     "instellingen.taal": "Langue",
     "instellingen.taalOnthouden": "Langue mémorisée dans ce navigateur.",
     "instellingen.taalVergeten": "Oublier",
     "instellingen.bronLive": "Les voitures et leur emplacement sont à jour. La marque, le modèle et les équipements ont été mis à jour le {datum}.",
     "instellingen.bronDump": "Données du {datum}.",
     "instellingen.pictogram": "Icône de l'onglet :",
-    "melden.knop": "Signaler un problème",
-    "melden.titel": "Signaler un problème ou donner un avis — ouvre github.com dans un nouvel onglet",
+    "melden.knop": "Problème ou avis",
+    "melden.titel": "Signaler un problème ou donner un avis — ouvre github.com dans un nouvel onglet ; votre avis sera public",
+    "melden.titelFormulier": "Signaler un problème ou donner un avis — votre signalement sera public",
+    /* Het issueformulier op GitHub in deze taal; zie .github/ISSUE_TEMPLATE/. */
+    "melden.sjabloon": "feedback-fr.yml",
+    "meldformulier.titel": "Problème ou avis",
+    "meldformulier.publiek": "<strong>Votre signalement est public.</strong> Ce que vous écrivez " +
+                             "dans la description, et la capture d'écran si vous la joignez, est publié comme ticket public sur GitHub, visible " +
+                             "par tout le monde. N'y mettez donc aucune donnée personnelle : nom, " +
+                             "adresse, numéro de téléphone, adresse e-mail, numéro de membre ou plaque " +
+                             "d'immatriculation. Vous devez signaler quelque chose qui ne peut pas être " +
+                             "public ? Écrivez alors à " +
+                             "<a href=\"mailto:info@degage.be\">info@degage.be</a>.",
+    "meldformulier.soort": "De quoi s'agit-il ?",
+    "meldformulier.soortKaart": "Quelque chose est incorrect sur la carte",
+    "meldformulier.soortWerking": "La carte ne fonctionne pas bien",
+    "meldformulier.soortIdee": "Idée ou suggestion",
+    "meldformulier.soortAnders": "Autre chose",
+    "meldformulier.beschrijving": "Description",
+    "meldformulier.beschrijvingPlh": "Qu'avez-vous vu, et à quoi vous attendiez-vous ? De quelle voiture ou de quel endroit s'agit-il ?",
+    "meldformulier.mail": "Adresse e-mail (facultatif)",
+    "meldformulier.mailUitleg": "Seulement si vous souhaitez une réponse. Elle reste privée et est effacée 30 jours après traitement.",
+    "meldformulier.veldMail": "Ceci ne ressemble pas à une adresse e-mail. Vérifiez-la, ou laissez le champ vide.",
+    "meldformulier.bedanktMail": "Votre adresse e-mail ne figure pas dans le signalement sur " +
+                                 "GitHub. Nous l'utilisons uniquement pour vous répondre.",
+    "meldformulier.mailMislukt": "Votre signalement est sur GitHub, mais votre adresse e-mail " +
+                                 "n'a pas pu être enregistrée. Vous souhaitez une réponse ? " +
+                                 "Écrivez alors à <a href=\"mailto:info@degage.be\">info@degage.be</a>.",
+    "meldformulier.akkoord":"Je comprends que mon signalement sera public, et il ne contient aucune donnée personnelle.",
+    "meldformulier.beeld": "Joindre une capture d'écran de la carte",
+    "meldformulier.beeldBezig": "Capture d'écran en cours…",
+    "meldformulier.beeldUitleg": "Ainsi, nous voyons ce que vous avez vu. La capture d'écran sera publique, elle aussi. Votre propre position n'y figure pas.",
+    "meldformulier.beeldLocatie": "Vous avez utilisé votre position : la carte est donc centrée sur l'endroit où vous êtes. C'est pourquoi cette option est désactivée par défaut.",
+    "meldformulier.beeldAlt": "Capture d'écran de la carte jointe au signalement",
+    "meldformulier.beeldMislukt": "Votre signalement est sur GitHub, mais la capture d'écran n'a pas pu être enregistrée.",
+    "meldformulier.annuleren": "Annuler",
+    "meldformulier.versturen": "Envoyer",
+    "meldformulier.bezig": "Envoi en cours…",
+    "meldformulier.bedankt": "Merci ! Votre signalement est maintenant sur GitHub.",
+    "meldformulier.bekijk": "Voir votre signalement",
+    "meldformulier.veldSoort": "Choisissez le sujet de votre signalement.",
+    "meldformulier.veldBeschrijving": "Veuillez saisir une description.",
+    "meldformulier.veldTeKort": "Écrivez un peu plus : au moins {min} caractères.",
+    "meldformulier.veldAkkoord": "Cochez la case pour confirmer que vous comprenez que votre signalement est public.",
+    "meldformulier.foutControle": "Le contrôle anti-spam n'est pas encore prêt. Attendez que la case affiche une coche, puis réessayez.",
+    "meldformulier.fout": "L'envoi a échoué. Réessayez plus tard, ou signalez-le directement " +
+                          "sur {link} (un compte y est nécessaire).",
 
     "knop.alles": "Tout afficher — dézoomer sur la carte entière",
     "knop.allesKort": "Tout afficher",
@@ -162,13 +222,15 @@
     "popup.geenFoto": "Aucune photo d'exemple disponible pour ce modèle",
     "popup.fotoAlt": "Photo d'exemple d'une {model}",
     "popup.nieuw": "Nouvelle voiture",
-    "popup.nieuwUitleg": "Pas encore dans les données de la carte. La marque, le modèle et les autres détails suivront lors de la prochaine mise à jour de la carte.",
-    "popup.lidWorden": "Envie de partager vous aussi ? Découvrez {tarieven} et la {faq}, et devenez membre de Dégage ! 🚗",
-    "popup.tarieven": "nos tarifs",
+    "popup.nieuwUitleg": "La marque, le modèle et les autres détails suivront lors de la prochaine mise à jour de la carte.",
+    "popup.ookHier": "Aussi à cet emplacement :",
+    "popup.lidVraag": "Envie de partager vous aussi ?",
+    "popup.lidOproep": "Devenez membre de Dégage ! 🚗",
+    "popup.tarieven": "Nos tarifs",
     "popup.faq": "FAQ",
     "popup.uitleg": "Explication",
-    "popup.bereikEen": "± {km} km d'autonomie",
-    "popup.bereikMarge": "{van}–{tot} km d'autonomie",
+    "popup.bereikEen": "± {km} km",
+    "popup.bereikMarge": "{van}–{tot} km",
     "popup.bereikUitleg": "Autonomie : estimation en usage mixte, pas WLTP. Une " +
                           "fourchette signifie qu'elle dépend de la batterie. Source :",
     "popup.bereikUitlegHandmatig": "Autonomie : estimation en usage mixte, pas WLTP. " +
@@ -179,14 +241,18 @@
     "ov.bushalte": "Arrêt de bus",
     "ov.tramhalte": "Arrêt de tram",
     "ov.geenHalte": "Aucun arrêt de bus ou de tram à moins de {straal}",
+    "ov.geenBushalte": "Aucun arrêt de bus à moins de {straal}",
+    "ov.geenTramhalte": "Aucun arrêt de tram à moins de {straal}",
     "ov.station": "Gare",
-    "ov.perUur": "{n}/h",
-    "ov.minderDanEen": "<1/h",
     "ov.meter": "{n} mètres",
     "ov.kilometer": "{n} kilomètres",
     "ov.kilometerEen": "1 kilomètre",
     "ov.kmKort": "{n} km",
-    "ov.bron": "Après le nom : départs par heure et par sens. " +
+    "ov.keer": "{n}×",
+    "ov.minderDanEenKeer": "<1×",
+    "ov.perUurLabel": "par heure",
+    "ov.bron": "À côté du pictogramme : départs par heure et par sens. Le nom de " +
+              "l'arrêt figure sur le pictogramme. " +
               "Mobiscore : Departement Omgeving, gouvernement flamand — commerces, écoles, " +
               "soins, loisirs et transports en commun à distance de marche et de vélo. Bus et " +
               "trams : De Lijn, par sens, du côté le plus fréquenté de l'arrêt. Trains : SNCB, " +
@@ -199,7 +265,6 @@
     "reden.buiten": "Hors des filtres — {redenen}",
     "reden.paar": "{kop} : {waarde}",
     "reden.onbekend": "inconnu",
-    "reden.nietNieuw": "pas une nouvelle voiture",
     "reden.nietVermeld": "{vlag} non renseigné",
 
     "fout.titel": "Impossible de charger les emplacements",

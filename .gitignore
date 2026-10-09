@@ -52,3 +52,20 @@ desktop.ini
 *.swp
 *~
 voorbeeld-uit/
+
+# ============================================================================
+# Cloudflare Wrangler
+# ============================================================================
+# Lokale staat van `wrangler`: het account-id van wie ingelogd is, en tijdelijke
+# bestanden van een deploy. Niets geheims, maar het hoort bij de computer waarop
+# je werkt en niet bij de repo.
+.wrangler/
+
+# Uitzondering op *.sql hierboven: het lege schema van de Worker. Geen gegevens, alleen
+# de CREATE TABLE.
+!feedback-worker/schema.sql
+
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example

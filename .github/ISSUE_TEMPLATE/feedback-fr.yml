@@ -1,0 +1,58 @@
+# La version française du formulaire de signalement sur GitHub. Il y en a un par langue
+# (feedback-nl / feedback-fr / feedback-en) ; la carte renvoie vers la version dans la
+# langue affichée à ce moment — voir zetMeldlink() dans map/index.js.
+#
+# Les textes viennent de map/taal/fr.js, pour que ce formulaire dise la même chose que
+# celui de la carte. Une phrase change là-bas ? Changez-la ici aussi. Deux
+# différences sont voulues. Ici, votre nom d'utilisateur GitHub figure dans le ticket, ce
+# qui n'est pas le cas du formulaire sur la carte. À l'inverse, le formulaire de la carte
+# peut demander une adresse e-mail pour une réponse (absente du ticket) ; ici, on répond
+# simplement sur GitHub.
+name: Avis sur la carte des voitures partagées (Français)
+description: Signalez un problème ou proposez une idée pour la carte des voitures de Dégage.
+title: "[Feedback] "
+labels: ["feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        > [!WARNING]
+        > **Votre signalement est public.** Il est publié comme ticket public sur GitHub, visible
+        > par tout le monde, avec votre nom d'utilisateur GitHub. N'y mettez donc aucune donnée
+        > personnelle : nom, adresse, numéro de téléphone, adresse e-mail, numéro de membre ou
+        > plaque d'immatriculation. Vous devez signaler quelque chose qui ne peut pas être
+        > public ? Écrivez alors à info@degage.be.
+
+  - type: dropdown
+    id: soort
+    attributes:
+      label: De quoi s'agit-il ?
+      options:
+        - Quelque chose est incorrect sur la carte
+        - La carte ne fonctionne pas bien
+        - Idée ou suggestion
+        - Autre chose
+    validations:
+      required: true
+
+  - type: textarea
+    id: beschrijving
+    attributes:
+      label: Description
+      description: Qu'avez-vous vu, et à quoi vous attendiez-vous ? De quelle voiture ou de quel endroit s'agit-il ?
+    validations:
+      required: true
+
+  - type: input
+    id: toestel
+    attributes:
+      label: Appareil et navigateur (facultatif)
+      placeholder: p. ex. iPhone avec Safari, ordinateur portable avec Firefox
+
+  - type: checkboxes
+    id: publiek
+    attributes:
+      label: Confirmation
+      options:
+        - label: Je comprends que mon signalement est public, et il ne contient aucune donnée personnelle.
+          required: true

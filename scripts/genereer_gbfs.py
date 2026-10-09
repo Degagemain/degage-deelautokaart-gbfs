@@ -7,6 +7,9 @@ Schrijft zes bestanden naar `gbfs/`:
   station_status.json · vehicle_types.json   -> GBFS v3.0, voor aggregatoren
   degage_vehicles.json                       -> eigen detailbestand, enkel voor onze kaart
 
+en stuurt daarna naar de Worker wat het in de bron rechtzette (zie stuur_correcties()),
+voor de datafouten op de beheerpagina.
+
 Waar de wagens vandaan komen
 ----------------------------
 Dit script kent de databank van Dégage niet. Het neemt een lijst wagens in een vast,
@@ -29,14 +32,17 @@ Wat dit script wél en niet doet
 · Privacy is een tweede poort: de gerenderde tekst wordt gescand op e-mailadressen,
   telefoonnummers, UUID's en lange cijferreeksen, plus wat de oproeper er nog aan toevoegt.
 · Een stille correctie is erger dan geen correctie. Elke normalisatie en elke herleiding
-  wordt geprint.
+  wordt geprint, en per auto naar de Worker gestuurd: de beheerpagina toont ze bij de
+  datafouten, zodat iemand ze in de bron kan rechtzetten. Dat is het enige netwerk dat
+  dit script gebruikt, pas NA het wegschrijven, en het mag mislukken: de feed hangt er
+  niet van af.
 
 Vlaggen bij `--invoer`
 ----------------------
     --invoer <json>      de wagens, in het formaat van INVOERVELDEN    (verplicht)
     --uit <map>          outputmap                                     (verplicht)
     --datum <dat>        datum van de gegevens   (anders: `datum` in het invoerbestand)
-    --basis-url <url>    publieke basis-URL      (anders: DEGAGE_BASIS_URL, CNAME of git)
+    --basis-url <url>    publieke basis-URL      (anders: CNAME of git)
     --no-interactive     niets vragen            (anders: alleen vragen mét terminal)
 
 `--uit` is verplicht: zo kan een proefrun nooit per ongeluk de echte feed overschrijven.
@@ -49,11 +55,12 @@ import calendar
 import hashlib
 import json
 import math
-import os
 import re
 import subprocess
 import sys
 import unicodedata
+import urllib.error
+import urllib.request
 from collections import Counter, defaultdict
 from datetime import date, timedelta
 from pathlib import Path
@@ -68,6 +75,7 @@ from pathlib import Path
 #   merk, model      str    vrije tekst; schrijfvarianten worden hier samengeklapt
 #   brandstof        str    één van BRANDSTOF_NAAR_PROPULSION
 #   inschrijving     str    één van INSCHRIJVING_SLUG
+#   klasse           str    één van KLASSEN: de tariefklasse van Dégage, of None
 #   zitplaatsen      int
 #   bouwjaar         int
 #   versnellingsbak  str    "manueel" of "automatisch"
@@ -79,7 +87,8 @@ from pathlib import Path
 #   district         str    de lokale groep, of None
 INVOERVELDEN = {
     "naam": str, "merk": str, "model": str, "brandstof": str, "inschrijving": str,
-    "zitplaatsen": int, "bouwjaar": int, "versnellingsbak": str, "toebehoren": list,
+    "klasse": (str, type(None)), "zitplaatsen": int, "bouwjaar": int,
+    "versnellingsbak": str, "toebehoren": list,
     "lat": float, "lon": float, "plaats": str, "postcode": (str, type(None)),
     "euronorm": (str, type(None)), "district": (str, type(None)),
 }
@@ -143,6 +152,14 @@ PROPULSION_NL = {
 # staat in de handmatige carrosserielijst hieronder.
 INSCHRIJVING_SLUG = {"personenwagen": "passenger", "lichte_vracht": "freight"}
 INSCHRIJVING_NL = {"personenwagen": "Personenwagen", "lichte_vracht": "Lichte vracht"}
+
+# De klasse is de tariefklasse van Dégage: elke wagen rijdt aan de kilometerprijs van zijn
+# klasse, en B is duurder dan A. Ze zegt dus iets wat een lid wil weten vóór het boekt.
+# Het is een indeling van Dégage, geen eigenschap van de wagen: de feed draagt alleen de
+# letter, de prijzen zelf veranderen per kwartaal en staan op degage.be. Kent de bron
+# geen klasse, dan blijft het veld weg (zoals bij de euronorm); een derde waarde laat dit
+# script luid vallen.
+KLASSEN = ("A", "B")
 
 # ============================================================================
 # CARROSSERIE — een handmatige lijst
@@ -403,6 +420,8 @@ def controleer_invoer(vloot: list[dict]) -> None:
             fouten.append(f"{wie}: onbekende brandstof {w.get('brandstof')!r}")
         if w.get("inschrijving") not in INSCHRIJVING_SLUG:
             fouten.append(f"{wie}: onbekende inschrijving {w.get('inschrijving')!r}")
+        if w.get("klasse") is not None and w.get("klasse") not in KLASSEN:
+            fouten.append(f"{wie}: onbekende klasse {w.get('klasse')!r}")
         if w.get("versnellingsbak") not in VERSNELLINGSBAKKEN:
             fouten.append(f"{wie}: onbekende versnellingsbak {w.get('versnellingsbak')!r}")
         for t in w.get("toebehoren") or []:
@@ -773,8 +792,12 @@ def render(payload: dict) -> str:
 # opbouw van de feed
 # ============================================================================
 def bouw(vloot: list[dict], stempel: str, basis_url: str,
-         carrosserie_pad: Path, districten_pad: Path, interactief: bool) -> dict[str, dict]:
-    """Bouw de zes payloads. Print elke keuze die de data aanraakt."""
+         carrosserie_pad: Path, districten_pad: Path, interactief: bool,
+         correcties_uit: list[dict] | None = None) -> dict[str, dict]:
+    """Bouw de zes payloads. Print elke keuze die de data aanraakt.
+
+    Wat er per auto rechtgezet werd, komt in `correcties_uit` als de oproeper een lijst
+    meegeeft (zie stuur_correcties()); het hoort niet in de feed."""
     # Werk op een kopie: de oproeper mag zijn lijst terugkrijgen zoals hij ze gaf.
     vloot = [dict(w) for w in vloot]
 
@@ -797,6 +820,13 @@ def bouw(vloot: list[dict], stempel: str, basis_url: str,
         zeg(f"  {soort:<16} {n:>4} wagens")
     zeg("  zitplaatsen: " + ", ".join(
         f"{z}x{zitplaats_telling[z]}" for z in sorted(zitplaats_telling)))
+    zeg()
+
+    klasse_telling = Counter(r["klasse"] for r in vloot)
+    zeg("klasse — de tariefklasse van Dégage; onbekend krijgt geen veld")
+    for klasse in (*KLASSEN, None):
+        n = klasse_telling[klasse]
+        zeg(f"  {klasse or 'onbekend':<12} {n:>4} wagens ({n / len(vloot) * 100:.1f}%)")
     zeg()
 
     bak_telling = Counter(r["versnellingsbak"] for r in vloot)
@@ -916,6 +946,10 @@ def bouw(vloot: list[dict], stempel: str, basis_url: str,
     euronorm_afbeelding: dict[str, Counter] = defaultdict(Counter)
     euronorm_geteld = Counter()
     met_asterisk = 0
+    # Wat er per auto rechtgezet of weggelaten werd, voor de beheerpagina (zie
+    # stuur_correcties()). Alleen wat in de bron FOUT staat; een
+    # subletter ("6b" -> "Euro 6") is geen fout maar een verfijning, en blijft eruit.
+    correcties: list[dict] = []
     for r in sorted(vloot, key=lambda r: (r["station_id"], r["naam"].strip())):
         # Alleen wat er is, in een vaste volgorde. Zie TOEBEHOREN_SLEUTELS.
         toebehoren = {s: True for s in TOEBEHOREN_SLEUTELS if s in r["toebehoren"]}
@@ -930,6 +964,28 @@ def bouw(vloot: list[dict], stempel: str, basis_url: str,
         euronorm_geteld[norm or "(onbekend)"] += 1
         if "*" in ruw:
             met_asterisk += 1
+        naam = r["naam"].strip()
+        for veld, kaart in (("merk", merk_map), ("model", model_map)):
+            bron = " ".join(r[veld].split())
+            if bron != kaart[r[veld]]:
+                correcties.append({"naam": naam, "veld": veld, "soort": "schrijfwijze",
+                                   "bron": bron, "feed": kaart[r[veld]]})
+        bron = " ".join(r["plaats"].split())
+        if bron != plaats_map[r["plaats"]]:
+            correcties.append({"naam": naam, "veld": "plaats", "soort": "hoofdletters",
+                               "bron": bron, "feed": plaats_map[r["plaats"]]})
+        if r["euronorm"] is None or not str(r["euronorm"]).strip():
+            # Leeg in de bron. Bij een elektrische wagen klopt dat: die heeft geen norm.
+            if r["brandstof"] != "elektrisch":
+                correcties.append({"naam": naam, "veld": "euronorm", "soort": "leeg",
+                                   "bron": ""})
+        else:
+            # Een sterretje naast een cijfer ('6*') negeren we: de norm is bruikbaar, en
+            # wat het sterretje betekent, weet niemand (beslist op 09-10-2026). Alleen een
+            # waarde waar geen norm uit volgt ('*', '0*', 'nvt', '5 of 6') is een fout.
+            if not norm:
+                correcties.append({"naam": naam, "veld": "euronorm", "soort": "onbruikbaar",
+                                   "bron": ruw.strip()})
 
         wagen = {
             "station_id": r["station_id"],
@@ -948,6 +1004,9 @@ def bouw(vloot: list[dict], stempel: str, basis_url: str,
             "bouwjaar": r["bouwjaar"],
             "versnellingsbak": r["versnellingsbak"],
         }
+        # Een onbekende klasse krijgt geen veld, net als een onbekende euronorm.
+        if r["klasse"]:
+            wagen["klasse"] = r["klasse"]
         # Alleen wegschrijven als we de norm kennen — zelfde regel als bij de
         # toebehoren. Een ontbrekend veld zegt "onbekend", niet "geen norm".
         if norm:
@@ -1030,6 +1089,14 @@ def bouw(vloot: list[dict], stempel: str, basis_url: str,
         "data": {"vehicles": vehicles},
     }
 
+    correcties.sort(key=lambda c: (c["naam"], c["veld"]))
+    zeg(f"datacorrecties — {len(correcties)} rechtzettingen per auto, voor de beheerpagina")
+    for soort, n in sorted(Counter(c["soort"] for c in correcties).items()):
+        zeg(f"  {soort:<14} {n:>4}")
+    zeg()
+    if correcties_uit is not None:
+        correcties_uit.extend(correcties)
+
     return {
         "gbfs": gbfs,
         "system_information": envelop(system),
@@ -1051,6 +1118,85 @@ SCHEMA_VAN = {
     "vehicle_types": "v3.0/vehicle_types.json",
     "degage_vehicles": "degage_vehicles.json",  # eigen schema, geen MobilityData-schema
 }
+
+# ============================================================================
+# DATACORRECTIES NAAR DE WORKER
+# ============================================================================
+# Wat bouw() in de bron rechtzette (een merk in een andere schrijfwijze, een gemeente in
+# hoofdletters, een onbruikbare euronorm), gaat naar de D1-databank van de Worker, waar
+# de beheerders het op /beheer/datafouten zien. Niet in de feed: het is geen gegeven over
+# de auto's maar een werklijst om de bron te verbeteren.
+#
+# De Worker neemt het aan op POST /api/datacorrecties, met een token: hetzelfde als het
+# geheim CORRECTIES_TOKEN van de Worker (feedback-worker/README.md, stap 7). Het token
+# staat in de interne repo, naast deze, in TOKEN_BESTAND — niet hier, want deze repo is
+# publiek. Het is bewust een eenvoudig token: wie het kent, kan alleen deze werklijst
+# overschrijven, en dat risico is aanvaard (README.md van de interne repo). Zonder
+# bestand wordt er niets gestuurd en zegt het script dat; de feed is daar niet minder om.
+WORKER_URL = "https://degage-kaart-feedback.degage.workers.dev"
+# De interne repo staat naast deze (REPO.parent; REPO wordt pas verderop gezet).
+TOKEN_BESTAND = (Path(__file__).resolve().parent.parent.parent
+                 / "degage-deelautokaart-gbfs-private" / "correcties-token.txt")
+
+
+def _post_json(url: str, gegevens: dict, kop: dict | None = None, timeout: int = 30) -> dict:
+    vraag = urllib.request.Request(
+        url, data=json.dumps(gegevens, ensure_ascii=False).encode("utf-8"), method="POST",
+        # Een eigen User-Agent: die van Python ("Python-urllib/…") weigert Cloudflare
+        # met fout 1010 nog vóór het verzoek bij de Worker komt.
+        headers={"Content-Type": "application/json; charset=utf-8",
+                 "Accept": "application/json", "User-Agent": "degage-generator",
+                 **(kop or {})})
+    with urllib.request.urlopen(vraag, timeout=timeout) as antwoord:
+        return json.loads(antwoord.read().decode("utf-8") or "{}")
+
+
+def stuur_correcties(correcties: list[dict], stempel: str) -> bool:
+    """Stuur de correcties naar de Worker. True als het lukte; mislukken is geen fout."""
+    zeg("datacorrecties naar de beheerpagina")
+    try:
+        token = TOKEN_BESTAND.read_text(encoding="utf-8").strip()
+    except OSError:
+        token = ""
+    if not token:
+        zeg(f"  NIET gestuurd: geen token in {TOKEN_BESTAND}. De feed is in orde; alleen")
+        zeg("  /beheer/datafouten mist de rechtzettingen van deze run.")
+        zeg("  Zie feedback-worker/README.md, stap 7.")
+        return False
+    try:
+        uit = _post_json(WORKER_URL + "/api/datacorrecties",
+                         {"feed": stempel, "correcties": correcties},
+                         {"Authorization": "Bearer " + token})
+        zeg(f"  {uit.get('bewaard', len(correcties))} rechtzettingen bewaard op {WORKER_URL}")
+        return True
+    except urllib.error.HTTPError as e:
+        try:
+            reden = json.loads(e.read().decode("utf-8", "replace")).get("fout", "")
+        except ValueError:
+            reden = ""
+        zeg(f"  NIET gestuurd: de Worker gaf {e.code}" + (f" — {reden}" if reden else ""))
+    except (urllib.error.URLError, TimeoutError, OSError, ValueError) as e:
+        zeg(f"  NIET gestuurd: {WORKER_URL} niet bereikbaar ({e})")
+    zeg("  De feed is in orde. Draai de feedstap later opnieuw om de lijst bij te werken.")
+    return False
+    lichaam = json.dumps({"feed": stempel, "correcties": correcties},
+                         ensure_ascii=False).encode("utf-8")
+    vraag = urllib.request.Request(
+        WORKER_URL + "/api/datacorrecties", data=lichaam, method="POST",
+        headers={"Content-Type": "application/json; charset=utf-8",
+                 "Authorization": "Bearer " + sleutel})
+    try:
+        with urllib.request.urlopen(vraag, timeout=30) as antwoord:
+            uit = json.loads(antwoord.read().decode("utf-8") or "{}")
+        zeg(f"  {uit.get('bewaard', len(correcties))} rechtzettingen bewaard op {WORKER_URL}")
+        return True
+    except urllib.error.HTTPError as e:
+        reden = e.read().decode("utf-8", "replace")[:300]
+        zeg(f"  NIET gestuurd: de Worker gaf {e.code} — {reden}")
+    except (urllib.error.URLError, TimeoutError, OSError) as e:
+        zeg(f"  NIET gestuurd: {WORKER_URL} niet bereikbaar ({e})")
+    zeg("  De feed is in orde. Draai de feedstap later opnieuw om de lijst bij te werken.")
+    return False
 
 # Elke instelling die dit script zelf kan vinden, hoort het zelf te vinden — en bij elke
 # waarde print het waar ze vandaan komt. Wat niet te vinden is, wordt niet geraden.
@@ -1097,10 +1243,6 @@ def zoek_basis_url(repo: Path, expliciet: str | None) -> tuple[str, str]:
     """
     if expliciet:
         return expliciet.rstrip("/"), "meegegeven met --basis-url"
-
-    uit_omgeving = os.environ.get("DEGAGE_BASIS_URL")
-    if uit_omgeving:
-        return uit_omgeving.rstrip("/"), "omgevingsvariabele DEGAGE_BASIS_URL"
 
     # Een CNAME-bestand betekent dat GitHub Pages op een eigen domein staat; dat wint,
     # want dan is het github.io-adres niet waar de feed woont.
@@ -1157,8 +1299,9 @@ def genereer(vloot: list[dict], datum: date, *, uit: Path | None = None,
     zeg(f"  {'vragen':<14} {'ja' if interactief else 'nee'}")
     zeg()
 
+    correcties: list[dict] = []
     payloads = bouw(vloot, stempel, basis, REPO / "scripts" / CARROSSERIE_BESTAND,
-                    REPO / "scripts" / DISTRICTEN_BESTAND, interactief)
+                    REPO / "scripts" / DISTRICTEN_BESTAND, interactief, correcties)
 
     # ---- poort 1: validatie tegen de officiële schema's -------------------------------
     zeg("validatie tegen de JSON Schemas (poort — er wordt niets geschreven als dit faalt)")
@@ -1167,7 +1310,7 @@ def genereer(vloot: list[dict], datum: date, *, uit: Path | None = None,
     for naam, payload in payloads.items():
         f = valideer(naam, payload, schema_map / SCHEMA_VAN[naam], fc)
         fouten += f
-        bron = "MobilityData v3.0" if naam != "degage_vehicles" else "eigen schema"
+        bron = "MobilityData v3.0" if SCHEMA_VAN[naam].startswith("v3.0/") else "eigen schema"
         zeg(f"  {naam + '.json':<28} {'OK' if not f else f'{len(f)} FOUT(EN)':<12} ({bron})")
     if fouten:
         zeg()
@@ -1210,6 +1353,14 @@ def genereer(vloot: list[dict], datum: date, *, uit: Path | None = None,
     zeg(f"  {len(payloads['station_information']['data']['stations'])} stations · "
         f"{len(payloads['vehicle_types']['data']['vehicle_types'])} vehicle_types · "
         f"{len(payloads['degage_vehicles']['data']['vehicles'])} wagens in het detailbestand")
+    zeg()
+    # Alleen bij de echte feed: een proefrun naar een andere map mag de werklijst van de
+    # beheerders niet overschrijven.
+    if uit == (REPO / "gbfs").resolve():
+        stuur_correcties(correcties, stempel)
+    else:
+        zeg("datacorrecties niet gestuurd: dit is een proefrun naar een andere map.")
+    zeg()
     zeg("  klaar. Publiceren gebeurt NIET door dit script — dat is een aparte, expliciete stap.")
     return payloads
 
@@ -1230,8 +1381,8 @@ def main() -> int:
                     help="datum van de gegevens; voedt last_updated. Standaard `datum` "
                          "uit het invoerbestand.")
     ap.add_argument("--basis-url", default=None, metavar="URL",
-                    help="publieke basis-URL van de feed. Standaard: DEGAGE_BASIS_URL, "
-                         "anders afgeleid uit CNAME of de git-remote.")
+                    help="publieke basis-URL van de feed. Standaard afgeleid uit CNAME "
+                         "of de git-remote.")
     ap.add_argument("--no-interactive", action="store_true",
                     help="vraag niets; faal luid bij een model dat niet in carrosserie.json "
                          "staat. Gebeurt vanzelf zonder terminal.")

@@ -53,8 +53,8 @@ waarheid** over welke auto's er zijn en waar ze staan. Daaruit volgen drie regel
 brandstof en zijn versnellingsbak. Al de rest — merk, model, bouwjaar, zitplaatsen,
 euronorm, toebehoren, gemeente, district, contactadres, modelfoto, rijbereik — kent de
 live lijst niet, en **dat laten we gewoon weg**. Er wordt niets
-bijgeraden. De popup zegt: *"Nog niet in de gegevens van de kaart. Merk, model en de
-andere details volgen bij de volgende bijwerking van de kaart."* Bij de volgende
+bijgeraden. De popup zegt: *"Merk, model en de andere details volgen bij de volgende
+bijwerking van de kaart."* Bij de volgende
 kwartaalverversing staat hij in het bestand en verdwijnt het label vanzelf.
 
 **Het openbaar vervoer is de uitzondering**, want dat hangt aan de plek en niet aan de
@@ -67,14 +67,8 @@ verscheen of verhuisde, heeft dat nog niet.
 Wat dat betekent voor de filters: zet je een filter op iets wat we van een nieuwe auto
 niet weten (zitplaatsen, bouwjaar, soort auto, euronorm, een toebehoren), dan valt hij af — net als een auto waarvan de euronorm onbekend is. Van
 een auto waarvan we het niet weten, kunnen we niet volhouden dat hij voldoet. Op brandstof
-en versnellingsbak filter je hem wel gewoon.
-
-**Alle nieuwe auto's in één keer zien** kan met het filter **"Nieuw in de vloot"**,
-bovenaan de filterlijst. Het heeft één keuze, *"Nieuwe auto's, nog zonder details"*, met
-het aantal erachter. Vink je die aan, dan blijven alleen de nieuwe auto's gekleurd en
-toont de lijst met dichtstbijzijnde auto's alleen nog nieuwe. Een grijze pin zegt dan
-"geen nieuwe auto". Zijn er geen nieuwe auto's (of lukt het live opvragen niet), dan staat
-dat filter er niet.
+en versnellingsbak filter je hem wel gewoon, en bij de prijsklasse staat hij onder
+*"Prijsklasse onbekend"*.
 
 **De stip van een nieuwe of verhuisde auto wordt op precies dezelfde manier vervaagd** als
 alle andere: twintig meter opzij, in een vaste richting die uit het punt zelf volgt (zie
@@ -118,9 +112,18 @@ altijd. Stippen in een cluster en grijze stippen krijgen geen naam.
 
 ## De popup: wat er op een standplaats staat
 
-Klik op een stip en je krijgt **alle** auto's van die standplaats te zien — ook de auto's
-die door je filter zijn afgevallen. Elke auto draagt zijn eigen gegevens, dus verwarring
-is niet mogelijk, en je ziet wat er werkelijk staat.
+Klik op een stip, op een auto in de balk of op een zoekresultaat, en je krijgt **die ene
+auto** te zien. Wie op één auto klikt, verwacht er ook maar één. Bij een klik op de stip
+is dat de eerste auto die door je filters komt.
+
+Staan er op dezelfde plek nog andere auto's (het gaat om een handvol standplaatsen), dan
+staat onderaan *"Op deze plek staat ook:"*, met hun namen als knop. Eén klik en die auto
+staat in de popup. Zo zie je nog altijd wat er werkelijk staat, ook de auto's die door je
+filter zijn afgevallen.
+
+Wie ze liever samen ziet, zet in de instellingen (het tandwiel) **"Auto's op dezelfde plek
+samen tonen"** aan. Dan toont de popup alle auto's van de standplaats onder elkaar. Elke
+auto draagt zijn eigen gegevens, dus verwarring is niet mogelijk. Standaard staat dat uit.
 
 Per auto:
 
@@ -129,7 +132,8 @@ Per auto:
   bron vaak in hoofdletters of juist helemaal klein ("GENTBRUGGE", "gent"); de feed zet
   dat al recht bij het samenstellen: "Gentbrugge", "Gent", "Heist-op-den-Berg".
 - een **foto van het model** — nadrukkelijk niet van deze auto (zie hieronder)
-- de feiten die we zeker weten: aantal zitplaatsen, brandstof, versnellingsbak en euronorm
+- de feiten die we zeker weten: aantal zitplaatsen, brandstof, versnellingsbak, prijsklasse en
+  euronorm
 - de **toebehoren en afspraken** die deze auto heeft: trekhaak, fietsdrager, kinderzitje,
   gps, bed, aanhangwagen, en of er huisdieren mee mogen of mee leren rijden mag
 - bij een elektrische auto: het **rijbereik** (zie hieronder)
@@ -138,8 +142,13 @@ Waar een getal uitleg nodig heeft — het rijbereik en de Mobiscore — staat er
 **ⓘ-knopje** naast. Daarachter staat wat het getal betekent en waar het vandaan komt;
 wie het niet nodig heeft, leest een rustige popup.
 
-Onderaan staat het **district** als dat iets toevoegt aan de gemeente, en het
-**contactadres van de lokale Dégage-groep** als dat bekend is.
+Het **district** staat erbij als dat iets toevoegt aan de gemeente: links in de voetregel
+van het blok met het openbaar vervoer, met de Mobiscore rechts ernaast — allebei gaan ze
+over de plek. Zonder gegevens over openbaar vervoer krijgt het een eigen regel.
+
+Helemaal onderaan staat de **oproep om lid te worden**, in een groen kader zodat ze
+opvalt: *"**Zin gekregen om mee te delen?** Word lid van Dégage! 🚗"*, met twee knoppen,
+**Onze tarieven** en **Veelgestelde vragen**.
 
 **Over het rijbereik.** Het rijbereik staat nergens in de gegevens van Dégage, dus het komt
 van buiten: uit [Open EV Data](https://github.com/KilowattApp/open-ev-data), een open
@@ -165,34 +174,64 @@ dan gokken.
 
 **Over de foto's.** Het is een foto van hetzelfde model, van iemand anders, onder een vrije
 licentie. Dat staat er letterlijk bij, samen met de naam van de maker en de licentie — dat
-is geen beleefdheid maar een voorwaarde van die licentie. Is er voor een model geen
+is geen beleefdheid maar een voorwaarde van die licentie. Op een breed scherm staat die
+vermelding verticaal langs de rechterrand van de foto, van onder naar boven te lezen; zo
+blijft de popup smal zonder dat de foto kleiner wordt. Op een telefoon staat ze eronder. Is er voor een model geen
 bruikbare foto, dan verschijnt er een tekening van een auto. Een foto van de verkeerde
 auto tonen is erger dan geen foto.
+
+**De popup krijgt nooit een scrollbalk.** Past hij niet in de ruimte die er is — een
+standplaats met drie auto's, of een laag venster — dan wordt de hele popup evenredig
+kleiner tot hij past. Leesbaar blijft hij altijd: kleiner dan 60% gaat hij niet.
+
+**Dat de locatie bij benadering is**, staat niet in elke popup maar in *"Goed om te
+weten"* bij het openen: *"Locaties bij benadering, vanwege privacy."* Hoe ver een
+stip verschoven is, zegt de kaart bewust niet. Dat venster gaat na vijftien
+seconden vanzelf dicht, zonder balkje dat aftelt, zodat niemand zich opgejaagd voelt bij
+het lezen; staat je muis erop, dan wacht het. Eerder dicht kan met het kruisje of Escape,
+en het gaat ook dicht zodra je de filters opent: wie begint te zoeken of te
+filteren, heeft het gelezen of wil verder. Bij het sluiten krimpt het naar het
+ⓘ-knopje onder het tandwiel, dat één keer oplicht; met dat knopje haal je het terug.
 
 **Wat er níét in de popup staat:** niets over de eigenaar. Geen naam, geen e-mailadres,
 geen telefoonnummer. Het enige adres dat getoond wordt, is dat van de lokale groep.
 
 ## Openbaar vervoer en Mobiscore
 
-Onder de auto's staat hoe ver het openbaar vervoer is. De afstand staat groot rechts, want
-dat is wat je eerst wilt weten; de Mobiscore staat klein onderaan:
+Onder de auto's staat hoe ver het openbaar vervoer is en hoe vaak er iets vertrekt: de
+dichtste **bushalte**, de dichtste **tramhalte** en het dichtste **station**, dezelfde drie
+als in het filter. Per halte één regel: een groot pictogram, de frequentie groot ernaast,
+en rechts de afstand. Onderaan, klein, het district en de Mobiscore:
 
-> 🚌 **Bushalte** ……………………………… **0,5 km**  
-> Zevergem Zevergemdorp · 5/u  
-> 🚆 **Treinstation** ………………………… **1,5 km**  
-> Melsele · 2/u  
-> Mobiscore 8,7 / 10 ⓘ
+> 🚌 **7×** per uur ……………………………… **0,2 km**  
+> 🚋 **7×** per uur ……………………………… **0,3 km**  
+> 🚆 **14×** per uur ……………………………… **1,9 km**  
+> 📍 Gent - Watersportbaan Ekkergem ………… Mobiscore 9,4 / 10 ⓘ
 
-Eerst wat het is — bushalte, tramhalte of treinstation — en de naam eronder.
+Op een breed scherm staan bus, tram en trein naast elkaar, met de afstand onder de
+frequentie, en komen het district en de Mobiscore daaronder te staan. Het blijft één regel
+over de plek: de Mobiscore is geen score van het station.
 
-De regel met het station staat er alleen als er een binnen tien kilometer ligt — en dat is
-bij elke standplaats zo.
+De tram staat **van opzij** getekend, met de bovenleiding erboven; bus en trein staan van
+voren. Zo zijn de drie in één oogopslag uit elkaar te houden.
+
+Welke halte of welk station het is, staat in de alt-tekst van het pictogram — *"Bushalte:
+Zevergem Zevergemdorp"*, *"Treinstation: Melsele"*. Met de muis erover zie je die als
+tooltip, en een schermlezer leest ze voor. Zo blijft de popup rustig.
+
+Trams rijden alleen in Gent, Antwerpen en aan de kust. Ligt er geen tramhalte binnen tien
+kilometer, dan staat er een streepje (—) waar de frequentie zou staan; de tooltip en de
+schermlezer zeggen *"Geen tramhalte binnen 10 kilometer"*. Voor een ontbrekende bushalte
+geldt hetzelfde. De regel met het
+station staat er alleen als er een binnen tien kilometer ligt — en dat is bij elke
+standplaats zo.
 
 De afstanden staan altijd in kilometer, op één decimaal, zodat halte en station naast
 elkaar te vergelijken zijn.
 
-Achter de naam staat hoeveel er per uur vertrekt, **per richting**. Rijdt er minder dan één
-per uur, dan staat er "<1/u"; is de halte ook een tramhalte, dan heet ze zo.
+De frequentie is het aantal vertrekken per uur, **per richting**. Rijdt er minder dan één
+per uur, dan staat er "<1× per uur". Bij de bus tellen alleen de bussen, bij de tram alleen
+de trams, ook als ze aan dezelfde halte stoppen.
 
 **De Mobiscore** is de officiële score van de Vlaamse overheid (Departement Omgeving) — de
 score die je ook bij een woning op Immoweb ziet. Ze meet hoe dicht een plek ligt bij vijf
@@ -212,8 +251,9 @@ Twee kanttekeningen:
 **De regels eronder** zijn onze eigen feiten, voor het deel dat over openbaar vervoer gaat —
 ze zeggen *waarom* een plek scoort zoals ze scoort:
 
-- **De dichtste halte met vaste lijnen**, en hoeveel bussen of trams
-  er daar per uur **per richting** vertrekken — wat je ervaart als je aan de halte staat.
+- **De dichtste bushalte en de dichtste tramhalte met vaste lijnen**, elk apart, en
+  hoeveel bussen of trams er daar per uur **per richting** vertrekken — wat je ervaart als
+  je aan de halte staat.
   De twee kanten van de straat zijn de twee richtingen; we tonen de drukste kant. De naam
   van de halte en het aantal haltes in de buurt staan er bewust niet bij: wie een plek
   beoordeelt, wil weten of er iets rijdt en hoe vaak.
@@ -318,26 +358,64 @@ De filters staan onder het zoekveld en klappen open zodra je in dat veld klikt o
 te typen. Ze gaan weer dicht met een klik op de kaart, met Escape, en zodra je in de kaart
 scrollt of veegt — dat laatste is uit te zetten met de schakelaar boven de filters.
 
+Onderaan de lijst staat **Meer filters**, een uitklapper met de filters waar de meeste
+bezoekers niet naar zoeken; standaard de euronorm en het bouwjaar. Zo duwen ze de rest
+niet uit beeld. Staat er in een filter onder *Meer filters* iets aan, dan zegt een
+groen bolletje met een getal naast *Meer filters* hoeveel, ook als de uitklapper dicht is.
+
+Welke filters er staan, en welke daarvan onder *Meer filters*, kiezen de beheerders op de
+beheerpagina (`/beheer/kaartfilters` op de Worker, zie `feedback-worker/README.md`), en
+ook welke keuzes erin staan — zo staan
+*bed* en *aanhangwagen* niet bij de toebehoren. Een uitgezet filter of keuze verdwijnt uit
+de lijst; de auto's blijven gewoon op de kaart. Een uitgezet toebehoren of afspraak staat
+ook niet in de popup van een auto. Een wijziging is binnen een minuut zichtbaar, zonder
+de kaart opnieuw te publiceren. Antwoordt de Worker niet, dan staan alle filters er, met
+euronorm en bouwjaar onder *Meer filters*.
+
 | filter | wat het doet |
 |---|---|
 | **Soort auto** | personenwagen of bestelwagen |
+| **Prijsklasse** | de prijsklasse van Dégage, A of B, of *onbekend* voor een auto waarvan we ze niet kennen (zoals een nieuwe auto). Achter de ⓘ staat dat B meer per kilometer kost dan A; bedragen staan er niet, die veranderen per kwartaal |
 | **Zitplaatsen** | een ondergrens: "vanaf 5 plaatsen" toont ook de zeven- en negenzitters |
 | **Brandstof** | benzine, diesel, elektrisch, hybride, plug-in hybride, CNG, LPG |
 | **Versnellingsbak** | manueel of automatisch |
 | **Toebehoren** | trekhaak, fietsdrager, kinderzitje, gps, bed, aanhangwagen |
 | **Afspraken** | huisdieren toegelaten, leren autorijden |
-| **Afstand tot een bushalte** | een bovengrens: "hoogstens 500 meter". Geldt voor de standplaats, niet voor de auto |
-| **Afstand tot een treinstation** | een bovengrens: "hoogstens 2 kilometer". Reikt verder, want naar een station fiets of rijd je |
-| **Euronorm** | een ondergrens, met elektrisch en hybride bovenaan (zie hieronder) |
+| **Openbaar vervoer** | bus, tram en trein; per modus de afstand (bovengrens) en de frequentie (ondergrens). Geldt voor de standplaats, niet voor de auto |
+| **Euronorm** | een schuif met twee bolletjes: van welke tot welke norm, met elektrisch bovenaan (zie hieronder) |
 | **Bouwjaar** | een ondergrens: "vanaf 2018" toont 2018 en later |
 
-**De twee afstandsfilters** horen bij de standplaats en niet bij de auto: ze zijn er voor wie
-de auto met bus of trein combineert — heen met de deelauto, terug met de trein, of een auto
-zoeken die te voet vanaf de halte te bereiken is. De schuif toont alleen standen die iets
-doen: ligt élke standplaats binnen twee kilometer van een halte, dan begint de halteschuif
-daar en niet bij tien kilometer. De afstand is in vogelvlucht; te voet is de weg altijd wat
-langer. Een standplaats waar geen halte of station van gemeten is, valt buiten élke
-bovengrens — we weten dan niet of ze eraan voldoet.
+**Het filter Openbaar vervoer** hoort bij de standplaats en niet bij de auto: het is er
+voor wie de auto met bus, tram of trein combineert — heen met de deelauto, terug met de
+trein, of een auto zoeken die te voet vanaf de halte te bereiken is. Er zijn drie modi,
+**Bus**, **Tram** en **Trein**, elk met twee schuiven:
+
+- **de afstand** tot de dichtste halte of het dichtste station, als bovengrens:
+  "hoogstens 500 meter". In vogelvlucht; te voet is de weg altijd wat langer. Helemaal
+  links staat **"elke afstand"**, en daar staat hij als je niets instelt; daarna volgen de
+  afstanden van klein naar groot, te beginnen bij 250 meter.
+- **de frequentie** daar, als ondergrens: "minstens 4× per uur", per richting, op een
+  gewone weekdag — dezelfde getallen als in de popup. Links staat "elke frequentie", naar
+  rechts wordt het strenger.
+
+Er is geen vakje om een modus aan te zetten: een modus filtert zodra je één van zijn
+schuiven verzet, en wat er ingesteld is, zie je aan de schuiven zelf. Het streepje links
+van een modus wordt dan groen. Staan beide schuiven op "elke", dan filtert die modus niet.
+
+Bus en tram zijn elk hun eigen halte: bij **Tram** telt de dichtste halte waar een tram
+stopt, ook als er een bushalte dichterbij ligt. Trams rijden alleen in Gent, Antwerpen en
+aan de kust; daarbuiten is de dichtste tramhalte meestal tientallen kilometers ver. (De
+popup toont dezelfde bushalte, tramhalte en hetzelfde station.)
+
+Stel je er meer in, dan volstaat er één: een standplaats bij een goede bushalte komt
+erdoor, ook als het station ver is. Wil je dat ze aan allemaal voldoet, zet dan **Aan alle
+ingestelde voldoen** aan; die schakelaar verschijnt zodra er twee of meer modi ingesteld
+zijn.
+
+De schuiven tonen alleen standen die iets doen: ligt élke standplaats binnen twee kilometer
+van een halte, dan begint de afstandsschuif daar en niet bij tien kilometer. Een standplaats
+waar geen halte of station van gemeten is, voldoet nooit aan die modus — we weten dan niet
+of ze eraan voldoet. "Filters wissen" zet alle schuiven terug op "elke".
 
 **Hoe ze samenwerken.** Binnen één groep is het "of" — vink je benzine én diesel aan, dan
 zie je allebei. Tussen groepen is het "en" — een bestelwagen op diesel moet aan allebei
@@ -360,25 +438,30 @@ schaal van vuil naar schoon. Een elektrische auto hoort aan de schone kant, maar
 in de brongegevens vaak helemaal geen norm — die schaal is nu eenmaal voor
 verbrandingsmotoren gemaakt. Zonder ingreep zouden juist de schoonste auto's uit het
 filter vallen, en dat leest als een fout in de kaart. Ze krijgen daarom een eigen trede
-bovenaan, met een eigen naam: *"elektrisch en hybride"*. Nadrukkelijk geen verzonnen
+bovenaan, met een eigen naam: *"elektrisch"*. Nadrukkelijk geen verzonnen
 "Euro 7" — die norm bestaat echt en komt eraan.
 
-Van zestig auto's kennen we de euronorm niet. Die zie je alleen bij de stand "alle auto's":
-van een auto zonder gekende norm kun je niet volhouden dat hij er minstens één haalt.
+Hybrides en plug-in hybrides staan **niet** bovenaan: ze hebben een verbrandingsmotor en
+dus een echte euronorm, en die telt. Een hybride met Euro 4 is niet schoner dan een
+diesel met Euro 6. Een hybride zonder gekende norm is onbekend, zoals elke andere auto
+zonder norm. Bij een elektrische auto toont de popup geen euronorm: staat er toch een in
+de brongegevens, dan is dat een fout, en die staat op de beheerpagina bij de datafouten.
 
-## Twee schakelaars bij de filters
+De schuif heeft twee bolletjes: het linkse is de laagste norm, het rechtse de hoogste.
+Zo kies je *"Euro 5 en hoger"* (rechts helemaal rechts laten), maar ook *"enkel Euro 3"*
+(beide bolletjes op Euro 3) of *"Euro 3 tot en met Euro 5"*. De bolletjes kunnen elkaar
+niet voorbij. Elk bolletje is apart met het toetsenbord te bedienen (Tab, pijltjes, Home
+en End).
 
-Bovenaan de filterlijst, net boven *"Soort auto"*, staan de twee keuzes die over het
-filteren zelf gaan. Ze horen daar en niet achter het tandwiel: wie filtert, beslist er
-meteen mee wat er met de weggefilterde auto's gebeurt.
+Van zestig auto's kennen we de euronorm niet. Die zie je alleen bij de stand "maakt niet uit",
+met beide bolletjes aan de uiteinden: van een auto zonder gekende norm weet je niet of
+hij binnen de gekozen normen valt.
 
-- **Gefilterde auto's grijs tonen** — uit betekent dat weggefilterde standplaatsen echt
-  verdwijnen in plaats van grijs te blijven staan. Aan zegt een grijze pin ook waarom:
-  wie met de muis erover gaat, ziet per auto welke filters hem tegenhouden
-  (*"Brandstof: benzine · Bouwjaar: 2012"*), en in de popup staat hetzelfde onder de naam
-  van de auto. Een ontbrekend toebehoren heet daar "niet vermeld", nooit "nee".
-- **Filters sluiten bij scrollen in de kaart** — uit betekent dat de filters open blijven
-  terwijl je met het wieltje zoomt of de kaart met je vingers verschuift.
+## Een schakelaar bij de filters
+
+Bovenaan de filterlijst, net boven *"Soort auto"*, staat **Filters sluiten bij scrollen in
+de kaart**. Uit betekent dat de filters open blijven terwijl je met het wieltje zoomt of de
+kaart met je vingers verschuift. Op een telefoon staat hij achter het tandwiel.
 
 ## Instellingen
 
@@ -389,7 +472,12 @@ Achter het tandwiel bij de zoomknoppen:
 - **Lijst dichtstbijzijnde auto's tonen** — uit laat de balk helemaal weg, ook na een
   zoekopdracht of bij het inzoomen. Voor wie de kaart zelf wil lezen zonder een balk
   onderaan.
-- **Melding over beschikbaarheid tonen** — zet de regel *"Dit is géén live
+- **Gefilterde auto's grijs tonen** — uit betekent dat weggefilterde standplaatsen echt
+  verdwijnen in plaats van grijs te blijven staan. Aan zegt een grijze pin ook waarom:
+  wie met de muis erover gaat, ziet per auto welke filters hem tegenhouden
+  (*"Brandstof: benzine · Bouwjaar: 2012"*), en in de popup staat hetzelfde onder de naam
+  van de auto. Een ontbrekend toebehoren heet daar "niet vermeld", nooit "nee".
+- **Melding over beschikbaarheid tonen** — zet de regel *"Geen live
   beschikbaarheid"* terug nadat je hem weggeklikt hebt, of haalt hem weg.
 - **Taal** — Nederlands, Français of English.
 
@@ -436,11 +524,46 @@ liggen hier boven elkaar en laten samen nauwelijks kaart over. Ze komt ongewijzi
 zodra de filters dichtgaan. De lijst volgt daar geen muis — die is er niet — en meet vanaf
 het midden van de kaart.
 
-Een popup valt op een telefoon nooit meer half buiten beeld. De knop **"Probleem melden"**
+Een popup valt op een telefoon nooit meer half buiten beeld. De knop **"Probleem of feedback"**
 gaat zolang weg — die stond er precies in de weg — en past de popup ook dan niet tussen het
 paneel en de lijst, dan neemt hij de plaats van de lijst in en stapt die zolang opzij.
 Allebei komen ze terug zodra je de popup sluit. Blijft er nog te weinig plaats, dan schuift
 de inhoud binnen de popup zelf.
+
+## Iets melden
+
+Rechtsboven staat **"Probleem of feedback"**. Dat is er voor wie ziet dat een auto op de
+verkeerde plaats staat, dat er iets niet werkt, of wie gewoon een idee heeft.
+
+De knop opent een formulier op de kaart zelf: waarover het gaat, een beschrijving, en
+versturen. **Je hebt er geen GitHub-account voor nodig** — dat was de hele reden om het zo
+te bouwen. Het formulier staat in dezelfde drie talen als de rest van de kaart.
+
+**Wat je invult, wordt publiek.** Het komt als een openbaar issue op GitHub terecht, waar
+iedereen het kan lezen. Dat staat bovenaan het formulier in een gele kader, en je moet
+onderaan aanvinken dat je het begrepen hebt voor je kunt versturen. Vandaar ook de vraag om
+geen persoonlijke gegevens in de beschrijving te zetten: geen naam, adres, telefoonnummer, e-mailadres
+of lidnummer. Wil je iets melden dat niet publiek kan, neem dan contact op met je lokale
+groep — dat adres staat in de popup van de auto.
+
+**Wil je een antwoord**, dan kun je in het formulier een e-mailadres achterlaten. Dat veld
+is optioneel, en het is het enige wat níét publiek wordt: het adres komt niet op GitHub,
+alleen de beheerders van de kaart zien het. In het issue staat alleen dat je een antwoord
+wil. Het adres wordt vanzelf gewist 30 dagen nadat je melding afgehandeld is. (Dit veld
+staat er pas als de beheerders het aanzetten.)
+
+**Een screenshot van de kaart** gaat standaard mee, zodat de beheerders zien wat jij zag.
+Het formulier toont een klein voorbeeld van precies wat er meegaat, en een vakje om het uit
+te zetten. Ook de screenshot wordt publiek: hij staat in het issue. Het formulier zelf staat
+er niet op, en het punt van je eigen locatie ook niet. Gebruikte je *Auto's in mijn buurt*,
+dan staat de kaart rond je eigen plek; dan staat het vakje standaard uit, en zegt het
+formulier waarom.
+
+Er gaat verder niets mee: geen IP-adres, geen browsergegevens, geen locatie. Na het
+versturen krijg je de link naar je eigen melding, zodat je kunt volgen wat ermee gebeurt.
+
+Lukt het versturen niet, dan staat in de foutmelding de link naar GitHub, waar je het
+rechtstreeks kwijt kunt — daar heb je wél een account voor nodig.
 
 ## Wat de kaart bewust niet doet
 
