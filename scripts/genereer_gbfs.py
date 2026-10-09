@@ -974,13 +974,18 @@ def bouw(vloot: list[dict], stempel: str, basis_url: str,
         if bron != plaats_map[r["plaats"]]:
             correcties.append({"naam": naam, "veld": "plaats", "soort": "hoofdletters",
                                "bron": bron, "feed": plaats_map[r["plaats"]]})
-        if r["euronorm"] is not None and str(r["euronorm"]).strip():
+        if r["euronorm"] is None or not str(r["euronorm"]).strip():
+            # Leeg in de bron. Bij een elektrische wagen klopt dat: die heeft geen norm.
+            if r["brandstof"] != "elektrisch":
+                correcties.append({"naam": naam, "veld": "euronorm", "soort": "leeg",
+                                   "bron": ""})
+        else:
+            # Een sterretje naast een cijfer ('6*') negeren we: de norm is bruikbaar, en
+            # wat het sterretje betekent, weet niemand (beslist op 09-10-2026). Alleen een
+            # waarde waar geen norm uit volgt ('*', '0*', 'nvt', '5 of 6') is een fout.
             if not norm:
                 correcties.append({"naam": naam, "veld": "euronorm", "soort": "onbruikbaar",
                                    "bron": ruw.strip()})
-            elif "*" in ruw:
-                correcties.append({"naam": naam, "veld": "euronorm", "soort": "asterisk",
-                                   "bron": ruw.strip(), "feed": norm})
 
         wagen = {
             "station_id": r["station_id"],
@@ -1137,8 +1142,11 @@ TOKEN_BESTAND = (Path(__file__).resolve().parent.parent.parent
 def _post_json(url: str, gegevens: dict, kop: dict | None = None, timeout: int = 30) -> dict:
     vraag = urllib.request.Request(
         url, data=json.dumps(gegevens, ensure_ascii=False).encode("utf-8"), method="POST",
+        # Een eigen User-Agent: die van Python ("Python-urllib/…") weigert Cloudflare
+        # met fout 1010 nog vóór het verzoek bij de Worker komt.
         headers={"Content-Type": "application/json; charset=utf-8",
-                 "Accept": "application/json", **(kop or {})})
+                 "Accept": "application/json", "User-Agent": "degage-generator",
+                 **(kop or {})})
     with urllib.request.urlopen(vraag, timeout=timeout) as antwoord:
         return json.loads(antwoord.read().decode("utf-8") or "{}")
 

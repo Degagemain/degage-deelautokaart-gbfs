@@ -284,7 +284,8 @@ elektrische auto met een euronorm, een euronorm die niet bij het bouwjaar past, 
 euronorm of ander veld dat ontbreekt, een model in het merkveld, een postcode of land in
 de gemeente. Daarbij komt wat de generator al rechtzette maar in de bron fout blijft
 staan: een merk of model in een andere schrijfwijze, een gemeente in hoofdletters, een
-onbruikbare euronorm ("nvt", "5 of 6") of een sterretje. Per fout de naam van de auto, wat
+lege of onbruikbare euronorm ("nvt", "5 of 6", een los "*"). Een sterretje naast een cijfer
+("6*") is geen fout: dat negeren we. Per fout de naam van de auto, wat
 er mis is, wanneer het gevonden werd, en een knop **Probleem opgelost, wissen**.
 
 De Worker leest de feed elke nacht (en meteen met *Nu controleren*) op het adres in

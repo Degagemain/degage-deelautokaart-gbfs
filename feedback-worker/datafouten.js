@@ -99,10 +99,12 @@ const REGELS = {
     ? "Volledig elektrische auto met euronorm “" + w.euronorm + "”. Een elektrische auto " +
       "heeft geen euronorm: klopt de brandstof (is het een hybride?), of moet de euronorm weg?"
     : null,
+  // Wat er in de bron staat, weet alleen de generator; controleer() vult het aan uit de
+  // tabel datacorrecties. Dit is de zin voor als die (nog) niets over deze auto zegt.
   "norm-ontbreekt": (w) => MOTOR.has(w.brandstof) && !w.euronorm
-    ? "Euronorm ontbreekt bij een auto op " + w.brandstof + ". In de bron is hij leeg, " +
-      "“nvt” of dubbelzinnig (zoals “5 of 6”). Op de kaart valt de auto daardoor weg zodra " +
-      "iemand op euronorm filtert."
+    ? "Euronorm ontbreekt in de feed bij een auto op " + w.brandstof + ". Wat er in de bron " +
+      "staat, komt met de rechtzettingen van de volgende kwartaalrun. Op de kaart valt de " +
+      "auto weg zodra iemand op euronorm filtert."
     : null,
   "norm-bouwjaar": (w) => {
     const m = /^Euro (\d)$/.exec(w.euronorm || "");
@@ -137,16 +139,14 @@ const REGELS = {
     ["ontbreekt-" + veld, (w) => (w[veld] ? null : naam + " ontbreekt.")]))
 };
 
-/* Wat de generator rechtzette (de tabel datacorrecties), in gewone woorden. Een onbruikbare
-   euronorm staat hier niet: die zit in de regel "norm-ontbreekt", met de bronwaarde erbij,
-   zodat dezelfde fout niet twee keer in de lijst staat. */
+/* Wat de generator rechtzette (de tabel datacorrecties), in gewone woorden. Een lege of
+   onbruikbare euronorm staat hier niet: die zit in de regel "norm-ontbreekt", met de
+   bronwaarde erbij, zodat dezelfde fout niet twee keer in de lijst staat. */
 const CORRECTIES = {
   schrijfwijze: (c) => (c.veld === "merk" ? "Merk" : "Model") + " staat in de bron als “" +
     c.bron + "”, elders in de vloot als “" + c.feed + "”. De feed gebruikt “" + c.feed + "”.",
   hoofdletters: (c) => "Gemeente staat in de bron als “" + c.bron + "”; de feed zet de " +
-    "hoofdletters recht tot “" + c.feed + "”.",
-  asterisk: (c) => "Euronorm staat in de bron als “" + c.bron + "”: het sterretje wordt " +
-    "genegeerd, de feed zegt “" + c.feed + "”. Wat betekent het sterretje?"
+    "hoofdletters recht tot “" + c.feed + "”."
 };
 
 /* Alle fouten in een feed, als lijst { sleutel, auto, station, plaats, regel, fout }.
@@ -154,10 +154,10 @@ const CORRECTIES = {
 export function controleer(feed, correcties = []) {
   const wagens = (feed && feed.data && feed.data.vehicles) || [];
   const opNaam = new Map(wagens.map((w) => [String(w.naam || ""), w]));
-  // Een onbruikbare euronorm per auto, voor de regel "norm-ontbreekt".
-  const onbruikbaar = new Map(correcties
-    .filter((c) => c.veld === "euronorm" && c.soort === "onbruikbaar")
-    .map((c) => [c.naam, c.bron]));
+  // Een lege of onbruikbare euronorm per auto, voor de regel "norm-ontbreekt".
+  const bronNorm = new Map(correcties
+    .filter((c) => c.veld === "euronorm" && (c.soort === "onbruikbaar" || c.soort === "leeg"))
+    .map((c) => [c.naam, c]));
   const paren = new Map();
   for (const w of wagens) {
     if (!w.merk) continue;
@@ -173,10 +173,13 @@ export function controleer(feed, correcties = []) {
     const auto = String(w.naam || "(zonder naam)");
     for (const [regel, test] of Object.entries(REGELS)) {
       let fout = test(w);
-      if (fout && regel === "norm-ontbreekt" && onbruikbaar.has(auto)) {
-        fout = "Euronorm staat in de bron als “" + onbruikbaar.get(auto) + "”, en daar valt " +
-          "geen norm uit af te leiden. Op de kaart valt de auto daardoor weg zodra iemand " +
-          "op euronorm filtert.";
+      if (fout && regel === "norm-ontbreekt" && bronNorm.has(auto)) {
+        const c = bronNorm.get(auto);
+        fout = (c.soort === "leeg"
+          ? "Euronorm is leeg in de bron, bij een auto op " + w.brandstof + "."
+          : "Euronorm staat in de bron als “" + c.bron + "”, en daar valt geen norm uit af " +
+            "te leiden.") +
+          " Op de kaart valt de auto daardoor weg zodra iemand op euronorm filtert.";
       }
       if (fout) voeg(w, auto, regel, fout);
     }
@@ -205,7 +208,6 @@ export const SOORTEN = {
   "elektrisch-met-norm": "Elektrische auto met euronorm",
   "norm-ontbreekt": "Euronorm ontbreekt of onbruikbaar",
   "norm-bouwjaar": "Euronorm past niet bij bouwjaar",
-  "correctie-euronorm": "Sterretje in de euronorm",
   "merkveld": "Model in het merkveld",
   "schrijfwijze": "Schrijfwijze van merk of model",
   "plaats": "Gemeenteveld",
@@ -230,7 +232,8 @@ async function leesCorrecties(env) {
 
 const SLEUTEL_ONTVANGEN = "datacorrecties_ontvangen";
 const VELDEN_CORRECTIE = new Set(["merk", "model", "plaats", "euronorm"]);
-const SOORTEN_CORRECTIE = new Set(["schrijfwijze", "hoofdletters", "onbruikbaar", "asterisk"]);
+/* Een sterretje naast een cijfer ('6*') stuurt de generator niet: dat negeren we. */
+const SOORTEN_CORRECTIE = new Set(["schrijfwijze", "hoofdletters", "onbruikbaar", "leeg"]);
 const MAX_CORRECTIES = 5000;
 
 /* Twee teksten vergelijken in een tijd die niet verraadt hoeveel tekens er kloppen. */
@@ -337,8 +340,10 @@ export async function nieuweAutos(env) {
 
 const SLEUTEL_CONTROLE = "datafouten_controle";
 
-/* De feed ophalen, nakijken en de tabel bijwerken. Geeft { aantal, feed } terug, of
-   gooit een fout als de feed niet te lezen is; de tabel blijft dan zoals ze was. */
+/* De feed ophalen, nakijken en de tabel bijwerken. Geeft terug wat er veranderde:
+   { aantal: fouten op de lijst, nieuw: daarvan nieuw (of terug na "opgelost"), weg: niet
+   meer in de feed, verborgen: als opgelost gewist en nog verborgen, feed }. Gooit een
+   fout als de feed niet te lezen is; de tabel blijft dan zoals ze was. */
 export async function werkBij(env) {
   if (!env.DB) throw new Error("geen databank");
   if (!env.FEED_URL) throw new Error("FEED_URL staat niet in wrangler.toml");
@@ -353,8 +358,11 @@ export async function werkBij(env) {
     "SELECT sleutel, opgelost, feed_bij_opgelost FROM datafouten").all();
   const bekend = new Map(results.map((r) => [r.sleutel, r]));
   const opdrachten = [];
+  let nieuw = 0, verborgen = 0, weg = 0;
   for (const f of gevonden) {
     const rij = bekend.get(f.sleutel);
+    if (!rij || (rij.opgelost && nieuwer(feedDatum, rij.feed_bij_opgelost))) nieuw++;
+    else if (rij.opgelost) verborgen++;
     if (!rij) {
       opdrachten.push(env.DB.prepare(
         "INSERT INTO datafouten (sleutel, auto, station, plaats, regel, fout, gevonden) " +
@@ -376,6 +384,7 @@ export async function werkBij(env) {
   const nog = new Set(gevonden.map((f) => f.sleutel));
   for (const sleutel of bekend.keys()) {
     if (!nog.has(sleutel)) {
+      if (!bekend.get(sleutel).opgelost) weg++;
       opdrachten.push(env.DB.prepare("DELETE FROM datafouten WHERE sleutel = ?").bind(sleutel));
     }
   }
@@ -386,7 +395,7 @@ export async function werkBij(env) {
   ).bind(SLEUTEL_CONTROLE, JSON.stringify({ feed: feedDatum, aantal: gevonden.length }), nu,
          "controle"));
   await env.DB.batch(opdrachten);
-  return { aantal: gevonden.length, feed: feedDatum };
+  return { aantal: gevonden.length - verborgen, nieuw, weg, verborgen, feed: feedDatum };
 }
 
 function nieuwer(a, b) {

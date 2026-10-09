@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS datafouten (
 CREATE TABLE IF NOT EXISTS datacorrecties (
   naam  TEXT NOT NULL,                  -- de naam van de auto
   veld  TEXT NOT NULL,                  -- merk, model, plaats of euronorm
-  soort TEXT NOT NULL,                  -- schrijfwijze, hoofdletters, onbruikbaar of asterisk
+  soort TEXT NOT NULL,                  -- schrijfwijze, hoofdletters, onbruikbaar of leeg
   bron  TEXT NOT NULL,                  -- de waarde in de bron
   feed  TEXT,                           -- de waarde in de feed, of NULL
   PRIMARY KEY (naam, veld)

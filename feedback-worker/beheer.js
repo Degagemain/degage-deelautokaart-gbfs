@@ -132,8 +132,9 @@ export async function beheer(request, env) {
     if (!komtVanHier(request, url)) {
       return pagina(403, "Geweigerd", "<p>Dit verzoek kwam niet van deze pagina.</p>");
     }
+    let uitslag;
     try {
-      await werkBij(env);
+      uitslag = await werkBij(env);
     } catch (e) {
       console.error("Datafouten:", e.message);
       return pagina(500, "Niet gecontroleerd",
@@ -141,7 +142,10 @@ export async function beheer(request, env) {
         "<code>datafouten</code> al in de databank? Voer <code>schema.sql</code> opnieuw uit " +
         "(README.md, stap 5).</p><p><a href=\"/beheer/datafouten\">Terug</a></p>");
     }
-    return doorsturen(url.origin + "/beheer/datafouten?gecontroleerd=1", [], 303);
+    // Wat de controle vond, in de zoekstring: de pagina zegt het dan na het doorsturen.
+    const { aantal, nieuw, weg, verborgen } = uitslag;
+    return doorsturen(url.origin + "/beheer/datafouten?" +
+      new URLSearchParams({ gecontroleerd: aantal, nieuw, weg, verborgen }), [], 303);
   }
   if (pad === "/beheer/datafouten") return datafouten(env, wie, url);
   if (pad === "/beheer") return overzicht(env, wie, url);
@@ -507,7 +511,7 @@ async function datafouten(env, wie, url) {
       "dan op <b>Probleem opgelost, wissen</b>. De feed wordt maar per kwartaal ververst: " +
       "een gewiste fout blijft weg tot de volgende feed, en staat ze daar nog altijd in, dan " +
       "komt ze terug. Een fout die uit de feed verdwijnt, gaat vanzelf van de lijst.</p>" +
-    (url.searchParams.get("gecontroleerd") ? '<p class="bewaard">Gecontroleerd.</p>' : "") +
+    controleUitslag(url.searchParams) +
     '<form class="vlak controle" method="post" action="/beheer/datafouten/controleer">' +
       '<span class="zacht">' + (laatst
         ? "Laatst nagekeken op " + dag(laatst.wanneer) + ", in de feed van " +
@@ -546,6 +550,28 @@ async function datafouten(env, wie, url) {
       "bouwjaar, zitplaatsen, euronorm en toebehoren volgen met de volgende feed. Geen fout: " +
       "zo gaat het tussen twee kwartaalruns.</p>" + nieuwHtml,
     kopregel(env, wie, "datafouten"));
+}
+
+/* Na "Nu controleren": wat er gevonden werd, in een zin. Leest de aantallen uit de
+   zoekstring die het doorsturen meegaf; zonder die zoekstring niets. */
+function controleUitslag(vraag) {
+  if (!vraag.has("gecontroleerd")) return "";
+  const getal = (naam) => Math.max(0, parseInt(vraag.get(naam), 10) || 0);
+  const fouten = (n) => n + (n === 1 ? " fout" : " fouten");
+  const aantal = getal("gecontroleerd"), nieuw = getal("nieuw");
+  const weg = getal("weg"), verborgen = getal("verborgen");
+  let zin = "Gecontroleerd: " + (aantal
+    ? fouten(aantal) + " gevonden" + (nieuw ? ", waarvan " + nieuw + " nieuw" : ", geen nieuwe")
+    : "geen fouten gevonden") + ".";
+  if (weg) {
+    zin += " " + fouten(weg) + (weg === 1 ? " staat" : " staan") + " niet meer in de feed en " +
+      (weg === 1 ? "is" : "zijn") + " van de lijst gehaald.";
+  }
+  if (verborgen) {
+    zin += " " + fouten(verborgen) + " als opgelost gewist: " + (verborgen === 1 ? "die blijft" :
+      "die blijven") + " verborgen tot een nieuwere feed.";
+  }
+  return '<p class="bewaard">' + ontsnap(zin) + "</p>";
 }
 
 /* Een link naar de kaart, in een nieuw tabblad; niets als KAART_URL niet ingesteld is. */
