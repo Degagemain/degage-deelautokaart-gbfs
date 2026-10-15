@@ -58,9 +58,17 @@
     "zoek.adresMarker": "Adresse recherchée : {adres}",
 
     "locatie.bezig": "Recherche de votre position…",
-    "locatie.geweigerd": "Pas d'autorisation pour votre position. Activez-la dans votre " +
-                         "navigateur ; si la carte est intégrée dans une autre page, " +
-                         "celle-ci doit aussi l'autoriser.",
+    "locatie.geblokkeerd": "Votre navigateur bloque votre position pour ce site. Cliquez sur " +
+                           "l'icône à gauche de l'adresse web, réglez Position sur Autoriser " +
+                           "et réessayez.",
+    "locatie.geweigerd": "Votre navigateur n'a pas transmis votre position et ne l'a pas " +
+                         "demandée non plus. Vérifiez que votre appareil autorise le " +
+                         "navigateur à utiliser votre position (sur un Mac : Réglages " +
+                         "Système › Confidentialité et sécurité › Service de localisation) " +
+                         "et si une icône de position barrée apparaît à gauche de l'adresse web.",
+    "locatie.ingebed": "Le site dans lequel cette carte est intégrée n'autorise pas le " +
+                       "partage de votre position. Ouvrez la carte seule pour utiliser " +
+                       "votre position.",
     "locatie.mislukt": "Votre position n'a pas pu être déterminée. Essayez plutôt une " +
                        "commune ou une adresse.",
     "locatie.geenSteun": "Ce navigateur ne transmet pas de position. Cherchez une commune " +

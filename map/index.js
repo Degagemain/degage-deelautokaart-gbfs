@@ -4236,8 +4236,7 @@ $("zoekform").addEventListener("submit", async (e) => {
 
    Let op bij het inbedden: in een iframe van een ander domein geeft de browser de
    locatie alleen door als de iframe `allow="geolocation"` draagt. Zonder dat komt hier een
-   weigering binnen die niet van de bezoeker komt — vandaar dat de melding allebei de
-   mogelijkheden noemt. */
+   weigering binnen die niet van de bezoeker komt — zie waaromGeweigerd(). */
 const LOCATIE_NAUWKEURIG = 500;     // m; daarboven heet het "bij benadering"
 const LOCATIE_VER = 25000;          // m; daarboven melden we hoe ver de dichtste staat
 let locatieLoopt = false;
@@ -4306,11 +4305,35 @@ kaart.on("locationfound", (e) => {
 /* Code 1 is een weigering — door de bezoeker zelf, of door de pagina waarin de kaart
    hangt. Die twee zijn hier niet uit elkaar te houden, dus de melding noemt ze allebei
    in plaats van er één te kiezen. */
-kaart.on("locationerror", (e) => {
+kaart.on("locationerror", async (e) => {
   zetLocatieBezig(false);
-  toonZoekmelding(t(e.code === 1 ? "locatie.geweigerd" : "locatie.mislukt"));
   console.info("locatie niet gekregen:", e.code, e.message);
+  toonZoekmelding(t(e.code === 1 ? await waaromGeweigerd() : "locatie.mislukt"));
 });
+
+/* Een weigering (code 1) heeft drie heel verschillende oorzaken, en elk vraagt iets anders
+   van de bezoeker. Een melding die ze alle drie opsomt, helpt niemand:
+
+   · De pagina waarin de kaart staat, laat geen locatie toe (iframe zonder
+     `allow="geolocation"`). Chrome en Edge zeggen dat via `document.permissionsPolicy`
+     (vroeger `featurePolicy`); de bezoeker kan er niets aan doen behalve de kaart apart
+     openen.
+   · De site staat in de browser op "blokkeren" — `permissions.query` zegt dan "denied".
+     De browser vraagt het dan nooit meer: het moet bij het slotje naast het webadres.
+   · De browser vraagt niets en weigert toch ("prompt" of onbekend). Dat is het toestel dat
+     de browser geen locatie geeft, of Chrome dat na een paar keer wegklikken een tijd
+     zwijgt. */
+async function waaromGeweigerd() {
+  const beleid = document.permissionsPolicy || document.featurePolicy;
+  if (window.self !== window.top && beleid && !beleid.allowsFeature("geolocation")) {
+    return "locatie.ingebed";
+  }
+  try {
+    const stand = await navigator.permissions.query({ name: "geolocation" });
+    if (stand.state === "denied") return "locatie.geblokkeerd";
+  } catch (fout) { /* oudere Safari kent geolocation hier niet */ }
+  return "locatie.geweigerd";
+}
 
 /* Wat je typt hoort bij wat er staat.
    ------------------------------------------------------------------------------------

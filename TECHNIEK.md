@@ -510,9 +510,12 @@ Twee dingen zijn wél anders en staan in de code benoemd:
 
 > **Bij het inbedden:** in een iframe van een ander domein geeft de browser de locatie
 > alleen door als de iframe **`allow="geolocation"`** draagt. Zonder dat attribuut komt er
-> een weigering binnen (code 1) die niet van de bezoeker komt, en die is in de kaart niet
-> te onderscheiden van een bezoeker die zelf weigert — vandaar dat de melding allebei de
-> mogelijkheden noemt. Geolocatie vraagt bovendien een beveiligde verbinding: `https` of
+> een weigering binnen (code 1) die niet van de bezoeker komt. `waaromGeweigerd()` zoekt bij
+> elke weigering de oorzaak, zodat de melding zegt wat de bezoeker moet doen: de iframe laat
+> het niet toe (`document.permissionsPolicy`, alleen Chrome en Edge), de site staat in de
+> browser op blokkeren (`permissions.query` → `denied`; dan vraagt de browser nooit meer),
+> of de browser weigert zonder te vragen (meestal het toestel, op een Mac de
+> Locatievoorzieningen). Geolocatie vraagt bovendien een beveiligde verbinding: `https` of
 > `localhost`.
 
 ## 10. De talen

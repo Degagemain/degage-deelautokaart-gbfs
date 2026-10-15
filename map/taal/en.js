@@ -56,8 +56,14 @@
     "zoek.adresMarker": "Searched address: {adres}",
 
     "locatie.bezig": "Finding your location…",
-    "locatie.geweigerd": "No permission for your location. Allow it in your browser; if " +
-                         "the map is embedded in another page, that page has to allow it too.",
+    "locatie.geblokkeerd": "Your browser blocks your location for this site. Click the icon " +
+                           "to the left of the web address, set Location to Allow and try again.",
+    "locatie.geweigerd": "Your browser did not share your location and did not ask for it " +
+                         "either. Check that your device lets the browser use your location " +
+                         "(on a Mac: System Settings › Privacy & Security › Location Services) " +
+                         "and whether a crossed-out location icon shows left of the web address.",
+    "locatie.ingebed": "The website this map is embedded in does not allow sharing your " +
+                       "location. Open the map on its own to use your location.",
     "locatie.mislukt": "Your location could not be determined. Try a town or address instead.",
     "locatie.geenSteun": "This browser does not provide a location. Search for a town or address.",
     "locatie.onnauwkeurig": "Your location is approximate: accurate to about {afstand}.",

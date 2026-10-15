@@ -56,8 +56,15 @@
     "zoek.adresMarker": "Gezocht adres: {adres}",
 
     "locatie.bezig": "Je locatie opzoeken…",
-    "locatie.geweigerd": "Geen toestemming voor je locatie. Zet die aan in je browser; " +
-                         "staat de kaart in een andere pagina, dan moet die het ook toelaten.",
+    "locatie.geblokkeerd": "Je browser blokkeert je locatie voor deze site. Klik op het " +
+                           "symbool links van het webadres, zet Locatie op Toestaan en " +
+                           "probeer opnieuw.",
+    "locatie.geweigerd": "Je browser gaf je locatie niet door en vroeg er ook niet om. Kijk " +
+                         "of je toestel de browser je locatie laat gebruiken (op een Mac: " +
+                         "Systeeminstellingen › Privacy en beveiliging › Locatievoorzieningen) " +
+                         "en of er links van het webadres een doorgestreept locatiesymbool staat.",
+    "locatie.ingebed": "De website waarin deze kaart staat, laat het delen van je locatie " +
+                       "niet toe. Open de kaart apart om je locatie te gebruiken.",
     "locatie.mislukt": "Je locatie kon niet bepaald worden. Zoek anders op gemeente of adres.",
     "locatie.geenSteun": "Deze browser geeft geen locatie door. Zoek op gemeente of adres.",
     "locatie.onnauwkeurig": "Je locatie is bij benadering: ongeveer {afstand} nauwkeurig.",
