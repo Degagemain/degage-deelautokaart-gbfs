@@ -91,7 +91,8 @@ degapp.be (live vloot) ────────────────▶ kaart
 | `gbfs/` | de gegenereerde feed + de officiële JSON Schemas |
 | `gbfs/index.html` | instappagina voor aggregatoren: instapadres, bestanden, wat de feed niet belooft |
 | `index.html` | doorverwijzing: de root naar de kaart |
-| `favicon.png`, `favicon-32.png` | het pictogram in het tabblad, op alle drie de pagina's (512 px en 32 px) |
+| `admin/index.html` | doorverwijzing: `/admin` naar de beheerpagina op de Worker |
+| `favicon.png`, `favicon-32.png` | het pictogram in het tabblad, op elke pagina van de site (512 px en 32 px) |
 | `BIJWERKEN.bat` | **dubbelklik hierop om alles bij te werken** (Windows) |
 | `scripts/bijwerken.py` | hetzelfde, vanaf de opdrachtregel: roept de vier scripts hieronder in de juiste volgorde aan |
 | `scripts/genereer_gbfs.py` | de bouwer: lijst wagens → feed (het inlezen van de databank gebeurt in de interne repo) |

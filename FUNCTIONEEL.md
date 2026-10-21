@@ -61,7 +61,7 @@ kwartaalverversing staat hij in het bestand en verdwijnt het label vanzelf.
 auto. Bij het bijwerken van de kaart wordt de live lijst ook opgevraagd, en voor elke plek
 waar een nieuwe of verhuisde auto staat, worden de Mobiscore en de afstand tot de dichtste
 halte en het dichtste station berekend. Een nieuwe auto heeft dus gewoon een OV-blok en doet
-mee in de schuiven voor bus en trein. Alleen een auto die pas ná de laatste bijwerking
+mee in het filter voor bus, tram en trein. Alleen een auto die pas ná de laatste bijwerking
 verscheen of verhuisde, heeft dat nog niet.
 
 Wat dat betekent voor de filters: zet je een filter op iets wat we van een nieuwe auto
@@ -388,7 +388,8 @@ euronorm en bouwjaar onder *Meer filters*.
 **Het filter Openbaar vervoer** hoort bij de standplaats en niet bij de auto: het is er
 voor wie de auto met bus, tram of trein combineert — heen met de deelauto, terug met de
 trein, of een auto zoeken die te voet vanaf de halte te bereiken is. Er zijn drie modi,
-**Bus**, **Tram** en **Trein**, elk met twee schuiven:
+**Bus**, **Tram** en **Trein**. Eerst staan er alleen drie knoppen met die namen; pas als
+je op een knop drukt, verschijnen de twee schuiven van die modus:
 
 - **de afstand** tot de dichtste halte of het dichtste station, als bovengrens:
   "hoogstens 500 meter". In vogelvlucht; te voet is de weg altijd wat langer. Helemaal
@@ -398,9 +399,10 @@ trein, of een auto zoeken die te voet vanaf de halte te bereiken is. Er zijn dri
   gewone weekdag — dezelfde getallen als in de popup. Links staat "elke frequentie", naar
   rechts wordt het strenger.
 
-Er is geen vakje om een modus aan te zetten: een modus filtert zodra je één van zijn
-schuiven verzet, en wat er ingesteld is, zie je aan de schuiven zelf. Het streepje links
-van een modus wordt dan groen. Staan beide schuiven op "elke", dan filtert die modus niet.
+Een knop indrukken filtert nog niets: een modus filtert pas zodra je één van zijn schuiven
+verzet, en wat er ingesteld is, zie je aan de schuiven zelf. Het streepje links van een
+modus wordt dan groen. Staan beide schuiven op "elke", dan filtert die modus niet. Druk je
+de knop opnieuw in, dan verdwijnen zijn schuiven en gaan ze terug op "elke".
 
 Bus en tram zijn elk hun eigen halte: bij **Tram** telt de dichtste halte waar een tram
 stopt, ook als er een bushalte dichterbij ligt. Trams rijden alleen in Gent, Antwerpen en
@@ -415,7 +417,7 @@ zijn.
 De schuiven tonen alleen standen die iets doen: ligt élke standplaats binnen twee kilometer
 van een halte, dan begint de afstandsschuif daar en niet bij tien kilometer. Een standplaats
 waar geen halte of station van gemeten is, voldoet nooit aan die modus — we weten dan niet
-of ze eraan voldoet. "Filters wissen" zet alle schuiven terug op "elke".
+of ze eraan voldoet. "Filters wissen" zet alle schuiven terug op "elke" en klapt ze dicht.
 
 **Hoe ze samenwerken.** Binnen één groep is het "of" — vink je benzine én diesel aan, dan
 zie je allebei. Tussen groepen is het "en" — een bestelwagen op diesel moet aan allebei

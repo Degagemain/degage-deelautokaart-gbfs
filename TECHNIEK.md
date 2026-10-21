@@ -294,8 +294,11 @@ openstaande popup, want die draagt afgewerkte tekst volgens de oude keuze.
 
 `wagenPast(w)` is de enige plek waar beslist wordt of een auto door de filters komt.
 Het OV-filter is het enige dat niet naar de auto kijkt maar naar zijn standplaats
-(`ovPast()`, `ovModusPast()`). Elke modus (`OV_MODI`: bus, tram, trein) is een blok in de
-opmaak met twee schuiven, zonder aanvinkvakje. `staat.gekozenOvModi` wordt afgeleid uit de
+(`ovPast()`, `ovModusPast()`). Elke modus (`OV_MODI`: bus, tram, trein) heeft een knop
+(`#ovknop-…`, met `aria-pressed`) en een blok met twee schuiven (`#ovmodus-…`) dat pas
+verschijnt als die knop ingedrukt is (`zetOvKnop()`). De knop zelf filtert niets en is
+geen `.keuze`-vakje, zodat hij niet meetelt in het telbolletje; dichtklappen roept ook
+`wisOvModus()` aan, zodat er geen onzichtbaar filter blijft staan. `staat.gekozenOvModi` wordt afgeleid uit de
 schuiven (`ovModiBijwerken()`): een modus filtert zodra `maxM` of `minFreq` niet `null` is.
 `wisOvModus()` zet beide schuiven terug op "alles". Bij twee of meer modi is het "of",
 tenzij `ovBeide` aanstaat. Een modus zonder gegevens verdwijnt, en het hele blok als er
@@ -650,6 +653,16 @@ binnen mag wie schrijfrechten op de repo heeft. Een nachtelijke taak wist een ad
 dagen nadat zijn issue gesloten is. Lukt het bewaren niet, dan staat het issue er wel, en
 zegt het bedankscherm dat er geen antwoord per mail komt. Alles over de opzet staat in
 [`feedback-worker/README.md`](feedback-worker/README.md), stap 5.
+
+**De knop naar de beheerpagina** op de kaart (`.beheer-knop`, onder de ⓘ) staat er alleen
+in de browser van een beheerder. De kaart kan de sessie van `/beheer` niet zien: dat
+koekje hoort bij het domein van de Worker en is `SameSite=Lax`, dus het gaat niet mee met
+een verzoek van de kaart. `kiesBeheerknop()` leest daarom `?adminButton=on` of `=off`,
+bewaart dat in `localStorage` (`degage-kaart-beheerder`) en haalt de parameter uit de
+adresbalk. De knop "Naar de kaart" op de beheerpagina (`kaartknop()` in
+`feedback-worker/beheer.js`) zet `?adminButton=on` erachter. Het is gemak, geen
+beveiliging: de knop leidt naar `admin/`, een doorverwijzing naar `/beheer`, en daar
+vraagt de Worker zelf een GitHub-login.
 
 **Als het misloopt** — Worker plat, netwerk weg, Turnstile stuk — dan staat in de
 foutmelding de link naar GitHub. Dat is de uitweg die altijd blijft werken.

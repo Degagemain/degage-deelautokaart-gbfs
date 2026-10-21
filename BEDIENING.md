@@ -228,12 +228,16 @@ toegang heeft tot de repo.
 
 Iemand erbij zetten of weghalen:
 
-1. Pas in dat bestand de regel `assignees: ['Smile4ever', 'pieter-degage', 'lienlouwagie']`
-   aan: GitHub-gebruikersnamen tussen enkele aanhalingstekens, met komma's ertussen,
-   hooguit tien. Dat kan rechtstreeks op GitHub (het potlood, *Edit this file*).
+1. Pas in dat bestand de regel aan die begint met `assignees:`, bijvoorbeeld
+   `assignees: ['Smile4ever', 'een-andere-naam']`: GitHub-gebruikersnamen tussen enkele
+   aanhalingstekens, met komma's ertussen, hooguit tien. Dat kan rechtstreeks op GitHub
+   (het potlood, *Edit this file*).
 2. Commit op `main`. Binnen enkele minuten toont de beheerpagina de nieuwe lijst.
 3. Geef een nieuwe naam toegang tot de repo, minstens de rol *Triage*, onder *Settings →
-   Collaborators*. Anders slaat GitHub de naam over zonder foutmelding.
+   Collaborators*, en laat die persoon de uitnodiging aanvaarden (via de mail van GitHub,
+   of op `github.com/<eigenaar>/<repo>/invitations`). Tot dan staat de naam daar als
+   *Pending invite* en slaat GitHub hem over zonder foutmelding, ook bij wie als admin
+   uitgenodigd is.
 
 De lijst geldt alleen voor nieuwe meldingen. Een bestaande melding geef je door op het
 issue zelf, rechts bij *Assignees*. Of het bericht ook als mail komt, kiest ieder zelf op
@@ -429,9 +433,18 @@ Alleen adressen op @degage.be worden aanvaard. Een persoonlijk adres zorgt ervoo
 
 # Hosting
 
-Gehost op GitHub Pages. Alleen `map/`, `gbfs/` en de twee `favicon`-bestanden in de root
-hoeven gehost te worden; de scripts staan erbij omdat ze bij het project horen, niet omdat
-ze publiek uitgevoerd worden.
+Gehost op GitHub Pages, rechtstreeks vanaf de branch `main` en de root van de repo. Alles
+wat op `main` staat, is dus publiek te openen, ook wat er niet voor bedoeld is: de
+scripts, de README's en `feedback-worker/` staan erbij omdat ze bij het project horen,
+niet omdat iemand ze via de site moet uitvoeren. Zet er dus nooit iets geheims in.
+`.nojekyll` in de root zorgt dat GitHub de bestanden ongewijzigd toont, zonder ze eerst
+door Jekyll te halen.
+
+Wat de site echt nodig heeft: elke map met een `index.html` is een pagina, samen met wat
+die pagina laadt, plus de `favicon`-bestanden in de root. Welke pagina's dat zijn, zie je
+met `git ls-files '*index.html'`. Komt er een pagina bij, dan staat ze vanzelf online;
+hier hoeft niets aangepast te worden. Werk je met een andere host die maar een deel van de
+repo publiceert, neem dan die mappen mee.
 
 **`map/index.js` en `map/taal/` horen er altijd bij.** De pagina laadt ze met gewone
 scripttags. Ontbreekt `index.js`, dan blijft er een lege kaart over; ontbreken de

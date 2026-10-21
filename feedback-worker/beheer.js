@@ -567,14 +567,15 @@ function ontvangersBlok(env, wieKrijgt) {
       "<details><summary>Zo pas je deze lijst aan</summary><ol>" +
         '<li>Open <a href="' + bestand + '"><code>' + WORKFLOW + "</code></a> op GitHub " +
           "en klik op het potlood (<em>Edit this file</em>).</li>" +
-        "<li>Pas de regel <code>assignees: ['Smile4ever', 'pieter-degage']</code> aan: " +
+        "<li>Pas de regel aan die begint met <code>assignees:</code>: " +
           "GitHub-gebruikersnamen, elk tussen enkele aanhalingstekens, met komma's ertussen. " +
           "Hooguit tien namen.</li>" +
         "<li>Klik op <em>Commit changes…</em> en bewaar rechtstreeks op <code>main</code>. " +
           "Binnen enkele minuten staat de nieuwe lijst hier.</li>" +
         "<li>Iemand die erbij komt, moet toegang hebben tot de repo (minstens de rol " +
-          "<em>Triage</em>, onder <em>Settings → Collaborators</em>). Anders slaat GitHub de " +
-          "naam over, en staat hier <em>krijgt niets</em>.</li>" +
+          "<em>Triage</em>, onder <em>Settings → Collaborators</em>) en de uitnodiging " +
+          "aanvaard hebben. Anders slaat GitHub de naam over, ook bij een admin, en staat " +
+          "hier <em>krijgt niets</em>.</li>" +
       "</ol><p>De lijst geldt voor nieuwe meldingen. Een bestaande melding geef je aan " +
         "iemand anders door op het issue zelf, rechts bij <em>Assignees</em>. Wie alleen wil " +
         "meelezen zonder meldingen toegekend te krijgen, zet op de repo " +

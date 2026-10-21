@@ -138,7 +138,8 @@ hij antwoordt alleen met een fout.
 Staat de kaart ook op een ander domein, zet dat dan bij `TOEGESTANE_HERKOMST` in
 `wrangler.toml` en voer `deploy` opnieuw uit. Verhuist de kaart, pas dan ook `KAART_URL`
 en `GBFS_URL` aan: daar wijzen de knoppen "Naar de kaart" en "GBFS" op de beheerpagina
-naartoe. De knop "Cloudflare" ernaast opent de Worker in het dashboard van Cloudflare
+naartoe; "Naar de kaart" zet er `?adminButton=on` achter, zodat de kaart in die browser
+een knop terug naar de beheerpagina toont. De knop "Cloudflare" ernaast opent de Worker in het dashboard van Cloudflare
 (`CLOUDFLARE_URL`); hernoem je de Worker, pas dan ook die aan.
 
 ### 4. De kaart laten weten waar de Worker staat
