@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Beheer van de deelautokaart</title>
+
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../favicon.png">
+<link rel="apple-touch-icon" href="../favicon.png">
+
+<!--
+  Doorverwijzing naar de beheerpagina, zodat beheerders /admin achter het adres van de
+  kaart kunnen typen in plaats van het adres van de Worker te onthouden. De kaart zelf
+  linkt hier niet naartoe: voor gewone bezoekers heeft de beheerpagina geen nut, en wie er
+  toch komt, ziet alleen de GitHub-login van feedback-worker/beheer.js.
+
+  Dezelfde drie lagen als de index.html in de root (meta refresh, location.replace, een
+  link). Het adres is hier wel absoluut, want de Worker staat op een ander domein; het is
+  hetzelfde als in map/config.js. Hernoem je de Worker, pas het dan hier ook aan.
+-->
+<meta http-equiv="refresh" content="0; url=https://degage-kaart-feedback.degage.workers.dev/beheer">
+
+<style>
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    color: #1d2a28; background: #f4f6f5;
+    text-align: center;
+  }
+  p { margin: 0; padding: 24px; }
+  a { color: #235348; }
+</style>
+</head>
+<body>
+  <p>De beheerpagina wordt geopend. Gebeurt er niets?
+     <a href="https://degage-kaart-feedback.degage.workers.dev/beheer">Ga naar de beheerpagina</a>.</p>
+  <script>location.replace("https://degage-kaart-feedback.degage.workers.dev/beheer");</script>
+</body>
+</html>

@@ -171,7 +171,8 @@ via relatieve paden leest — als `file://` blokkeert de browser dat.
 
 **<https://degage-kaart-feedback.degage.workers.dev/beheer>**
 
-Het kale adres van de Worker (zonder `/beheer`) stuurt je hierheen.
+Het kale adres van de Worker (zonder `/beheer`) stuurt je hierheen, en ook `/admin` achter
+het adres van de kaart (<https://degagemain.github.io/degage-deelautokaart-gbfs/admin/>).
 
 Je meldt je aan met je GitHub-account. Binnen mag wie schrijfrechten heeft op deze repo;
 voor de anderen blijft de pagina dicht. Toegang geven doe je dus op GitHub, onder
