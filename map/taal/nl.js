@@ -214,6 +214,7 @@
     "knop.alles": "Alles in beeld — uitzoomen tot de volledige kaart",
     "knop.allesKort": "Alles in beeld",
     "knop.instellingen": "Instellingen",
+    "knop.beheer": "Beheerpagina",
     "kaart.attributie": "Kaartgegevens &copy; {link}-bijdragers",
     "kaart.tegelbron": "kaartstijl {link}",
     "kaart.inzoomen": "Inzoomen",

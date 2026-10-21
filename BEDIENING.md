@@ -174,6 +174,11 @@ via relatieve paden leest — als `file://` blokkeert de browser dat.
 Het kale adres van de Worker (zonder `/beheer`) stuurt je hierheen, en ook `/admin` achter
 het adres van de kaart (<https://degagemain.github.io/degage-deelautokaart-gbfs/admin/>).
 
+Op de kaart zelf staat voor beheerders een knop (een schildje onder de ⓘ) die hierheen
+leidt. Gewone bezoekers zien die niet: je zet hem per browser aan door de kaart te openen
+met `?adminButton=on` achter het adres, en weer uit met `?adminButton=off`. De knop
+*Naar de kaart* op de beheerpagina doet dat eerste vanzelf.
+
 Je meldt je aan met je GitHub-account. Binnen mag wie schrijfrechten heeft op deze repo;
 voor de anderen blijft de pagina dicht. Toegang geven doe je dus op GitHub, onder
 *Settings → Collaborators*, niet op de pagina zelf. Het adres is geen geheim: de aanmelding

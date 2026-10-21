@@ -211,6 +211,7 @@
     "knop.alles": "Show everything — zoom out to the whole map",
     "knop.allesKort": "Show everything",
     "knop.instellingen": "Settings",
+    "knop.beheer": "Admin page",
     "kaart.attributie": "Map data &copy; {link} contributors",
     "kaart.tegelbron": "map style {link}",
     "kaart.inzoomen": "Zoom in",

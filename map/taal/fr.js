@@ -220,6 +220,7 @@
     "knop.alles": "Tout afficher — dézoomer sur la carte entière",
     "knop.allesKort": "Tout afficher",
     "knop.instellingen": "Paramètres",
+    "knop.beheer": "Page d'administration",
     "kaart.attributie": "Données cartographiques &copy; les contributeurs {link}",
     "kaart.tegelbron": "fond de carte {link}",
     "kaart.inzoomen": "Zoom avant",

@@ -185,6 +185,12 @@ body {
   color: var(--inkt);
 }
 .voorbehoud-knop svg { width: 16px; height: 16px; }
+/* De knop naar de beheerpagina, onder de ⓘ; alleen voor beheerders (kiesBeheerknop()). */
+.beheer-knop {
+  display: flex !important; align-items: center; justify-content: center;
+  color: var(--groen);
+}
+.beheer-knop svg { width: 16px; height: 16px; }
 .voorbehoud-knop[aria-expanded="true"] { color: var(--groen); }
 .voorbehoud-knop.is-nieuw { animation: voorbehoud-knop-tik .7s ease-out; }
 .voorbehoud-knop.is-nieuw svg { animation: voorbehoud-knop-wip .7s ease-out; }

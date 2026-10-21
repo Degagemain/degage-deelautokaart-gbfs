@@ -900,10 +900,14 @@ function controleUitslag(vraag) {
   return '<p class="bewaard">' + ontsnap(zin) + "</p>";
 }
 
-/* Een link naar de kaart, in een nieuw tabblad; niets als KAART_URL niet ingesteld is. */
+/* Een link naar de kaart, in een nieuw tabblad; niets als KAART_URL niet ingesteld is.
+   Met ?adminButton=on: dan toont de kaart in deze browser voortaan een knop terug naar
+   de beheerpagina (kiesBeheerknop() in map/index.js). Alleen beheerders zien deze link. */
 function kaartknop(env, klasse, tekst) {
   if (!env.KAART_URL) return "";
-  return '<a class="' + klasse + '" href="' + ontsnap(env.KAART_URL) +
+  const adres = new URL(env.KAART_URL);
+  adres.searchParams.set("adminButton", "on");
+  return '<a class="' + klasse + '" href="' + ontsnap(adres.href) +
     '" target="_blank" rel="noopener">' + ontsnap(tekst) + " ↗</a>";
 }
 

@@ -156,6 +156,40 @@ function taalcode(kandidaat) {
   return TALEN.includes(code) ? code : null;
 }
 
+/* De knop naar de beheerpagina (zie AllesInBeeld). Alleen voor beheerders, en de kaart
+   kan niet zelf zien wie dat is: het login-koekje hoort bij de Worker, op een ander
+   domein, en is SameSite=Lax. Daarom zet je hem per browser aan met ?adminButton=on
+   achter het adres — de knop "Naar de kaart" op de beheerpagina doet dat — en uit met
+   ?adminButton=off. Geen beveiliging: de beheerpagina vraagt zelf een GitHub-login. De
+   parameter verdwijnt meteen uit de adresbalk, zodat hij niet mee gedeeld wordt. */
+const BEHEER_SLEUTEL = "degage-kaart-beheerder";
+
+function kiesBeheerknop() {
+  const url = new URL(location.href);
+  const keuze = url.searchParams.get("adminButton");
+  const aan = keuze === "on";
+  const uit = keuze === "off";
+  try {
+    if (aan) localStorage.setItem(BEHEER_SLEUTEL, "1");
+    if (uit) localStorage.removeItem(BEHEER_SLEUTEL);
+  } catch (e) {
+    /* Dan geldt het alleen voor dit bezoek. */
+  }
+  if (keuze !== null) {
+    url.searchParams.delete("adminButton");
+    history.replaceState(history.state, "", url.pathname + url.search + url.hash);
+  }
+  if (uit) return false;
+  if (aan) return true;
+  try {
+    return localStorage.getItem(BEHEER_SLEUTEL) === "1";
+  } catch (e) {
+    return false;
+  }
+}
+
+const toonBeheerknop = kiesBeheerknop();
+
 /* Kwam de taal uit een Engelse browser, dan vraagt de kaart één keer of dat klopt — zie
    toonTaalvraag(). Engels staat op heel wat computers in België gewoon omdat het
    besturingssysteem zo geleverd werd, niet omdat de gebruiker het zo wil. */
@@ -2487,6 +2521,26 @@ const AllesInBeeld = L.Control.extend({
       else sluitVoorbehoud();
     });
     ik.addEventListener("animationend", () => ik.classList.remove("is-nieuw"));
+
+    /* De beheerpagina, alleen in de browser van een beheerder (zie kiesBeheerknop()).
+       Via ../admin/, de doorverwijzing naast de kaart, zodat het adres van de Worker
+       maar op één plaats bij de site staat. In een nieuw tabblad, zoals de beheerpagina
+       de kaart opent. */
+    if (toonBeheerknop) {
+      const beheer = L.DomUtil.create("a", "beheer-knop", doos);
+      beheer.href = "../admin/";
+      beheer.target = "_blank";
+      beheer.rel = "noopener";
+      beheer.title = t("knop.beheer");
+      beheer.setAttribute("data-i18n-title", "knop.beheer");
+      beheer.innerHTML =
+        '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" ' +
+        'stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
+        '<path d="M12 3l7.5 3v5.5c0 4.5-3.2 8.2-7.5 9.5-4.3-1.3-7.5-5-7.5-9.5V6z"/>' +
+        '<path d="M8.8 12l2.2 2.2 4.2-4.4"/></svg>' +
+        '<span class="enkel-schermlezer" data-i18n="knop.beheer">' +
+        ontsnap(t("knop.beheer")) + "</span>";
+    }
 
     /* Het doosje hangt onder de knop, binnen dezelfde control. Zo verhuist het mee naar
        onderaan op een telefoon, zonder een tweede plaatsberekening. */
