@@ -90,8 +90,9 @@
     "kop.klasse": "Prijsklasse",
     "filter.klasse": "Klasse {klasse}",
     "filter.klasseOnbekend": "Klasse onbekend",
-    "klasse.uitleg": "Elke auto rijdt aan de kilometerprijs van zijn prijsklasse. " +
-                     "Prijsklasse B kost meer per kilometer dan prijsklasse A.",
+    "klasse.uitleg": "Prijsklasse B kost meer per kilometer dan prijsklasse A. " +
+                     "<a href=\"https://www.degage.be/de-prijzen/\" target=\"_blank\" rel=\"noopener\">" +
+                     "De actuele kilometerprijzen bekijken</a>.",
     "kop.zitplaatsen": "Zitplaatsen",
     "kop.brandstof": "Brandstof",
     "kop.bak": "Versnellingsbak",
@@ -104,7 +105,7 @@
     "filter.ovTram": "Tram",
     "filter.ovTrein": "Trein",
     "filter.ovBeide": "Aan alle ingestelde voldoen",
-    "ov.filterUitleg": "Stel een afstand of frequentie in voor bus, tram of trein; staat een schuif op " +
+    "ov.filterUitleg": "Kies bus, tram of trein en stel er een afstand of frequentie voor in; staat een schuif op " +
                        "\"elke\", dan filtert hij niet. De afstand is hemelsbreed, van de standplaats tot de " +
                        "dichtstbijzijnde halte of het dichtstbijzijnde station; te voet is de weg wat " +
                        "langer. De frequentie is het aantal vertrekken per uur, per richting, op een gewone " +

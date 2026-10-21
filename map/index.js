@@ -219,8 +219,8 @@ function getal(n) {
 
 /* Alle statische teksten in de opmaak. Vier attributen, omdat een tekst nu eens de
    inhoud van een element is en dan weer een titel, een tekstballon voor een schermlezer
-   of een plaatshouder. `data-i18n-html` bestaat alleen voor het voorbehoud, dat een <strong>
-   in zijn zinnen heeft staan. */
+   of een plaatshouder. `data-i18n-html` bestaat voor teksten met opmaak:
+   de <strong> in het voorbehoud, de link naar de tarieven bij de prijsklasse. */
 function vertaalPagina() {
   document.documentElement.lang = taal;
   document.title = t("app.titel");
@@ -1577,7 +1577,18 @@ function bouwOv() {
   for (const modus of OV_MODI) {
     const m = staat.ovModus[modus];
     // Een modus zonder gegevens (een oud ov.json zonder bus of tram) toont niets.
-    $("ovmodus-" + modus).hidden = !ovDelen(modus).length;
+    $("ovknop-" + modus).hidden = !ovDelen(modus).length;
+    /* De knop klapt de schuiven van zijn modus open. Dichtklappen wist ze ook: een
+       filter dat je niet meer ziet, hoort niets meer te verbergen. */
+    $("ovknop-" + modus).addEventListener("click", () => {
+      const open = $("ovknop-" + modus).getAttribute("aria-pressed") !== "true";
+      zetOvKnop(modus, open);
+      if (!open) {
+        wisOvModus(modus);
+        toonOv();
+        teken();
+      }
+    });
     Object.assign(m, ovStanden(modus));
 
     // Afstand: stand 0, links, is "elke afstand"; stand i daarna afstanden[i - 1].
@@ -1612,6 +1623,12 @@ function bouwOv() {
     teken();
   });
   toonOv();
+}
+
+/* Een OV-knop aan of uit, en de schuiven van zijn modus mee open of dicht. */
+function zetOvKnop(modus, open) {
+  $("ovknop-" + modus).setAttribute("aria-pressed", String(open));
+  $("ovmodus-" + modus).hidden = !open;
 }
 
 /* Beide schuiven van een modus terug op "alles" — elk naar zijn eigen ruststand. */
@@ -1797,7 +1814,10 @@ function herstelFilters() {
   staat.jaarVan = null;
   $("bouwjaar-schuif").value = "0";
   toonBouwjaar();
-  for (const modus of OV_MODI) wisOvModus(modus);
+  for (const modus of OV_MODI) {
+    wisOvModus(modus);
+    zetOvKnop(modus, false);
+  }
   staat.ovBeide = false;
   $("ovbeide").checked = false;
   toonOv();

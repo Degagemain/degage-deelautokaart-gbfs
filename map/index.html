@@ -344,8 +344,9 @@
           data-i18n="popup.uitleg">Uitleg</span></button></h2>
       <div class="keuzes" id="filter-klasse"></div>
       <p class="schuif__uitleg" id="klasse-uitleg" hidden
-         data-i18n="klasse.uitleg">Elke auto rijdt aan de kilometerprijs van zijn
-        prijsklasse. Prijsklasse B kost meer per kilometer dan prijsklasse A.</p>
+         data-i18n-html="klasse.uitleg">Prijsklasse B kost meer per kilometer dan
+        prijsklasse A. <a href="https://www.degage.be/de-prijzen/" target="_blank"
+        rel="noopener">De actuele kilometerprijzen bekijken</a>.</p>
     </div>
 
     <div class="sectie sectie--schuif" data-filter="zitplaatsen">
@@ -378,7 +379,7 @@
 
     <!-- Openbaar vervoer. Hoort bij de STANDPLAATS, niet bij de wagen: wie hier filtert,
          zoekt een auto die hij kan combineren met bus, tram of trein — heen met de auto,
-         terug met de trein, of omgekeerd. Per soort twee schuiven, zonder aanvinkvakje: de
+         terug met de trein, of omgekeerd. Per soort een knop, en pas na een klik daarop twee schuiven, zonder aanvinkvakje: de
          afstand tot de dichtste halte of het dichtste station (van klein naar groot, met
          "elke afstand" rechts), en hoeveel er daar per uur vertrekt. Een soort filtert
          zodra één van zijn schuiven verzet is. Stel je er meer in, dan volstaat er één,
@@ -394,7 +395,21 @@
           title="Uitleg" data-i18n-title="popup.uitleg"><svg class="ico" aria-hidden="true"><use
           href="#i-info"/></svg><span class="enkel-schermlezer"
           data-i18n="popup.uitleg">Uitleg</span></button></h2>
-      <div class="ovmodus" id="ovmodus-bus">
+      <!-- Eerst alleen drie knoppen; de schuiven van een soort verschijnen pas als je op
+           die knop drukt. Zes schuiven tegelijk was voor wie geen OV zoekt veel te veel.
+           Een knop weer uitzetten zet zijn schuiven ook terug op "elke". Zie bouwOv(). -->
+      <div class="keuzes ovknoppen">
+        <button type="button" class="ovknop" id="ovknop-bus" aria-pressed="false"
+           aria-controls="ovmodus-bus"><svg class="ico" aria-hidden="true"><use href="#i-ov"/></svg><span
+           data-i18n="filter.ovBus">Bus</span></button>
+        <button type="button" class="ovknop" id="ovknop-tram" aria-pressed="false"
+           aria-controls="ovmodus-tram"><svg class="ico" aria-hidden="true"><use href="#i-tram"/></svg><span
+           data-i18n="filter.ovTram">Tram</span></button>
+        <button type="button" class="ovknop" id="ovknop-trein" aria-pressed="false"
+           aria-controls="ovmodus-trein"><svg class="ico" aria-hidden="true"><use href="#i-trein"/></svg><span
+           data-i18n="filter.ovTrein">Trein</span></button>
+      </div>
+      <div class="ovmodus" id="ovmodus-bus" hidden>
         <p class="ovmodus__kop"><svg class="ico" aria-hidden="true"><use href="#i-ov"/></svg><span
            data-i18n="filter.ovBus">Bus</span></p>
         <div class="schuif schuif--in">
@@ -406,7 +421,7 @@
           <p class="schuif__waarde" id="busfreq-waarde"></p>
         </div>
       </div>
-      <div class="ovmodus" id="ovmodus-tram">
+      <div class="ovmodus" id="ovmodus-tram" hidden>
         <p class="ovmodus__kop"><svg class="ico" aria-hidden="true"><use href="#i-tram"/></svg><span
            data-i18n="filter.ovTram">Tram</span></p>
         <div class="schuif schuif--in">
@@ -418,7 +433,7 @@
           <p class="schuif__waarde" id="tramfreq-waarde"></p>
         </div>
       </div>
-      <div class="ovmodus" id="ovmodus-trein">
+      <div class="ovmodus" id="ovmodus-trein" hidden>
         <p class="ovmodus__kop"><svg class="ico" aria-hidden="true"><use href="#i-trein"/></svg><span
            data-i18n="filter.ovTrein">Trein</span></p>
         <div class="schuif schuif--in">

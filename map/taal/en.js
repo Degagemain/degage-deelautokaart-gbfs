@@ -89,8 +89,9 @@
     "kop.klasse": "Price class",
     "filter.klasse": "Class {klasse}",
     "filter.klasseOnbekend": "Class unknown",
-    "klasse.uitleg": "Each car is charged at the per-kilometre rate of its price " +
-                     "class. Price class B costs more per kilometre than price class A.",
+    "klasse.uitleg": "Price class B costs more per kilometre than price class A. " +
+                     "<a href=\"https://www.degage.be/de-prijzen/\" target=\"_blank\" rel=\"noopener\">" +
+                     "View the current per-kilometre rates</a>.",
     "kop.zitplaatsen": "Seats",
     "kop.brandstof": "Fuel",
     "kop.bak": "Transmission",
@@ -103,7 +104,7 @@
     "filter.ovTram": "Tram",
     "filter.ovTrein": "Train",
     "filter.ovBeide": "Must meet all set modes",
-    "ov.filterUitleg": "Set a distance or frequency for bus, tram or train; a slider on \"any\" does not " +
+    "ov.filterUitleg": "Pick bus, tram or train and set a distance or frequency for it; a slider on \"any\" does not " +
                        "filter. The distance is a straight line from the parking spot to the nearest stop " +
                        "or station; on foot the walk is a bit longer. The frequency is the number of " +
                        "departures per hour, per direction, on an ordinary weekday. If you set more than " +

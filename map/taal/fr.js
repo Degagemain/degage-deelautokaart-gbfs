@@ -96,8 +96,9 @@
     "kop.klasse": "Catégorie de prix",
     "filter.klasse": "Catégorie {klasse}",
     "filter.klasseOnbekend": "Catégorie inconnue",
-    "klasse.uitleg": "Chaque voiture roule au prix kilométrique de sa catégorie de " +
-                     "prix. La catégorie B coûte plus cher au kilomètre que la catégorie A.",
+    "klasse.uitleg": "La catégorie B coûte plus cher au kilomètre que la catégorie A. " +
+                     "<a href=\"https://www.degage.be/de-prijzen/\" target=\"_blank\" rel=\"noopener\">" +
+                     "Voir les prix kilométriques actuels</a>.",
     "kop.zitplaatsen": "Places assises",
     "kop.brandstof": "Carburant",
     "kop.bak": "Boîte de vitesses",
@@ -110,7 +111,7 @@
     "filter.ovTram": "Tram",
     "filter.ovTrein": "Train",
     "filter.ovBeide": "Satisfaire à tous les modes réglés",
-    "ov.filterUitleg": "Réglez une distance ou une fréquence pour le bus, le tram ou le train ; un curseur " +
+    "ov.filterUitleg": "Choisissez bus, tram ou train et réglez-y une distance ou une fréquence ; un curseur " +
                        "sur « toute » ne filtre rien. La distance est mesurée à vol d'oiseau, de " +
                        "l'emplacement à l'arrêt ou à la gare le plus proche ; à pied, le trajet est un peu " +
                        "plus long. La fréquence est le nombre de départs par heure et par sens, un jour de " +
