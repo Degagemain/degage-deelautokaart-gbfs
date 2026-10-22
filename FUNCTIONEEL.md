@@ -70,8 +70,7 @@ een auto waarvan we het niet weten, kunnen we niet volhouden dat hij voldoet. Op
 en versnellingsbak filter je hem wel gewoon, en bij de prijsklasse staat hij onder
 *"Prijsklasse onbekend"*.
 
-**De stip van een nieuwe of verhuisde auto wordt op precies dezelfde manier vervaagd** als
-alle andere: twintig meter opzij, in een vaste richting die uit het punt zelf volgt (zie
+**De stip van een nieuwe of verhuisde auto wordt ook vervaagd**, net als alle andere (zie
 [Wat je ziet](#wat-je-ziet)). Een auto die niet verhuisd is, houdt zijn vertrouwde stip.
 
 Hoe een auto uit de live lijst herkend wordt als een auto uit het bestand, en de andere
@@ -86,8 +85,8 @@ Vlaanderen.
 **De stippen** zijn standplaatsen. Eén stip is één adres; staan er twee auto's op
 hetzelfde punt, dan is dat één stip die er twee draagt.
 
-**Een stip staat met opzet niet precies goed.** Elke standplaats is twintig meter opzij
-gezet, in een richting die je niet kunt terugrekenen. Bij de meeste auto's is de
+**Een stip staat met opzet niet precies goed.** Elke standplaats is een eindje opzij gezet,
+op een manier die je niet kunt terugrekenen. Bij de meeste auto's is de
 standplaats namelijk het huis van de eigenaar, en een coördinaat op de meter nauwkeurig
 wijst dan één voordeur aan. Je vindt de auto er nog steeds mee — je vindt er niet mee in
 welk huis de eigenaar woont. Dat staat ook in het blok "Goed om te weten".
@@ -244,7 +243,7 @@ Twee kanttekeningen:
 
 - Er is alleen een **totaalscore**. De deelscores per soort voorziening die de
   Mobiscore-site bij een adres toont, staan niet in de open gegevens.
-- De score hoort bij de **stip**, en die staat met opzet twintig meter naast de
+- De score hoort bij de **stip**, en die staat met opzet een eindje naast de
   standplaats. Op cellen van honderd meter kan dat de buurcel zijn; die verschilt zelden
   meer dan een paar tienden.
 
@@ -578,7 +577,7 @@ rechtstreeks kwijt kunt — daar heb je wél een account voor nodig.
 - **Geen foto van de échte auto** — alleen van het model, met bronvermelding.
 - **Geen gegevens van eigenaars.** Geen namen, adressen, telefoonnummers of e-mailadressen
   van leden. Het enige contactadres is dat van de lokale groep.
-- **Geen exacte standplaats.** De stippen staan twintig meter opzij, met opzet.
+- **Geen exacte standplaats.** De stippen staan met opzet een eindje opzij.
 - **Geen officieel rijbereik.** Het bereik is een schatting bij gemengd gebruik uit een
   open databank, geen WLTP-cijfer van de fabrikant — en een marge waar de batterij niet
   bekend is.

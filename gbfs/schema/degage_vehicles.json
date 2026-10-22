@@ -9,8 +9,7 @@
     "ttl",
     "version",
     "toelichting",
-    "data",
-    "locatie_nauwkeurigheid_m"
+    "data"
   ],
   "properties": {
     "last_updated": {
@@ -215,11 +214,6 @@
           }
         }
       }
-    },
-    "locatie_nauwkeurigheid_m": {
-      "type": "integer",
-      "minimum": 0,
-      "$comment": "Hoeveel meter de coördinaten in station_information.json bewust opzij gezet zijn. Zie LOCATIE_FUZZ_M in scripts/genereer_gbfs.py; de kaart toont dit getal in de popup."
     }
   }
 }

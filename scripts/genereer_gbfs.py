@@ -23,7 +23,8 @@ toch draaien op het verzonnen voorbeeld:
 Wat dit script wél en niet doet
 -------------------------------
 · Een station is één uniek coördinaat. Wagens op exact hetzelfde punt delen een station.
-· Elk coördinaat wordt vervaagd voor het de feed in gaat (LOCATIE_FUZZ_M). Het
+· Elk coördinaat wordt vervaagd voor het de feed in gaat, met een functie van de
+  oproeper (zie "COÖRDINATEN VERVAGEN"). Het
   `station_id` komt uit dat vervaagde punt, dus uit niets wat niet al in de feed staat.
 · `last_updated` komt uit de datum van de gegevens, nooit uit de klok. Zelfde invoer ->
   byte-voor-byte dezelfde bestanden.
@@ -53,6 +54,7 @@ from __future__ import annotations
 import argparse
 import calendar
 import hashlib
+import hmac
 import json
 import math
 import re
@@ -64,6 +66,7 @@ import urllib.request
 from collections import Counter, defaultdict
 from datetime import date, timedelta
 from pathlib import Path
+from typing import Callable
 
 # ============================================================================
 # HET INVOERFORMAAT
@@ -225,55 +228,44 @@ COORD_DECIMALEN = 6
 # ============================================================================
 # De feed draagt de plek waar een deelauto staat, en dat is bij de meeste wagens het huis
 # van de eigenaar. Een coördinaat op de meter nauwkeurig wijst dan één voordeur aan.
-# Daarom krijgt elke standplaats een vaste verschuiving van LOCATIE_FUZZ_M meter in een
-# richting die niet uit de data af te leiden is.
+# Daarom zet de oproeper elk coördinaat opzij voor het de feed in gaat: hij geeft een
+# vervagingsfunctie mee (`vervaag` in genereer()). Hoe ver en met welke sleutel, staat
+# bewust NIET in deze repo — dat zou het terugrekenen makkelijker maken. De feed zegt dus
+# ook nergens hoe ver.
 #
-# Wat dit wél en niet doet
-# ------------------------
-# · Het is een VASTE afstand, geen toevallige tussen nul en twintig meter. Zo ligt het
-#   echte punt altijd op een cirkel van twintig meter rond de stip, en nooit toevallig
-#   er bovenop.
-# · Het is geen garantie. In een straat met smalle rijhuizen dekt twintig meter een paar
-#   huizen; in een verkaveling met brede percelen minder. Het maakt de voordeur
-#   dubbelzinnig, het maakt hem niet onvindbaar. Wie meer wil, moet de precisie zelf
-#   omlaag brengen (een groter getal, of afronden op straatniveau).
+# · Het is geen garantie. Het maakt de voordeur dubbelzinnig, het maakt hem niet onvindbaar.
 # · De feed draagt géén straat en huisnummer, alleen gemeente en postcode. De verschuiving
 #   hoeft dus alleen het coördinaat zelf dubbelzinnig te maken.
+# · De functie moet BESTENDIG zijn: dezelfde plek houdt run na run dezelfde verschuiving,
+#   anders verspringen de stippen bij elke verversing. Gebruik `verschuif()` hieronder, met
+#   een vaste geheime sleutel.
 #
-# Waarom het bestendig is
-# -----------------------
-# De richting komt uit een hash van het AFGERONDE COÖRDINAAT, niet uit een toevalsgetal.
-# Dat heeft twee gevolgen die allebei nodig zijn:
-#   · Dezelfde invoer levert dezelfde bestanden op — de generator blijft deterministisch.
-#   · Dezelfde plek houdt kwartaal na kwartaal dezelfde verschuiving, ook als de wagens
-#     die er staan wisselen. Anders zou elke verversing de stippen zichtbaar laten
-#     verspringen, en dat leest als data die niet klopt.
-#
-# De kaart vertelt de bezoeker dat de locatie bij benadering is; het getal hieronder gaat
-# als `locatie_nauwkeurigheid_m` mee in degage_vehicles.json, zodat die twee niet uit
-# elkaar kunnen lopen.
-LOCATIE_FUZZ_M = 20
-
 # Meter per graad breedte. Voor lengte deelt dit nog door cos(breedte); op onze
 # breedtegraad scheelt dat ruim een derde, en dat weglaten zou de verschuiving in
 # oost-westrichting een halve meter te groot maken.
 METER_PER_GRAAD = 111_320.0
 
 
-def verschuif(lat: float, lon: float) -> tuple[float, float]:
-    """Zet een coördinaat LOCATIE_FUZZ_M meter opzij, in een bestendige richting.
+Vervaging = Callable[[float, float], tuple[float, float]]
 
-    De hoek komt uit een SHA-256 van het afgeronde coördinaat: hetzelfde punt geeft altijd
-    dezelfde hoek, op elke machine en in elke Python-versie. (De ingebouwde `hash()` kan
-    dat niet beloven — die is per proces gezouten.)
+
+def verschuif(lat: float, lon: float, sleutel: bytes,
+              min_m: float, max_m: float) -> tuple[float, float]:
+    """Zet een coördinaat `min_m` tot `max_m` meter opzij, bestendig.
+
+    Hoek en afstand komen uit een HMAC-SHA-256 van het afgeronde coördinaat met `sleutel`:
+    hetzelfde punt geeft met dezelfde sleutel altijd dezelfde verschuiving, op elke machine
+    en in elke Python-versie. (De ingebouwde `hash()` kan dat niet beloven — die is per
+    proces gezouten.) De eerste 8 bytes geven de hoek, de volgende 8 de afstand. Sleutel en
+    afstanden geeft de oproeper mee; voor de feed staan ze in de interne repo.
     """
-    sleutel = f"{lat:.6f},{lon:.6f}".encode("utf-8")
-    # 64 bits is ruim genoeg voor een hoek en houdt het getal leesbaar in de logs.
-    getal = int.from_bytes(hashlib.sha256(sleutel).digest()[:8], "big")
-    hoek = (getal / 2**64) * 2 * math.pi
+    bericht = f"{lat:.6f},{lon:.6f}".encode("utf-8")
+    h = hmac.new(sleutel, bericht, hashlib.sha256).digest()
+    hoek = int.from_bytes(h[:8], "big") / 2**64 * 2 * math.pi
+    afstand = min_m + int.from_bytes(h[8:16], "big") / 2**64 * (max_m - min_m)
 
-    dnoord = LOCATIE_FUZZ_M * math.cos(hoek)
-    doost = LOCATIE_FUZZ_M * math.sin(hoek)
+    dnoord = afstand * math.cos(hoek)
+    doost = afstand * math.sin(hoek)
     nieuwe_lat = lat + dnoord / METER_PER_GRAAD
     nieuwe_lon = lon + doost / (METER_PER_GRAAD * math.cos(math.radians(lat)))
     return round(nieuwe_lat, COORD_DECIMALEN), round(nieuwe_lon, COORD_DECIMALEN)
@@ -793,7 +785,8 @@ def render(payload: dict) -> str:
 # ============================================================================
 def bouw(vloot: list[dict], stempel: str, basis_url: str,
          carrosserie_pad: Path, districten_pad: Path, interactief: bool,
-         correcties_uit: list[dict] | None = None) -> dict[str, dict]:
+         correcties_uit: list[dict] | None = None, *,
+         vervaag: Vervaging) -> dict[str, dict]:
     """Bouw de zes payloads. Print elke keuze die de data aanraakt.
 
     Wat er per auto rechtgezet werd, komt in `correcties_uit` als de oproeper een lijst
@@ -883,10 +876,7 @@ def bouw(vloot: list[dict], stempel: str, basis_url: str,
     for r in vloot:
         per_punt[(round(r["lat"], COORD_DECIMALEN), round(r["lon"], COORD_DECIMALEN))].append(r)
 
-    zeg("coördinaten vervagen (privacy — zie LOCATIE_FUZZ_M in dit script)")
-    zeg(f"  elke standplaats {LOCATIE_FUZZ_M} m opzij, in een richting uit een hash van het punt zelf")
-    zeg("  vast bedrag, geen toeval: het echte punt ligt altijd op die afstand, nooit eronder")
-    zeg("  bestendig: dezelfde plek houdt dezelfde verschuiving, ook na een nieuwe dump")
+    zeg("coördinaten vervagen (privacy — met de functie van de oproeper)")
     zeg()
 
     stations, statussen = [], []
@@ -894,7 +884,7 @@ def bouw(vloot: list[dict], stempel: str, basis_url: str,
         wagens.sort(key=lambda r: r["naam"].strip())
         # Pas hier vervagen, niet eerder: het groeperen moet op het ECHTE punt gebeuren,
         # anders vallen twee wagens op dezelfde stoep uit elkaar.
-        vaag_lat, vaag_lon = verschuif(punt[0], punt[1])
+        vaag_lat, vaag_lon = vervaag(punt[0], punt[1])
         sid = station_id(vaag_lat, vaag_lon)
         for r in wagens:
             r["station_id"] = sid
@@ -926,8 +916,14 @@ def bouw(vloot: list[dict], stempel: str, basis_url: str,
         # Twee echte punten die na het vervagen op hetzelfde id uitkomen. Praktisch
         # onmogelijk, maar stil samenvoegen zou twee standplaatsen tot één maken.
         raise SystemExit(f"FOUT: station_id komt meer dan eens voor: {dubbel}. Niets weggeschreven.")
-    stations.sort(key=lambda s: s["station_id"])
-    statussen.sort(key=lambda s: s["station_id"])
+    # Op naam, niet op station_id: het id is een hash van het vervaagde punt, dus een
+    # willekeurige volgorde, en een verhuisde standplaats sprong dan naar een andere plek in
+    # het bestand. Op naam blijft een standplaats staan waar ze stond, en toont een diff in
+    # git alleen wat er echt veranderde. Het id beslist alleen bij gelijke naam.
+    volgorde = {s["station_id"]: (s["name"][0]["text"].casefold(), s["station_id"])
+                for s in stations}
+    stations.sort(key=lambda s: volgorde[s["station_id"]])
+    statussen.sort(key=lambda s: volgorde[s["station_id"]])
 
     meervoudig = [s for s in statussen if s["num_vehicles_available"] > 1]
     zeg("stationsmodel — één station per uniek coördinaat")
@@ -1021,6 +1017,8 @@ def bouw(vloot: list[dict], stempel: str, basis_url: str,
             if r["district"] in district_mail:
                 wagen["contact"] = district_mail[r["district"]]
         vehicles.append(wagen)
+    # Op naam (uniek in de vloot), om dezelfde reden als de stations hierboven.
+    vehicles.sort(key=lambda w: (w["naam"].casefold(), w["naam"]))
 
     zeg("toebehoren — alleen wat er is komt in het bestand")
     for sleutel in TOEBEHOREN_SLEUTELS:
@@ -1074,17 +1072,14 @@ def bouw(vloot: list[dict], stempel: str, basis_url: str,
         "last_updated": stempel,
         "ttl": TTL,
         "version": EIGEN_VERSIE,
-        # De kaart leest dit en zet het in de popup. Eén bron, zodat de belofte aan de
-        # bezoeker en de werkelijke verschuiving niet uit elkaar kunnen lopen.
-        "locatie_nauwkeurigheid_m": LOCATIE_FUZZ_M,
         "toelichting": tekst(
             "Eigen detailbestand van Dégage, geen GBFS. Aggregatoren mogen dit negeren. "
             "Let op bij het lezen van de feed: Dégage kent geen live beschikbaarheid — "
             "num_vehicles_available in station_status.json is het aantal wagens dat op die "
             "standplaats staat, niet het aantal dat nu vrij is. De feed wordt manueel "
             "ververst, per kwartaal. De coördinaten in station_information.json zijn "
-            "bewust vervaagd: elke standplaats staat een vaste afstand opzij "
-            "(locatie_nauwkeurigheid_m), zodat het coördinaat geen voordeur aanwijst."
+            "bewust vervaagd: elke standplaats staat een eindje opzij, zodat het "
+            "coördinaat geen voordeur aanwijst."
         ),
         "data": {"vehicles": vehicles},
     }
@@ -1278,11 +1273,13 @@ def herkomst(label: str, waarde: str, bron: str) -> None:
 # ============================================================================
 def genereer(vloot: list[dict], datum: date, *, uit: Path | None = None,
              basis_url: str | None = None, interactief: bool = False,
-             extra_verboden: list[str] | None = None) -> dict[str, dict] | None:
+             extra_verboden: list[str] | None = None,
+             vervaag: Vervaging) -> dict[str, dict] | None:
     """Bouw, controleer en schrijf de feed. Geeft de payloads terug, of None bij een fout.
 
     Dit is de ingang voor de oproeper die de wagens zelf inleest. Hij print vooraf zelf
-    waar de wagens en de datum vandaan komen; dit print de rest.
+    waar de wagens en de datum vandaan komen; dit print de rest. `vervaag` zet een
+    coördinaat opzij; voor de echte feed komt ze uit de interne repo.
     """
     controleer_invoer(vloot)
 
@@ -1301,7 +1298,8 @@ def genereer(vloot: list[dict], datum: date, *, uit: Path | None = None,
 
     correcties: list[dict] = []
     payloads = bouw(vloot, stempel, basis, REPO / "scripts" / CARROSSERIE_BESTAND,
-                    REPO / "scripts" / DISTRICTEN_BESTAND, interactief, correcties)
+                    REPO / "scripts" / DISTRICTEN_BESTAND, interactief, correcties,
+                    vervaag=vervaag)
 
     # ---- poort 1: validatie tegen de officiële schema's -------------------------------
     zeg("validatie tegen de JSON Schemas (poort — er wordt niets geschreven als dit faalt)")
@@ -1409,6 +1407,9 @@ def main() -> int:
     payloads = genereer(
         invoer.get("wagens", []), datum, uit=args.uit, basis_url=args.basis_url,
         interactief=sys.stdin.isatty() and not args.no_interactive,
+        # Verzonnen gegevens: niets te verbergen, dus niet vervaagd. De vervaging van de
+        # echte feed staat in de interne repo.
+        vervaag=lambda lat, lon: (round(lat, COORD_DECIMALEN), round(lon, COORD_DECIMALEN)),
     )
     return 0 if payloads is not None else 1
 

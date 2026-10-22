@@ -167,18 +167,20 @@ overgeslagen: een auto zonder plek kan niet op een kaart.
 de generator). Dan per punt:
 
 - ligt er een **gekoppelde auto die niet verhuisd is** — zijn API-punt ligt binnen
-  `locatie_nauwkeurigheid_m` + `VERHUIS_MARGE_M` (20 + 10 m) van zijn feedstip — dan blijft
-  de plek **op die feedstip**, met haar OV-gegevens. Een nieuwe auto op datzelfde punt komt
-  erbij. Twee API-punten bij dezelfde feedstip worden één plek;
+  `VERHUIS_GRENS_M` van zijn feedstip — dan blijft de plek **op die feedstip**, met haar
+  OV-gegevens. Een nieuwe auto op datzelfde punt komt erbij. Twee API-punten bij dezelfde
+  feedstip worden één plek;
 - anders (**nieuwe plek of verhuisd**) wordt het API-punt vervaagd met **`verschuif()`**,
-  de regel-voor-regel-kopie van `verschuif()` in `scripts/genereer_gbfs.py`: SHA-256 van
-  `"lat,lon"` op 6 decimalen, de eerste 8 bytes big-endian als hoek, en
-  `locatie_nauwkeurigheid_m` meter in die richting. Zo'n plek haalt haar OV-gegevens uit
-  `live_plekken` in `ov.json`, als `haal_ov.py` ze toen al zag.
+  de regel-voor-regel-kopie van `verschuif()` in `scripts/genereer_gbfs.py`: HMAC-SHA-256
+  van `"lat,lon"` op 6 decimalen, bytes 0–7 big-endian als hoek, bytes 8–15 als afstand
+  tussen `LIVE_MIN_M` en `LIVE_MAX_M`, met `LIVE_SLEUTEL`. Dat zijn de eigen, publieke
+  instellingen van de live vloot; de feed wordt anders vervaagd, met instellingen die niet
+  in deze repo staan. Zo'n plek haalt haar OV-gegevens uit `live_plekken` in `ov.json`, als
+  `haal_ov.py` ze toen al zag.
 
 `haal_ov.py` doet deze stap na in Python, met `verschuif()` en `station_id()` uit de
-generator en zijn eigen `VERHUIS_MARGE_M`. Wijzig je de koppeling, de groepering of de
-marge hier, wijzig ze daar mee — anders zoekt de kaart een id dat er niet in staat. Dat
+generator en dezelfde `LIVE_*`-instellingen en `VERHUIS_GRENS_M`. Wijzig je de koppeling,
+de groepering of die instellingen hier, wijzig ze daar mee — anders zoekt de kaart een id dat er niet in staat. Dat
 beide hetzelfde uitkomen, is op 03-10-2026 nagekeken: 583 plekken, 43 uit de live vloot,
 alle 583 met OV-gegevens.
 
@@ -190,17 +192,16 @@ SHA-256 van het **vervaagde** punt. Een plek op een feedstip houdt het id van di
 zijn niet bit voor bit gelijk, en de hash ziet elk verschil: opnieuw vervagen gaf bijna
 élke stip een andere richting — verspringende stippen tegenover de feed, en geen enkele
 OV-regel meer. Wijzig je `verschuif()` in de generator, wijzig dan deze mee; dat beide
-versies dezelfde uitkomst geven, is op 28-09-2026 nagekeken.
+versies dezelfde uitkomst geven, is op 22-10-2026 nagekeken op 2000 punten.
 
-*Waarom `VERHUIS_MARGE_M = 10`?* Bepaald op een meting van 28-09-2026; de cijfers staan in
-de interne notities (zie `README.md`).
+*Waarom `VERHUIS_GRENS_M = 75`?* Bepaald op een meting; de cijfers staan in de interne
+notities (zie `README.md`).
 
 **4. Terugvallen.** De kaart toont gewoon de feed, met een waarschuwing in de console, als:
 
 - de API niet antwoordt binnen `VLOOT_WACHTTIJD_MS` (8 s), een fout geeft, of geen lijst;
 - de lijst leeg is (of geen enkele auto met een plek bevat) — een lege vloot is eerder een
   storing dan de waarheid;
-- de feed geen `locatie_nauwkeurigheid_m` draagt — dan is er geen afstand om mee te vervagen;
 - de browser geen `crypto.subtle` heeft (alleen op `https` of `localhost`) — zonder
   vervaging komt er niets uit de API op de kaart.
 
@@ -727,10 +728,10 @@ op een rij wat waar staat. `index.html` draagt alleen nog structuur en pictogram
 - **De kaart toont geen live beschikbaarheid** en zegt dat ook. De feed kent die informatie
   niet: het aantal in `station_status` is het aantal auto's dát er staat, niet het aantal dat
   nu vrij is.
-- **De coördinaten zijn vervaagd.** De generator zet elke standplaats 20 m opzij; zolang `degage_vehicles.json` het veld
-  `locatie_nauwkeurigheid_m` draagt, zegt de kaart in elke popup dat de locatie bij
-  benadering is. Afstanden in de balk zijn dus tot op tientallen meters juist, niet preciezer.
-  Het getal hoort nergens hardgecodeerd te staan — één bron, in de feed.
+- **De coördinaten zijn vervaagd.** De generator zet elke standplaats een eindje opzij, en
+  de kaart zegt bij het openen dat de locaties bij benadering zijn. Afstanden in de balk
+  zijn dus tot op tientallen meters juist, niet preciezer. Hoe ver opzij, staat bewust
+  nergens publiek.
 
 ## 15. Lokaal draaien
 

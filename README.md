@@ -19,7 +19,7 @@ vooraf nodig hebt en wat er gebeurt, staat in [`BEDIENING.md`](BEDIENING.md).
 **1. De bouwer — `scripts/`, één keer per kwartaal, met de hand.**
 `bijwerken.py` (of `BIJWERKEN.bat`) draait vier stappen in een vaste volgorde:
 `genereer_gbfs.py` maakt van de databankreplica (gelezen via de interne repo) de feed in
-`gbfs/`, met elke standplaats 20 m vervaagd. Daarna halen `haal_stockfotos.py`,
+`gbfs/`, met elke standplaats vervaagd. Daarna halen `haal_stockfotos.py`,
 `haal_bereik.py` en `haal_ov.py` de modelfoto's, het rijbereik en het openbaar vervoer op,
 in `map/fotos/`, `map/bereik.json` en `map/ov.json`. Die drie lezen uit de feed, vandaar de
 vaste volgorde. Publiceren gebeurt pas als je "ja" typt.
@@ -70,6 +70,8 @@ degapp.be (live vloot) ────────────────▶ kaart
 
 - **`verschuif()` en `station_id()` bestaan twee keer**: in `scripts/genereer_gbfs.py` en als
   kopie in `map/index.js`, voor de auto's uit de live vloot. Wijzig je de ene, wijzig dan de andere.
+  De feed vervaagt met instellingen uit de interne repo, de kaart met de eigen, publieke
+  `LIVE_*`-instellingen in `map/index.js` en `scripts/haal_ov.py`.
 - **`map/ov.json` draagt de datum van de feed** waarvoor het berekend is. Klopt die niet,
   dan laat de kaart het OV-blok weg — daarom draait `bijwerken.py` alles in één keer.
 - **Elke storing valt terug op iets dat werkt.** Antwoordt de live vloot niet, dan toont de

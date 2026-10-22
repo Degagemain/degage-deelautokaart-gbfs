@@ -693,11 +693,6 @@ function meervoud(n) {
 /* ==========================================================================
    data
    ========================================================================== */
-/* Hoeveel meter de coördinaten in de feed bewust opzij gezet zijn. Komt uit
-   `degage_vehicles.json` en niet uit een constante hier: de generator bepaalt het getal,
-   en een tweede plek zou er stilletjes naast kunnen gaan staan. Ontbreekt het veld — een
-   oudere feed — dan zegt de kaart er niets over. */
-let locatieVaagheid = null;
 
 const staat = {
   stations: [],           // { station_id, lat, lon, plaats, wagens[] }
@@ -882,13 +877,15 @@ async function laadOv() {
 
    Daarom, per plek (auto's op exact hetzelfde API-punt horen samen):
 
-   · Staat er een gekoppelde auto die NIET verhuisd is — zijn API-punt ligt binnen de
-     vervaging + VERHUIS_MARGE_M van zijn feedstip — dan blijft de plek op die feedstip,
-     met haar OV-gegevens. Een nieuwe auto op datzelfde punt komt erbij.
+   · Staat er een gekoppelde auto die NIET verhuisd is — zijn API-punt ligt binnen
+     VERHUIS_GRENS_M van zijn feedstip — dan blijft de plek op die feedstip, met haar
+     OV-gegevens. Een nieuwe auto op datzelfde punt komt erbij.
    · Anders (een nieuwe auto op een nieuwe plek, of een verhuisde auto) wordt het
-     API-punt EXACT ZO vervaagd als de generator het doet (`verschuif()` in
-     scripts/genereer_gbfs.py): een vaste afstand opzij in een richting uit een SHA-256
-     van het afgeronde punt. Wijzigt de ene, wijzig dan de andere mee. Zo'n plek haalt
+     API-punt vervaagd met dezelfde functie als de generator (`verschuif()` in
+     scripts/genereer_gbfs.py): richting en afstand uit een HMAC van het afgeronde punt —
+     maar met de eigen, publieke instellingen van de live vloot (LIVE_SLEUTEL, LIVE_MIN_M,
+     LIVE_MAX_M), want die van de feed horen niet in publieke code. Wijzigt de ene, wijzig
+     dan de andere mee. Zo'n plek haalt
      haar OV-gegevens uit `live_plekken` in map/ov.json: scripts/haal_ov.py vraagt de
      live vloot ook op en rekent die plekken op dezelfde manier uit. Is de auto pas
      na die run verschenen of verhuisd, dan staat ze daar (nog) niet in.
@@ -897,14 +894,13 @@ async function laadOv() {
    vervaagde punt (stationId()).
 
    Terugvallen op de feed (met een waarschuwing in de console) doen we als de API niet
-   antwoordt, een lege lijst geeft, de feed geen `locatie_nauwkeurigheid_m` draagt, of de
-   browser geen `crypto.subtle` kent (alleen op https of localhost). Zonder vervaging
+   antwoordt, een lege lijst geeft, of de browser geen `crypto.subtle` kent (alleen op https of localhost). Zonder vervaging
    komt er niets uit de API op de kaart. */
 const METER_PER_GRAAD = 111320;
 
-/* Hoe ver een API-punt buiten de vervaging van zijn feedstip mag liggen voor hij als
-   verhuisd telt. Bepaald op een meting van 28-09-2026 (zie de interne notities). */
-const VERHUIS_MARGE_M = 10;
+/* Hoe ver een API-punt van zijn feedstip mag liggen voor hij als verhuisd telt. Gelijk aan
+   VERHUIS_GRENS_M in scripts/haal_ov.py; bepaald op een meting (zie de interne notities). */
+const VERHUIS_GRENS_M = 75;
 
 /* De waarden van de API in de woorden van de feed. Een waarde die hier niet staat, wordt
    weggelaten in plaats van geraden. */
@@ -972,12 +968,24 @@ async function laadVloot() {
   }
 }
 
-/* De tegenhanger van `verschuif()` in scripts/genereer_gbfs.py, regel voor regel. */
-async function verschuif(lat, lon, meter) {
-  const sleutel = new TextEncoder().encode(lat.toFixed(6) + "," + lon.toFixed(6));
-  const hash = new DataView(await crypto.subtle.digest("SHA-256", sleutel));
-  // De eerste 8 bytes, big-endian — Pythons int.from_bytes(..., "big").
+/* De vervaging van de live vloot: gelijk aan LIVE_SLEUTEL, LIVE_MIN_M en LIVE_MAX_M in
+   scripts/haal_ov.py. Publiek, en bewust niet die van de feed. */
+const LIVE_SLEUTEL = "degage-live-vloot-publiek";
+const LIVE_MIN_M = 15;
+const LIVE_MAX_M = 35;
+
+/* De tegenhanger van `verschuif()` in scripts/genereer_gbfs.py, regel voor regel, met de
+   instellingen van de live vloot. */
+async function verschuif(lat, lon) {
+  const tekst = new TextEncoder();
+  const sleutel = await crypto.subtle.importKey(
+    "raw", tekst.encode(LIVE_SLEUTEL), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
+  const hash = new DataView(await crypto.subtle.sign(
+    "HMAC", sleutel, tekst.encode(lat.toFixed(6) + "," + lon.toFixed(6))));
+  // Bytes 0–7 de hoek, 8–15 de afstand, big-endian — Pythons int.from_bytes(..., "big").
   const hoek = (Number(hash.getBigUint64(0)) / 2 ** 64) * 2 * Math.PI;
+  const meter = LIVE_MIN_M +
+                (Number(hash.getBigUint64(8)) / 2 ** 64) * (LIVE_MAX_M - LIVE_MIN_M);
   const nieuweLat = lat + (meter * Math.cos(hoek)) / METER_PER_GRAAD;
   const nieuweLon = lon + (meter * Math.sin(hoek)) /
                     (METER_PER_GRAAD * Math.cos(lat * (Math.PI / 180)));
@@ -1002,7 +1010,7 @@ const puntSleutel = (lat, lon) => lat.toFixed(6) + "," + lon.toFixed(6);
    het bij de feed hoort (anders null), `ovBestand` het bestand hoe dan ook: zijn
    `live_plekken` hangen niet aan de feed, want hun id is het punt zelf. Geeft null als
    er niets bruikbaars in de API staat. */
-async function metLiveVloot(api, feedStations, feedWagens, ov, ovBestand, meter) {
+async function metLiveVloot(api, feedStations, feedWagens, ov, ovBestand) {
   const auto = api.filter((v) =>
     v && v.geoPosition &&
     Number.isFinite(v.geoPosition.latitude) && Number.isFinite(v.geoPosition.longitude) &&
@@ -1040,14 +1048,14 @@ async function metLiveVloot(api, feedStations, feedWagens, ov, ovBestand, meter)
     for (const v of punt.autos) {
       const f = koppeling.get(v);
       const s = f && feedStation.get(f.station_id);
-      if (s && meterTussen(punt, s) <= meter + VERHUIS_MARGE_M) { anker = s; break; }
+      if (s && meterTussen(punt, s) <= VERHUIS_GRENS_M) { anker = s; break; }
     }
     /* Twee API-punten die bij dezelfde feedstip horen, blijven één plek: in de feed
        stonden die auto's samen, en twee pins op dezelfde stip zijn er één te veel. */
     const sleutel = anker ? "feed:" + anker.station_id : "punt:" + k;
     if (!plekken.has(sleutel)) {
       const [lat, lon] = anker ? [anker.lat, anker.lon]
-                               : await verschuif(punt.lat, punt.lon, meter);
+                               : await verschuif(punt.lat, punt.lon);
       const station_id = anker ? anker.station_id : await stationId(lat, lon);
       plekken.set(sleutel, { lat, lon, station_id, feed_id: anker && anker.station_id, autos: [] });
     }
@@ -1125,7 +1133,6 @@ async function laden() {
   }
   plaatsMeerFilters(verborgen.meer);
 
-  locatieVaagheid = wagenBestand.locatie_nauwkeurigheid_m || null;
   toonVoorbehoudLocatie();
   staat.bijgewerkt = stationBestand.last_updated;
 
@@ -1144,15 +1151,12 @@ async function laden() {
   let feedStations = stationBestand.data.stations;
   let feedWagens = wagenBestand.data.vehicles;
   let live = null;
-  if (vloot && !locatieVaagheid) {
-    console.warn("de feed draagt geen locatie_nauwkeurigheid_m: de live vloot kan niet " +
-                 "vervaagd worden en wordt niet gebruikt.");
-  } else if (vloot && !(window.crypto && crypto.subtle)) {
+  if (vloot && !(window.crypto && crypto.subtle)) {
     console.warn("geen crypto.subtle (geen https?): de live vloot kan niet vervaagd " +
                  "worden en wordt niet gebruikt.");
   } else if (vloot) {
     try {
-      live = await metLiveVloot(vloot, feedStations, feedWagens, ov, ovBestand, locatieVaagheid);
+      live = await metLiveVloot(vloot, feedStations, feedWagens, ov, ovBestand);
       if (!live) console.warn("de live vloot is leeg — de kaart toont de feed.");
     } catch (e) {
       console.warn("live vloot niet verwerkt: " + e.message + " — de kaart toont de feed.");
@@ -1245,13 +1249,11 @@ async function laden() {
 
 /* De stip staat met opzet niet precies op de standplaats: dat zou de voordeur van de
    eigenaar aanwijzen. Dat zegt het voorbehoud bij het openen, zonder te zeggen hoe ver: dat
-   getal (`locatie_nauwkeurigheid_m` uit de feed) gaat de bezoeker niet aan. Het blijft als
-   {m} beschikbaar voor een vertaling. Draagt de feed het getal niet, dan is er niets
-   verschoven en zwijgt de kaart erover. Ook na een taalwissel. */
+   staat bewust nergens publiek. Ook na een taalwissel. */
 function toonVoorbehoudLocatie() {
   const li = $("voorbehoud-locatie");
-  li.hidden = !locatieVaagheid;
-  if (locatieVaagheid) li.innerHTML = t("voorbehoud.locatie", { m: getal(locatieVaagheid) });
+  li.hidden = false;
+  li.innerHTML = t("voorbehoud.locatie");
 }
 
 /* De datum van de dump, in woorden en in de taal van de bezoeker. Apart, want hij moet

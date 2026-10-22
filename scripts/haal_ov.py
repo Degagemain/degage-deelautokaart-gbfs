@@ -50,8 +50,7 @@ kaart.
 Twee dingen om te weten:
 · Er is alleen een TOTAALSCORE per hectare. De deelscores per soort voorziening die de
   Mobiscore-site bij een adres toont, staan niet in de open laag.
-· Hij wordt opgevraagd op het VERVAAGDE punt uit de feed (20 m opzij, zie LOCATIE_FUZZ_M in
-  genereer_gbfs.py). Op cellen van honderd meter kan dat een buurcel zijn; die verschilt
+· Hij wordt opgevraagd op het VERVAAGDE punt uit de feed. Op cellen van honderd meter kan dat een buurcel zijn; die verschilt
   zelden meer dan een paar tienden.
 
 De OV-feiten — en dat zijn KEUZES, geen feiten
@@ -126,7 +125,7 @@ from pathlib import Path
 
 # De vervaging van de generator, om een nieuwe plek exact zo te vervagen en te benoemen als
 # de kaart het doet (die heeft er zelf een kopie van).
-from genereer_gbfs import LOCATIE_FUZZ_M, station_id, verschuif
+from genereer_gbfs import station_id, verschuif
 
 # ============================================================================
 # DE KEUZES — zie de uitleg bovenaan
@@ -182,8 +181,13 @@ BRONNEN = {
 # deze bron staat bij zo'n plek geen OV-blok en valt ze uit elk afstandsfilter. Zie
 # `nieuwe_plekken()`.
 VLOOT_API = "https://degapp.be/api/v1/car/stands"
-# Moet gelijk zijn aan VERHUIS_MARGE_M in map/index.js.
-VERHUIS_MARGE_M = 10
+# De vervaging en de verhuisgrens van de kaart voor de live vloot: gelijk aan LIVE_SLEUTEL,
+# LIVE_MIN_M, LIVE_MAX_M en VERHUIS_GRENS_M in map/index.js. Publiek, en bewust niet die van
+# de feed.
+LIVE_SLEUTEL = b"degage-live-vloot-publiek"
+LIVE_MIN_M = 15
+LIVE_MAX_M = 35
+VERHUIS_GRENS_M = 75
 
 UA = "DegageDeelautokaart/1.0 (https://www.degage.be/; info@degage.be)"
 CACHE_DAGEN = 7
@@ -629,14 +633,13 @@ def haal_vloot() -> list | None:
         return None
 
 
-def nieuwe_plekken(api: list, feed_stations: list, feed_wagens: list,
-                   meter_vaag: float) -> tuple[list, int]:
+def nieuwe_plekken(api: list, feed_stations: list, feed_wagens: list) -> tuple[list, int]:
     """De plekken die de kaart NIET op een feedstip zet, met het station_id dat ze krijgen.
 
     De tegenhanger van `metLiveVloot()` in map/index.js, voor zover het de plaats betreft:
     koppelen op naam, groeperen op het API-punt (6 decimalen), een punt blijft op zijn
-    feedstip als een gekoppelde auto daar binnen de vervaging + VERHUIS_MARGE_M ligt, en
-    anders wordt het vervaagd met `verschuif()` uit de generator. Wijzigt die regel in de
+    feedstip als een gekoppelde auto daar binnen VERHUIS_GRENS_M ligt, en anders wordt het
+    vervaagd met `verschuif()` uit de generator, met de live-instellingen hierboven. Wijzigt die regel in de
     kaart, wijzig hem dan hier mee — anders zoekt de kaart een station_id dat hier niet
     berekend is, en staat er bij een nieuwe auto gewoon geen OV-blok.
 
@@ -684,12 +687,12 @@ def nieuwe_plekken(api: list, feed_stations: list, feed_wagens: list,
         for i in wie:
             f = koppeling.get(i)
             s = f and feed_station.get(f["station_id"])
-            if s and meter_tussen(lat, lon, s["lat"], s["lon"]) <= meter_vaag + VERHUIS_MARGE_M:
+            if s and meter_tussen(lat, lon, s["lat"], s["lon"]) <= VERHUIS_GRENS_M:
                 anker = True
                 break
         if anker:
             continue
-        vlat, vlon = verschuif(lat, lon)
+        vlat, vlon = verschuif(lat, lon, LIVE_SLEUTEL, LIVE_MIN_M, LIVE_MAX_M)
         plekken.setdefault(station_id(vlat, vlon), (vlat, vlon))
         nieuw += sum(1 for i in wie if i not in koppeling)
     return [(sid, lat, lon) for sid, (lat, lon) in plekken.items()], nieuw
@@ -719,20 +722,14 @@ def main() -> int:
     # De plekken die de kaart uit de live vloot maakt, komen erbij: zo staat er ook bij een
     # nieuwe of verhuisde auto een OV-blok. Mislukt dat, dan gaat de rest gewoon door.
     wagens = json.loads((repo / "gbfs" / "degage_vehicles.json").read_text(encoding="utf-8"))
-    meter_vaag = wagens.get("locatie_nauwkeurigheid_m")
     nieuw: list = []
-    if meter_vaag != LOCATIE_FUZZ_M:
-        zeg(f"live vloot         overgeslagen: de feed vervaagt {meter_vaag} m, de generator "
-            f"{LOCATIE_FUZZ_M} m")
-    else:
-        api = haal_vloot()
-        if api:
-            nieuw, n_autos = nieuwe_plekken(api, info["data"]["stations"],
-                                            wagens["data"]["vehicles"], meter_vaag)
-            bekend = {s[0] for s in standplaatsen}
-            nieuw = [p for p in nieuw if p[0] not in bekend]
-            zeg(f"live vloot         {len(api)} auto's; {len(nieuw)} plekken niet op een feedstip "
-                f"(nieuwe of verhuisde auto's, waarvan {n_autos} nieuw)")
+    api = haal_vloot()
+    if api:
+        nieuw, n_autos = nieuwe_plekken(api, info["data"]["stations"], wagens["data"]["vehicles"])
+        bekend = {s[0] for s in standplaatsen}
+        nieuw = [p for p in nieuw if p[0] not in bekend]
+        zeg(f"live vloot         {len(api)} auto's; {len(nieuw)} plekken niet op een feedstip "
+            f"(nieuwe of verhuisde auto's, waarvan {n_autos} nieuw)")
     nieuwe_ids = {p[0] for p in nieuw}
     standplaatsen += nieuw
     zeg(f"keuzes            dichtste halte tot {HALTE_VER_M} m · haltes geteld binnen {HALTE_M} m · "
